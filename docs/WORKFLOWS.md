@@ -100,8 +100,16 @@ A `rule_search` spec replaces `rule`/`periods` with:
 | `sma_cross` | `fast`, `slow` | SMA(fast) > SMA(slow) |
 | `tsmom` | `lookback` | return over `lookback` days > 0 |
 | `donchian` | `entry` | breakout above `entry`-day high, exit below `entry/2`-day low |
+| `vol_target` | `target`, `lookback`, `cap` | always in; position = target ÷ realised volatility, capped (0…`cap`) |
+| `day_of_week` | `days` (0 = Monday) | tomorrow's UTC weekday is in `days` |
+| `turn_of_month` | `last`, `first` | tomorrow is one of the last `last` or first `first` days of the month |
+| `asset_above_sma` | `asset`, `window` | **another** asset (e.g. BTCUSDT) closes above its SMA |
 | `feature_threshold` | `feature`, `threshold`, `long_when` (`above`/`below`), `lag` | feature vs a fixed level |
 | `feature_vs_rolling_quantile` | `feature`, `q`, `long_when` (`above`/`not_above`), `lookback`, `min_periods`, `lag` | feature vs its own rolling quantile |
+
+Significance for `timing_rule`: `circular_shift` (any rule except calendar rules) or `permutation`
+(calendar rules only: shuffles daily returns under the fixed calendar position; a circular shift
+would just repeat the weekly pattern).
 
 Features: `stablecoin_growth_7d`, `funding_btc_7d`, `fear_greed`, `etf_flow_btc_5d`.
 
@@ -110,6 +118,7 @@ Features: `stablecoin_growth_7d`, `funding_btc_7d`, `fear_greed`, `etf_flow_btc_
 | Series | Source | Notes |
 |--------|--------|-------|
 | Spot daily klines | data.binance.vision | monthly archives, plus daily files for the last two months |
+| Coins not on Binance (EVER) | Gate.io API v4 | full history re-read each run (one request per year); listed in `OTHER_EXCHANGES` in `sources.py` |
 | BTC funding | data.binance.vision (archive), fapi.binance.com, OKX as fallback | fapi answers 451 from US IPs |
 | USDT/USDC supply | DefiLlama stablecoins API | |
 | Fear & Greed | alternative.me | |

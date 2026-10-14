@@ -63,6 +63,33 @@ scratch, and every verdict except one matched F1MEBOT:
 
 Live numbers: [reports/RESULTS.md](../reports/RESULTS.md).
 
+## Ideas from the literature (H-012…H-019, tested 2026-10-14)
+
+All eight were written and locked before testing. Out of sample means after the cited paper's data
+ended, or 2022+.
+
+| ID | Idea and source | Result |
+|----|-----------------|--------|
+| H-012 ◐ | Volatility targeting at 30 %/yr (Man Group; Harvey et al. 2018) on BTC/ETH/SOL | Sharpe BTC 0.54 vs 0.50, ETH 0.32 vs 0.22, SOL 0.45 vs 0.36; drawdowns −47…−52 % vs −67…−95 %. p = 0.17–0.25, not significant |
+| H-013 ◐ | Same on 8 independent coins | Beats holding on **8/8 since 2022**, but 5/8 since 2019 (6 needed): in the 2019–2021 bull run it gave up too much upside |
+| H-014 ◐ | 1-week time-series momentum (Liu & Tsyvinski 2021) | SOL 0.79 vs 0.36 (p = 0.02, just above the 0.0167 bar); ETH 0.36 vs 0.22; BTC 0.08 vs 0.50. Not consistent |
+| H-015 ❌ | Monday effect (Caporale & Plastun 2019) | Monday-only BTC: Sharpe 0.25 vs 0.65 holding since 2018. The effect did not persist after publication |
+| H-016 ❌ | Turn of the month | Sharpe 0.53 vs 0.65, p = 0.13 |
+| H-017 ❌ | Altcoins only while BTC > SMA200 | 7/8 better since 2022, but 1/8 since 2019: in 2019–2021 the filter left the market during alt rallies |
+| H-018 ◐ | **Everscale (EVER)**: SMA50 trend rule, Gate.io, 0.2 % fee | −10 %/yr vs **−70 %/yr** holding since mid-2022; max drawdown −84 % vs −100 %. Sharpe 0.23 vs −0.17, p = 0.14 |
+| H-019 ◐ | EVER only while BTC > SMA200 | −37 %/yr vs −70 %/yr, drawdown −98 %, p = 0.19 |
+
+**What it means.** Volatility targeting is the most promising so far. It never beat holding by a
+significant margin, but it beat it on 11 of 11 coins since 2022 with roughly half the drawdown.
+Re-testing it as data accumulates is exactly what the runner does every 90 days. Calendar effects
+look like artefacts of their original samples. For EVER, every rule "beats" holding only because
+holding lost almost everything. With ~$12k daily turnover, none of this is tradable at size.
+
+Sources: [Man Group: Crypto, too hot to handle?](https://www.man.com/insights/crypto-too-hot-to-handle) ·
+[Liu & Tsyvinski, Risks and Returns of Cryptocurrency (NBER w24877)](https://www.nber.org/system/files/working_papers/w24877/w24877.pdf) ·
+[Quantpedia: Day of the week effect in crypto](https://quantpedia.com/the-day-of-the-week-effect-in-the-crypto-currency-market/) ·
+[End-of-month effect in Bitcoin](https://valuelytica.substack.com/p/end-of-month-effect-in-bitcoin)
+
 ## Bottom line
 
 None of these ideas has a statistically reliable edge after fees. Daily trend rules

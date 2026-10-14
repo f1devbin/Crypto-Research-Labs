@@ -34,11 +34,13 @@ and automated agents re-test old ideas as new market data arrives.
 | See today's market and every result, with plain-language explanations | the **[live dashboard](https://f1devbin.github.io/Crypto-Research-Labs/)** (7 languages) |
 | Understand the words (Sharpe, drawdown, p-value, funding…) | the glossary on the dashboard, or [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
 | Know what was found | [docs/FINDINGS.md](docs/FINDINGS.md) |
+| Which coins | BTC, ETH, SOL; for independent confirmation BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX; Everscale (EVER) from Gate.io. Any Binance spot pair can be added |
 | Run it yourself or add your own idea | [Quickstart](#quickstart) and [CONTRIBUTING.md](CONTRIBUTING.md) |
 
-**The short answer so far: no idea has beaten buy-and-hold reliably.** Daily trend rules lower
-drawdowns, mostly because they spend less time in the market, but they don't win by a margin
-that luck can't explain. Fast minute-level signals lose to fees.
+**The short answer so far: no idea has beaten buy-and-hold reliably.** Daily trend rules and
+volatility targeting lower drawdowns, mostly because they spend less time in the market, but they
+don't win by a margin that luck can't explain. Fast minute-level signals lose to fees, and the
+famous calendar effects (Monday, turn of the month) did not survive after their papers were published.
 
 ## What the dashboard shows
 
@@ -69,6 +71,14 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-009 | BTC long only after positive 5-day spot-ETF flow | ◐ Weak |
 | H-010 | Stablecoin timing beats buy-and-hold on 8 independent coins | ❌ Fail |
 | H-011 | BTC funding carry (spot long + perp short) | ❌ Fail (~1.5 %/yr recently) |
+| H-012 | Volatility targeting (30 %/yr) on BTC, ETH, SOL | ◐ Weak: better Sharpe on 3/3, not significant |
+| H-013 | Volatility targeting on 8 independent coins | ◐ Weak: 8/8 since 2022, 5/8 since 2019 (6 needed) |
+| H-014 | 1-week momentum (Liu & Tsyvinski) on BTC, ETH, SOL | ◐ Weak: works on SOL, fails on BTC |
+| H-015 | Monday effect in BTC | ❌ Fail |
+| H-016 | Turn-of-the-month effect in BTC | ❌ Fail |
+| H-017 | Altcoins only while BTC is above its 200-day average | ❌ Fail: 7/8 since 2022, 1/8 since 2019 |
+| H-018 | Everscale (EVER): SMA50 trend rule | ◐ Weak: −10 %/yr vs −70 %/yr holding, not significant |
+| H-019 | Everscale (EVER): only while BTC is above its 200-day average | ◐ Weak |
 
 The live table is in [reports/RESULTS.md](reports/RESULTS.md) and on the dashboard.
 
