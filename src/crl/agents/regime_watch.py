@@ -47,6 +47,21 @@ def _realized_vol(store: DataStore, p: dict) -> pd.Series:
     return r.rolling(int(p.get("days", 30))).std() * np.sqrt(365)
 
 
+def _breadth(store: DataStore, p: dict) -> pd.Series:
+    """Share of the listed coins closing above their own `window`-day average (coins without
+    enough history yet are left out of that day's count)."""
+    flags = []
+    for sym in p["symbols"]:
+        try:
+            c = store.close(sym)
+        except (FileNotFoundError, KeyError):
+            continue
+        sma = c.rolling(int(p.get("window", 200))).mean()
+        flags.append((c > sma).astype(float).where(sma.notna()).rename(sym))
+    df = pd.concat(flags, axis=1)
+    return df.mean(axis=1).where(df.notna().sum(axis=1) >= max(3, len(flags) // 2))
+
+
 # each metric is a full daily history; the monitor reads its last value
 METRICS = {
     "funding_carry": _funding_carry,
@@ -54,6 +69,7 @@ METRICS = {
     "fear_greed": _fear_greed,
     "price_vs_sma": _price_vs_sma,
     "realized_vol": _realized_vol,
+    "breadth": _breadth,
 }
 
 

@@ -37,7 +37,7 @@ Open the [home page]({site}). The menu at the top jumps to each section; the lan
 | Section | What is there | Why look |
 | --- | --- | --- |
 | New here? | 5 steps to read the page | once, to get the logic |
-| Market regime | cards: funding, stablecoins, fear & greed, BTC trend, BTC volatility, EVER | today's "weather" in the market |
+| Market regime | cards: funding, stablecoins, fear & greed, BTC trend, BTC volatility, market breadth, EVER | today's "weather" in the market |
 | Coins | {n_coins} coins: price, 7 and 30 days, trend, volatility | quick overview, entry to each coin |
 | Bitcoin vs its 200-day average | BTC chart since 2020 | the long-term trend of the whole market |
 | Hypotheses | all {n_hyps} ideas with verdicts | what has been tested and how it ended |
@@ -52,7 +52,7 @@ Every coin has its own page. Home page → "Coins" → click **SOL Solana**, or 
 A coin page is read in four steps:
 
 1. **12-month chart.** Blue line = price, yellow dashes = 50-day average, white dots = 200-day average. Price above both averages = uptrend, below both = downtrend. The scale is logarithmic: a rise from $10 to $20 looks the same as from $100 to $200.
-2. **Numbers.** Change over 7 days, 30 days and a year; distance from the averages; volatility. Volatility of 70% means a typical yearly move of about 70% up or down. Today: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}.
+2. **Numbers.** Change over 7 days, 30 days and a year; distance from the averages; volatility. Volatility of 70% means a typical yearly move of about 70% up or down. Today: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}. Three more lines put the price in context: how far it is below its highest close (SOL: {sol_dd_peak}), what $100 invested a year ago is worth now (SOL: {sol_100}), and how closely the coin moves with Bitcoin, from −1 to 1 (SOL: {sol_corr}).
 3. **What the tested rules say today.** Four rules from the hypotheses and what each would do today: "in the market", "out of the market" or a share of a position. Next to each is the verdict of its test. None has passed, so this is **an observation, not a signal**.
 4. **Studies that include this coin.** For SOL the most interesting is H-014 (1-week momentum): on SOL the rule reached a Sharpe of {sol_mom_sharpe} against {sol_mom_hold} for holding, but it failed on BTC, so the verdict is "weak".
 
@@ -154,7 +154,7 @@ RU = [
 | Раздел | Что там | Зачем смотреть |
 | --- | --- | --- |
 | Новичкам | 5 шагов «как читать страницу» | один раз, чтобы понять логику |
-| Рынок сейчас | карточки: фандинг, стейблкоины, страх и жадность, тренд BTC, волатильность BTC, EVER | какая «погода» на рынке сегодня |
+| Рынок сейчас | карточки: фандинг, стейблкоины, страх и жадность, тренд BTC, волатильность BTC, ширина рынка, EVER | какая «погода» на рынке сегодня |
 | Монеты | {n_coins} монет: цена, 7 и 30 дней, тренд, волатильность | быстрый обзор и вход на страницу монеты |
 | Биткоин и 200-дневная | график BTC с 2020 года | долгосрочный тренд всего рынка |
 | Гипотезы | все {n_hyps} идей с вердиктами | что уже проверено и чем закончилось |
@@ -169,7 +169,7 @@ RU = [
 Страница монеты читается за 4 шага:
 
 1. **График за 12 месяцев.** Синяя линия — цена, жёлтый пунктир — средняя за 50 дней, белые точки — средняя за 200 дней. Цена выше обеих средних — восходящий тренд, ниже обеих — нисходящий. Шкала логарифмическая: рост с $10 до $20 и с $100 до $200 выглядит одинаково.
-2. **Цифры.** Изменение за 7 дней, 30 дней и год; насколько цена выше или ниже средних; волатильность. Волатильность 70% значит: типичное движение за год — около 70% вверх или вниз. Сегодня: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}.
+2. **Цифры.** Изменение за 7 дней, 30 дней и год; насколько цена выше или ниже средних; волатильность. Волатильность 70% значит: типичное движение за год — около 70% вверх или вниз. Сегодня: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}. Ещё три строки дают контекст: насколько цена ниже своего максимума (SOL: {sol_dd_peak}), сколько сейчас стоят $100, вложенные год назад (SOL: {sol_100}), и насколько монета движется вместе с биткоином, от −1 до 1 (SOL: {sol_corr}).
 3. **«Что сегодня говорят проверенные правила».** Четыре правила из гипотез и что каждое сделало бы сегодня: «в рынке», «вне рынка» или доля позиции. Рядом — вердикт проверки этого правила. Ни одно не прошло, поэтому это **наблюдение, а не сигнал**.
 4. **«Исследования с этой монетой».** Для SOL самое интересное — H-014 (недельный моментум): на SOL правило дало Sharpe {sol_mom_sharpe} против {sol_mom_hold} у удержания, но на BTC не сработало, поэтому вердикт «слабо».
 
@@ -271,7 +271,7 @@ Abre la [página principal]({site}). El menú de arriba lleva a cada sección; l
 | Sección | Qué hay | Para qué mirarla |
 | --- | --- | --- |
 | ¿Eres nuevo? | 5 pasos para leer la página | una vez, para entender la lógica |
-| Mercado hoy | tarjetas: funding, stablecoins, miedo y codicia, tendencia BTC, volatilidad BTC, EVER | el "clima" del mercado hoy |
+| Mercado hoy | tarjetas: funding, stablecoins, miedo y codicia, tendencia BTC, volatilidad BTC, amplitud del mercado, EVER | el "clima" del mercado hoy |
 | Monedas | {n_coins} monedas: precio, 7 y 30 días, tendencia, volatilidad | vista rápida y acceso a cada moneda |
 | Bitcoin y su media de 200 días | gráfico de BTC desde 2020 | la tendencia de largo plazo del mercado |
 | Hipótesis | las {n_hyps} ideas con veredicto | qué se ha probado y cómo terminó |
@@ -286,7 +286,7 @@ Cada moneda tiene su página. Página principal → "Monedas" → pulsa **SOL So
 La página se lee en cuatro pasos:
 
 1. **Gráfico de 12 meses.** Línea azul = precio, rayas amarillas = media de 50 días, puntos blancos = media de 200 días. Precio sobre ambas medias = tendencia alcista; bajo ambas = bajista. La escala es logarítmica: subir de $10 a $20 se ve igual que de $100 a $200.
-2. **Cifras.** Cambio en 7 días, 30 días y un año; distancia a las medias; volatilidad. Una volatilidad del 70% significa un movimiento anual típico de un 70% arriba o abajo. Hoy: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}.
+2. **Cifras.** Cambio en 7 días, 30 días y un año; distancia a las medias; volatilidad. Una volatilidad del 70% significa un movimiento anual típico de un 70% arriba o abajo. Hoy: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}. Tres líneas más dan contexto: cuánto está por debajo de su cierre más alto (SOL: {sol_dd_peak}), cuánto valen hoy $100 invertidos hace un año (SOL: {sol_100}) y cuánto se mueve junto con Bitcoin, de −1 a 1 (SOL: {sol_corr}).
 3. **Qué dicen hoy las reglas probadas.** Cuatro reglas de las hipótesis y qué haría cada una hoy: "dentro del mercado", "fuera del mercado" o una parte de la posición. Al lado, el veredicto de su prueba. Ninguna ha superado la prueba, así que es **una observación, no una señal**.
 4. **Estudios que incluyen esta moneda.** Para SOL lo más interesante es H-014 (momentum semanal): en SOL la regla logró un Sharpe de {sol_mom_sharpe} frente a {sol_mom_hold} al mantener, pero falló en BTC, por eso el veredicto es "débil".
 
@@ -388,7 +388,7 @@ Abra a [página principal]({site}). O menu no topo leva a cada seção; os idiom
 | Seção | O que tem | Por que olhar |
 | --- | --- | --- |
 | Novo aqui? | 5 passos para ler a página | uma vez, para entender a lógica |
-| Mercado hoje | cartões: funding, stablecoins, medo e ganância, tendência do BTC, volatilidade do BTC, EVER | o "clima" do mercado hoje |
+| Mercado hoje | cartões: funding, stablecoins, medo e ganância, tendência do BTC, volatilidade do BTC, amplitude do mercado, EVER | o "clima" do mercado hoje |
 | Moedas | {n_coins} moedas: preço, 7 e 30 dias, tendência, volatilidade | visão rápida e acesso a cada moeda |
 | Bitcoin e sua média de 200 dias | gráfico do BTC desde 2020 | a tendência de longo prazo do mercado |
 | Hipóteses | todas as {n_hyps} ideias com veredicto | o que já foi testado e como terminou |
@@ -403,7 +403,7 @@ Cada moeda tem sua página. Página principal → "Moedas" → clique em **SOL S
 A página é lida em quatro passos:
 
 1. **Gráfico de 12 meses.** Linha azul = preço, tracejado amarelo = média de 50 dias, pontos brancos = média de 200 dias. Preço acima das duas médias = tendência de alta; abaixo das duas = de baixa. A escala é logarítmica: subir de $10 para $20 parece igual a subir de $100 para $200.
-2. **Números.** Variação em 7 dias, 30 dias e um ano; distância das médias; volatilidade. Volatilidade de 70% significa um movimento anual típico de cerca de 70% para cima ou para baixo. Hoje: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}.
+2. **Números.** Variação em 7 dias, 30 dias e um ano; distância das médias; volatilidade. Volatilidade de 70% significa um movimento anual típico de cerca de 70% para cima ou para baixo. Hoje: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}. Mais três linhas dão contexto: quanto o preço está abaixo do maior fechamento (SOL: {sol_dd_peak}), quanto valem hoje $100 investidos há um ano (SOL: {sol_100}) e quanto a moeda se move junto com o Bitcoin, de −1 a 1 (SOL: {sol_corr}).
 3. **O que as regras testadas dizem hoje.** Quatro regras das hipóteses e o que cada uma faria hoje: "no mercado", "fora do mercado" ou uma fração da posição. Ao lado, o veredicto do teste. Nenhuma passou, então isto é **uma observação, não um sinal**.
 4. **Estudos com esta moeda.** Para SOL o mais interessante é a H-014 (momentum semanal): em SOL a regra chegou a Sharpe {sol_mom_sharpe} contra {sol_mom_hold} de segurar, mas falhou no BTC, por isso o veredicto é "fraca".
 
@@ -505,7 +505,7 @@ Her şey GitHub sunucularında kendiliğinden çalışır. Kimsenin bilgisayarı
 | Bölüm | Ne var | Neden bakılır |
 | --- | --- | --- |
 | Yeni misiniz? | sayfayı okumak için 5 adım | bir kez, mantığı anlamak için |
-| Piyasa bugün | kartlar: funding, stablecoinler, korku ve açgözlülük, BTC trendi, BTC volatilitesi, EVER | bugün piyasanın "havası" |
+| Piyasa bugün | kartlar: funding, stablecoinler, korku ve açgözlülük, BTC trendi, BTC volatilitesi, piyasa genişliği, EVER | bugün piyasanın "havası" |
 | Coinler | {n_coins} coin: fiyat, 7 ve 30 gün, trend, volatilite | hızlı bakış ve her coinin sayfası |
 | Bitcoin ve 200 günlük ortalaması | 2020'den beri BTC grafiği | tüm piyasanın uzun vadeli trendi |
 | Hipotezler | {n_hyps} fikrin tümü ve kararları | neler test edildi, nasıl sonuçlandı |
@@ -520,7 +520,7 @@ Her coinin kendi sayfası var. Ana sayfa → "Coinler" → **SOL Solana**'ya tı
 Sayfa dört adımda okunur:
 
 1. **12 aylık grafik.** Mavi çizgi = fiyat, sarı kesikli = 50 günlük ortalama, beyaz noktalar = 200 günlük ortalama. Fiyat iki ortalamanın da üstünde = yükseliş trendi; ikisinin de altında = düşüş. Ölçek logaritmiktir: 10$'dan 20$'a çıkış, 100$'dan 200$'a çıkışla aynı görünür.
-2. **Rakamlar.** 7 gün, 30 gün ve bir yıldaki değişim; ortalamalara uzaklık; volatilite. %70 volatilite, yıllık tipik hareketin yaklaşık %70 yukarı ya da aşağı olduğu anlamına gelir. Bugün: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}.
+2. **Rakamlar.** 7 gün, 30 gün ve bir yıldaki değişim; ortalamalara uzaklık; volatilite. %70 volatilite, yıllık tipik hareketin yaklaşık %70 yukarı ya da aşağı olduğu anlamına gelir. Bugün: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}. Üç satır daha bağlam verir: fiyatın en yüksek kapanışın ne kadar altında olduğu (SOL: {sol_dd_peak}), 1 yıl önce yatırılan 100$'ın şimdi ne ettiği (SOL: {sol_100}) ve coinin Bitcoin ile ne kadar birlikte hareket ettiği, −1 ile 1 arası (SOL: {sol_corr}).
 3. **Test edilen kurallar bugün ne diyor.** Hipotezlerden dört kural ve her birinin bugün ne yapacağı: "piyasada", "piyasa dışında" ya da pozisyonun bir payı. Yanında testinin kararı var. Hiçbiri testi geçmedi, bu yüzden bu **bir gözlemdir, sinyal değil**.
 4. **Bu coini içeren çalışmalar.** SOL için en ilginci H-014 (haftalık momentum): kural SOL'da {sol_mom_sharpe} Sharpe'a ulaştı, tutmanınki {sol_mom_hold}; ama BTC'de işe yaramadı, bu yüzden karar "zayıf".
 
@@ -622,7 +622,7 @@ Mở [trang chủ]({site}). Menu phía trên dẫn tới từng mục; liên k�
 | Mục | Có gì | Xem để làm gì |
 | --- | --- | --- |
 | Người mới? | 5 bước để đọc trang | một lần, để hiểu logic |
-| Thị trường hôm nay | các thẻ: funding, stablecoin, sợ hãi & tham lam, xu hướng BTC, biến động BTC, EVER | "thời tiết" thị trường hôm nay |
+| Thị trường hôm nay | các thẻ: funding, stablecoin, sợ hãi & tham lam, xu hướng BTC, biến động BTC, độ rộng thị trường, EVER | "thời tiết" thị trường hôm nay |
 | Đồng coin | {n_coins} coin: giá, 7 và 30 ngày, xu hướng, biến động | xem nhanh và vào trang từng coin |
 | Bitcoin và trung bình 200 ngày | biểu đồ BTC từ 2020 | xu hướng dài hạn của cả thị trường |
 | Giả thuyết | toàn bộ {n_hyps} ý tưởng kèm kết luận | đã kiểm tra gì và kết quả ra sao |
@@ -637,7 +637,7 @@ Mỗi đồng coin có trang riêng. Trang chủ → "Đồng coin" → nhấn *
 Trang được đọc trong bốn bước:
 
 1. **Biểu đồ 12 tháng.** Đường xanh = giá, nét đứt vàng = trung bình 50 ngày, chấm trắng = trung bình 200 ngày. Giá trên cả hai đường trung bình = xu hướng tăng; dưới cả hai = giảm. Thang logarit: tăng từ $10 lên $20 trông giống từ $100 lên $200.
-2. **Số liệu.** Thay đổi 7 ngày, 30 ngày và một năm; khoảng cách tới các đường trung bình; độ biến động. Biến động 70% nghĩa là dao động năm điển hình khoảng 70% lên hoặc xuống. Hôm nay: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}.
+2. **Số liệu.** Thay đổi 7 ngày, 30 ngày và một năm; khoảng cách tới các đường trung bình; độ biến động. Biến động 70% nghĩa là dao động năm điển hình khoảng 70% lên hoặc xuống. Hôm nay: BTC {btc_vol}, SOL {sol_vol}, EVER {ever_vol}. Ba dòng nữa cho thêm bối cảnh: giá thấp hơn mức đóng cửa cao nhất bao nhiêu (SOL: {sol_dd_peak}), $100 đầu tư một năm trước giờ là bao nhiêu (SOL: {sol_100}), và coin biến động cùng Bitcoin đến mức nào, từ −1 đến 1 (SOL: {sol_corr}).
 3. **Các quy tắc đã kiểm tra nói gì hôm nay.** Bốn quy tắc từ các giả thuyết và mỗi quy tắc sẽ làm gì hôm nay: "trong thị trường", "đứng ngoài" hoặc một phần vị thế. Bên cạnh là kết luận kiểm tra. Chưa quy tắc nào đạt, nên đây là **quan sát, không phải tín hiệu**.
 4. **Nghiên cứu có đồng coin này.** Với SOL thú vị nhất là H-014 (động lượng 1 tuần): trên SOL quy tắc đạt Sharpe {sol_mom_sharpe} so với {sol_mom_hold} khi giữ, nhưng thất bại trên BTC, nên kết luận là "yếu".
 
@@ -739,7 +739,7 @@ ZH = [
 | 部分 | 内容 | 为什么看 |
 | --- | --- | --- |
 | 新手指南 | 阅读本页的 5 个步骤 | 看一次，理解逻辑 |
-| 今日市场 | 卡片：资金费率、稳定币、恐惧与贪婪、BTC 趋势、BTC 波动率、EVER | 今天市场的“天气” |
+| 今日市场 | 卡片：资金费率、稳定币、恐惧与贪婪、BTC 趋势、BTC 波动率、市场广度、EVER | 今天市场的“天气” |
 | 币种 | {n_coins} 个币：价格、7 天和 30 天、趋势、波动率 | 快速概览并进入各币页面 |
 | 比特币与其 200 日均线 | 2020 年以来的 BTC 图表 | 整个市场的长期趋势 |
 | 假设 | 全部 {n_hyps} 个想法及结论 | 检验过什么、结果如何 |
@@ -754,7 +754,7 @@ ZH = [
 页面分四步阅读：
 
 1. **12 个月图表。**蓝线 = 价格，黄色虚线 = 50 日均线，白色点线 = 200 日均线。价格高于两条均线 = 上升趋势；低于两条 = 下降趋势。坐标是对数的：从 10 美元涨到 20 美元，与从 100 美元涨到 200 美元看起来一样。
-2. **数据。**7 天、30 天和一年的涨跌；与均线的距离；波动率。波动率 70% 表示一年内典型涨跌幅约为 70%。今天：BTC {btc_vol}，SOL {sol_vol}，EVER {ever_vol}。
+2. **数据。**7 天、30 天和一年的涨跌；与均线的距离；波动率。波动率 70% 表示一年内典型涨跌幅约为 70%。今天：BTC {btc_vol}，SOL {sol_vol}，EVER {ever_vol}。另外三行提供背景：价格距最高收盘价有多远（SOL：{sol_dd_peak}），一年前投入的 $100 现在值多少（SOL：{sol_100}），以及该币与比特币同步程度，范围 −1 到 1（SOL：{sol_corr}）。
 3. **已检验规则今天的状态。**来自假设的四条规则，以及每条今天会怎么做：“持仓”、“空仓”或仓位比例。旁边是该规则的检验结论。没有一条通过检验，所以这是**观察，不是信号**。
 4. **包含该币种的研究。**对 SOL 最有意思的是 H-014（一周动量）：在 SOL 上规则的 Sharpe 为 {sol_mom_sharpe}，持有为 {sol_mom_hold}；但在 BTC 上失败，所以结论是“偏弱”。
 

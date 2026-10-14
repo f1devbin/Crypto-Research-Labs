@@ -58,6 +58,12 @@ T = {
  'coin_studies_h': 'Studies that include this coin',
  'no_studies': 'This coin is only used as a market filter.',
  'thin_note': 'This coin trades on {exchange}, not Binance. Liquidity is low, so prices can jump on small trades.',
+ 'th_peak': 'From peak',
+ 'th_100': '$100 a year ago →',
+ 'st_peak': 'From the highest close since {since} ({peak} on {date})',
+ 'st_100': '$100 invested a year ago is now',
+ 'st_corr': 'Correlation with Bitcoin (90 days)',
+ 'corr_note': 'Correlation: 1 = moves exactly with Bitcoin, 0 = no link, −1 = moves opposite. Most coins are above 0.6, so owning several of them is not much safer than owning one.',
  "site_title": "Crypto Research Labs: open, pre-registered crypto trading research",
  "site_desc": "Open, pre-registered crypto trading research: {verdict} Live market regime (BTC funding carry, "
               "stablecoin supply, Fear & Greed, trend, volatility) and every hypothesis re-tested automatically.",
@@ -167,6 +173,7 @@ T = {
    "far, and even a pass would need independent confirmation and paper trading first."),
  ],
  "monitors": {
+  "breadth": ('Market breadth: coins above their 200-day average', 'Share of the 12 coins whose price is above their own 200-day average. High means most of the market is in an uptrend; low means most coins are falling.'),
   "ever_trend": ('Everscale (EVER) vs its 50-day average', 'How far EVER trades above (+) or below (−) its 50-day average on Gate.io. This is the H-018 rule: above = in the market, below = out.'),
   "funding_carry": ("BTC funding carry: yearly yield after costs",
                     "What you would earn per year by holding BTC and shorting the same amount of BTC futures, so the "
@@ -183,7 +190,7 @@ T = {
                      "How much the price swings, scaled to a year. 40% means a typical yearly move of about 40% up "
                      "or down."),
  },
- "bands": {"negative": "negative", "low": "low", "moderate": "moderate", "attractive": "attractive",
+ "bands": {"weak": 'weak', "mixed": 'mixed', "strong": 'strong', "negative": "negative", "low": "low", "moderate": "moderate", "attractive": "attractive",
            "contracting": "contracting", "flat": "flat", "expanding": "expanding", "extreme_fear": "extreme fear",
            "fear": "fear", "neutral": "neutral", "greed": "greed", "extreme_greed": "extreme greed",
            "below": "below", "above": "above", "calm": "calm", "normal": "normal", "stressed": "stressed",
@@ -238,6 +245,12 @@ T = {
  'coin_studies_h': 'Исследования с этой монетой',
  'no_studies': 'Эта монета используется только как фильтр рынка.',
  'thin_note': 'Эта монета торгуется на {exchange}, а не на Binance. Ликвидность низкая, поэтому цена может скакать даже от небольших сделок.',
+ 'th_peak': 'От пика',
+ 'th_100': '$100 год назад →',
+ 'st_peak': 'От максимума закрытия с {since} ({peak}, {date})',
+ 'st_100': '$100, вложенные год назад, сейчас',
+ 'st_corr': 'Связь с биткоином (корреляция, 90 дней)',
+ 'corr_note': 'Корреляция: 1 — движется точно как биткоин, 0 — связи нет, −1 — движется наоборот. У большинства монет выше 0,6, поэтому несколько монет в портфеле почти не надёжнее одной.',
  "site_title": "Crypto Research Labs: открытые исследования торговых стратегий для криптовалют",
  "site_desc": "Открытые исследования торговых идей для криптовалют с предварительной регистрацией: {verdict} "
               "Состояние рынка в реальном времени (доходность фандинга BTC, стейблкоины, индекс страха и жадности, "
@@ -351,6 +364,7 @@ T = {
    "прошедшей идее нужна независимая проверка и торговля на бумаге."),
  ],
  "monitors": {
+  "breadth": ('Ширина рынка: монеты выше 200-дневной средней', 'Доля из 12 монет, у которых цена выше собственной 200-дневной средней. Много — большая часть рынка в росте; мало — большинство монет падает.'),
   "ever_trend": ('Everscale (EVER) относительно 50-дневной средней', 'Насколько EVER на Gate.io выше (+) или ниже (−) своей средней за 50 дней. Это правило H-018: выше — в рынке, ниже — вне рынка.'),
   "funding_carry": ("Керри на фандинге BTC: годовая доходность после издержек",
                     "Сколько можно заработать за год, держа BTC и одновременно продав столько же фьючерсов BTC, — "
@@ -368,7 +382,7 @@ T = {
                      "Насколько сильно скачет цена в пересчёте на год. 40% — типичное годовое движение примерно на "
                      "40% вверх или вниз."),
  },
- "bands": {"negative": "отрицательная", "low": "низкая", "moderate": "умеренная", "attractive": "привлекательная",
+ "bands": {"weak": 'слабая', "mixed": 'смешанная', "strong": 'сильная', "negative": "отрицательная", "low": "низкая", "moderate": "умеренная", "attractive": "привлекательная",
            "contracting": "сокращение", "flat": "без изменений", "expanding": "рост",
            "extreme_fear": "крайний страх", "fear": "страх", "neutral": "нейтрально", "greed": "жадность",
            "extreme_greed": "крайняя жадность", "below": "ниже", "above": "выше", "calm": "спокойно",
@@ -443,6 +457,12 @@ T = {
  'coin_studies_h': 'Estudios que incluyen esta moneda',
  'no_studies': 'Esta moneda solo se usa como filtro de mercado.',
  'thin_note': 'Esta moneda cotiza en {exchange}, no en Binance. La liquidez es baja y el precio puede saltar con operaciones pequeñas.',
+ 'th_peak': 'Desde el máximo',
+ 'th_100': '$100 hace un año →',
+ 'st_peak': 'Desde el cierre más alto desde {since} ({peak} el {date})',
+ 'st_100': '$100 invertidos hace un año valen hoy',
+ 'st_corr': 'Correlación con Bitcoin (90 días)',
+ 'corr_note': 'Correlación: 1 = se mueve igual que Bitcoin, 0 = sin relación, −1 = se mueve al revés. La mayoría de las monedas están por encima de 0,6, así que tener varias no es mucho más seguro que tener una.',
  "site_title": "Crypto Research Labs: investigación abierta y prerregistrada de trading de criptomonedas",
  "site_desc": "Investigación abierta y prerregistrada de estrategias de trading cripto: {verdict} Régimen de mercado "
               "en vivo (carry de funding de BTC, stablecoins, Fear & Greed, tendencia, volatilidad) y cada hipótesis "
@@ -554,6 +574,7 @@ T = {
    "la prueba hasta ahora, e incluso un aprobado necesitaría confirmación independiente y trading simulado."),
  ],
  "monitors": {
+  "breadth": ('Amplitud del mercado: monedas sobre su media de 200 días', 'Parte de las 12 monedas cuyo precio está por encima de su propia media de 200 días. Alto = la mayor parte del mercado sube; bajo = la mayoría cae.'),
   "ever_trend": ('Everscale (EVER) frente a su media de 50 días', 'Cuánto cotiza EVER en Gate.io por encima (+) o por debajo (−) de su media de 50 días. Es la regla H-018: encima = dentro, debajo = fuera.'),
   "funding_carry": ("Carry de funding de BTC: rendimiento anual tras costes",
                     "Lo que ganarías al año manteniendo BTC y vendiendo en corto la misma cantidad en futuros, de modo "
@@ -571,7 +592,7 @@ T = {
                      "Cuánto oscila el precio, escalado a un año. 40% significa un movimiento anual típico de un 40% "
                      "arriba o abajo."),
  },
- "bands": {"negative": "negativo", "low": "bajo", "moderate": "moderado", "attractive": "atractivo",
+ "bands": {"weak": 'débil', "mixed": 'mixta', "strong": 'fuerte', "negative": "negativo", "low": "bajo", "moderate": "moderado", "attractive": "atractivo",
            "contracting": "contracción", "flat": "estable", "expanding": "expansión", "extreme_fear": "miedo extremo",
            "fear": "miedo", "neutral": "neutral", "greed": "codicia", "extreme_greed": "codicia extrema",
            "below": "por debajo", "above": "por encima", "calm": "tranquilo", "normal": "normal",
@@ -646,6 +667,12 @@ T = {
  'coin_studies_h': 'Estudos com esta moeda',
  'no_studies': 'Esta moeda é usada apenas como filtro de mercado.',
  'thin_note': 'Esta moeda é negociada na {exchange}, não na Binance. A liquidez é baixa, então o preço pode saltar com negócios pequenos.',
+ 'th_peak': 'Desde o pico',
+ 'th_100': '$100 há um ano →',
+ 'st_peak': 'Desde o maior fechamento desde {since} ({peak} em {date})',
+ 'st_100': '$100 investidos há um ano valem hoje',
+ 'st_corr': 'Correlação com o Bitcoin (90 dias)',
+ 'corr_note': 'Correlação: 1 = se move igual ao Bitcoin, 0 = sem relação, −1 = se move ao contrário. A maioria das moedas fica acima de 0,6, então ter várias não é muito mais seguro do que ter uma.',
  "site_title": "Crypto Research Labs: pesquisa aberta e pré-registrada de trading de criptomoedas",
  "site_desc": "Pesquisa aberta e pré-registrada de estratégias de trading cripto: {verdict} Regime de mercado ao vivo "
               "(carry de funding do BTC, stablecoins, Fear & Greed, tendência, volatilidade) e cada hipótese é "
@@ -757,6 +784,7 @@ T = {
    "mesmo uma aprovação precisaria de confirmação independente e trading simulado."),
  ],
  "monitors": {
+  "breadth": ('Amplitude do mercado: moedas acima da média de 200 dias', 'Parte das 12 moedas com preço acima da própria média de 200 dias. Alto = a maior parte do mercado está em alta; baixo = a maioria está caindo.'),
   "ever_trend": ('Everscale (EVER) versus sua média de 50 dias', 'Quanto o EVER na Gate.io está acima (+) ou abaixo (−) da média de 50 dias. É a regra H-018: acima = no mercado, abaixo = fora.'),
   "funding_carry": ("Carry de funding do BTC: rendimento anual após custos",
                     "Quanto você ganharia por ano segurando BTC e vendendo a mesma quantidade em futuros, de modo que "
@@ -774,7 +802,7 @@ T = {
                      "Quanto o preço oscila, em escala anual. 40% significa um movimento anual típico de cerca de 40% "
                      "para cima ou para baixo."),
  },
- "bands": {"negative": "negativo", "low": "baixo", "moderate": "moderado", "attractive": "atraente",
+ "bands": {"weak": 'fraca', "mixed": 'mista', "strong": 'forte', "negative": "negativo", "low": "baixo", "moderate": "moderado", "attractive": "atraente",
            "contracting": "em queda", "flat": "estável", "expanding": "em alta", "extreme_fear": "medo extremo",
            "fear": "medo", "neutral": "neutro", "greed": "ganância", "extreme_greed": "ganância extrema",
            "below": "abaixo", "above": "acima", "calm": "calmo", "normal": "normal", "stressed": "tenso",
@@ -849,6 +877,12 @@ T = {
  'coin_studies_h': 'Bu coini içeren çalışmalar',
  'no_studies': 'Bu coin yalnızca piyasa filtresi olarak kullanılıyor.',
  'thin_note': "Bu coin Binance'te değil {exchange} üzerinde işlem görüyor. Likidite düşük; küçük işlemlerle fiyat sıçrayabilir.",
+ 'th_peak': 'Zirveden',
+ 'th_100': '1 yıl önce 100$ →',
+ 'st_peak': '{since} tarihinden beri en yüksek kapanıştan ({date}, {peak})',
+ 'st_100': '1 yıl önce yatırılan 100$ şimdi',
+ 'st_corr': 'Bitcoin ile korelasyon (90 gün)',
+ 'corr_note': "Korelasyon: 1 = Bitcoin ile tam aynı hareket, 0 = ilişki yok, −1 = ters hareket. Çoğu coin 0,6'nın üzerinde; bu yüzden birkaç coin tutmak tek coin tutmaktan pek daha güvenli değil.",
  "site_title": "Crypto Research Labs: açık, önceden kayıtlı kripto alım satım araştırması",
  "site_desc": "Açık ve önceden kayıtlı kripto alım satım araştırması: {verdict} Canlı piyasa rejimi (BTC funding "
               "carry, stablecoin arzı, Korku ve Açgözlülük, trend, volatilite) ve her hipotez otomatik olarak yeniden "
@@ -959,6 +993,7 @@ T = {
    "kadar hiçbir şey geçmedi; geçse bile bağımsız doğrulama ve kağıt üzerinde işlem gerekir."),
  ],
  "monitors": {
+  "breadth": ('Piyasa genişliği: 200 günlük ortalamanın üzerindeki coinler', '12 coinden fiyatı kendi 200 günlük ortalamasının üzerinde olanların payı. Yüksek = piyasanın çoğu yükselişte; düşük = coinlerin çoğu düşüyor.'),
   "ever_trend": ('Everscale (EVER) ve 50 günlük ortalaması', "EVER'in Gate.io'da 50 günlük ortalamasının ne kadar üstünde (+) ya da altında (−) olduğu. H-018 kuralı: üstünde = piyasada, altında = dışarıda."),
   "funding_carry": ("BTC funding carry: maliyet sonrası yıllık getiri",
                     "BTC tutup aynı miktarda BTC vadeli işlemi açığa satarak yılda ne kazanacağınız; fiyatın önemi "
@@ -976,7 +1011,7 @@ T = {
                      "Fiyatın yıllık ölçekte ne kadar dalgalandığı. %40, yaklaşık %40 yukarı veya aşağı tipik bir "
                      "yıllık hareket demektir."),
  },
- "bands": {"negative": "negatif", "low": "düşük", "moderate": "orta", "attractive": "cazip",
+ "bands": {"weak": 'zayıf', "mixed": 'karışık', "strong": 'güçlü', "negative": "negatif", "low": "düşük", "moderate": "orta", "attractive": "cazip",
            "contracting": "daralıyor", "flat": "yatay", "expanding": "genişliyor", "extreme_fear": "aşırı korku",
            "fear": "korku", "neutral": "nötr", "greed": "açgözlülük", "extreme_greed": "aşırı açgözlülük",
            "below": "altında", "above": "üstünde", "calm": "sakin", "normal": "normal", "stressed": "gergin",
@@ -1051,6 +1086,12 @@ T = {
  'coin_studies_h': 'Các nghiên cứu có đồng coin này',
  'no_studies': 'Đồng coin này chỉ được dùng làm bộ lọc thị trường.',
  'thin_note': 'Đồng coin này giao dịch trên {exchange}, không phải Binance. Thanh khoản thấp nên giá có thể nhảy mạnh chỉ với giao dịch nhỏ.',
+ 'th_peak': 'Từ đỉnh',
+ 'th_100': '$100 một năm trước →',
+ 'st_peak': 'So với giá đóng cửa cao nhất từ {since} ({peak} ngày {date})',
+ 'st_100': '$100 đầu tư một năm trước giờ là',
+ 'st_corr': 'Tương quan với Bitcoin (90 ngày)',
+ 'corr_note': 'Tương quan: 1 = biến động y như Bitcoin, 0 = không liên quan, −1 = ngược chiều. Đa số coin trên 0,6, nên giữ nhiều coin cũng không an toàn hơn nhiều so với giữ một coin.',
  "site_title": "Crypto Research Labs: nghiên cứu giao dịch tiền mã hóa mở, đăng ký trước",
  "site_desc": "Nghiên cứu chiến lược giao dịch tiền mã hóa mở và đăng ký trước: {verdict} Trạng thái thị trường trực "
               "tiếp (lợi suất funding BTC, nguồn cung stablecoin, chỉ số Sợ hãi & Tham lam, xu hướng, biến động) và "
@@ -1159,6 +1200,7 @@ T = {
    "nay chưa có gì đạt, và ngay cả khi đạt cũng cần xác nhận độc lập và giao dịch thử trước."),
  ],
  "monitors": {
+  "breadth": ('Độ rộng thị trường: coin trên trung bình 200 ngày', 'Tỷ lệ trong 12 coin có giá trên trung bình 200 ngày của chính nó. Cao = phần lớn thị trường đang tăng; thấp = đa số coin đang giảm.'),
   "ever_trend": ('Everscale (EVER) so với trung bình 50 ngày', 'EVER trên Gate.io cao hơn (+) hay thấp hơn (−) bao nhiêu so với trung bình 50 ngày. Đây là quy tắc H-018: trên = trong thị trường, dưới = đứng ngoài.'),
   "funding_carry": ("Carry funding BTC: lợi suất năm sau chi phí",
                     "Số tiền bạn kiếm được mỗi năm khi giữ BTC và bán khống cùng lượng BTC trên hợp đồng tương lai, nên "
@@ -1176,7 +1218,7 @@ T = {
                      "Giá dao động mạnh đến mức nào, quy ra năm. 40% nghĩa là biến động năm điển hình khoảng 40% lên "
                      "hoặc xuống."),
  },
- "bands": {"negative": "âm", "low": "thấp", "moderate": "vừa phải", "attractive": "hấp dẫn",
+ "bands": {"weak": 'yếu', "mixed": 'trung tính', "strong": 'mạnh', "negative": "âm", "low": "thấp", "moderate": "vừa phải", "attractive": "hấp dẫn",
            "contracting": "thu hẹp", "flat": "đi ngang", "expanding": "mở rộng", "extreme_fear": "cực kỳ sợ hãi",
            "fear": "sợ hãi", "neutral": "trung lập", "greed": "tham lam", "extreme_greed": "cực kỳ tham lam",
            "below": "dưới", "above": "trên", "calm": "bình lặng", "normal": "bình thường", "stressed": "căng thẳng",
@@ -1251,6 +1293,12 @@ T = {
  'coin_studies_h': '包含该币种的研究',
  'no_studies': '该币种仅用作市场过滤条件。',
  'thin_note': '该币种在 {exchange} 而非 Binance 交易。流动性较低，小额交易也可能导致价格大幅波动。',
+ 'th_peak': '距高点',
+ 'th_100': '一年前的 $100 →',
+ 'st_peak': '距 {since} 以来最高收盘价（{date}，{peak}）',
+ 'st_100': '一年前投入的 $100 现在值',
+ 'st_corr': '与比特币的相关性（90 天）',
+ 'corr_note': '相关性：1 = 与比特币完全同步，0 = 无关联，−1 = 反向。大多数币高于 0.6，所以持有多个币并不比持有一个安全多少。',
  "site_title": "Crypto Research Labs：公开、预注册的加密货币交易研究",
  "site_desc": "公开、预注册的加密货币交易策略研究：{verdict}实时市场状态（BTC 资金费率套利收益、稳定币供应、恐惧与贪婪指数、"
               "趋势、波动率），每个假设都会自动重新检验。",
@@ -1338,6 +1386,7 @@ T = {
    "验证并进行模拟交易。"),
  ],
  "monitors": {
+  "breadth": ('市场广度：高于 200 日均线的币种', '12 个币中价格高于自身 200 日均线的比例。高 = 大部分市场处于上升趋势；低 = 大多数币在下跌。'),
   "ever_trend": ('Everscale (EVER) 相对 50 日均线', 'EVER 在 Gate.io 上高于（+）或低于（−）其 50 日均价的幅度。这就是 H-018 规则：高于 = 持仓，低于 = 空仓。'),
   "funding_carry": ("BTC 资金费率套利：扣除成本后的年化收益",
                     "持有 BTC 同时做空等量 BTC 期货每年能赚多少，价格涨跌不影响结果。当期货市场多数人做多时，空头会收到费用。"),
@@ -1347,7 +1396,7 @@ T = {
   "btc_trend": ("BTC 相对 200 日均线", "价格高于（+）或低于（−）过去 200 天均价的幅度。高于通常意味着长期上升趋势。"),
   "btc_volatility": ("BTC 波动率（30 天，年化）", "价格波动有多大，换算为一年。40% 表示一年内典型涨跌幅约为 40%。"),
  },
- "bands": {"negative": "负值", "low": "低", "moderate": "中等", "attractive": "有吸引力", "contracting": "收缩",
+ "bands": {"weak": '弱', "mixed": '分化', "strong": '强', "negative": "负值", "low": "低", "moderate": "中等", "attractive": "有吸引力", "contracting": "收缩",
            "flat": "持平", "expanding": "扩张", "extreme_fear": "极度恐惧", "fear": "恐惧", "neutral": "中性",
            "greed": "贪婪", "extreme_greed": "极度贪婪", "below": "低于", "above": "高于", "calm": "平稳",
            "normal": "正常", "stressed": "紧张", "unavailable": "无数据"},

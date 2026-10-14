@@ -9,6 +9,8 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - Coin pages on the dashboard (`coins/<SYMBOL>.html`, 7 languages): price, changes, trend, volatility,
   12-month chart and today's state of each tested rule; a Coins table on the home page.
 - Translated titles for H-012…H-019.
+- Coin pages: distance from the highest close, value today of $100 invested a year ago, 90-day correlation with Bitcoin.
+- Market breadth monitor: share of the 12 coins above their 200-day average (regime card + alerts).
 - Course for beginners on the website (`course.html`), 10 lessons in 7 languages, live numbers, Course structured data.
 
 ## [0.2.0] - 2026-10-14

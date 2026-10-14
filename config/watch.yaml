@@ -73,6 +73,21 @@ monitors:
       normal: [0.4, 0.8]
       stressed: [0.8, null]
 
+  breadth:
+    label: Market breadth (coins above their 200-day average)
+    metric: breadth
+    params:
+      window: 200
+      symbols: [BTCUSDT, ETHUSDT, SOLUSDT, BNBUSDT, XRPUSDT, ADAUSDT, LTCUSDT, LINKUSDT, DOGEUSDT, XLMUSDT, TRXUSDT, EVERUSDT]
+    explain: >-
+      Share of the 12 coins whose price is above their own 200-day average. High means most of the
+      market is in an uptrend; low means most coins are falling.
+    format: "{:.0%}"
+    bands:
+      weak: [null, 0.3]
+      mixed: [0.3, 0.7]
+      strong: [0.7, null]
+
   ever_trend:
     label: Everscale (EVER) vs its 50-day average
     metric: price_vs_sma

@@ -120,6 +120,10 @@ def price(v) -> str:
     return f"${v:.4g}"
 
 
+def usd(v) -> str:
+    return "—" if v is None else f"${v:,.0f}"
+
+
 def pct(v, signed=False, nd=1) -> str:
     if v is None:
         return "—"
@@ -334,12 +338,13 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         f'<tr><td><a href="coins/{e(c["symbol"])}.html"><strong>{e(c["ticker"])}</strong> {e(c["name"])}</a></td>'
         f'<td class=num>{price(c["price"])}</td><td class=num>{pct(c["ch7"], True)}</td>'
         f'<td class=num>{pct(c["ch30"], True)}</td><td class=num>{pct(c["vs200"], True)}</td>'
-        f'<td class=num>{pct(c["vol"], nd=0)}</td></tr>' for c in data.get("coins", []))
+        f'<td class=num>{pct(c["vol"], nd=0)}</td><td class=num>{pct(c.get("dd_peak"), True, 0)}</td>'
+        f'<td class=num>{usd(c.get("usd100"))}</td></tr>' for c in data.get("coins", []))
     coins_section = (f'<section aria-labelledby="coins"><h2 id="coins">{e(t(lang, "coins_title"))}</h2>'
                      f'<p>{e(t(lang, "coins_intro"))}</p><div class="table-wrap"><table><thead><tr>'
                      f'<th>{e(t(lang, "th_coin"))}</th><th>{e(t(lang, "th_price"))}</th><th>{e(t(lang, "th_7d"))}</th>'
                      f'<th>{e(t(lang, "th_30d"))}</th><th>{e(t(lang, "th_vs200"))}</th><th>{e(t(lang, "th_vol"))}</th>'
-                     f'</tr></thead><tbody>{coin_rows}</tbody></table></div></section>') if coin_rows else ""
+                     f'<th>{e(t(lang, "th_peak"))}</th><th>{e(t(lang, "th_100"))}</th></tr></thead><tbody>{coin_rows}</tbody></table></div></section>') if coin_rows else ""
 
     rows = []
     for h in hyps:
@@ -491,8 +496,13 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
         {"label": t(lang, "sma200"), "v": ch["sma200"]["v"], "dash": [2, 3]}]}}
     stats = [("st_price", price(c["price"])), ("st_7d", pct(c["ch7"], True)), ("st_30d", pct(c["ch30"], True)),
              ("st_1y", pct(c["ch365"], True)), ("st_sma50", pct(c["vs50"], True)),
-             ("st_sma200", pct(c["vs200"], True)), ("st_vol", pct(c["vol"], nd=0))]
-    stat_rows = "".join(f"<tr><th scope=row>{e(t(lang, k))}</th><td class=num>{e(v)}</td></tr>" for k, v in stats)
+             ("st_sma200", pct(c["vs200"], True)), ("st_vol", pct(c["vol"], nd=0)),
+             (t(lang, "st_peak", since=(c.get("since") or "")[:4], peak=price(c.get("peak")), date=c.get("peak_date", "")),
+              pct(c.get("dd_peak"), True)),
+             ("st_100", usd(c.get("usd100"))),
+             ("st_corr", "—" if c.get("corr_btc") is None else f"{c['corr_btc']:.2f}")]
+    stat_rows = "".join(f"<tr><th scope=row>{e(t(lang, k) if k.startswith('st_') else k)}</th><td class=num>{e(v)}</td></tr>"
+                        for k, v in stats)
 
     def state(sig, val):
         if val is None:
@@ -522,6 +532,7 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
 <div class="chart"><canvas data-chart="coin" role="img" aria-label="{e(title)}"></canvas></div>
 <h2>{e(t(lang, 'stats_h'))}</h2>
 <div class="table-wrap"><table><tbody>{stat_rows}</tbody></table></div>
+<p class="meta">{e(t(lang, 'corr_note'))}</p>
 <h2>{e(t(lang, 'signals_h'))}</h2>
 <p class="callout">{e(t(lang, 'signals_warn'))}</p>
 <div class="table-wrap"><table><thead><tr><th>{e(t(lang, 'th_rule'))}</th><th>{e(t(lang, 'th_state'))}</th>

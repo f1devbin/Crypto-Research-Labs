@@ -84,8 +84,9 @@ def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
     try:
         btc = store.close("BTCUSDT")
         btc_on = bool(btc.iloc[-1] > btc.rolling(200).mean().iloc[-1])
+        btc_r = btc.pct_change()
     except (FileNotFoundError, KeyError):
-        btc_on = None
+        btc_on, btc_r = None, None
     out = []
     for sym in symbols:
         try:
@@ -95,6 +96,12 @@ def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
         sma50, sma200 = c.rolling(50).mean(), c.rolling(200).mean()
         vol = c.pct_change().rolling(30).std() * np.sqrt(365)
         last, v = float(c.iloc[-1]), _num(vol.iloc[-1], 6)
+        peak_i = c.idxmax()
+        r = c.pct_change()
+        corr = None
+        if btc_r is not None and sym != "BTCUSDT":
+            j = pd.concat([r, btc_r], axis=1, join="inner").dropna().iloc[-90:]
+            corr = _num(j.iloc[:, 0].corr(j.iloc[:, 1]), 4) if len(j) >= 60 else None
         recent = c.index > c.index[-1] - pd.Timedelta(days=days)
         out.append({
             "symbol": sym, "ticker": sym.removesuffix("USDT"), "name": COIN_NAMES.get(sym, sym),
@@ -104,6 +111,11 @@ def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
             "vs50": _num(last / sma50.iloc[-1] - 1, 6) if sma50.notna().iloc[-1] else None,
             "vs200": _num(last / sma200.iloc[-1] - 1, 6) if sma200.notna().iloc[-1] else None,
             "vol": v,
+            # distance from the highest close in our history (Binance since 2017, Gate.io since 2022)
+            "dd_peak": _num(last / float(c.max()) - 1, 6), "peak": float(c.max()), "peak_date": str(peak_i.date()),
+            "since": str(c.index[0].date()),
+            "usd100": _num(100 * last / float(c.iloc[-366]), 2) if len(c) > 365 else None,
+            "corr_btc": corr,
             "signals": {
                 "sma50": None if pd.isna(sma50.iloc[-1]) else bool(last > sma50.iloc[-1]),
                 "mom7": None if len(c) <= 7 else bool(last > c.iloc[-8]),
@@ -144,6 +156,10 @@ def course_values(data: dict, lang: str, site: str) -> dict:
         "btc_vol": vol("BTCUSDT"), "sol_vol": vol("SOLUSDT"), "ever_vol": vol("EVERUSDT"),
         "sol_mom_sharpe": loc(f"{mom['sharpe']:.2f}") if mom.get("sharpe") is not None else "—",
         "sol_mom_hold": loc(f"{mom['hold_sharpe']:.2f}") if mom.get("hold_sharpe") is not None else "—",
+        "sol_dd_peak": pc(coins_by.get("SOLUSDT", {}).get("dd_peak")),
+        "sol_100": "—" if coins_by.get("SOLUSDT", {}).get("usd100") is None else f"${coins_by['SOLUSDT']['usd100']:,.0f}",
+        "sol_corr": "—" if coins_by.get("SOLUSDT", {}).get("corr_btc") is None
+                    else loc(f"{coins_by['SOLUSDT']['corr_btc']:.2f}"),
         "ever_rule_cagr": pc(ever.get("cagr")), "ever_hold_cagr": pc(ever.get("hold_cagr")),
         "ever_rule_dd": pc(ever.get("max_dd")), "ever_hold_dd": pc(ever.get("hold_max_dd")),
     }

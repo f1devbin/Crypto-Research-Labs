@@ -60,3 +60,13 @@ def test_calendar_rules_need_permutation(tmp_registry):
     assert registry.validate(make(hyp, "H-101", spec=spec)) == []
     spec2 = {**SPEC, "significance": {"method": "permutation", "alpha": 0.05}}
     assert any("only valid for calendar" in e for e in registry.validate(make(hyp, "H-102", spec=spec2)))
+
+
+def test_breadth_counts_coins_above_their_average():
+    from crl.agents import regime_watch
+    idx = pd.date_range("2020-01-01", periods=400)
+    up = pd.Series(np.linspace(1, 2, 400), index=idx)
+    down = pd.Series(np.linspace(2, 1, 400), index=idx)
+    store = MemoryStore({"A": up, "B": up, "C": down, "D": down})
+    s = regime_watch.series(store, {"metric": "breadth", "params": {"window": 200, "symbols": ["A", "B", "C", "D", "X"]}})
+    assert s.iloc[-1] == 0.5 and s.index[0] == idx[199]
