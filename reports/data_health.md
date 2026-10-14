@@ -1,6 +1,6 @@
 # Data health
 
-Checked 2026-10-14 18:23 UTC
+Checked 2026-10-14 19:44 UTC
 
 | source | files | missing | errors |
 |---|---|---|---|
@@ -17,6 +17,7 @@ Checked 2026-10-14 18:23 UTC
 | klines XLMUSDT | 114 | 0 | — |
 | klines XRPUSDT | 114 | 0 | — |
 | etf_flow_btc | 1 | 0 | — |
+| exchange flows (Coin Metrics) | 1 | 0 | — |
 | fear_greed | 1 | 0 | — |
 | funding BTCUSDT | 81 | 0 | — |
 | stable_usdt | 1 | 0 | — |

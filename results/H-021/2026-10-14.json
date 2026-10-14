@@ -1,0 +1,30 @@
+{
+ "id": "H-021",
+ "prereg_sha256": "de674dece11e3fd795256792278dec9faa611fb7fae915e8e587337834e15256",
+ "verdict": "WEAK",
+ "summary": "oos: wins 0/1 (need 1), beats buy-and-hold 1/1",
+ "rows": [
+  {
+   "symbol": "ETHUSDT",
+   "period": "oos",
+   "days": 1747,
+   "start": "2022-01-01",
+   "end": "2026-10-13",
+   "sharpe": 0.40107,
+   "cagr": 0.065797,
+   "max_dd": -0.785547,
+   "hold_sharpe": 0.22382,
+   "hold_cagr": -0.077561,
+   "hold_max_dd": -0.740058,
+   "exposure": 0.804808,
+   "trades_per_year": 16.818832,
+   "p": 0.081959,
+   "beats_hold": true,
+   "win": false
+  }
+ ],
+ "kind": "timing_rule",
+ "engine_version": "0.2.0",
+ "data_end": "2026-10-13",
+ "run_at": "2026-10-14T19:44:43Z"
+}
