@@ -338,7 +338,7 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         f'<tr><td><a href="coins/{e(c["symbol"])}.html"><strong>{e(c["ticker"])}</strong> {e(c["name"])}</a></td>'
         f'<td class=num>{price(c["price"])}</td><td class=num>{pct(c["ch7"], True)}</td>'
         f'<td class=num>{pct(c["ch30"], True)}</td><td class=num>{pct(c["vs200"], True)}</td>'
-        f'<td class=num>{pct(c["vol"], nd=0)}</td><td class=num>{pct(c.get("dd_peak"), True, 0)}</td>'
+        f'<td class=num>{pct(c["vol"], nd=0)}</td><td class=num>{pct(c.get("dd_peak"), True, 1 if abs(c.get("dd_peak") or 0) >= 0.995 else 0)}</td>'
         f'<td class=num>{usd(c.get("usd100"))}</td></tr>' for c in data.get("coins", []))
     coins_section = (f'<section aria-labelledby="coins"><h2 id="coins">{e(t(lang, "coins_title"))}</h2>'
                      f'<p>{e(t(lang, "coins_intro"))}</p><div class="table-wrap"><table><thead><tr>'
