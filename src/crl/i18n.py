@@ -402,6 +402,7 @@ T = {
   ("fear_greed", "extreme_greed"): "Выход при ≥ 75 (H-008) не обыграл удержание.",
  },
  "titles": {
+  "H-022": 'Повторная проверка H-020 на данных, собранных после 15.10.2026',
   "H-020": 'BTC вне рынка, когда 7-дневный чистый завод на биржи в верхних 20%',
   "H-021": 'ETH вне рынка, когда 7-дневный чистый завод на биржи в верхних 20%',
   "H-012": 'Контроль волатильности (30% в год) обыгрывает удержание на BTC, ETH, SOL',
@@ -617,6 +618,7 @@ T = {
   ("fear_greed", "extreme_greed"): "Salir en ≥ 75 (H-008) no superó a mantener.",
  },
  "titles": {
+  "H-022": 'Réplica de H-020 con datos recogidos después del 15-10-2026',
   "H-020": 'BTC fuera del mercado cuando los depósitos netos de 7 días a exchanges están en su 20% superior',
   "H-021": 'ETH fuera del mercado cuando los depósitos netos de 7 días a exchanges están en su 20% superior',
   "H-012": 'Objetivo de volatilidad (30%/año) gana a mantener en BTC, ETH, SOL',
@@ -832,6 +834,7 @@ T = {
   ("fear_greed", "extreme_greed"): "Sair em ≥ 75 (H-008) não venceu segurar.",
  },
  "titles": {
+  "H-022": 'Replicação da H-020 com dados coletados após 15/10/2026',
   "H-020": 'BTC fora do mercado quando os depósitos líquidos de 7 dias em corretoras estão nos 20% mais altos',
   "H-021": 'ETH fora do mercado quando os depósitos líquidos de 7 dias em corretoras estão nos 20% mais altos',
   "H-012": 'Meta de volatilidade (30%/ano) vence segurar em BTC, ETH, SOL',
@@ -1046,6 +1049,7 @@ T = {
   ("fear_greed", "extreme_greed"): "≥ 75'te çıkmak (H-008) tutmayı geçemedi.",
  },
  "titles": {
+  "H-022": "H-020'nin 15.10.2026 sonrası toplanan verilerle tekrarı",
   "H-020": "7 günlük net borsa yatırmaları en üst %20'deyken BTC piyasa dışında",
   "H-021": "7 günlük net borsa yatırmaları en üst %20'deyken ETH piyasa dışında",
   "H-012": "Volatilite hedefi (yıllık %30) BTC, ETH, SOL'da al-tut'u geçer",
@@ -1258,6 +1262,7 @@ T = {
   ("fear_greed", "extreme_greed"): "Thoát ở ≥ 75 (H-008) không thắng việc giữ.",
  },
  "titles": {
+  "H-022": 'Kiểm tra lặp lại H-020 trên dữ liệu thu thập sau 15/10/2026',
   "H-020": 'BTC đứng ngoài khi lượng nạp ròng vào sàn 7 ngày thuộc nhóm 20% cao nhất',
   "H-021": 'ETH đứng ngoài khi lượng nạp ròng vào sàn 7 ngày thuộc nhóm 20% cao nhất',
   "H-012": 'Mục tiêu biến động (30%/năm) thắng mua và giữ trên BTC, ETH, SOL',
@@ -1440,6 +1445,7 @@ T = {
   ("fear_greed", "extreme_greed"): "在 ≥ 75 时离场（H-008）未能跑赢持有。",
  },
  "titles": {
+  "H-022": '用 2026-10-15 之后收集的数据复现 H-020',
   "H-020": '当 7 日交易所净存入处于最高 20% 时 BTC 空仓',
   "H-021": '当 7 日交易所净存入处于最高 20% 时 ETH 空仓',
   "H-012": '目标波动率（年化 30%）在 BTC、ETH、SOL 上跑赢买入持有',

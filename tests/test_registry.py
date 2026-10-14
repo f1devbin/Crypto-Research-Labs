@@ -85,3 +85,11 @@ def test_test_after_postpones_the_first_run(tmp_registry):
     registry.register(h)
     assert not registry.is_due(h, dt.date(2027, 10, 14), res)
     assert registry.is_due(h, dt.date(2027, 10, 15), res)
+
+
+def test_declared_replication_is_not_a_duplicate(tmp_registry):
+    hyp, _ = tmp_registry
+    a = make(hyp, "H-100")
+    b = make(hyp, "H-101", replicates="H-100")
+    c = make(hyp, "H-102")
+    assert registry.duplicates(b, [a, b, c]) == ["H-102"]

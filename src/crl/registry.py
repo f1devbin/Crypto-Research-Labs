@@ -159,8 +159,11 @@ def duplicates(h: Hypothesis, others: list[Hypothesis]) -> list[str]:
     if not h.get("spec") or not h.get("rerunnable", True):
         return []
     fp = fingerprint(h["spec"])
+    # a declared replication (same rule on new, later data) is not a duplicate of what it replicates
+    pair_ok = lambda o: h.get("replicates") == o.id or o.get("replicates") == h.id
     return [o.id for o in others
-            if o.id != h.id and o.get("spec") and o.get("rerunnable", True) and fingerprint(o["spec"]) == fp]
+            if o.id != h.id and o.get("spec") and o.get("rerunnable", True) and fingerprint(o["spec"]) == fp
+            and not pair_ok(o)]
 
 
 def register(h: Hypothesis, today: dt.date | None = None) -> None:

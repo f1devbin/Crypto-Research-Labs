@@ -1,0 +1,40 @@
+id: H-022
+title: Forward replication of H-020 on data collected after 2026-10-15
+status: registered
+family: flows
+created: '2026-10-14'
+author: Claude (replication)
+replicates: H-020
+rationale: 'H-020 passed on 2022+ data, but historical exchange-flow data can carry look-ahead bias: exchange
+  addresses discovered later are labelled retroactively, so past flows look cleaner than they were in
+  real time. This repeats the exact rule only on flows recorded day by day from 2026-10-15 on, as they
+  were published. Tested after a year of such data.'
+spec:
+  kind: timing_rule
+  rule:
+    type: feature_vs_rolling_quantile
+    feature: exnetflow_btc_7d
+    q: 0.8
+    long_when: not_above
+    lookback: 365
+    min_periods: 180
+    lag: 1
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  periods:
+  - name: forward
+    start: '2026-10-15'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.05
+  criterion:
+    min_wins:
+      forward: 1
+    require_significance: true
+retest_every_days: 90
+test_after: '2027-10-15'
+registered: '2026-10-14'
+prereg_sha256: 093f54203511ba2b73ad1ff9bf05c40f6020bae293a051948a809f9f45a4b712

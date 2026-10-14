@@ -206,6 +206,7 @@ def _recent_funding(symbol: str) -> list:
 
 COINMETRICS = "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics"
 FLOW_ASSETS = ("btc", "eth")
+REVISE_DAYS = 14
 
 
 def fetch_exchange_flows(datasets: Path | None = None) -> FetchReport:
@@ -222,8 +223,15 @@ def fetch_exchange_flows(datasets: Path | None = None) -> FetchReport:
     if path.exists():
         for r in csv.DictReader(io.StringIO(path.read_text())):
             rows[(r["date"], r["asset"])] = r
+    # Once we hold the history, fetch only the last REVISE_DAYS and never overwrite older rows:
+    # providers re-label exchange addresses retroactively, which would leak hindsight into old data.
+    # Rows older than that stay exactly as they were first recorded ("as published").
+    last = max((d for d, _ in rows), default=None)
+    cutoff = None
+    if last:
+        cutoff = (dt.date.fromisoformat(last) - dt.timedelta(days=REVISE_DAYS)).isoformat()
     url = (f"{COINMETRICS}?assets={','.join(FLOW_ASSETS)}&metrics=FlowInExNtv,FlowOutExNtv"
-           f"&frequency=1d&page_size=1000")
+           f"&frequency=1d&page_size=1000" + (f"&start_time={cutoff}" if cutoff else ""))
     got = 0
     for _ in range(10):  # paging
         res = get(url)
@@ -238,6 +246,8 @@ def fetch_exchange_flows(datasets: Path | None = None) -> FetchReport:
             if d.get("FlowInExNtv") is None or d.get("FlowOutExNtv") is None:
                 continue
             day = d["time"][:10]
+            if cutoff and day < cutoff and (day, d["asset"]) in rows:
+                continue
             rows[(day, d["asset"])] = {"date": day, "asset": d["asset"], "inflow": d["FlowInExNtv"],
                                        "outflow": d["FlowOutExNtv"]}
             got += 1
