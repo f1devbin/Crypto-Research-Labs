@@ -55,7 +55,7 @@ change verdicts. It can only open draft pull requests, and a human must lock a d
 ## Quickstart
 
 ```bash
-git clone https://github.com/f1devbin/crypto-research-labs
+git clone https://github.com/f1devbin/Crypto-Research-Labs
 cd crypto-research-labs
 python -m venv .venv && . .venv/bin/activate
 pip install -e ".[dev]"
