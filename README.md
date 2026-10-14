@@ -53,7 +53,8 @@ famous calendar effects (Monday, turn of the month) did not survive after their 
 |---|---|
 | ![Coin page](docs/screenshots/coin-ru.png) | ![Russian dashboard](docs/screenshots/dashboard-ru.png) |
 
-Every coin has its own page (BTC, ETH, SOL, BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX, EVER), for example
+Every coin has its own page (BTC, ETH, SOL, BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX, EVER) with trend, volatility,
+distance from its peak, what $100 invested a year ago is worth today and its correlation with Bitcoin, for example
 [Solana](https://f1devbin.github.io/Crypto-Research-Labs/coins/SOLUSDT.html) or
 [Everscale](https://f1devbin.github.io/Crypto-Research-Labs/ru/coins/EVERUSDT.html).
 
