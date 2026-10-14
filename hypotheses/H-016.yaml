@@ -1,0 +1,33 @@
+id: H-016
+title: 'Turn of the month: BTC held only on the last 2 and first 3 days of each month'
+status: registered
+family: calendar
+created: '2026-10-14'
+author: Claude (literature review for F1DevBin)
+rationale: 'Month-end and month-start flows (salaries, fund rebalancing, DCA purchases) produce a turn-of-the-month
+  effect in equities; several crypto studies and practitioner notes report a similar end-of-month pattern
+  in Bitcoin. Test: Sharpe vs holding since 2018, permutation test. Source: https://valuelytica.substack.com/p/end-of-month-effect-in-bitcoin'
+spec:
+  kind: timing_rule
+  rule:
+    type: turn_of_month
+    last: 2
+    first: 3
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  periods:
+  - name: since_2018
+    start: '2018-01-01'
+  significance:
+    method: permutation
+    n: 2000
+    alpha: 0.05
+  criterion:
+    min_wins:
+      since_2018: 1
+    require_significance: true
+retest_every_days: 90
+registered: '2026-10-14'
+prereg_sha256: 5f0c331df59be2c9f78da8b9628c7e04ec5f02bd577b2aee9c1b86db82a8fead

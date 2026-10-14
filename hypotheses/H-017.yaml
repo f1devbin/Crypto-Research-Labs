@@ -1,0 +1,39 @@
+id: H-017
+title: 'BTC regime filter: hold altcoins only while BTC is above its 200-day average'
+status: registered
+family: trend
+created: '2026-10-14'
+author: Claude (literature review for F1DevBin)
+rationale: Altcoins move with high beta to Bitcoin and their worst drawdowns happen in BTC bear markets.
+  Using BTC's long-term trend (a less noisy signal than each alt's own price, which failed in H-005) as
+  the on/off switch should cut those drawdowns without missing alt rallies, which mostly happen in BTC
+  bull phases.
+spec:
+  kind: timing_rule
+  rule:
+    type: asset_above_sma
+    asset: BTCUSDT
+    window: 200
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  periods:
+  - name: full
+    start: '2019-01-01'
+  - name: recent
+    start: '2022-01-01'
+  criterion:
+    min_wins:
+      full: 6
+      recent: 6
+retest_every_days: 90
+registered: '2026-10-14'
+prereg_sha256: 75c67590cf92a4101b564c69ceabd7d94ebd695a487b957b5a14f68c794d605e

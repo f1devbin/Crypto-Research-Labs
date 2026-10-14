@@ -30,6 +30,21 @@ def circular_shift_p(pos: np.ndarray, r: np.ndarray, fee: float, rng: np.random.
     return float((better + 1) / (n + 1))
 
 
+def permutation_p(pos: np.ndarray, r: np.ndarray, fee: float, rng: np.random.Generator,
+                  n: int = 2000) -> float:
+    """Null: returns do not depend on the date. Shuffling the daily returns under a fixed
+    calendar position breaks any day-of-week / day-of-month link. Valid only for rules whose
+    positions don't depend on returns (calendar rules); for those a circular shift would
+    just reproduce the same weekly pattern."""
+    pos = np.asarray(pos, dtype=float)
+    r = np.asarray(r, dtype=float)
+    if len(pos) < 90:
+        return 1.0
+    actual = sharpe(_strategy_returns(pos, r, fee))
+    better = sum(sharpe(_strategy_returns(pos, rng.permutation(r), fee)) >= actual for _ in range(n))
+    return float((better + 1) / (n + 1))
+
+
 def bootstrap_p(rule: Callable[[pd.Series], pd.Series], hist: np.ndarray, oos_close: np.ndarray,
                 fee: float, mode: str, rng: np.random.Generator, n: int = 400) -> float:
     """Null: there is no trend to catch. Resampling out-of-sample daily returns (iid) keeps

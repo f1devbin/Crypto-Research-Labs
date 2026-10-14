@@ -22,7 +22,7 @@ import pandas as pd
 from crl import __version__
 from crl.engine import rules as R
 from crl.engine.backtest import evaluate_period, to_position
-from crl.engine.stats import bootstrap_p, circular_shift_p
+from crl.engine.stats import bootstrap_p, circular_shift_p, permutation_p
 
 MARK = {"PASS": "✅", "WEAK": "◐", "FAIL": "❌"}
 
@@ -67,6 +67,8 @@ def _timing_rule(spec: dict, store, rng) -> dict:
             p = None
             if e["days"] and sig.get("method") == "circular_shift":
                 p = circular_shift_p(e["_pos"], e["_r"], fee, rng, int(sig.get("n", 2000)))
+            elif e["days"] and sig.get("method") == "permutation":
+                p = permutation_p(e["_pos"], e["_r"], fee, rng, int(sig.get("n", 2000)))
             beats = e["days"] > 0 and e["sharpe"] > e["hold_sharpe"]
             win = beats and (not crit.get("require_significance") or (p is not None and p < sig["alpha"]))
             rows.append({"symbol": sym, "period": per["name"], **e, "p": p, "beats_hold": beats, "win": win})

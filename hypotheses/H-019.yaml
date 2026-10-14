@@ -1,0 +1,33 @@
+id: H-019
+title: 'Everscale (EVER): hold only while BTC is above its 200-day average'
+status: registered
+family: trend
+created: '2026-10-14'
+author: Claude (literature review for F1DevBin)
+rationale: 'Requested by F1DevBin. Same idea as H-017 applied to EVER: small-cap coins depend on the overall
+  crypto regime, which BTC''s 200-day trend captures. Gate.io data, fee 0.2% per side; thin liquidity
+  caveat as in H-018.'
+spec:
+  kind: timing_rule
+  rule:
+    type: asset_above_sma
+    asset: BTCUSDT
+    window: 200
+  mode: long_flat
+  fee: 0.002
+  universe:
+  - EVERUSDT
+  periods:
+  - name: since_listing
+    start: '2022-06-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.05
+  criterion:
+    min_wins:
+      since_listing: 1
+    require_significance: true
+retest_every_days: 90
+registered: '2026-10-14'
+prereg_sha256: a32a2211c54b40fee11a943e371ca41c537151845aa45478597aa70e44674a94

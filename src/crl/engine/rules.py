@@ -63,22 +63,58 @@ def feature_vs_rolling_quantile(x: pd.Series, q: float, long_when: str, lookback
     return _flag(cond, v.notna() & ref.notna())
 
 
+def vol_target(close: pd.Series, target: float, lookback: int = 30, cap: float = 1.0) -> pd.Series:
+    """Volatility scaling: position = target / realised volatility (annualised, trailing
+    `lookback` days up to and including t), capped at `cap` (1.0 = no leverage). Continuous 0..cap."""
+    vol = close.pct_change().rolling(lookback).std() * np.sqrt(365)
+    return (target / vol).clip(upper=cap).where(vol.notna() & (vol > 0))
+
+
+def day_of_week(close: pd.Series, days: list) -> pd.Series:
+    """In the market on the given UTC weekdays (0 = Monday). The flag at close t sets the
+    position for day t+1, so it looks at tomorrow's weekday."""
+    nxt = close.index + pd.Timedelta(days=1)
+    return pd.Series(np.isin(nxt.weekday, list(days)).astype(float), index=close.index)
+
+
+def turn_of_month(close: pd.Series, last: int, first: int) -> pd.Series:
+    """In the market on the last `last` and the first `first` calendar days of each month."""
+    nxt = close.index + pd.Timedelta(days=1)
+    from_end = nxt.days_in_month - nxt.day  # 0 on the last day
+    return pd.Series(((nxt.day <= first) | (from_end < last)).astype(float), index=close.index)
+
+
+def asset_above_sma(other: pd.Series, window: int) -> pd.Series:
+    """Risk-on while ANOTHER asset (e.g. BTC) closes above its SMA — a market-regime filter."""
+    return price_above_sma(other, window)
+
+
 PRICE_RULES: dict[str, Callable] = {
     "price_above_sma": price_above_sma,
     "sma_cross": sma_cross,
     "tsmom": tsmom,
     "donchian": donchian,
+    "vol_target": vol_target,
+}
+# depend only on the calendar: positions never use returns, so a permutation test is valid
+CALENDAR_RULES: dict[str, Callable] = {
+    "day_of_week": day_of_week,
+    "turn_of_month": turn_of_month,
+}
+# use another asset's prices; spec carries `asset`
+CROSS_RULES: dict[str, Callable] = {
+    "asset_above_sma": asset_above_sma,
 }
 FEATURE_RULES: dict[str, Callable] = {
     "feature_threshold": feature_threshold,
     "feature_vs_rolling_quantile": feature_vs_rolling_quantile,
 }
-RULE_TYPES = set(PRICE_RULES) | set(FEATURE_RULES)
+RULE_TYPES = set(PRICE_RULES) | set(FEATURE_RULES) | set(CALENDAR_RULES) | set(CROSS_RULES)
 
 
 def lookback_days(spec: dict) -> int:
     """How much history a price rule needs before it is defined."""
-    return int(max([v for k, v in spec.items() if isinstance(v, int)] + [1]))
+    return int(max([v for k, v in spec.items() if isinstance(v, int) and not isinstance(v, bool)] + [1]))
 
 
 def build(spec: dict, store, symbol: str) -> pd.Series:
@@ -86,8 +122,12 @@ def build(spec: dict, store, symbol: str) -> pd.Series:
     spec = dict(spec)
     kind = spec.pop("type")
     close = store.close(symbol)
-    if kind in PRICE_RULES:
-        return PRICE_RULES[kind](close, **spec)
+    if kind in PRICE_RULES or kind in CALENDAR_RULES:
+        return (PRICE_RULES.get(kind) or CALENDAR_RULES[kind])(close, **spec)
+    if kind in CROSS_RULES:
+        other = store.close(spec.pop("asset"))
+        full = other.reindex(pd.date_range(min(other.index.min(), close.index.min()), close.index.max(), freq="D"))
+        return CROSS_RULES[kind](full, **spec).reindex(close.index)
     if kind in FEATURE_RULES:
         feat = store.feature(spec.pop("feature"))
         # align on the full calendar first so lags count days, then onto trading days

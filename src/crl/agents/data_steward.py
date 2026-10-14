@@ -38,6 +38,7 @@ def required_inputs(hyps: list) -> tuple[set, set]:
         symbols.update(spec.get("universe", []))
         rules = [spec.get("rule")] + list((spec.get("candidates") or {}).values())
         features.update(r["feature"] for r in rules if isinstance(r, dict) and "feature" in r)
+        symbols.update(r["asset"] for r in rules if isinstance(r, dict) and "asset" in r)
     return symbols, features
 
 

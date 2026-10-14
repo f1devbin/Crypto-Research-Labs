@@ -24,7 +24,7 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
         assert html.count("<h1>") == 1 and "application/ld+json" in html
         assert (out / ("" if lang == "en" else f"{lang}/") / "hypotheses" / "H-003.html").exists()
     sitemap = (out / "sitemap.xml").read_text()
-    assert sitemap.count("<url>") == len(LANGS) * 12
+    assert sitemap.count("<url>") == len(LANGS) * (len(data_hyps := json.loads((out / "data.json").read_text())["hypotheses"]) + 1)
     assert "Sitemap: https://x.test/sitemap.xml" in (out / "robots.txt").read_text()
     data = json.loads((out / "data.json").read_text())
     assert data["btc"] and any(h["curves"] for h in data["hypotheses"])

@@ -100,6 +100,14 @@ def validate(h: Hypothesis) -> list[str]:
         sig = spec.get("significance", {})
         if spec.get("criterion", {}).get("require_significance") and "alpha" not in sig:
             errs.append("require_significance needs significance.alpha")
+        method = sig.get("method", "none")
+        if method not in ("none", "circular_shift", "permutation"):
+            errs.append("timing_rule significance.method must be circular_shift or permutation")
+        rule_type = (spec.get("rule") or {}).get("type")
+        if method == "permutation" and rule_type not in ("day_of_week", "turn_of_month"):
+            errs.append("permutation significance is only valid for calendar rules; use circular_shift")
+        if method == "circular_shift" and rule_type in ("day_of_week", "turn_of_month"):
+            errs.append("circular_shift cannot test calendar rules (shifts repeat the pattern); use permutation")
     else:
         for k in ("in_sample", "out_of_sample", "candidates"):
             if k not in spec:
@@ -117,11 +125,12 @@ def validate(h: Hypothesis) -> list[str]:
 
 def _check_rule_params(rule: dict) -> list[str]:
     from crl.data.store import FEATURES
-    from crl.engine.rules import FEATURE_RULES, PRICE_RULES
+    from crl.engine.rules import CALENDAR_RULES, CROSS_RULES, FEATURE_RULES, PRICE_RULES
 
-    fn = PRICE_RULES.get(rule["type"]) or FEATURE_RULES[rule["type"]]
+    fn = (PRICE_RULES.get(rule["type"]) or FEATURE_RULES.get(rule["type"]) or CALENDAR_RULES.get(rule["type"])
+          or CROSS_RULES[rule["type"]])
     params = list(inspect.signature(fn).parameters.values())[1:]  # first arg is the series
-    given = {k for k in rule if k not in ("type", "feature")}
+    given = {k for k in rule if k not in ("type", "feature", "asset")}
     allowed = {p.name for p in params}
     required = {p.name for p in params if p.default is inspect.Parameter.empty}
     errs = []
@@ -131,6 +140,11 @@ def _check_rule_params(rule: dict) -> list[str]:
         errs.append(f"{rule['type']}: missing params {sorted(required - given)}")
     if rule["type"] in FEATURE_RULES and rule.get("feature") not in FEATURES:
         errs.append(f"{rule['type']}: feature must be one of {sorted(FEATURES)}")
+    if rule["type"] in CROSS_RULES and not isinstance(rule.get("asset"), str):
+        errs.append(f"{rule['type']}: needs `asset`, e.g. BTCUSDT")
+    if rule["type"] == "day_of_week" and not (isinstance(rule.get("days"), list) and
+                                              all(isinstance(d, int) and 0 <= d <= 6 for d in rule["days"])):
+        errs.append("day_of_week: days must be a list of weekday numbers 0..6 (0 = Monday)")
     if rule.get("long_when") not in (None, "above", "below", "not_above"):
         errs.append(f"{rule['type']}: bad long_when '{rule.get('long_when')}'")
     return errs

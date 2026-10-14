@@ -1,0 +1,37 @@
+id: H-012
+title: Volatility targeting (30%/yr) beats buy-and-hold on BTC, ETH, SOL
+status: registered
+family: risk
+created: '2026-10-14'
+author: Claude (literature review for F1DevBin)
+rationale: 'Scaling exposure to a constant volatility target cuts exposure in turbulent periods, when
+  crypto drawdowns cluster. Man Group reports about +0.4 Sharpe for BTC with ex-ante 30% vol scaling (2012-2024),
+  following Harvey et al. (2018) ''The impact of volatility targeting''. Spot, no leverage (position capped
+  at 1). Source: https://www.man.com/insights/crypto-too-hot-to-handle'
+spec:
+  kind: timing_rule
+  rule:
+    type: vol_target
+    target: 0.3
+    lookback: 30
+    cap: 1.0
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  periods:
+  - name: oos
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.0167
+  criterion:
+    min_wins:
+      oos: 2
+    require_significance: true
+retest_every_days: 90
+registered: '2026-10-14'
+prereg_sha256: 47b8d345bab41071d089c9819eedda4117639e06d631d28084375c07d0868899

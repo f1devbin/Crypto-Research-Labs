@@ -103,7 +103,7 @@ T = {
  "caution": "This hypothesis passed its pre-registered test. That is a reason for independent confirmation and "
             "paper trading, not for trading real money.",
  "families": {"trend": "trend", "flows": "flows", "sentiment": "sentiment", "carry": "carry",
-              "intraday": "intraday", "other": "other"},
+              "intraday": "intraday", "other": "other", "risk": "risk", "calendar": "calendar"},
  "statuses": {"draft": "draft", "registered": "registered", "passed": "passed", "weak": "weak",
               "rejected": "rejected", "archived": "archived"},
  "glossary": [
@@ -244,7 +244,7 @@ T = {
  "caution": "Гипотеза прошла заранее заданный тест. Это повод для независимой проверки и торговли на бумаге, а не "
             "для торговли реальными деньгами.",
  "families": {"trend": "тренд", "flows": "потоки", "sentiment": "настроение", "carry": "керри",
-              "intraday": "внутри дня", "other": "другое"},
+              "intraday": "внутри дня", "other": "другое", "risk": "риск", "calendar": "календарь"},
  "statuses": {"draft": "черновик", "registered": "зарегистрирована", "passed": "прошла", "weak": "слабо",
               "rejected": "отклонена", "archived": "в архиве"},
  "glossary": [
@@ -400,7 +400,7 @@ T = {
  "caution": "Esta hipótesis superó su prueba prerregistrada. Es motivo para una confirmación independiente y "
             "trading simulado, no para operar con dinero real.",
  "families": {"trend": "tendencia", "flows": "flujos", "sentiment": "sentimiento", "carry": "carry",
-              "intraday": "intradía", "other": "otro"},
+              "intraday": "intradía", "other": "otro", "risk": "riesgo", "calendar": "calendario"},
  "statuses": {"draft": "borrador", "registered": "registrada", "passed": "superada", "weak": "débil",
               "rejected": "rechazada", "archived": "archivada"},
  "glossary": [
@@ -553,7 +553,7 @@ T = {
  "caution": "Esta hipótese passou no teste pré-registrado. Isso é motivo para confirmação independente e trading "
             "simulado, não para operar com dinheiro real.",
  "families": {"trend": "tendência", "flows": "fluxos", "sentiment": "sentimento", "carry": "carry",
-              "intraday": "intradiário", "other": "outro"},
+              "intraday": "intradiário", "other": "outro", "risk": "risco", "calendar": "calendário"},
  "statuses": {"draft": "rascunho", "registered": "registrada", "passed": "aprovada", "weak": "fraca",
               "rejected": "rejeitada", "archived": "arquivada"},
  "glossary": [
@@ -707,7 +707,7 @@ T = {
  "caution": "Bu hipotez önceden kayıtlı testini geçti. Bu, bağımsız doğrulama ve kağıt üzerinde işlem için bir "
             "nedendir; gerçek parayla işlem için değil.",
  "families": {"trend": "trend", "flows": "akışlar", "sentiment": "duyarlılık", "carry": "carry",
-              "intraday": "gün içi", "other": "diğer"},
+              "intraday": "gün içi", "other": "diğer", "risk": "risk", "calendar": "takvim"},
  "statuses": {"draft": "taslak", "registered": "kayıtlı", "passed": "geçti", "weak": "zayıf",
               "rejected": "reddedildi", "archived": "arşivlendi"},
  "glossary": [
@@ -858,7 +858,7 @@ T = {
  "caution": "Giả thuyết này đã vượt qua bài kiểm tra đăng ký trước. Đó là lý do để xác nhận độc lập và giao dịch thử, "
             "không phải để giao dịch bằng tiền thật.",
  "families": {"trend": "xu hướng", "flows": "dòng tiền", "sentiment": "tâm lý", "carry": "carry",
-              "intraday": "trong ngày", "other": "khác"},
+              "intraday": "trong ngày", "other": "khác", "risk": "rủi ro", "calendar": "lịch"},
  "statuses": {"draft": "bản nháp", "registered": "đã đăng ký", "passed": "đạt", "weak": "yếu",
               "rejected": "bị loại", "archived": "lưu trữ"},
  "glossary": [
@@ -995,7 +995,7 @@ T = {
  "why_h": "为什么可能有效", "history_h": "结论历史", "engine_src": "本引擎，数据截至 {d}",
  "spec_h": "预注册规范",
  "caution": "该假设通过了预注册检验。这意味着应当进行独立验证和模拟交易，而不是用真金白银交易。",
- "families": {"trend": "趋势", "flows": "资金流", "sentiment": "情绪", "carry": "套利", "intraday": "日内", "other": "其他"},
+ "families": {"trend": "趋势", "flows": "资金流", "sentiment": "情绪", "carry": "套利", "intraday": "日内", "other": "其他", "risk": "风险", "calendar": "日历"},
  "statuses": {"draft": "草稿", "registered": "已注册", "passed": "通过", "weak": "偏弱", "rejected": "已否定",
               "archived": "已归档"},
  "glossary": [

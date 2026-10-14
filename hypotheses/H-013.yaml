@@ -1,0 +1,38 @@
+id: H-013
+title: Volatility targeting (30%/yr) beats buy-and-hold on 8 independent coins
+status: registered
+family: risk
+created: '2026-10-14'
+author: Claude (literature review for F1DevBin)
+rationale: Confirmation of H-012 on coins not used to design it. Same rule, same fee; Sharpe must beat
+  holding on most coins in the full history and since 2022.
+spec:
+  kind: timing_rule
+  rule:
+    type: vol_target
+    target: 0.3
+    lookback: 30
+    cap: 1.0
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  periods:
+  - name: full
+    start: '2019-01-01'
+  - name: recent
+    start: '2022-01-01'
+  criterion:
+    min_wins:
+      full: 6
+      recent: 6
+retest_every_days: 90
+registered: '2026-10-14'
+prereg_sha256: cf1ebd686ca11b4a79353401b4087976141875f23bf8f63970241749a6d93302

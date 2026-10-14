@@ -65,9 +65,63 @@ def _download(url: str, dest: Path) -> str:
     return "404" if res.status == 404 else "err"
 
 
+# coins that Binance does not list: symbol -> (exchange, its pair name, first day to request)
+OTHER_EXCHANGES = {
+    "EVERUSDT": ("gate", "EVER_USDT", dt.date(2022, 1, 1)),  # Everscale; Gate.io spot
+}
+GATE = "https://api.gateio.ws/api/v4/spot/candlesticks"
+
+
+def fetch_gate_klines(symbol: str, pair: str, start: dt.date, root: Path = DATA_DIR) -> FetchReport:
+    """Daily candles from Gate.io (max 1000 per request, so one request per year), stored as a
+    zipped CSV in Binance column order (open time ms, o, h, l, c) so the store reads it as-is.
+    Gate rows are [t_sec, quote_volume, close, high, low, open, base_volume, closed]."""
+    import io
+    import zipfile
+
+    rep = FetchReport(f"klines {symbol} (gate)")
+    dest = root / "klines" / "1d" / symbol / f"{symbol}-1d-gate.zip"
+    today = dt.datetime.now(dt.timezone.utc).date()
+    rows: dict[int, list] = {}
+    y = start.year
+    while y <= today.year:
+        f = int(dt.datetime(y, 1, 1, tzinfo=dt.timezone.utc).timestamp())
+        t = int(dt.datetime(y, 12, 31, tzinfo=dt.timezone.utc).timestamp())
+        res = get(f"{GATE}?currency_pair={pair}&interval=1d&from={f}&to={t}")
+        try:
+            data = json.loads(res.body) if res.ok else None
+        except ValueError:
+            data = None
+        if not isinstance(data, list):
+            rep.errors.append(f"Gate.io HTTP {res.status} for {y}")
+            break
+        for r in data:
+            if len(r) >= 8 and str(r[7]).lower() == "true":  # closed candles only
+                rows[int(r[0]) * 1000] = [r[5], r[3], r[4], r[2]]
+        rep.files_ok += 1
+        y += 1
+    if rep.errors and dest.exists():
+        log.warning("%s: %s, using cached copy", symbol, rep.errors[0])
+        rep.errors = []  # keep serving the cached history; integrity check reports staleness
+        return rep
+    if not rows:
+        rep.errors.append("Gate.io returned no candles")
+        return rep
+    csv = "\n".join(f"{t},{','.join(map(str, v))}" for t, v in sorted(rows.items())) + "\n"
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr(f"{symbol}-1d-gate.csv", csv)
+    _write_atomic(dest, buf.getvalue())
+    return rep
+
+
 def fetch_daily_klines(symbol: str, start: dt.date = dt.date(2017, 8, 1),
                        root: Path = DATA_DIR) -> FetchReport:
-    """Monthly archives; the last ~2 months (not yet archived) are filled with daily files."""
+    """Monthly archives; the last ~2 months (not yet archived) are filled with daily files.
+    Coins listed in OTHER_EXCHANGES are fetched from that exchange instead."""
+    if symbol in OTHER_EXCHANGES:
+        _, pair, first = OTHER_EXCHANGES[symbol]
+        return fetch_gate_klines(symbol, pair, first, root)
     rep = FetchReport(f"klines {symbol}")
     today = dt.datetime.now(dt.timezone.utc).date()
     last = today - dt.timedelta(days=1)

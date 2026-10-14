@@ -1,0 +1,34 @@
+id: H-015
+title: 'Monday effect: BTC held only on Mondays (UTC) beats buy-and-hold'
+status: registered
+family: calendar
+created: '2026-10-14'
+author: Claude (literature review for F1DevBin)
+rationale: 'Caporale & Plastun (2019, ''The day of the week effect in the cryptocurrency market'') report
+  significantly higher Bitcoin returns on Mondays in 2013-2017; Baur et al. also note a higher Monday
+  return. Our 2018+ data is entirely after their sample. Test: Sharpe of a Monday-only position vs holding,
+  permutation test. Source: https://quantpedia.com/the-day-of-the-week-effect-in-the-crypto-currency-market/'
+spec:
+  kind: timing_rule
+  rule:
+    type: day_of_week
+    days:
+    - 0
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  periods:
+  - name: post_paper
+    start: '2018-01-01'
+  significance:
+    method: permutation
+    n: 2000
+    alpha: 0.05
+  criterion:
+    min_wins:
+      post_paper: 1
+    require_significance: true
+retest_every_days: 90
+registered: '2026-10-14'
+prereg_sha256: 3c9bfd9f233c355653a869b8636a3c54a84aa6b6f342714ac7f1df667f37c3a7
