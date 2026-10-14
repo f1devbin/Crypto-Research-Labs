@@ -32,6 +32,5 @@ spec:
       oos: 1
     require_significance: true
 retest_every_days: 90
-test_after: '2027-10-15'
 registered: '2026-10-14'
 prereg_sha256: de674dece11e3fd795256792278dec9faa611fb7fae915e8e587337834e15256
