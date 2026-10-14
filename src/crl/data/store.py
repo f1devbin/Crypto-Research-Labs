@@ -113,6 +113,20 @@ class DataStore:
         return s[~s.index.duplicated(keep="last")].sort_index()
 
 
+def _exchange_flows(asset: str) -> pd.DataFrame:
+    from crl.config import DATASETS_DIR
+    df = pd.read_csv(DATASETS_DIR / "exchange_flows.csv", parse_dates=["date"])
+    df = df[df["asset"] == asset].set_index("date").sort_index()
+    return df[["inflow", "outflow"]].astype(float).asfreq("D")
+
+
+def _netflow_7d(asset: str) -> pd.Series:
+    """Coins moved TO exchanges minus coins moved OUT over 7 days (native units).
+    Positive = net deposits (often read as coming sell pressure); negative = net withdrawals."""
+    f = _exchange_flows(asset)
+    return (f["inflow"] - f["outflow"]).rolling(7, min_periods=6).sum()
+
+
 FEATURES = {
     # 7-day growth of USDT+USDC supply
     "stablecoin_growth_7d": lambda st: (lambda s: s / s.shift(7) - 1)(st.stablecoin_supply()),
@@ -121,6 +135,9 @@ FEATURES = {
     "fear_greed": lambda st: st.fear_greed(),
     # net spot-BTC-ETF flow over the last 5 US trading days
     "etf_flow_btc_5d": lambda st: st.etf_flow().rolling(5).sum().asfreq("D").ffill(limit=5),
+    # 7-day net flow of BTC / ETH into exchanges (Coin Metrics, accumulated in datasets/)
+    "exnetflow_btc_7d": lambda st: _netflow_7d("btc"),
+    "exnetflow_eth_7d": lambda st: _netflow_7d("eth"),
 }
 
 

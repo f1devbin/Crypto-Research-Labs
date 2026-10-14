@@ -204,6 +204,60 @@ def _recent_funding(symbol: str) -> list:
     return []
 
 
+COINMETRICS = "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics"
+FLOW_ASSETS = ("btc", "eth")
+
+
+def fetch_exchange_flows(datasets: Path | None = None) -> FetchReport:
+    """Daily on-chain flows into / out of exchanges (Coin Metrics community API: free, but only the
+    last ~30 days). Each run merges them into datasets/exchange_flows.csv, which is committed, so the
+    history grows by itself. Newer values replace older ones (flash estimates get revised)."""
+    import csv
+    import io
+
+    from crl.config import DATASETS_DIR
+    path = (datasets or DATASETS_DIR) / "exchange_flows.csv"
+    rep = FetchReport("exchange flows (Coin Metrics)")
+    rows: dict[tuple, dict] = {}
+    if path.exists():
+        for r in csv.DictReader(io.StringIO(path.read_text())):
+            rows[(r["date"], r["asset"])] = r
+    url = (f"{COINMETRICS}?assets={','.join(FLOW_ASSETS)}&metrics=FlowInExNtv,FlowOutExNtv"
+           f"&frequency=1d&page_size=1000")
+    got = 0
+    for _ in range(10):  # paging
+        res = get(url)
+        try:
+            body = json.loads(res.body) if res.ok else None
+        except ValueError:
+            body = None
+        if not isinstance(body, dict) or "data" not in body:
+            rep.errors.append(f"Coin Metrics HTTP {res.status}")
+            break
+        for d in body["data"]:
+            if d.get("FlowInExNtv") is None or d.get("FlowOutExNtv") is None:
+                continue
+            day = d["time"][:10]
+            rows[(day, d["asset"])] = {"date": day, "asset": d["asset"], "inflow": d["FlowInExNtv"],
+                                       "outflow": d["FlowOutExNtv"]}
+            got += 1
+        if not body.get("next_page_url"):
+            break
+        url = body["next_page_url"]
+    if got:
+        out = io.StringIO()
+        w = csv.DictWriter(out, fieldnames=["date", "asset", "inflow", "outflow"], lineterminator="\n")
+        w.writeheader()
+        for k in sorted(rows):
+            w.writerow({f: rows[k][f] for f in w.fieldnames})
+        _write_atomic(path, out.getvalue().encode())
+        rep.files_ok = 1
+    if rep.errors and path.exists():
+        log.warning("exchange flows: %s, keeping the stored history", rep.errors[0])
+        rep.errors = []
+    return rep
+
+
 def fetch_external(name: str, root: Path = DATA_DIR) -> FetchReport:
     rep = FetchReport(name)
     url, max_age = EXTERNAL[name]

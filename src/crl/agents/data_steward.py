@@ -23,10 +23,13 @@ FEATURE_SOURCES = {
     "funding_btc_7d": [("funding", "BTCUSDT")],
     "fear_greed": [("external", "fear_greed")],
     "etf_flow_btc_5d": [("external", "etf_flow_btc")],
+    "exnetflow_btc_7d": [("exflows", "coinmetrics")],
+    "exnetflow_eth_7d": [("exflows", "coinmetrics")],
 }
-FEATURE_MAX_STALE = {"etf_flow_btc_5d": 6, "funding_btc_7d": 3}
+FEATURE_MAX_STALE = {"etf_flow_btc_5d": 6, "funding_btc_7d": 3, "exnetflow_btc_7d": 4, "exnetflow_eth_7d": 4}
 WATCH_SYMBOLS = ["BTCUSDT"]
-WATCH_FEATURES = ["stablecoin_growth_7d", "funding_btc_7d", "fear_greed"]
+# always collected, even before any hypothesis uses them (exchange flows can't be backfilled later)
+WATCH_FEATURES = ["stablecoin_growth_7d", "funding_btc_7d", "fear_greed", "exnetflow_btc_7d", "exnetflow_eth_7d"]
 
 
 def required_inputs(hyps: list) -> tuple[set, set]:
@@ -52,8 +55,12 @@ def refresh(root: Path = DATA_DIR, today: dt.date | None = None) -> tuple[list, 
             if (kind, name) in done:
                 continue
             done.add((kind, name))
-            reports.append(sources.fetch_funding(name, root=root) if kind == "funding"
-                           else sources.fetch_external(name, root=root))
+            if kind == "funding":
+                reports.append(sources.fetch_funding(name, root=root))
+            elif kind == "exflows":
+                reports.append(sources.fetch_exchange_flows())
+            else:
+                reports.append(sources.fetch_external(name, root=root))
 
     store = DataStore(root)
     now = pd.Timestamp(today)

@@ -77,3 +77,11 @@ def test_due_logic(tmp_registry):
     assert h["status"] == "rejected"
     assert not registry.is_due(h, today, res)
     assert registry.is_due(h, dt.date(2026, 11, 1), res)
+
+
+def test_test_after_postpones_the_first_run(tmp_registry):
+    hyp, res = tmp_registry
+    h = make(hyp, test_after="2027-10-15")
+    registry.register(h)
+    assert not registry.is_due(h, dt.date(2027, 10, 14), res)
+    assert registry.is_due(h, dt.date(2027, 10, 15), res)

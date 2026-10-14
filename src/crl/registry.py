@@ -115,6 +115,11 @@ def validate(h: Hypothesis) -> list[str]:
         if spec.get("significance", {}).get("method") == "bootstrap":
             if any(r.get("type") not in ("price_above_sma", "sma_cross", "tsmom", "donchian") for r in rules):
                 errs.append("bootstrap significance supports price rules only; use circular_shift")
+    if h.get("test_after"):
+        try:
+            dt.date.fromisoformat(str(h["test_after"]))
+        except ValueError:
+            errs.append("test_after must be a date YYYY-MM-DD")
     if h.get("status") != "draft":
         if not h.get("prereg_sha256"):
             errs.append("registered hypothesis has no prereg_sha256 — run `crl registry register`")
@@ -195,6 +200,8 @@ def store_result(h: Hypothesis, res: dict, root: Path = RESULTS_DIR) -> dict | N
 def is_due(h: Hypothesis, today: dt.date, root: Path = RESULTS_DIR) -> bool:
     if not h.get("rerunnable", True) or h.get("status") in ("draft", "archived"):
         return False
+    if h.get("test_after") and today < dt.date.fromisoformat(str(h["test_after"])):
+        return False  # waiting for enough data to accumulate (decided before any look at it)
     last = latest_result(h.id, root)
     if last is None:
         return True

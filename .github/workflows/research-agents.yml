@@ -55,7 +55,9 @@ jobs:
       - name: Restore data cache
         uses: actions/cache/restore@v4
         with:
-          path: data
+          path: |
+            data
+            datasets
           key: crl-data-${{ github.run_id }}
           restore-keys: crl-data-
 
@@ -98,7 +100,9 @@ jobs:
         if: always()
         uses: actions/cache/save@v4
         with:
-          path: data
+          path: |
+            data
+            datasets
           key: crl-data-${{ github.run_id }}
 
       - name: Commit results and reports
@@ -106,7 +110,7 @@ jobs:
         run: |
           git config user.name "crl-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results reports hypotheses docs/screenshots
+          git add results reports hypotheses docs/screenshots datasets
           if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
           git commit -m "chore(results): scheduled run $(date -u +%F)"
           git pull --rebase origin "${GITHUB_REF_NAME}"

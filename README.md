@@ -85,6 +85,8 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-017 | Altcoins only while BTC is above its 200-day average | ❌ Fail: 7/8 since 2022, 1/8 since 2019 |
 | H-018 | Everscale (EVER): SMA50 trend rule | ◐ Weak: −10 %/yr vs −70 %/yr holding, not significant |
 | H-019 | Everscale (EVER): only while BTC is above its 200-day average | ◐ Weak |
+| H-020 | BTC out of the market after heavy net deposits to exchanges | ⏳ collecting data, test on 2027-10-15 |
+| H-021 | Same for ETH | ⏳ collecting data, test on 2027-10-15 |
 
 The live table is in [reports/RESULTS.md](reports/RESULTS.md) and on the dashboard.
 

@@ -171,8 +171,10 @@ def badge(lang: str, verdict) -> str:
     return f'<span class="badge {VERDICT_CLASS.get(verdict, "none")}">{e(verdict_word(lang, verdict))}</span>'
 
 
-def plain(lang: str, verdict) -> str:
-    return t(lang, f"plain_{verdict}") if verdict in VERDICT_KEY else t(lang, "plain_none")
+def plain(lang: str, verdict, test_after=None) -> str:
+    if verdict in VERDICT_KEY:
+        return t(lang, f"plain_{verdict}")
+    return t(lang, "plain_scheduled", date=test_after) if test_after else t(lang, "plain_none")
 
 
 def title_of(lang: str, h: dict) -> str:
@@ -352,7 +354,7 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         href = f'hypotheses/{e(h["id"])}.html'
         rows.append(f'<tr><td><a href="{href}">{e(h["id"])}</a></td><td><a href="{href}">{e(title_of(lang, h))}</a></td>'
                     f'<td>{e(sub(lang, "families", h["family"], h["family"]))}</td><td>{badge(lang, h["verdict"])}</td>'
-                    f'<td>{e(plain(lang, h["verdict"]))}</td><td class=num>{e(when)}</td></tr>')
+                    f'<td>{e(plain(lang, h["verdict"], h.get("test_after")))}</td><td class=num>{e(when)}</td></tr>')
 
     fresh = "".join(f'<tr><td>{e(d["series"])}</td><td class=num>{e(d.get("first") or "—")}</td>'
                     f'<td class=num>{e(d.get("last") or "—")}</td>'
@@ -458,7 +460,7 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
 <p>{badge(lang, h['verdict'])} &nbsp;{e(t(lang, 'family'))}: <strong>{e(sub(lang, 'families', h['family'], h['family']))}</strong>
 · {e(t(lang, 'status'))}: <strong>{e(sub(lang, 'statuses', h['status'], h['status']))}</strong></p>
 {caution}
-<p class="plain"><strong>{e(t(lang, 'in_plain'))}:</strong> {e(plain(lang, h['verdict']))}</p>
+<p class="plain"><strong>{e(t(lang, 'in_plain'))}:</strong> {e(plain(lang, h['verdict'], h.get('test_after')))}</p>
 <h2>{e(t(lang, 'result_h'))}</h2>
 {en_note}
 <p lang="en">{e(h['summary'])}</p>
@@ -472,7 +474,7 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
 {footer(lang, hid)}"""
     url = page_url(base, lang, hid)
     description = t(lang, "hyp_desc", id=hid, verdict=verdict_word(lang, h["verdict"]), title=title,
-                    plain=plain(lang, h["verdict"]))
+                    plain=plain(lang, h["verdict"], h.get("test_after")))
     jsonld = [{"@context": "https://schema.org", "@type": "TechArticle", "headline": f"{hid}: {title}"[:110],
                "description": description[:300], "url": url, "inLanguage": LANGS[lang][1],
                "dateModified": (h.get("run_at") or data["generated_at"])[:10],

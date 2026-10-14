@@ -10,6 +10,8 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   12-month chart and today's state of each tested rule; a Coins table on the home page.
 - Translated titles for H-012…H-019.
 - Coin pages: distance from the highest close, value today of $100 invested a year ago, 90-day correlation with Bitcoin.
+- Exchange flows (Coin Metrics community, BTC/ETH) collected daily into `datasets/exchange_flows.csv`; BTC net-flow regime card; H-020/H-021 pre-registered with `test_after: 2027-10-15`.
+- `test_after` field: a hypothesis is not run (even with `--force`) before its pre-registered start date.
 - Market breadth monitor: share of the 12 coins above their 200-day average (regime card + alerts).
 - Course for beginners on the website (`course.html`), 10 lessons in 7 languages, live numbers, Course structured data.
 

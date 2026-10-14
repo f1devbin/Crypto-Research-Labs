@@ -26,6 +26,8 @@ def run(ids: list[str] | None = None, force: bool = False, store: DataStore | No
     for h in hyps:
         if ids and h.id not in ids:
             continue
+        if h.get("test_after") and today < dt.date.fromisoformat(str(h["test_after"])):
+            continue  # data still accumulating; --force does not override a pre-registered start date
         if not (force and h.get("rerunnable", True) and h.get("status") != "draft") and not registry.is_due(h, today):
             continue
         errs = registry.validate(h)

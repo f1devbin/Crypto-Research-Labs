@@ -64,6 +64,7 @@ author: F1DevBin
 rationale: Why this should work economically, written before testing.
 retest_every_days: 90    # how often the runner re-tests it
 rerunnable: true         # false for studies the engine can't reproduce (kept for the record)
+test_after: '2027-10-15' # optional: not run before this date, e.g. while new data accumulates
 spec:
   kind: timing_rule
   rule: {type: price_above_sma, window: 100}
@@ -111,7 +112,7 @@ Significance for `timing_rule`: `circular_shift` (any rule except calendar rules
 (calendar rules only: shuffles daily returns under the fixed calendar position; a circular shift
 would just repeat the weekly pattern).
 
-Features: `stablecoin_growth_7d`, `funding_btc_7d`, `fear_greed`, `etf_flow_btc_5d`.
+Features: `stablecoin_growth_7d`, `funding_btc_7d`, `fear_greed`, `etf_flow_btc_5d`, `exnetflow_btc_7d`, `exnetflow_eth_7d`.
 
 ### Data sources
 
@@ -122,6 +123,7 @@ Features: `stablecoin_growth_7d`, `funding_btc_7d`, `fear_greed`, `etf_flow_btc_
 | BTC funding | data.binance.vision (archive), fapi.binance.com, OKX as fallback | fapi answers 451 from US IPs |
 | USDT/USDC supply | DefiLlama stablecoins API | |
 | Fear & Greed | alternative.me | |
+| BTC/ETH exchange in/outflows | Coin Metrics community API | free API keeps ~30 days only, so each run merges them into `datasets/exchange_flows.csv` (committed) |
 | BTC spot-ETF flows | BGeometrics | rate-limited (8 requests/hour); cached for 24 h |
 
 If a source is unreachable, the steward falls back to the last cached copy and reports it as stale.

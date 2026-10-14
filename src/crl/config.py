@@ -8,6 +8,8 @@ HYPOTHESES_DIR = ROOT / "hypotheses"
 RESULTS_DIR = ROOT / "results"
 REPORTS_DIR = ROOT / "reports"
 CONFIG_DIR = ROOT / "config"
+# small series that cannot be re-downloaded later (free APIs keep only ~30 days) — committed to git
+DATASETS_DIR = Path(os.environ.get("CRL_DATASETS_DIR", ROOT / "datasets"))
 STATE_DIR = Path(os.environ.get("CRL_STATE_DIR", DATA_DIR / "state"))
 
 USER_AGENT = "crypto-research-labs/0.2 (+https://github.com/f1devbin/Crypto-Research-Labs)"

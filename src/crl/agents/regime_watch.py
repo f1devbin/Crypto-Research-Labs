@@ -62,6 +62,10 @@ def _breadth(store: DataStore, p: dict) -> pd.Series:
     return df.mean(axis=1).where(df.notna().sum(axis=1) >= max(3, len(flags) // 2))
 
 
+def _feature(store: DataStore, p: dict) -> pd.Series:
+    return store.feature(p["name"])
+
+
 # each metric is a full daily history; the monitor reads its last value
 METRICS = {
     "funding_carry": _funding_carry,
@@ -70,6 +74,7 @@ METRICS = {
     "price_vs_sma": _price_vs_sma,
     "realized_vol": _realized_vol,
     "breadth": _breadth,
+    "feature": _feature,
 }
 
 

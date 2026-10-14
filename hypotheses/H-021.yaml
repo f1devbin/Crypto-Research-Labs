@@ -1,0 +1,37 @@
+id: H-021
+title: ETH out of the market when 7-day net deposits to exchanges are in their top 20%
+status: registered
+family: flows
+created: '2026-10-14'
+author: F1DevBin (idea), Claude (spec)
+rationale: Same as H-020 for Ethereum, an independent asset with its own exchange flows. Alpha 0.025 each
+  (Bonferroni for the pair).
+spec:
+  kind: timing_rule
+  rule:
+    type: feature_vs_rolling_quantile
+    feature: exnetflow_eth_7d
+    q: 0.8
+    long_when: not_above
+    lookback: 365
+    min_periods: 180
+    lag: 1
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - ETHUSDT
+  periods:
+  - name: forward
+    start: '2026-09-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.025
+  criterion:
+    min_wins:
+      forward: 1
+    require_significance: true
+retest_every_days: 90
+test_after: '2027-10-15'
+registered: '2026-10-14'
+prereg_sha256: 00e36b6e1b9e378d01d5a494f4093eb0ab4784bb05f27dc4860e22aa58e12cf4

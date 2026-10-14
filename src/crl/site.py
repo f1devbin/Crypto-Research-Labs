@@ -222,7 +222,7 @@ def hypotheses(store: DataStore, curves: bool = True) -> list[dict]:
                 "source": "engine" if res else (hist[-1].get("source") if hist else None),
                 "history": [{"date": x.get("date"), "verdict": x.get("verdict"), "source": x.get("source")}
                             for x in hist],
-                "spec": h.get("spec"), "rows": [], "curves": []}
+                "spec": h.get("spec"), "rows": [], "curves": [], "test_after": h.get("test_after")}
         if res:
             item["rows"] = [{k: (_num(r[k], 6) if isinstance(r.get(k), float) else r.get(k))
                              for k in ROW_FIELDS if k in r} for r in res["rows"]]

@@ -73,6 +73,20 @@ monitors:
       normal: [0.4, 0.8]
       stressed: [0.8, null]
 
+  btc_exchange_flow:
+    label: BTC net flow to exchanges (7 days)
+    metric: feature
+    params: {name: exnetflow_btc_7d}
+    explain: >-
+      Bitcoin moved onto exchanges minus bitcoin moved off them over the last 7 days. Plus means net
+      deposits (often read as coming sales), minus means net withdrawals to private wallets.
+    format: "{:+,.0f} BTC"
+    bands:
+      withdrawals: [null, 0]
+      deposits: [0, null]
+    notes:
+      deposits: "Tested as H-020 (results after 2027-10-15, once a year of data has accumulated)."
+
   breadth:
     label: Market breadth (coins above their 200-day average)
     metric: breadth
