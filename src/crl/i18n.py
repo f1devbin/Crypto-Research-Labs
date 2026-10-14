@@ -129,6 +129,7 @@ T = {
    "far, and even a pass would need independent confirmation and paper trading first."),
  ],
  "monitors": {
+  "ever_trend": ('Everscale (EVER) vs its 50-day average', 'How far EVER trades above (+) or below (−) its 50-day average on Gate.io. This is the H-018 rule: above = in the market, below = out.'),
   "funding_carry": ("BTC funding carry: yearly yield after costs",
                     "What you would earn per year by holding BTC and shorting the same amount of BTC futures, so the "
                     "price itself does not matter. When most futures traders are long, shorts get paid."),
@@ -150,6 +151,8 @@ T = {
            "below": "below", "above": "above", "calm": "calm", "normal": "normal", "stressed": "stressed",
            "unavailable": "unavailable"},
  "notes": {
+  ("ever_trend", "above"): 'H-018 rule is in the market. Better than holding so far, but not significant; very thin liquidity.',
+  ("ever_trend", "below"): 'H-018 rule is out of the market.',
   ("funding_carry", "attractive"): "Rejected in H-011 at ~1.5% a year. Carry this high is worth re-checking.",
   ("funding_carry", "negative"): "Shorts pay longs: crowded bearish positioning.",
   ("stablecoin_growth", "expanding"): "Money is entering crypto. H-006/H-010 found no reliable timing edge in this.",
@@ -272,6 +275,7 @@ T = {
    "прошедшей идее нужна независимая проверка и торговля на бумаге."),
  ],
  "monitors": {
+  "ever_trend": ('Everscale (EVER) относительно 50-дневной средней', 'Насколько EVER на Gate.io выше (+) или ниже (−) своей средней за 50 дней. Это правило H-018: выше — в рынке, ниже — вне рынка.'),
   "funding_carry": ("Керри на фандинге BTC: годовая доходность после издержек",
                     "Сколько можно заработать за год, держа BTC и одновременно продав столько же фьючерсов BTC, — "
                     "цена при этом не важна. Когда большинство на фьючерсах в лонге, шортам платят."),
@@ -294,6 +298,8 @@ T = {
            "extreme_greed": "крайняя жадность", "below": "ниже", "above": "выше", "calm": "спокойно",
            "normal": "обычно", "stressed": "напряжённо", "unavailable": "нет данных"},
  "notes": {
+  ("ever_trend", "above"): 'Правило H-018 в рынке. Пока лучше удержания, но не значимо; ликвидность очень низкая.',
+  ("ever_trend", "below"): 'Правило H-018 вне рынка.',
   ("funding_carry", "attractive"): "В H-011 отклонено при ~1,5% в год. Такую доходность стоит перепроверить.",
   ("funding_carry", "negative"): "Шорты платят лонгам: рынок перегружен медвежьими позициями.",
   ("stablecoin_growth", "expanding"): "Деньги заходят в крипту. H-006/H-010 не нашли в этом надёжного сигнала.",
@@ -426,6 +432,7 @@ T = {
    "la prueba hasta ahora, e incluso un aprobado necesitaría confirmación independiente y trading simulado."),
  ],
  "monitors": {
+  "ever_trend": ('Everscale (EVER) frente a su media de 50 días', 'Cuánto cotiza EVER en Gate.io por encima (+) o por debajo (−) de su media de 50 días. Es la regla H-018: encima = dentro, debajo = fuera.'),
   "funding_carry": ("Carry de funding de BTC: rendimiento anual tras costes",
                     "Lo que ganarías al año manteniendo BTC y vendiendo en corto la misma cantidad en futuros, de modo "
                     "que el precio no importa. Cuando la mayoría está en largo, a los cortos se les paga."),
@@ -448,6 +455,8 @@ T = {
            "below": "por debajo", "above": "por encima", "calm": "tranquilo", "normal": "normal",
            "stressed": "tenso", "unavailable": "sin datos"},
  "notes": {
+  ("ever_trend", "above"): 'La regla H-018 está dentro. Mejor que mantener, pero no significativo; liquidez muy baja.',
+  ("ever_trend", "below"): 'La regla H-018 está fuera del mercado.',
   ("funding_carry", "attractive"): "Rechazado en H-011 con ~1,5% anual. Un carry tan alto merece revisarse.",
   ("funding_carry", "negative"): "Los cortos pagan a los largos: posicionamiento bajista saturado.",
   ("stablecoin_growth", "expanding"): "Entra dinero en cripto. H-006/H-010 no hallaron una señal fiable en esto.",
@@ -580,6 +589,7 @@ T = {
    "mesmo uma aprovação precisaria de confirmação independente e trading simulado."),
  ],
  "monitors": {
+  "ever_trend": ('Everscale (EVER) versus sua média de 50 dias', 'Quanto o EVER na Gate.io está acima (+) ou abaixo (−) da média de 50 dias. É a regra H-018: acima = no mercado, abaixo = fora.'),
   "funding_carry": ("Carry de funding do BTC: rendimento anual após custos",
                     "Quanto você ganharia por ano segurando BTC e vendendo a mesma quantidade em futuros, de modo que "
                     "o preço não importa. Quando a maioria está comprada, os vendidos recebem."),
@@ -602,6 +612,8 @@ T = {
            "below": "abaixo", "above": "acima", "calm": "calmo", "normal": "normal", "stressed": "tenso",
            "unavailable": "sem dados"},
  "notes": {
+  ("ever_trend", "above"): 'A regra H-018 está no mercado. Melhor que segurar, mas não significativo; liquidez muito baixa.',
+  ("ever_trend", "below"): 'A regra H-018 está fora do mercado.',
   ("funding_carry", "attractive"): "Rejeitado na H-011 com ~1,5% ao ano. Um carry tão alto merece nova análise.",
   ("funding_carry", "negative"): "Vendidos pagam comprados: posicionamento baixista lotado.",
   ("stablecoin_growth", "expanding"): "Dinheiro entrando em cripto. H-006/H-010 não acharam um sinal confiável nisso.",
@@ -733,6 +745,7 @@ T = {
    "kadar hiçbir şey geçmedi; geçse bile bağımsız doğrulama ve kağıt üzerinde işlem gerekir."),
  ],
  "monitors": {
+  "ever_trend": ('Everscale (EVER) ve 50 günlük ortalaması', "EVER'in Gate.io'da 50 günlük ortalamasının ne kadar üstünde (+) ya da altında (−) olduğu. H-018 kuralı: üstünde = piyasada, altında = dışarıda."),
   "funding_carry": ("BTC funding carry: maliyet sonrası yıllık getiri",
                     "BTC tutup aynı miktarda BTC vadeli işlemi açığa satarak yılda ne kazanacağınız; fiyatın önemi "
                     "kalmaz. Vadelide çoğunluk long iken short'lara ödeme yapılır."),
@@ -755,6 +768,8 @@ T = {
            "below": "altında", "above": "üstünde", "calm": "sakin", "normal": "normal", "stressed": "gergin",
            "unavailable": "veri yok"},
  "notes": {
+  ("ever_trend", "above"): 'H-018 kuralı piyasada. Tutmaktan iyi ama anlamlı değil; likidite çok düşük.',
+  ("ever_trend", "below"): 'H-018 kuralı piyasa dışında.',
   ("funding_carry", "attractive"): "H-011'de yılda ~%1,5 ile reddedildi. Bu kadar yüksek carry yeniden incelenmeli.",
   ("funding_carry", "negative"): "Short'lar long'lara ödüyor: kalabalık düşüş pozisyonları.",
   ("stablecoin_growth", "expanding"): "Kriptoya para giriyor. H-006/H-010 bunda güvenilir bir sinyal bulamadı.",
@@ -884,6 +899,7 @@ T = {
    "nay chưa có gì đạt, và ngay cả khi đạt cũng cần xác nhận độc lập và giao dịch thử trước."),
  ],
  "monitors": {
+  "ever_trend": ('Everscale (EVER) so với trung bình 50 ngày', 'EVER trên Gate.io cao hơn (+) hay thấp hơn (−) bao nhiêu so với trung bình 50 ngày. Đây là quy tắc H-018: trên = trong thị trường, dưới = đứng ngoài.'),
   "funding_carry": ("Carry funding BTC: lợi suất năm sau chi phí",
                     "Số tiền bạn kiếm được mỗi năm khi giữ BTC và bán khống cùng lượng BTC trên hợp đồng tương lai, nên "
                     "giá không quan trọng. Khi đa số mua (long), bên bán khống được trả tiền."),
@@ -906,6 +922,8 @@ T = {
            "below": "dưới", "above": "trên", "calm": "bình lặng", "normal": "bình thường", "stressed": "căng thẳng",
            "unavailable": "không có dữ liệu"},
  "notes": {
+  ("ever_trend", "above"): 'Quy tắc H-018 đang trong thị trường. Tốt hơn giữ nhưng chưa có ý nghĩa thống kê; thanh khoản rất thấp.',
+  ("ever_trend", "below"): 'Quy tắc H-018 đang đứng ngoài.',
   ("funding_carry", "attractive"): "Bị loại ở H-011 với ~1,5%/năm. Mức carry cao thế này đáng kiểm tra lại.",
   ("funding_carry", "negative"): "Bên bán khống trả cho bên mua: vị thế giảm giá quá đông.",
   ("stablecoin_growth", "expanding"): "Tiền đang vào crypto. H-006/H-010 không tìm thấy tín hiệu đáng tin ở đây.",
@@ -1014,6 +1032,7 @@ T = {
    "验证并进行模拟交易。"),
  ],
  "monitors": {
+  "ever_trend": ('Everscale (EVER) 相对 50 日均线', 'EVER 在 Gate.io 上高于（+）或低于（−）其 50 日均价的幅度。这就是 H-018 规则：高于 = 持仓，低于 = 空仓。'),
   "funding_carry": ("BTC 资金费率套利：扣除成本后的年化收益",
                     "持有 BTC 同时做空等量 BTC 期货每年能赚多少，价格涨跌不影响结果。当期货市场多数人做多时，空头会收到费用。"),
   "stablecoin_growth": ("稳定币供应增长（30 天）",
@@ -1027,6 +1046,8 @@ T = {
            "greed": "贪婪", "extreme_greed": "极度贪婪", "below": "低于", "above": "高于", "calm": "平稳",
            "normal": "正常", "stressed": "紧张", "unavailable": "无数据"},
  "notes": {
+  ("ever_trend", "above"): 'H-018 规则处于持仓状态。目前优于持有，但不显著；流动性很低。',
+  ("ever_trend", "below"): 'H-018 规则处于空仓状态。',
   ("funding_carry", "attractive"): "H-011 在约 1.5%/年时被否定。如此高的套利收益值得重新评估。",
   ("funding_carry", "negative"): "空头向多头付费：看空仓位过于拥挤。",
   ("stablecoin_growth", "expanding"): "资金正在流入加密市场。H-006/H-010 未发现可靠的择时信号。",

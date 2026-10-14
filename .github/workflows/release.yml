@@ -1,0 +1,39 @@
+# Push a tag like v0.2.0 → a GitHub Release with that version's CHANGELOG section,
+# plus a snapshot of the registry, results and reports.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check version matches tag
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          grep -q "^version = \"$v\"" pyproject.toml || { echo "pyproject version != $v"; exit 1; }
+      - name: Release notes from CHANGELOG
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          awk -v v="$v" '/^## \[/{p = index($0, "[" v "]") > 0; next} p' CHANGELOG.md > notes.md
+          echo "" >> notes.md
+          echo "Live dashboard: https://f1devbin.github.io/Crypto-Research-Labs/" >> notes.md
+          test -s notes.md
+      - name: Build package and research snapshot
+        run: |
+          pip install -q build
+          python -m build
+          tar -czf "dist/research-snapshot-${GITHUB_REF_NAME}.tar.gz" hypotheses results reports config docs
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --title "Crypto Research Labs $GITHUB_REF_NAME" --notes-file notes.md

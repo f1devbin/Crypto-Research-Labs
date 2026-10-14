@@ -72,3 +72,18 @@ monitors:
       calm: [null, 0.4]
       normal: [0.4, 0.8]
       stressed: [0.8, null]
+
+  ever_trend:
+    label: Everscale (EVER) vs its 50-day average
+    metric: price_vs_sma
+    params: {symbol: EVERUSDT, window: 50}
+    explain: >-
+      How far EVER trades above (+) or below (-) its 50-day average on Gate.io. This is the H-018 rule:
+      above means in the market, below means out.
+    format: "{:+.1%}"
+    bands:
+      below: [null, 0.0]
+      above: [0.0, null]
+    notes:
+      above: "H-018 rule is in the market. Historically better than holding, but not significant; very thin liquidity."
+      below: "H-018 rule is out of the market."

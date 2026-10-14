@@ -10,4 +10,4 @@ REPORTS_DIR = ROOT / "reports"
 CONFIG_DIR = ROOT / "config"
 STATE_DIR = Path(os.environ.get("CRL_STATE_DIR", DATA_DIR / "state"))
 
-USER_AGENT = "crypto-research-labs/0.1 (+https://github.com/f1devbin/crypto-research-labs)"
+USER_AGENT = "crypto-research-labs/0.2 (+https://github.com/f1devbin/Crypto-Research-Labs)"
