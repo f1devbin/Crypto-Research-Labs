@@ -38,7 +38,7 @@ and automated agents re-test old ideas as new market data arrives.
 | Which coins | BTC, ETH, SOL; for independent confirmation BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX; Everscale (EVER) from Gate.io. Any Binance spot pair can be added |
 | Run it yourself or add your own idea | [Quickstart](#quickstart) and [CONTRIBUTING.md](CONTRIBUTING.md) |
 
-**The short answer so far: no idea has beaten buy-and-hold reliably.** Daily trend rules and
+**The short answer so far: one idea passed (H-020, exchange deposits), and it is still being verified.** Daily trend rules and
 volatility targeting lower drawdowns, mostly because they spend less time in the market, but they
 don't win by a margin that luck can't explain. Fast minute-level signals lose to fees, and the
 famous calendar effects (Monday, turn of the month) did not survive after their papers were published.
@@ -85,8 +85,9 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-017 | Altcoins only while BTC is above its 200-day average | ❌ Fail: 7/8 since 2022, 1/8 since 2019 |
 | H-018 | Everscale (EVER): SMA50 trend rule | ◐ Weak: −10 %/yr vs −70 %/yr holding, not significant |
 | H-019 | Everscale (EVER): only while BTC is above its 200-day average | ◐ Weak |
-| H-020 | BTC out of the market after heavy net deposits to exchanges | (testing) |
-| H-021 | Same for ETH | (testing) |
+| H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
+| H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |
+| H-022 | Forward replication of H-020 on as-published data | ⏳ collecting data, test on 2027-10-15 |
 
 The live table is in [reports/RESULTS.md](reports/RESULTS.md) and on the dashboard.
 

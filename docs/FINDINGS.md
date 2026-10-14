@@ -90,8 +90,30 @@ Sources: [Man Group: Crypto, too hot to handle?](https://www.man.com/insights/cr
 [Quantpedia: Day of the week effect in crypto](https://quantpedia.com/the-day-of-the-week-effect-in-the-crypto-currency-market/) ·
 [End-of-month effect in Bitcoin](https://valuelytica.substack.com/p/end-of-month-effect-in-bitcoin)
 
+## Exchange deposits (H-020…H-022, tested 2026-10-14)
+
+Idea by F1DevBin: coins moved to exchanges carry information about the next price move. Data: Coin Metrics
+community exchange flows (BTC since 2011, ETH since 2015). Rule: stay out of the market for a day when the 7-day
+net deposit to exchanges is above its trailing one-year 80th percentile.
+
+| ID | Coin | Sharpe vs hold | CAGR vs hold | Max drawdown vs hold | In market | p (needed) |
+|----|------|----------------|--------------|----------------------|-----------|------------|
+| H-020 ✅ | BTC, 2022+ | 0.83 vs 0.50 | +30.6 % vs +13.1 % | −44 % vs −67 % | 83 % | 0.010 (< 0.025) |
+| H-021 ◐ | ETH, 2022+ | 0.40 vs 0.22 | +6.6 % vs −7.8 % | −79 % vs −74 % | 80 % | 0.082 (< 0.025) |
+
+**The first pass in the project, with two reasons for caution.**
+
+1. **Look-ahead in the data.** Exchange addresses are often identified long after they were used, and data providers
+   label them retroactively. Historical flows can therefore look more informative than they were in real time.
+   H-022 repeats the exact rule on flows recorded day by day from 2026-10-15 and never rewritten later; it is
+   tested on 2027-10-15.
+2. **ETH only partly confirms it.** The direction is the same, but it is not significant, and the drawdown is not better.
+
+Wallet-level analysis (which wallets deposit before moves) needs labelled exchange addresses; for Everscale it
+waits for an Evercloud API key.
+
 ## Bottom line
 
-None of these ideas has a statistically reliable edge after fees. Daily trend rules
+Apart from H-020 (pending its forward replication), none of these ideas has a statistically reliable edge after fees. Daily trend rules
 are a risk-reduction tool, not an alpha source. Further work should only go to ideas
 with a clear economic reason, tested on independent assets.
