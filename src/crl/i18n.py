@@ -198,7 +198,7 @@ T = {
            "below": "below", "above": "above", "calm": "calm", "normal": "normal", "stressed": "stressed",
            "unavailable": "unavailable"},
  "notes": {
-  ("btc_exchange_flow", "deposits"): 'Tested as H-020 (results after 2027-10-15, once a year of data has accumulated).',
+  ("btc_exchange_flow", "deposits"): 'Heavy deposits are tested in H-020 (BTC) and H-021 (ETH).',
   ("ever_trend", "above"): 'H-018 rule is in the market. Better than holding so far, but not significant; very thin liquidity.',
   ("ever_trend", "below"): 'H-018 rule is out of the market.',
   ("funding_carry", "attractive"): "Rejected in H-011 at ~1.5% a year. Carry this high is worth re-checking.",
@@ -393,7 +393,7 @@ T = {
            "extreme_greed": "крайняя жадность", "below": "ниже", "above": "выше", "calm": "спокойно",
            "normal": "обычно", "stressed": "напряжённо", "unavailable": "нет данных"},
  "notes": {
-  ("btc_exchange_flow", "deposits"): 'Проверяется как H-020 (результат после 15.10.2027, когда накопится год данных).',
+  ("btc_exchange_flow", "deposits"): 'Сильный завод на биржи проверяется в H-020 (BTC) и H-021 (ETH).',
   ("ever_trend", "above"): 'Правило H-018 в рынке. Пока лучше удержания, но не значимо; ликвидность очень низкая.',
   ("ever_trend", "below"): 'Правило H-018 вне рынка.',
   ("funding_carry", "attractive"): "В H-011 отклонено при ~1,5% в год. Такую доходность стоит перепроверить.",
@@ -608,7 +608,7 @@ T = {
            "below": "por debajo", "above": "por encima", "calm": "tranquilo", "normal": "normal",
            "stressed": "tenso", "unavailable": "sin datos"},
  "notes": {
-  ("btc_exchange_flow", "deposits"): 'Se prueba como H-020 (resultados tras el 15-10-2027, cuando haya un año de datos).',
+  ("btc_exchange_flow", "deposits"): 'Los depósitos fuertes se prueban en H-020 (BTC) y H-021 (ETH).',
   ("ever_trend", "above"): 'La regla H-018 está dentro. Mejor que mantener, pero no significativo; liquidez muy baja.',
   ("ever_trend", "below"): 'La regla H-018 está fuera del mercado.',
   ("funding_carry", "attractive"): "Rechazado en H-011 con ~1,5% anual. Un carry tan alto merece revisarse.",
@@ -823,7 +823,7 @@ T = {
            "below": "abaixo", "above": "acima", "calm": "calmo", "normal": "normal", "stressed": "tenso",
            "unavailable": "sem dados"},
  "notes": {
-  ("btc_exchange_flow", "deposits"): 'Testado como H-020 (resultados após 15/10/2027, quando houver um ano de dados).',
+  ("btc_exchange_flow", "deposits"): 'Depósitos fortes são testados na H-020 (BTC) e na H-021 (ETH).',
   ("ever_trend", "above"): 'A regra H-018 está no mercado. Melhor que segurar, mas não significativo; liquidez muito baixa.',
   ("ever_trend", "below"): 'A regra H-018 está fora do mercado.',
   ("funding_carry", "attractive"): "Rejeitado na H-011 com ~1,5% ao ano. Um carry tão alto merece nova análise.",
@@ -1037,7 +1037,7 @@ T = {
            "below": "altında", "above": "üstünde", "calm": "sakin", "normal": "normal", "stressed": "gergin",
            "unavailable": "veri yok"},
  "notes": {
-  ("btc_exchange_flow", "deposits"): 'H-020 olarak test ediliyor (bir yıllık veri biriktikten sonra, 15.10.2027 sonrası sonuç).',
+  ("btc_exchange_flow", "deposits"): "Yoğun yatırmalar H-020 (BTC) ve H-021'de (ETH) test ediliyor.",
   ("ever_trend", "above"): 'H-018 kuralı piyasada. Tutmaktan iyi ama anlamlı değil; likidite çok düşük.',
   ("ever_trend", "below"): 'H-018 kuralı piyasa dışında.',
   ("funding_carry", "attractive"): "H-011'de yılda ~%1,5 ile reddedildi. Bu kadar yüksek carry yeniden incelenmeli.",
@@ -1249,7 +1249,7 @@ T = {
            "below": "dưới", "above": "trên", "calm": "bình lặng", "normal": "bình thường", "stressed": "căng thẳng",
            "unavailable": "không có dữ liệu"},
  "notes": {
-  ("btc_exchange_flow", "deposits"): 'Được kiểm tra trong H-020 (có kết quả sau 15/10/2027, khi đủ một năm dữ liệu).',
+  ("btc_exchange_flow", "deposits"): 'Lượng nạp lớn được kiểm tra trong H-020 (BTC) và H-021 (ETH).',
   ("ever_trend", "above"): 'Quy tắc H-018 đang trong thị trường. Tốt hơn giữ nhưng chưa có ý nghĩa thống kê; thanh khoản rất thấp.',
   ("ever_trend", "below"): 'Quy tắc H-018 đang đứng ngoài.',
   ("funding_carry", "attractive"): "Bị loại ở H-011 với ~1,5%/năm. Mức carry cao thế này đáng kiểm tra lại.",
@@ -1431,7 +1431,7 @@ T = {
            "greed": "贪婪", "extreme_greed": "极度贪婪", "below": "低于", "above": "高于", "calm": "平稳",
            "normal": "正常", "stressed": "紧张", "unavailable": "无数据"},
  "notes": {
-  ("btc_exchange_flow", "deposits"): '作为 H-020 检验（积累一年数据后，于 2027-10-15 之后出结果）。',
+  ("btc_exchange_flow", "deposits"): '大额存入在 H-020（BTC）和 H-021（ETH）中检验。',
   ("ever_trend", "above"): 'H-018 规则处于持仓状态。目前优于持有，但不显著；流动性很低。',
   ("ever_trend", "below"): 'H-018 规则处于空仓状态。',
   ("funding_carry", "attractive"): "H-011 在约 1.5%/年时被否定。如此高的套利收益值得重新评估。",

@@ -85,7 +85,7 @@ monitors:
       withdrawals: [null, 0]
       deposits: [0, null]
     notes:
-      deposits: "Tested as H-020 (results after 2027-10-15, once a year of data has accumulated)."
+      deposits: "Heavy deposits are tested in H-020 (BTC) and H-021 (ETH)."
 
   breadth:
     label: Market breadth (coins above their 200-day average)

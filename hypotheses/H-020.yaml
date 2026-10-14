@@ -6,10 +6,10 @@ created: '2026-10-14'
 author: F1DevBin (idea), Claude (spec)
 rationale: 'Idea by F1DevBin: coins moved to exchanges before price moves carry information. Deposits
   usually precede selling, so heavy net inflow should precede weaker returns (CryptoQuant and others read
-  large inflows as bearish). Data: Coin Metrics community exchange flows, free for the last ~30 days only,
-  so the history is collected daily from 2026-09 and the test waits until a year has accumulated (test_after).
-  Both directions are reported: if heavy deposits come before rises instead, this hypothesis fails and
-  the reverse is a new hypothesis.'
+  large inflows as bearish). Data: Coin Metrics community exchange flows (free, full history since 2011
+  for BTC, 2015 for ETH); collected daily into datasets/exchange_flows.csv. Spec revised on 2026-10-14
+  before any test was run: the first version waited a year for data, until it turned out the full history
+  is available.'
 spec:
   kind: timing_rule
   rule:
@@ -25,17 +25,16 @@ spec:
   universe:
   - BTCUSDT
   periods:
-  - name: forward
-    start: '2026-09-01'
+  - name: oos
+    start: '2022-01-01'
   significance:
     method: circular_shift
     n: 2000
     alpha: 0.025
   criterion:
     min_wins:
-      forward: 1
+      oos: 1
     require_significance: true
 retest_every_days: 90
-test_after: '2027-10-15'
 registered: '2026-10-14'
-prereg_sha256: fcf606ddd02ba3e0a36b3e1ef4189a59b598ceaa7d1acd7846af6bfb22af9ccb
+prereg_sha256: ad7da5beb9884261b70580c2f7327406a6009c71d45733822c147b70a3538911
