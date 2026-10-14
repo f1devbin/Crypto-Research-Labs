@@ -3,7 +3,7 @@
 | Workflow | File | Trigger | Needs |
 |----------|------|---------|-------|
 | CI | `.github/workflows/ci.yml` | push, PR | — |
-| Research agents | `.github/workflows/research-agents.yml` | daily 06:17 UTC; weekly Mon 07:41 UTC; manual | optional Telegram secrets |
+| Research agents + dashboard | `.github/workflows/research-agents.yml` | daily 06:17 UTC; weekly Mon 07:41 UTC; push to site code; manual | Pages source = GitHub Actions; optional Telegram secrets |
 | Hypothesis proposer | `.github/workflows/propose.yml` | 1st of month; manual | `ANTHROPIC_API_KEY` |
 
 Every step is a single `crl` command, so you can run the same thing locally or from cron.
@@ -17,20 +17,25 @@ Every step is a single `crl` command, so you can run the same thing locally or f
 3. `crl watch` computes each monitor in `config/watch.yaml`, assigns it to a band and
    compares it with yesterday's state (`data/state/watch_state.json`). An alert goes
    out **only** on a band change. The first run and unavailable sources stay silent.
-4. The cache is saved, including the watch state.
+4. `crl site` builds the dashboard into `_site/`: 7 languages (`/`, `/ru/`, `/es/`, `/pt/`, `/tr/`,
+   `/vi/`, `/zh/`), one page per hypothesis, `sitemap.xml` with `hreflang` alternates, `robots.txt`,
+   JSON-LD and `data.json`. The `deploy-pages` job publishes it to GitHub Pages.
+   Set the repository variable `GOOGLE_SITE_VERIFICATION` to add the Search Console tag.
+5. The cache is saved, including the watch state.
 
 ## Weekly: + runner → digest → commit
 
-5. `crl run` executes every hypothesis that is `registered` or has a verdict, is
+6. `crl run` executes every hypothesis that is `registered` or has a verdict, is
    `rerunnable`, and is due (`retest_every_days` since its last result). Each result
    goes to `results/<ID>/<date>.json` and `latest.json`, then `reports/RESULTS.md`
    and `reports/runs/<date>.md` are regenerated. An alert goes out when a verdict
    changes, when anything passes (with a reminder of the steps required before
    real money) and on errors.
-6. `crl digest` writes `reports/digest/<year>-W<week>.md`. With an API key, Claude
+7. `crl digest` writes `reports/digest/<year>-W<week>.md`. With an API key, Claude
    rewrites it into a short briefing. It's told to use only numbers from the input
    and never to recommend trades.
-7. `results/`, `reports/` and `hypotheses/` are committed by `crl-bot`.
+8. README screenshots are refreshed (`scripts/screenshots.py`), then `results/`, `reports/`,
+   `hypotheses/` and `docs/screenshots/` are committed by `crl-bot`.
 
 Manual run: *Actions → research-agents → Run workflow* (`force` re-tests everything).
 

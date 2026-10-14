@@ -12,3 +12,4 @@ dist/
 # secrets
 .env
 *.env
+_site/

@@ -1,0 +1,22 @@
+name: Hypothesis idea
+description: Suggest a trading idea to test. Plain words are fine.
+labels: [hypothesis]
+body:
+  - type: textarea
+    id: rule
+    attributes:
+      label: The rule
+      description: When are you in the market, when are you out? Which coins?
+      placeholder: Hold BTC only while the price is above its 100-day average.
+    validations: {required: true}
+  - type: textarea
+    id: why
+    attributes:
+      label: Why should it work?
+      description: The economic reason. Write it before looking at any backtest.
+    validations: {required: true}
+  - type: textarea
+    id: pass
+    attributes:
+      label: What would count as success?
+      placeholder: Beats buy-and-hold by Sharpe on at least 6 of 8 independent coins since 2022.

@@ -4,6 +4,10 @@ monitors:
   funding_carry:
     label: BTC funding carry, yield on capital (30 d, annualised, after costs)
     metric: funding_carry
+    explain: >-
+      What you would earn per year by holding BTC and shorting the same amount of BTC futures, so the
+      price itself does not matter. Futures traders pay each other a "funding" fee; when many are long,
+      shorts get paid.
     params: {symbol: BTCUSDT, days: 30, round_trip_cost: 0.003}
     format: "{:+.1%}"
     bands:
@@ -18,6 +22,9 @@ monitors:
   stablecoin_growth:
     label: USDT+USDC supply growth (30 d)
     metric: stablecoin_growth
+    explain: >-
+      How fast the supply of dollar-pegged coins (USDT, USDC) is growing. New stablecoins are often money
+      waiting to buy crypto; shrinking supply means money is leaving.
     params: {days: 30}
     format: "{:+.2%}"
     bands:
@@ -30,6 +37,8 @@ monitors:
   fear_greed:
     label: Crypto Fear & Greed index
     metric: fear_greed
+    explain: >-
+      A 0-100 mood score built from price moves, volatility and social media. Low = fear, high = greed.
     format: "{:.0f}"
     bands:
       extreme_fear: [null, 20]
@@ -43,6 +52,9 @@ monitors:
   btc_trend:
     label: BTC vs its 200-day average
     metric: price_vs_sma
+    explain: >-
+      How far the price is above (+) or below (-) its average over the last 200 days. Above usually
+      means a long-term uptrend.
     params: {symbol: BTCUSDT, window: 200}
     format: "{:+.1%}"
     bands:
@@ -52,6 +64,8 @@ monitors:
   btc_volatility:
     label: BTC realised volatility (30 d, annualised)
     metric: realized_vol
+    explain: >-
+      How much the price swings, scaled to a year. 40% means a typical yearly move of about 40% up or down.
     params: {symbol: BTCUSDT, days: 30}
     format: "{:.0%}"
     bands:

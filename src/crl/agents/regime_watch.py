@@ -21,35 +21,33 @@ from crl.notify import alert
 log = logging.getLogger(__name__)
 
 
-def _funding_carry(store: DataStore, p: dict) -> float:
+def _funding_carry(store: DataStore, p: dict) -> pd.Series:
     """Annualised yield on capital of spot-long / perp-short, no leverage (half the capital
     on each leg), after one round trip amortised over a year."""
     f = store.funding_daily(p.get("symbol", "BTCUSDT")).dropna()
-    window = f[f.index > f.index[-1] - pd.Timedelta(days=int(p.get("days", 30)))]
-    annual = float(window.mean() * 3 * 365)  # 3 prints a day
+    annual = f.rolling(f"{int(p.get('days', 30))}D").mean() * 3 * 365  # 3 prints a day
     return (annual - float(p.get("round_trip_cost", 0.003))) / 2
 
 
-def _stablecoin_growth(store: DataStore, p: dict) -> float:
-    s = store.stablecoin_supply().dropna()
-    days = int(p.get("days", 30))
-    return float(s.iloc[-1] / s.iloc[-1 - days] - 1)
+def _stablecoin_growth(store: DataStore, p: dict) -> pd.Series:
+    return store.stablecoin_supply().dropna().pct_change(int(p.get("days", 30)))
 
 
-def _fear_greed(store: DataStore, p: dict) -> float:
-    return float(store.fear_greed().dropna().iloc[-1])
+def _fear_greed(store: DataStore, p: dict) -> pd.Series:
+    return store.fear_greed().dropna()
 
 
-def _price_vs_sma(store: DataStore, p: dict) -> float:
+def _price_vs_sma(store: DataStore, p: dict) -> pd.Series:
     c = store.close(p.get("symbol", "BTCUSDT"))
-    return float(c.iloc[-1] / c.rolling(int(p.get("window", 200))).mean().iloc[-1] - 1)
+    return c / c.rolling(int(p.get("window", 200))).mean() - 1
 
 
-def _realized_vol(store: DataStore, p: dict) -> float:
-    r = store.close(p.get("symbol", "BTCUSDT")).pct_change().dropna()
-    return float(r.iloc[-int(p.get("days", 30)):].std() * np.sqrt(365))
+def _realized_vol(store: DataStore, p: dict) -> pd.Series:
+    r = store.close(p.get("symbol", "BTCUSDT")).pct_change()
+    return r.rolling(int(p.get("days", 30))).std() * np.sqrt(365)
 
 
+# each metric is a full daily history; the monitor reads its last value
 METRICS = {
     "funding_carry": _funding_carry,
     "stablecoin_growth": _stablecoin_growth,
@@ -57,6 +55,10 @@ METRICS = {
     "price_vs_sma": _price_vs_sma,
     "realized_vol": _realized_vol,
 }
+
+
+def series(store: DataStore, m: dict) -> pd.Series:
+    return METRICS[m["metric"]](store, m.get("params", {})).dropna()
 
 
 def band(value: float, bands: dict) -> str:
@@ -71,7 +73,7 @@ def evaluate(store: DataStore, monitors: dict) -> dict:
     out = {}
     for name, m in monitors.items():
         try:
-            v = METRICS[m["metric"]](store, m.get("params", {}))
+            v = float(series(store, m).iloc[-1])
             out[name] = {"value": v, "band": band(v, m["bands"])}
         except Exception as e:  # one broken source must not hide the other monitors
             out[name] = {"value": None, "band": "unavailable", "error": f"{type(e).__name__}: {e}"}
@@ -91,8 +93,12 @@ def transitions(current: dict, previous: dict, monitors: dict) -> list[str]:
     return msgs
 
 
+def load_monitors(config: Path = CONFIG_DIR / "watch.yaml") -> dict:
+    return yaml.safe_load(config.read_text())["monitors"]
+
+
 def main(config: Path = CONFIG_DIR / "watch.yaml", state_path: Path = STATE_DIR / "watch_state.json") -> int:
-    monitors = yaml.safe_load(config.read_text())["monitors"]
+    monitors = load_monitors(config)
     current = evaluate(DataStore(), monitors)
     previous = json.loads(state_path.read_text()) if state_path.exists() else {}
     msgs = transitions(current, previous, monitors)

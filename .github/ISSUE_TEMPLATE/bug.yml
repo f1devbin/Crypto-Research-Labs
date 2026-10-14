@@ -1,0 +1,14 @@
+name: Bug or wrong number
+description: Something is broken or a number looks wrong.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Link the dashboard page or paste the command and its output.
+    validations: {required: true}
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?

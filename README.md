@@ -1,121 +1,168 @@
+<div align="center">
+
 # Crypto Research Labs
 
-Pre-registered, reproducible research on crypto trading ideas, run by a small set of
-scheduled agents that keep the data fresh, re-test old ideas as markets change and
-tell you when something actually moves.
+**Can a simple, published trading rule beat just buying a coin and holding it?**
+This project checks honestly. Every idea is written down and locked *before* it is tested,
+and automated agents re-test old ideas as new market data arrives.
 
-> **Not financial advice.** This is a research tool. Nothing here places orders.
-> A PASS verdict means "worth a closer look", not "trade this".
+[![Live dashboard](https://img.shields.io/badge/Live_dashboard-open-2ea043?style=for-the-badge)](https://f1devbin.github.io/Crypto-Research-Labs/)
+[![ci](https://github.com/f1devbin/Crypto-Research-Labs/actions/workflows/ci.yml/badge.svg)](https://github.com/f1devbin/Crypto-Research-Labs/actions/workflows/ci.yml)
+[![research-agents](https://github.com/f1devbin/Crypto-Research-Labs/actions/workflows/research-agents.yml/badge.svg)](https://github.com/f1devbin/Crypto-Research-Labs/actions/workflows/research-agents.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 
-## Why this exists
+[English](https://f1devbin.github.io/Crypto-Research-Labs/) ·
+[Русский](https://f1devbin.github.io/Crypto-Research-Labs/ru/) ·
+[Español](https://f1devbin.github.io/Crypto-Research-Labs/es/) ·
+[Português](https://f1devbin.github.io/Crypto-Research-Labs/pt/) ·
+[Türkçe](https://f1devbin.github.io/Crypto-Research-Labs/tr/) ·
+[Tiếng Việt](https://f1devbin.github.io/Crypto-Research-Labs/vi/) ·
+[中文](https://f1devbin.github.io/Crypto-Research-Labs/zh/)
 
-This project grew out of a year of work on a Telegram signal bot (F1MEBOT). The bot
-itself didn't hold up under testing: 7,649 live signals did *worse* than random once
-replayed on real prices. The research process around it was costly in its own way:
-every idea was a hand-written one-off script, data was downloaded again for each
-study, results lived in loose text files, and rejected ideas were never re-checked.
-[docs/INEFFICIENCIES.md](docs/INEFFICIENCIES.md) lists the six biggest problems and
-what replaces each one.
+![Dashboard](docs/screenshots/dashboard.png)
+
+</div>
+
+> **Not financial advice.** This is a research project. It does not trade, manage money or sell signals.
+> A "pass" means "worth a closer look", not "this makes money".
+
+## New here? Start with this
+
+| You want to… | Go to |
+|---|---|
+| See today's market and every result, with plain-language explanations | the **[live dashboard](https://f1devbin.github.io/Crypto-Research-Labs/)** (7 languages) |
+| Understand the words (Sharpe, drawdown, p-value, funding…) | the glossary on the dashboard, or [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
+| Know what was found | [docs/FINDINGS.md](docs/FINDINGS.md) |
+| Run it yourself or add your own idea | [Quickstart](#quickstart) and [CONTRIBUTING.md](CONTRIBUTING.md) |
+
+**The short answer so far: no idea has beaten buy-and-hold reliably.** Daily trend rules lower
+drawdowns, mostly because they spend less time in the market, but they don't win by a margin
+that luck can't explain. Fast minute-level signals lose to fees.
+
+## What the dashboard shows
+
+| Market regime: what the market looks like today | One hypothesis: numbers and equity curve |
+|---|---|
+| ![Market regime](docs/screenshots/regime.png) | ![Hypothesis page](docs/screenshots/hypothesis.png) |
+
+| Russian version | Phone |
+|---|---|
+| ![Russian dashboard](docs/screenshots/dashboard-ru.png) | ![Mobile](docs/screenshots/mobile.png) |
+
+The site is rebuilt every day by GitHub Actions from real Binance, OKX, DefiLlama,
+alternative.me and BGeometrics data. Every page is fully rendered HTML, with `hreflang` language
+versions, a sitemap and structured data, so it is readable without JavaScript and by search engines.
 
 ## What we know so far
 
-| ID | Hypothesis | Last verdict |
-|----|------------|--------------|
-| H-001 | Minute-level TA ensemble predicts 1–4 h direction | ❌ FAIL |
-| H-002 | Inverted minute signals are profitable after fees | ❌ FAIL |
-| H-003 | Best daily trend rule (chosen 2018–2021) beats buy-and-hold out of sample | ◐ WEAK |
-| H-004 | Same, long/short futures | ◐ WEAK on Sharpe, but drawdowns down to −87 % |
-| H-005 | SMA50 long/flat beats buy-and-hold on 8 independent coins | ❌ FAIL |
-| H-006 | BTC long when stablecoin growth is above its 1-year median | ◐ WEAK |
-| H-007 | BTC out of the market when funding is in its top 20 % | ❌ FAIL |
-| H-008 | BTC out of the market when Fear & Greed ≥ 75 | ❌ FAIL |
-| H-009 | BTC long only after positive 5-day spot-ETF flow | ◐ WEAK |
-| H-010 | Stablecoin timing beats buy-and-hold on 8 independent coins | ❌ FAIL |
-| H-011 | BTC funding carry (spot long + perp short) | ❌ FAIL (~1.5 %/yr recently) |
+| ID | Hypothesis | Verdict |
+|----|------------|---------|
+| H-001 | Minute-level indicator ensemble predicts 1–4 h direction | ❌ Fail |
+| H-002 | Inverted minute signals are profitable after fees | ❌ Fail |
+| H-003 | Best daily trend rule (chosen 2018–2021) beats buy-and-hold out of sample | ◐ Weak |
+| H-004 | Same, long/short futures | ◐ Weak on Sharpe, with drawdowns down to −87 % |
+| H-005 | SMA50 long/flat beats buy-and-hold on 8 independent coins | ❌ Fail |
+| H-006 | BTC long when stablecoin growth is above its 1-year median | ◐ Weak |
+| H-007 | BTC out of the market when funding is in its top 20 % | ❌ Fail |
+| H-008 | BTC out of the market when Fear & Greed ≥ 75 | ❌ Fail |
+| H-009 | BTC long only after positive 5-day spot-ETF flow | ◐ Weak |
+| H-010 | Stablecoin timing beats buy-and-hold on 8 independent coins | ❌ Fail |
+| H-011 | BTC funding carry (spot long + perp short) | ❌ Fail (~1.5 %/yr recently) |
 
-**No idea has passed so far.** Daily trend rules cut drawdowns but don't beat
-buy-and-hold with statistical significance; most of the drawdown improvement comes
-from spending less time in the market. Details are in [docs/FINDINGS.md](docs/FINDINGS.md).
-The live table, updated by the runner, is in [reports/RESULTS.md](reports/RESULTS.md).
+The live table is in [reports/RESULTS.md](reports/RESULTS.md) and on the dashboard.
 
-## The agents
+## How it works
 
-| Agent | Schedule | What it does | It replaces |
-|-------|----------|--------------|-------------|
-| **Data steward** | daily | Updates a shared cache of Binance klines, funding, stablecoin supply, Fear & Greed and ETF flows; checks for gaps, stale series, duplicates and outliers | re-downloading data for every study; silent data holes |
-| **Regime watch** | daily | Watches funding carry, stablecoin growth, sentiment, BTC trend and volatility; alerts **only when a reading moves to a different band** | nobody checking whether a rejected idea (e.g. carry) has become interesting |
-| **Hypothesis runner** | weekly | Runs every due hypothesis with the shared protocol; stores JSON results; alerts on verdict changes | one hand-written 20–27 KB installer script per idea |
-| **Digest** | weekly | Short summary of data health, regime and results (optionally rewritten by Claude) | reading scattered text reports |
-| **Proposer** *(optional LLM)* | monthly | Claude drafts new hypotheses, which are schema-checked and de-duplicated against the registry, then opened as a PR | re-testing the same idea in new words |
+```mermaid
+flowchart LR
+    A[Data steward<br/>daily] -->|shared cache| B[Regime watch<br/>daily]
+    A --> C[Hypothesis runner<br/>weekly]
+    C --> D[results/ + reports/]
+    B --> E[Telegram alert<br/>only on change]
+    C --> E
+    D --> F[Dashboard<br/>GitHub Pages]
+    B --> F
+    G[Proposer<br/>monthly, optional LLM] -->|draft PR| H[You review<br/>and lock]
+    H --> C
+```
 
-The deterministic core needs no API key. The LLM layer can't run tests and can't
-change verdicts. It can only open draft pull requests, and a human must lock a draft
-(sha256) before it is ever tested. See [docs/WORKFLOWS.md](docs/WORKFLOWS.md).
+| Agent | When | What it does |
+|-------|------|--------------|
+| **Data steward** | daily | Updates one shared data cache and checks it for gaps, stale series, duplicates and outliers |
+| **Regime watch** | daily | Tracks funding carry, stablecoin growth, sentiment, trend and volatility; alerts **only when a reading changes band** |
+| **Hypothesis runner** | weekly | Re-tests every due hypothesis the same way, stores JSON results, alerts when a verdict changes |
+| **Digest** | weekly | A short summary of data, regime and results (optionally rewritten by Claude) |
+| **Dashboard** | daily | Builds the multilingual site and publishes it to GitHub Pages |
+| **Proposer** *(optional, LLM)* | monthly | Claude drafts new hypotheses; they are validated, de-duplicated and opened as a PR for a human to review |
+
+The LLM can't run tests or change verdicts. A human locks every draft (SHA-256) before it is
+ever tested. Why it's built this way: [docs/INEFFICIENCIES.md](docs/INEFFICIENCIES.md).
 
 ## Quickstart
 
+You need Python 3.10+ and git.
+
 ```bash
 git clone https://github.com/f1devbin/Crypto-Research-Labs
-cd crypto-research-labs
-python -m venv .venv && . .venv/bin/activate
+cd Crypto-Research-Labs
+python -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 
-pytest -q                 # engine tests: planted effects found, noise rejected, no look-ahead
-crl registry check        # every hypothesis valid, locked, not a duplicate
-crl data refresh          # build the local cache in ./data (first run: a few minutes)
-crl run --force           # re-test all rerunnable hypotheses
-crl watch                 # current regime -> reports/regime.md
+pytest -q                 # self-tests: finds planted effects, rejects noise, no look-ahead
+crl registry check        # every hypothesis valid, locked and unique
+crl data refresh          # download market data into ./data (first run: ~15 minutes)
+crl run --force           # re-test all hypotheses
+crl watch                 # today's market regime -> reports/regime.md
+crl site                  # build the dashboard into ./_site (open _site/index.html)
 ```
 
-### Adding a hypothesis
+### Run your own copy on GitHub
 
-1. Copy a file in `hypotheses/` to the next free ID and set `status: draft`.
-2. Describe the rule, universe, periods, significance test and pass criterion **before** looking at results.
-3. `crl registry check`, then `crl registry register H-0NN`. This writes the spec's sha256.
-   After that, any edit to the spec makes the registry check fail.
-4. `crl run H-0NN`.
+1. Fork the repository.
+2. **Settings → Pages → Source: GitHub Actions.**
+3. **Actions → research-agents → Run workflow.** The first run takes about 20 minutes.
+   After that it runs on its own every day.
 
-The format and the available rules are in [docs/WORKFLOWS.md](docs/WORKFLOWS.md#hypothesis-format).
-The statistics are in [docs/METHODOLOGY.md](docs/METHODOLOGY.md).
+Optional settings (*Settings → Secrets and variables → Actions*):
 
-## GitHub setup
+| Name | Kind | What it does |
+|------|------|--------------|
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | secret | sends alerts to Telegram |
+| `ANTHROPIC_API_KEY` | secret | turns on the proposer and the LLM digest |
+| `CRL_LLM_MODEL` | variable | overrides the model (default `claude-sonnet-5-5`) |
+| `GOOGLE_SITE_VERIFICATION` | variable | Search Console HTML-tag code, added to every page |
+| `CRL_SITE_URL` | variable | dashboard URL if you use a custom domain |
 
-Secrets (*Settings → Secrets and variables → Actions*). All of them are optional:
+For the proposer to open PRs, turn on *Settings → Actions → General → Allow GitHub Actions to
+create and approve pull requests*.
 
-| Name | Kind | Purpose |
-|------|------|---------|
-| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | secret | alerts to Telegram (otherwise alerts go to the job summary only) |
-| `ANTHROPIC_API_KEY` | secret | enables the proposer and the LLM digest rewrite |
-| `CRL_LLM_MODEL` | variable | model override (default `claude-sonnet-5-5`) |
+GitHub's runners are in the US, where `fapi.binance.com` answers HTTP 451. Recent funding
+therefore comes from OKX. Binance's historical archives aren't blocked.
 
-For the proposer to open PRs, turn on *Settings → Actions → General → Allow GitHub
-Actions to create and approve pull requests*.
-
-**Geoblocking:** GitHub runners are in the US. `fapi.binance.com` answers HTTP 451
-there, so recent funding comes from OKX instead. Historical archives come from
-`data.binance.vision`, which isn't blocked. Running locally outside the US needs
-no workaround.
-
-## Layout
+## Project layout
 
 ```
-src/crl/data/      http, sources (fetchers), store (cached series), integrity checks
-src/crl/engine/    rules, backtest, statistics, protocol (spec -> verdict)
-src/crl/agents/    data_steward, regime_watch, runner
-src/crl/llm/       client (Anthropic API), proposer, digest
-hypotheses/        the registry: one YAML per idea, sha256-locked
-results/           machine-readable results per hypothesis (committed by the runner)
-reports/           RESULTS.md, regime.md, data_health.md, runs/, digest/
-config/watch.yaml  regime monitors and bands
+src/crl/data/       downloading, caching and checking market data
+src/crl/engine/     trading rules, backtest, statistics, protocol (spec -> verdict)
+src/crl/agents/     data steward, regime watch, hypothesis runner
+src/crl/llm/        optional Claude layer: proposer, digest
+src/crl/site*.py    dashboard builder; src/crl/i18n.py holds the translations
+hypotheses/         one YAML file per idea, SHA-256-locked
+results/ reports/   written by the agents
+config/watch.yaml   what regime watch monitors
+docs/               getting started, methodology, findings, workflows
 ```
 
-## Lessons we kept
+## Lessons kept from the past
 
-- **One clock: UTC.** A UTC vs UTC+3 mix-up in the old bot created a 30-minute
-  blind window. Every timestamp here is UTC, and a decision at close *t* is applied to day *t+1*.
-- **Stops live on the exchange.** A stop held in a bot's memory is no stop at all
-  when the bot is down. The project doesn't trade. If you build on it, keep this rule.
-- **Infrastructure follows evidence.** Prove the edge cheaply first, then automate.
+- **One clock: UTC.** Mixing UTC and UTC+3 once created a 30-minute blind window.
+- **Stops live on the exchange.** A stop held only in a bot's memory disappears when the bot goes down.
+- **Prove the edge before building infrastructure.** A year of engineering went into a bot whose signals turned out worse than random.
+
+## Contributing
+
+New hypotheses, translations and fixes are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

@@ -1,6 +1,7 @@
 # Scheduled research agents.
 #   daily  : data steward (refresh cache + integrity) and regime watch (alerts on band changes)
 #   weekly : the above, then the hypothesis runner and the digest; results/ and reports/ are committed
+#   always : the dashboard is rebuilt from the fresh data and deployed to GitHub Pages
 # The data cache and the watch state live in actions/cache, so nothing is re-downloaded from scratch.
 name: research-agents
 
@@ -8,6 +9,9 @@ on:
   schedule:
     - cron: "17 6 * * *"   # daily, 06:17 UTC
     - cron: "41 7 * * 1"   # weekly, Monday 07:41 UTC
+  push:
+    branches: [main]
+    paths: ["src/crl/site*.py", "src/crl/i18n.py", "site/**", "config/**", ".github/workflows/research-agents.yml"]
   workflow_dispatch:
     inputs:
       full:
@@ -21,6 +25,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: crl-data          # one writer of the cache at a time
@@ -70,6 +76,24 @@ jobs:
         if: env.FULL == 'true'
         run: crl digest
 
+      - name: Build dashboard
+        env:
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          CRL_SITE_URL: ${{ vars.CRL_SITE_URL }}
+        run: crl site
+
+      - name: Refresh README screenshots
+        if: env.FULL == 'true'
+        continue-on-error: true
+        run: |
+          pip install -q playwright
+          python -m playwright install --with-deps chromium > /dev/null
+          python scripts/screenshots.py _site docs/screenshots
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
       - name: Save data cache
         if: always()
         uses: actions/cache/save@v4
@@ -82,7 +106,7 @@ jobs:
         run: |
           git config user.name "crl-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results reports hypotheses
+          git add results reports hypotheses docs/screenshots
           if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
           git commit -m "chore(results): scheduled run $(date -u +%F)"
           git pull --rebase origin "${GITHUB_REF_NAME}"
@@ -91,3 +115,14 @@ jobs:
       - name: Fail if the data steward failed
         if: steps.steward.outcome == 'failure'
         run: exit 1
+
+  deploy-pages:
+    needs: agents
+    if: ${{ !cancelled() }}   # publish fresh numbers even if one data source failed
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

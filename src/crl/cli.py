@@ -62,6 +62,11 @@ def _digest(_args) -> int:
     return digest.main()
 
 
+def _site(_args) -> int:
+    from crl import site
+    return site.main()
+
+
 def main(argv=None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     ap = argparse.ArgumentParser(prog="crl", description="Crypto Research Labs")
@@ -91,6 +96,7 @@ def main(argv=None) -> int:
     p.set_defaults(fn=_propose)
 
     sub.add_parser("digest", help="weekly digest").set_defaults(fn=_digest)
+    sub.add_parser("site", help="build the static dashboard into _site/").set_defaults(fn=_site)
 
     args = ap.parse_args(argv)
     return args.fn(args)
