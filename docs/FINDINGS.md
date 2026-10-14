@@ -48,6 +48,21 @@ Four BTC timing rules, out of sample 2022+, circular-shift test at α = 0.0125:
   justify putting the full capital on one exchange. **Regime watch** tracks this and
   alerts if carry moves back above 8 %/yr.
 
+## Re-run with this engine (2026-10-14)
+
+The first scheduled run on GitHub Actions re-tested all eight rerunnable studies from
+scratch, and every verdict except one matched F1MEBOT:
+
+- H-006 reproduced exactly (Sharpe 0.68 vs 0.50, p = 0.10).
+- H-005 reproduced exactly (4/8 full history, 3/8 since 2022).
+- **H-004 is now WEAK instead of FAIL.** The pre-registered criterion counts Sharpe wins
+  and significance. Long/short beats holding on BTC and SOL by Sharpe (not
+  significantly), but drawdowns reach −63 … −87 %. F1MEBOT rejected it on drawdown;
+  the engine reports it, but drawdown is not part of the criterion.
+- H-010 since 2022: 5/8 coins beat holding (3/8 in F1MEBOT, which had less data); 7/8 are still needed.
+
+Live numbers: [reports/RESULTS.md](../reports/RESULTS.md).
+
 ## Bottom line
 
 None of these ideas has a statistically reliable edge after fees. Daily trend rules

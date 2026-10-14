@@ -24,7 +24,7 @@ what replaces each one.
 | H-001 | Minute-level TA ensemble predicts 1–4 h direction | ❌ FAIL |
 | H-002 | Inverted minute signals are profitable after fees | ❌ FAIL |
 | H-003 | Best daily trend rule (chosen 2018–2021) beats buy-and-hold out of sample | ◐ WEAK |
-| H-004 | Same, long/short futures | ❌ FAIL |
+| H-004 | Same, long/short futures | ◐ WEAK on Sharpe, but drawdowns down to −87 % |
 | H-005 | SMA50 long/flat beats buy-and-hold on 8 independent coins | ❌ FAIL |
 | H-006 | BTC long when stablecoin growth is above its 1-year median | ◐ WEAK |
 | H-007 | BTC out of the market when funding is in its top 20 % | ❌ FAIL |
