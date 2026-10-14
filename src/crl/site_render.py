@@ -34,7 +34,7 @@ h3{font-size:1.1rem;margin:0 0 .3em}
 p,li{color:var(--text2)}
 .lead{font-size:1.12rem;max-width:62ch}
 .meta{color:var(--text2);font-size:.95rem}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
 .card{overflow-wrap:anywhere;background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:14px 16px}
 .value{font-size:1.9rem;font-weight:700;line-height:1.2;margin:.15em 0}
 .band{display:inline-block;border:2px solid var(--text);border-radius:6px;padding:0 8px;font-weight:700;font-size:.9rem}
