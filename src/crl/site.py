@@ -81,7 +81,7 @@ def _rule_states(store: DataStore, hyps: list[dict], sym: str) -> list[dict]:
     for h in hyps:
         spec = h.get("spec") or {}
         rule = spec.get("rule") or {}
-        if (spec.get("kind") != "timing_rule" or sym not in spec.get("universe", [])
+        if (h.get("replicates") or spec.get("kind") != "timing_rule" or sym not in spec.get("universe", [])
                 or rule.get("type") not in set(R.FEATURE_RULES) | set(R.CROSS_RULES) | set(R.CALENDAR_RULES)):
             continue
         try:
@@ -91,7 +91,8 @@ def _rule_states(store: DataStore, hyps: list[dict], sym: str) -> list[dict]:
         except (FileNotFoundError, KeyError, ValueError):
             state, day = None, None
         out.append({"id": h["id"], "verdict": h["verdict"], "state": state, "date": day})
-    return out
+    rank = {"PASS": 0, "WEAK": 1, "FAIL": 2}
+    return sorted(out, key=lambda r: (rank.get(r["verdict"], 3), r["id"]))  # proven rules first
 
 
 def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
@@ -243,7 +244,8 @@ def hypotheses(store: DataStore, curves: bool = True) -> list[dict]:
                 "source": "engine" if res else (hist[-1].get("source") if hist else None),
                 "history": [{"date": x.get("date"), "verdict": x.get("verdict"), "source": x.get("source")}
                             for x in hist],
-                "spec": h.get("spec"), "rows": [], "curves": [], "test_after": h.get("test_after")}
+                "spec": h.get("spec"), "rows": [], "curves": [], "test_after": h.get("test_after"),
+                "replicates": h.get("replicates")}
         if res:
             item["rows"] = [{k: (_num(r[k], 6) if isinstance(r.get(k), float) else r.get(k))
                              for k in ROW_FIELDS if k in r} for r in res["rows"]]
