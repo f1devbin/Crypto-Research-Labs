@@ -62,6 +62,14 @@ def _breadth(store: DataStore, p: dict) -> pd.Series:
     return df.mean(axis=1).where(df.notna().sum(axis=1) >= max(3, len(flags) // 2))
 
 
+def _rule_state(store: DataStore, p: dict) -> pd.Series:
+    """1 = the hypothesis rule is in the market for the next day, 0 = out."""
+    from crl import registry
+    from crl.engine import rules as R
+    h = next(x for x in registry.load_all() if x.id == p["hypothesis"])
+    return R.build(h["spec"]["rule"], store, p.get("symbol", h["spec"]["universe"][0]))
+
+
 def _feature(store: DataStore, p: dict) -> pd.Series:
     return store.feature(p["name"])
 
@@ -75,6 +83,7 @@ METRICS = {
     "realized_vol": _realized_vol,
     "breadth": _breadth,
     "feature": _feature,
+    "rule_state": _rule_state,
 }
 
 

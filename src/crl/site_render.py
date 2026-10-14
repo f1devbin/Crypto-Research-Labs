@@ -320,7 +320,7 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         note_html = f'<p class="note">{e(note)}</p>' if note else ""
         err = f'<p class="note">{e(t(lang, "source_down"))}</p>' if m.get("error") else ""
         cards.append(f'<article class="card"><h3>{e(label)}</h3><p class="explain">{e(explain)}</p>'
-                     f'<div class="value">{e(fmt_monitor(m))}</div><span class="band">{e(band)}</span>'
+                     f'<div class="value">{e(band if m.get("metric") == "rule_state" else fmt_monitor(m))}</div><span class="band">{e(band)}</span>'
                      f'{note_html}{err}{spark}</article>')
 
     btc = ""
@@ -519,6 +519,14 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
         links = " ".join(f'<a href="../hypotheses/{i}.html">{i}</a> {badge(lang, hyps[i]["verdict"])}'
                          for i in SIGNAL_STUDIES_R[sig] if i in hyps)
         sig_rows.append(f"<tr><td>{e(t(lang, label))}</td><td>{state(sig, c['signals'][sig])}</td><td>{links}</td></tr>")
+    for rs in c.get("rule_states", []):
+        h = hyps.get(rs["id"])
+        if not h:
+            continue
+        val = None if rs["state"] is None else rs["state"] >= 0.5
+        sig_rows.append(f'<tr><td>{e(t(lang, "sig_rule", id=rs["id"]))}: {e(title_of(lang, h))}</td>'
+                        f'<td>{state("rule", val)}</td><td><a href="../hypotheses/{e(rs["id"])}.html">{e(rs["id"])}</a> '
+                        f'{badge(lang, rs["verdict"])}</td></tr>')
     studies = "".join(f'<li><a href="../hypotheses/{e(s["id"])}.html">{e(s["id"])}: {e(title_of(lang, hyps[s["id"]]))}'
                       f'</a> {badge(lang, s["verdict"])}</li>' for s in c["studies"] if s["id"] in hyps)
     thin = (f'<p class="callout">{e(t(lang, "thin_note", exchange=c["exchange"]))}</p>'

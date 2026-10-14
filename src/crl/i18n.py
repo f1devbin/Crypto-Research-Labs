@@ -65,6 +65,7 @@ T = {
  'st_corr': 'Correlation with Bitcoin (90 days)',
  'corr_note': 'Correlation: 1 = moves exactly with Bitcoin, 0 = no link, −1 = moves opposite. Most coins are above 0.6, so owning several of them is not much safer than owning one.',
  "plain_scheduled": 'Data is being collected. The pre-registered test runs on {date}, once a year of data has accumulated.',
+ "sig_rule": 'Rule {id}',
  "site_title": "Crypto Research Labs: open, pre-registered crypto trading research",
  "site_desc": "Open, pre-registered crypto trading research: {verdict} Live market regime (BTC funding carry, "
               "stablecoin supply, Fear & Greed, trend, volatility) and every hypothesis re-tested automatically.",
@@ -174,6 +175,7 @@ T = {
    "far, and even a pass would need independent confirmation and paper trading first."),
  ],
  "monitors": {
+  "h020_rule": ('H-020 rule today: BTC in or out of the market', 'The only rule that has passed its test. It stays out of Bitcoin while net deposits to exchanges are in their top 20% of the past year. Not a trading signal: it is still being verified (H-022).'),
   "btc_exchange_flow": ('BTC net flow to exchanges (7 days)', 'Bitcoin moved onto exchanges minus bitcoin moved off them over the last 7 days. Plus means net deposits (often read as coming sales), minus means net withdrawals to private wallets.'),
   "breadth": ('Market breadth: coins above their 200-day average', 'Share of the 12 coins whose price is above their own 200-day average. High means most of the market is in an uptrend; low means most coins are falling.'),
   "ever_trend": ('Everscale (EVER) vs its 50-day average', 'How far EVER trades above (+) or below (−) its 50-day average on Gate.io. This is the H-018 rule: above = in the market, below = out.'),
@@ -192,12 +194,13 @@ T = {
                      "How much the price swings, scaled to a year. 40% means a typical yearly move of about 40% up "
                      "or down."),
  },
- "bands": {"deposits": 'deposits', "withdrawals": 'withdrawals', "weak": 'weak', "mixed": 'mixed', "strong": 'strong', "negative": "negative", "low": "low", "moderate": "moderate", "attractive": "attractive",
+ "bands": {"rule_in": 'in the market', "rule_out": 'out of the market', "deposits": 'deposits', "withdrawals": 'withdrawals', "weak": 'weak', "mixed": 'mixed', "strong": 'strong', "negative": "negative", "low": "low", "moderate": "moderate", "attractive": "attractive",
            "contracting": "contracting", "flat": "flat", "expanding": "expanding", "extreme_fear": "extreme fear",
            "fear": "fear", "neutral": "neutral", "greed": "greed", "extreme_greed": "extreme greed",
            "below": "below", "above": "above", "calm": "calm", "normal": "normal", "stressed": "stressed",
            "unavailable": "unavailable"},
  "notes": {
+  ("h020_rule", "rule_out"): 'Heavy deposits to exchanges: the rule is out of the market.',
   ("btc_exchange_flow", "deposits"): 'Heavy deposits are tested in H-020 (BTC) and H-021 (ETH).',
   ("ever_trend", "above"): 'H-018 rule is in the market. Better than holding so far, but not significant; very thin liquidity.',
   ("ever_trend", "below"): 'H-018 rule is out of the market.',
@@ -255,6 +258,7 @@ T = {
  'st_corr': 'Связь с биткоином (корреляция, 90 дней)',
  'corr_note': 'Корреляция: 1 — движется точно как биткоин, 0 — связи нет, −1 — движется наоборот. У большинства монет выше 0,6, поэтому несколько монет в портфеле почти не надёжнее одной.',
  "plain_scheduled": 'Данные копятся. Заранее назначенная проверка пройдёт {date}, когда накопится год данных.',
+ "sig_rule": 'Правило {id}',
  "site_title": "Crypto Research Labs: открытые исследования торговых стратегий для криптовалют",
  "site_desc": "Открытые исследования торговых идей для криптовалют с предварительной регистрацией: {verdict} "
               "Состояние рынка в реальном времени (доходность фандинга BTC, стейблкоины, индекс страха и жадности, "
@@ -368,6 +372,7 @@ T = {
    "прошедшей идее нужна независимая проверка и торговля на бумаге."),
  ],
  "monitors": {
+  "h020_rule": ('Правило H-020 сегодня: BTC в рынке или вне', 'Единственное правило, прошедшее проверку. Оно не держит биткоин, пока чистый завод на биржи в верхних 20% за год. Это не торговый сигнал: правило ещё перепроверяется (H-022).'),
   "btc_exchange_flow": ('Чистый приток BTC на биржи (7 дней)', 'Сколько биткоинов завели на биржи минус сколько вывели за 7 дней. Плюс — чистый завод (часто читают как будущие продажи), минус — вывод в личные кошельки.'),
   "breadth": ('Ширина рынка: монеты выше 200-дневной средней', 'Доля из 12 монет, у которых цена выше собственной 200-дневной средней. Много — большая часть рынка в росте; мало — большинство монет падает.'),
   "ever_trend": ('Everscale (EVER) относительно 50-дневной средней', 'Насколько EVER на Gate.io выше (+) или ниже (−) своей средней за 50 дней. Это правило H-018: выше — в рынке, ниже — вне рынка.'),
@@ -387,12 +392,13 @@ T = {
                      "Насколько сильно скачет цена в пересчёте на год. 40% — типичное годовое движение примерно на "
                      "40% вверх или вниз."),
  },
- "bands": {"deposits": 'завод на биржи', "withdrawals": 'вывод с бирж', "weak": 'слабая', "mixed": 'смешанная', "strong": 'сильная', "negative": "отрицательная", "low": "низкая", "moderate": "умеренная", "attractive": "привлекательная",
+ "bands": {"rule_in": 'в рынке', "rule_out": 'вне рынка', "deposits": 'завод на биржи', "withdrawals": 'вывод с бирж', "weak": 'слабая', "mixed": 'смешанная', "strong": 'сильная', "negative": "отрицательная", "low": "низкая", "moderate": "умеренная", "attractive": "привлекательная",
            "contracting": "сокращение", "flat": "без изменений", "expanding": "рост",
            "extreme_fear": "крайний страх", "fear": "страх", "neutral": "нейтрально", "greed": "жадность",
            "extreme_greed": "крайняя жадность", "below": "ниже", "above": "выше", "calm": "спокойно",
            "normal": "обычно", "stressed": "напряжённо", "unavailable": "нет данных"},
  "notes": {
+  ("h020_rule", "rule_out"): 'Сильный завод на биржи: правило вне рынка.',
   ("btc_exchange_flow", "deposits"): 'Сильный завод на биржи проверяется в H-020 (BTC) и H-021 (ETH).',
   ("ever_trend", "above"): 'Правило H-018 в рынке. Пока лучше удержания, но не значимо; ликвидность очень низкая.',
   ("ever_trend", "below"): 'Правило H-018 вне рынка.',
@@ -473,6 +479,7 @@ T = {
  'st_corr': 'Correlación con Bitcoin (90 días)',
  'corr_note': 'Correlación: 1 = se mueve igual que Bitcoin, 0 = sin relación, −1 = se mueve al revés. La mayoría de las monedas están por encima de 0,6, así que tener varias no es mucho más seguro que tener una.',
  "plain_scheduled": 'Se están recogiendo datos. La prueba prerregistrada se hará el {date}, cuando haya un año de datos.',
+ "sig_rule": 'Regla {id}',
  "site_title": "Crypto Research Labs: investigación abierta y prerregistrada de trading de criptomonedas",
  "site_desc": "Investigación abierta y prerregistrada de estrategias de trading cripto: {verdict} Régimen de mercado "
               "en vivo (carry de funding de BTC, stablecoins, Fear & Greed, tendencia, volatilidad) y cada hipótesis "
@@ -584,6 +591,7 @@ T = {
    "la prueba hasta ahora, e incluso un aprobado necesitaría confirmación independiente y trading simulado."),
  ],
  "monitors": {
+  "h020_rule": ('Regla H-020 hoy: BTC dentro o fuera del mercado', 'La única regla que ha superado su prueba. No mantiene Bitcoin mientras los depósitos netos a exchanges estén en su 20% superior del último año. No es una señal: aún se está verificando (H-022).'),
   "btc_exchange_flow": ('Flujo neto de BTC a exchanges (7 días)', 'Bitcoin enviado a exchanges menos bitcoin retirado en los últimos 7 días. Positivo = depósitos netos (suele leerse como ventas próximas); negativo = retiros a carteras privadas.'),
   "breadth": ('Amplitud del mercado: monedas sobre su media de 200 días', 'Parte de las 12 monedas cuyo precio está por encima de su propia media de 200 días. Alto = la mayor parte del mercado sube; bajo = la mayoría cae.'),
   "ever_trend": ('Everscale (EVER) frente a su media de 50 días', 'Cuánto cotiza EVER en Gate.io por encima (+) o por debajo (−) de su media de 50 días. Es la regla H-018: encima = dentro, debajo = fuera.'),
@@ -603,12 +611,13 @@ T = {
                      "Cuánto oscila el precio, escalado a un año. 40% significa un movimiento anual típico de un 40% "
                      "arriba o abajo."),
  },
- "bands": {"deposits": 'depósitos', "withdrawals": 'retiros', "weak": 'débil', "mixed": 'mixta', "strong": 'fuerte', "negative": "negativo", "low": "bajo", "moderate": "moderado", "attractive": "atractivo",
+ "bands": {"rule_in": 'dentro del mercado', "rule_out": 'fuera del mercado', "deposits": 'depósitos', "withdrawals": 'retiros', "weak": 'débil', "mixed": 'mixta', "strong": 'fuerte', "negative": "negativo", "low": "bajo", "moderate": "moderado", "attractive": "atractivo",
            "contracting": "contracción", "flat": "estable", "expanding": "expansión", "extreme_fear": "miedo extremo",
            "fear": "miedo", "neutral": "neutral", "greed": "codicia", "extreme_greed": "codicia extrema",
            "below": "por debajo", "above": "por encima", "calm": "tranquilo", "normal": "normal",
            "stressed": "tenso", "unavailable": "sin datos"},
  "notes": {
+  ("h020_rule", "rule_out"): 'Depósitos fuertes a exchanges: la regla está fuera del mercado.',
   ("btc_exchange_flow", "deposits"): 'Los depósitos fuertes se prueban en H-020 (BTC) y H-021 (ETH).',
   ("ever_trend", "above"): 'La regla H-018 está dentro. Mejor que mantener, pero no significativo; liquidez muy baja.',
   ("ever_trend", "below"): 'La regla H-018 está fuera del mercado.',
@@ -689,6 +698,7 @@ T = {
  'st_corr': 'Correlação com o Bitcoin (90 dias)',
  'corr_note': 'Correlação: 1 = se move igual ao Bitcoin, 0 = sem relação, −1 = se move ao contrário. A maioria das moedas fica acima de 0,6, então ter várias não é muito mais seguro do que ter uma.',
  "plain_scheduled": 'Os dados estão sendo coletados. O teste pré-registrado será feito em {date}, quando houver um ano de dados.',
+ "sig_rule": 'Regra {id}',
  "site_title": "Crypto Research Labs: pesquisa aberta e pré-registrada de trading de criptomoedas",
  "site_desc": "Pesquisa aberta e pré-registrada de estratégias de trading cripto: {verdict} Regime de mercado ao vivo "
               "(carry de funding do BTC, stablecoins, Fear & Greed, tendência, volatilidade) e cada hipótese é "
@@ -800,6 +810,7 @@ T = {
    "mesmo uma aprovação precisaria de confirmação independente e trading simulado."),
  ],
  "monitors": {
+  "h020_rule": ('Regra H-020 hoje: BTC dentro ou fora do mercado', 'A única regra que passou no teste. Ela fica fora do Bitcoin enquanto os depósitos líquidos em corretoras estão nos 20% mais altos do último ano. Não é sinal de operação: ainda está sendo verificada (H-022).'),
   "btc_exchange_flow": ('Fluxo líquido de BTC para corretoras (7 dias)', 'Bitcoin enviado às corretoras menos bitcoin retirado nos últimos 7 dias. Positivo = depósitos líquidos (costuma indicar vendas à frente); negativo = saques para carteiras próprias.'),
   "breadth": ('Amplitude do mercado: moedas acima da média de 200 dias', 'Parte das 12 moedas com preço acima da própria média de 200 dias. Alto = a maior parte do mercado está em alta; baixo = a maioria está caindo.'),
   "ever_trend": ('Everscale (EVER) versus sua média de 50 dias', 'Quanto o EVER na Gate.io está acima (+) ou abaixo (−) da média de 50 dias. É a regra H-018: acima = no mercado, abaixo = fora.'),
@@ -819,12 +830,13 @@ T = {
                      "Quanto o preço oscila, em escala anual. 40% significa um movimento anual típico de cerca de 40% "
                      "para cima ou para baixo."),
  },
- "bands": {"deposits": 'depósitos', "withdrawals": 'saques', "weak": 'fraca', "mixed": 'mista', "strong": 'forte', "negative": "negativo", "low": "baixo", "moderate": "moderado", "attractive": "atraente",
+ "bands": {"rule_in": 'no mercado', "rule_out": 'fora do mercado', "deposits": 'depósitos', "withdrawals": 'saques', "weak": 'fraca', "mixed": 'mista', "strong": 'forte', "negative": "negativo", "low": "baixo", "moderate": "moderado", "attractive": "atraente",
            "contracting": "em queda", "flat": "estável", "expanding": "em alta", "extreme_fear": "medo extremo",
            "fear": "medo", "neutral": "neutro", "greed": "ganância", "extreme_greed": "ganância extrema",
            "below": "abaixo", "above": "acima", "calm": "calmo", "normal": "normal", "stressed": "tenso",
            "unavailable": "sem dados"},
  "notes": {
+  ("h020_rule", "rule_out"): 'Depósitos fortes em corretoras: a regra está fora do mercado.',
   ("btc_exchange_flow", "deposits"): 'Depósitos fortes são testados na H-020 (BTC) e na H-021 (ETH).',
   ("ever_trend", "above"): 'A regra H-018 está no mercado. Melhor que segurar, mas não significativo; liquidez muito baixa.',
   ("ever_trend", "below"): 'A regra H-018 está fora do mercado.',
@@ -905,6 +917,7 @@ T = {
  'st_corr': 'Bitcoin ile korelasyon (90 gün)',
  'corr_note': "Korelasyon: 1 = Bitcoin ile tam aynı hareket, 0 = ilişki yok, −1 = ters hareket. Çoğu coin 0,6'nın üzerinde; bu yüzden birkaç coin tutmak tek coin tutmaktan pek daha güvenli değil.",
  "plain_scheduled": 'Veri toplanıyor. Önceden kayıtlı test, bir yıllık veri biriktiğinde {date} tarihinde yapılacak.',
+ "sig_rule": 'Kural {id}',
  "site_title": "Crypto Research Labs: açık, önceden kayıtlı kripto alım satım araştırması",
  "site_desc": "Açık ve önceden kayıtlı kripto alım satım araştırması: {verdict} Canlı piyasa rejimi (BTC funding "
               "carry, stablecoin arzı, Korku ve Açgözlülük, trend, volatilite) ve her hipotez otomatik olarak yeniden "
@@ -1015,6 +1028,7 @@ T = {
    "kadar hiçbir şey geçmedi; geçse bile bağımsız doğrulama ve kağıt üzerinde işlem gerekir."),
  ],
  "monitors": {
+  "h020_rule": ('H-020 kuralı bugün: BTC piyasada mı dışında mı', "Testini geçen tek kural. Borsalara net yatırmalar son bir yılın en üst %20'sindeyken Bitcoin tutmaz. İşlem sinyali değildir: hâlâ doğrulanıyor (H-022)."),
   "btc_exchange_flow": ('Borsalara net BTC akışı (7 gün)', 'Son 7 günde borsalara gönderilen bitcoin eksi çekilen bitcoin. Artı = net yatırma (çoğunlukla yaklaşan satış olarak okunur), eksi = kişisel cüzdanlara net çekim.'),
   "breadth": ('Piyasa genişliği: 200 günlük ortalamanın üzerindeki coinler', '12 coinden fiyatı kendi 200 günlük ortalamasının üzerinde olanların payı. Yüksek = piyasanın çoğu yükselişte; düşük = coinlerin çoğu düşüyor.'),
   "ever_trend": ('Everscale (EVER) ve 50 günlük ortalaması', "EVER'in Gate.io'da 50 günlük ortalamasının ne kadar üstünde (+) ya da altında (−) olduğu. H-018 kuralı: üstünde = piyasada, altında = dışarıda."),
@@ -1034,12 +1048,13 @@ T = {
                      "Fiyatın yıllık ölçekte ne kadar dalgalandığı. %40, yaklaşık %40 yukarı veya aşağı tipik bir "
                      "yıllık hareket demektir."),
  },
- "bands": {"deposits": 'yatırma', "withdrawals": 'çekim', "weak": 'zayıf', "mixed": 'karışık', "strong": 'güçlü', "negative": "negatif", "low": "düşük", "moderate": "orta", "attractive": "cazip",
+ "bands": {"rule_in": 'piyasada', "rule_out": 'piyasa dışında', "deposits": 'yatırma', "withdrawals": 'çekim', "weak": 'zayıf', "mixed": 'karışık', "strong": 'güçlü', "negative": "negatif", "low": "düşük", "moderate": "orta", "attractive": "cazip",
            "contracting": "daralıyor", "flat": "yatay", "expanding": "genişliyor", "extreme_fear": "aşırı korku",
            "fear": "korku", "neutral": "nötr", "greed": "açgözlülük", "extreme_greed": "aşırı açgözlülük",
            "below": "altında", "above": "üstünde", "calm": "sakin", "normal": "normal", "stressed": "gergin",
            "unavailable": "veri yok"},
  "notes": {
+  ("h020_rule", "rule_out"): 'Borsalara yoğun yatırma: kural piyasa dışında.',
   ("btc_exchange_flow", "deposits"): "Yoğun yatırmalar H-020 (BTC) ve H-021'de (ETH) test ediliyor.",
   ("ever_trend", "above"): 'H-018 kuralı piyasada. Tutmaktan iyi ama anlamlı değil; likidite çok düşük.',
   ("ever_trend", "below"): 'H-018 kuralı piyasa dışında.',
@@ -1120,6 +1135,7 @@ T = {
  'st_corr': 'Tương quan với Bitcoin (90 ngày)',
  'corr_note': 'Tương quan: 1 = biến động y như Bitcoin, 0 = không liên quan, −1 = ngược chiều. Đa số coin trên 0,6, nên giữ nhiều coin cũng không an toàn hơn nhiều so với giữ một coin.',
  "plain_scheduled": 'Dữ liệu đang được thu thập. Bài kiểm tra đã đăng ký trước sẽ chạy vào {date}, khi đủ một năm dữ liệu.',
+ "sig_rule": 'Quy tắc {id}',
  "site_title": "Crypto Research Labs: nghiên cứu giao dịch tiền mã hóa mở, đăng ký trước",
  "site_desc": "Nghiên cứu chiến lược giao dịch tiền mã hóa mở và đăng ký trước: {verdict} Trạng thái thị trường trực "
               "tiếp (lợi suất funding BTC, nguồn cung stablecoin, chỉ số Sợ hãi & Tham lam, xu hướng, biến động) và "
@@ -1228,6 +1244,7 @@ T = {
    "nay chưa có gì đạt, và ngay cả khi đạt cũng cần xác nhận độc lập và giao dịch thử trước."),
  ],
  "monitors": {
+  "h020_rule": ('Quy tắc H-020 hôm nay: BTC trong hay ngoài thị trường', 'Quy tắc duy nhất đã vượt qua kiểm tra. Nó không giữ Bitcoin khi lượng nạp ròng vào sàn thuộc nhóm 20% cao nhất của năm qua. Không phải tín hiệu giao dịch: vẫn đang được kiểm chứng (H-022).'),
   "btc_exchange_flow": ('Dòng BTC ròng vào sàn (7 ngày)', 'Lượng bitcoin nạp vào sàn trừ lượng rút ra trong 7 ngày qua. Dương = nạp ròng (thường được hiểu là sắp bán), âm = rút ròng về ví cá nhân.'),
   "breadth": ('Độ rộng thị trường: coin trên trung bình 200 ngày', 'Tỷ lệ trong 12 coin có giá trên trung bình 200 ngày của chính nó. Cao = phần lớn thị trường đang tăng; thấp = đa số coin đang giảm.'),
   "ever_trend": ('Everscale (EVER) so với trung bình 50 ngày', 'EVER trên Gate.io cao hơn (+) hay thấp hơn (−) bao nhiêu so với trung bình 50 ngày. Đây là quy tắc H-018: trên = trong thị trường, dưới = đứng ngoài.'),
@@ -1247,12 +1264,13 @@ T = {
                      "Giá dao động mạnh đến mức nào, quy ra năm. 40% nghĩa là biến động năm điển hình khoảng 40% lên "
                      "hoặc xuống."),
  },
- "bands": {"deposits": 'nạp vào sàn', "withdrawals": 'rút khỏi sàn', "weak": 'yếu', "mixed": 'trung tính', "strong": 'mạnh', "negative": "âm", "low": "thấp", "moderate": "vừa phải", "attractive": "hấp dẫn",
+ "bands": {"rule_in": 'trong thị trường', "rule_out": 'đứng ngoài', "deposits": 'nạp vào sàn', "withdrawals": 'rút khỏi sàn', "weak": 'yếu', "mixed": 'trung tính', "strong": 'mạnh', "negative": "âm", "low": "thấp", "moderate": "vừa phải", "attractive": "hấp dẫn",
            "contracting": "thu hẹp", "flat": "đi ngang", "expanding": "mở rộng", "extreme_fear": "cực kỳ sợ hãi",
            "fear": "sợ hãi", "neutral": "trung lập", "greed": "tham lam", "extreme_greed": "cực kỳ tham lam",
            "below": "dưới", "above": "trên", "calm": "bình lặng", "normal": "bình thường", "stressed": "căng thẳng",
            "unavailable": "không có dữ liệu"},
  "notes": {
+  ("h020_rule", "rule_out"): 'Nạp mạnh vào sàn: quy tắc đang đứng ngoài.',
   ("btc_exchange_flow", "deposits"): 'Lượng nạp lớn được kiểm tra trong H-020 (BTC) và H-021 (ETH).',
   ("ever_trend", "above"): 'Quy tắc H-018 đang trong thị trường. Tốt hơn giữ nhưng chưa có ý nghĩa thống kê; thanh khoản rất thấp.',
   ("ever_trend", "below"): 'Quy tắc H-018 đang đứng ngoài.',
@@ -1333,6 +1351,7 @@ T = {
  'st_corr': '与比特币的相关性（90 天）',
  'corr_note': '相关性：1 = 与比特币完全同步，0 = 无关联，−1 = 反向。大多数币高于 0.6，所以持有多个币并不比持有一个安全多少。',
  "plain_scheduled": '数据正在积累中。预注册的检验将在积累一年数据后于 {date} 进行。',
+ "sig_rule": '规则 {id}',
  "site_title": "Crypto Research Labs：公开、预注册的加密货币交易研究",
  "site_desc": "公开、预注册的加密货币交易策略研究：{verdict}实时市场状态（BTC 资金费率套利收益、稳定币供应、恐惧与贪婪指数、"
               "趋势、波动率），每个假设都会自动重新检验。",
@@ -1420,6 +1439,7 @@ T = {
    "验证并进行模拟交易。"),
  ],
  "monitors": {
+  "h020_rule": ('H-020 规则今日状态：BTC 持仓还是空仓', '唯一通过检验的规则。当交易所净存入处于过去一年最高 20% 时不持有比特币。这不是交易信号：仍在验证中（H-022）。'),
   "btc_exchange_flow": ('BTC 交易所净流入（7 天）', '过去 7 天转入交易所的比特币减去转出的比特币。正值 = 净存入（常被视为即将卖出），负值 = 净提取到个人钱包。'),
   "breadth": ('市场广度：高于 200 日均线的币种', '12 个币中价格高于自身 200 日均线的比例。高 = 大部分市场处于上升趋势；低 = 大多数币在下跌。'),
   "ever_trend": ('Everscale (EVER) 相对 50 日均线', 'EVER 在 Gate.io 上高于（+）或低于（−）其 50 日均价的幅度。这就是 H-018 规则：高于 = 持仓，低于 = 空仓。'),
@@ -1431,11 +1451,12 @@ T = {
   "btc_trend": ("BTC 相对 200 日均线", "价格高于（+）或低于（−）过去 200 天均价的幅度。高于通常意味着长期上升趋势。"),
   "btc_volatility": ("BTC 波动率（30 天，年化）", "价格波动有多大，换算为一年。40% 表示一年内典型涨跌幅约为 40%。"),
  },
- "bands": {"deposits": '净存入', "withdrawals": '净提取', "weak": '弱', "mixed": '分化', "strong": '强', "negative": "负值", "low": "低", "moderate": "中等", "attractive": "有吸引力", "contracting": "收缩",
+ "bands": {"rule_in": '持仓', "rule_out": '空仓', "deposits": '净存入', "withdrawals": '净提取', "weak": '弱', "mixed": '分化', "strong": '强', "negative": "负值", "low": "低", "moderate": "中等", "attractive": "有吸引力", "contracting": "收缩",
            "flat": "持平", "expanding": "扩张", "extreme_fear": "极度恐惧", "fear": "恐惧", "neutral": "中性",
            "greed": "贪婪", "extreme_greed": "极度贪婪", "below": "低于", "above": "高于", "calm": "平稳",
            "normal": "正常", "stressed": "紧张", "unavailable": "无数据"},
  "notes": {
+  ("h020_rule", "rule_out"): '交易所大额存入：规则处于空仓。',
   ("btc_exchange_flow", "deposits"): '大额存入在 H-020（BTC）和 H-021（ETH）中检验。',
   ("ever_trend", "above"): 'H-018 规则处于持仓状态。目前优于持有，但不显著；流动性很低。',
   ("ever_trend", "below"): 'H-018 规则处于空仓状态。',

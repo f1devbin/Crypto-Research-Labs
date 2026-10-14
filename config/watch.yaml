@@ -87,6 +87,20 @@ monitors:
     notes:
       deposits: "Heavy deposits are tested in H-020 (BTC) and H-021 (ETH)."
 
+  h020_rule:
+    label: "H-020 rule today: BTC in or out of the market"
+    metric: rule_state
+    params: {hypothesis: H-020, symbol: BTCUSDT}
+    explain: >-
+      The only rule that has passed its test. It stays out of Bitcoin while net deposits to exchanges are in their
+      top 20% of the past year. Not a signal to trade: it is still being verified (H-022).
+    format: "{:.0f}"
+    bands:
+      rule_out: [null, 0.5]
+      rule_in: [0.5, null]
+    notes:
+      rule_out: "Heavy deposits to exchanges: the rule would be out of the market."
+
   breadth:
     label: Market breadth (coins above their 200-day average)
     metric: breadth

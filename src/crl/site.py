@@ -74,6 +74,26 @@ def _chg(c: pd.Series, days: int):
     return _num(c.iloc[-1] / c.iloc[-1 - days] - 1, 6) if len(c) > days else None
 
 
+def _rule_states(store: DataStore, hyps: list[dict], sym: str) -> list[dict]:
+    """Today's position of each data-driven timing rule tested on `sym` (decided at the last close,
+    so it applies to the next day). The 4 generic price rules are shown separately."""
+    out = []
+    for h in hyps:
+        spec = h.get("spec") or {}
+        rule = spec.get("rule") or {}
+        if (spec.get("kind") != "timing_rule" or sym not in spec.get("universe", [])
+                or rule.get("type") not in set(R.FEATURE_RULES) | set(R.CROSS_RULES) | set(R.CALENDAR_RULES)):
+            continue
+        try:
+            flag = R.build(rule, store, sym).dropna()
+            state = float(flag.iloc[-1]) if len(flag) else None
+            day = str(flag.index[-1].date()) if len(flag) else None
+        except (FileNotFoundError, KeyError, ValueError):
+            state, day = None, None
+        out.append({"id": h["id"], "verdict": h["verdict"], "state": state, "date": day})
+    return out
+
+
 def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
     """Per-coin snapshot: price, changes, trend, volatility, 12-month chart and today's state of each
     tested rule. Rule states are descriptive only: none of these rules has passed its test."""
@@ -122,6 +142,7 @@ def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
                 "vol": None if not v else _num(min(1.0, 0.3 / v), 4),
                 "btc": btc_on,
             },
+            "rule_states": _rule_states(store, hyps, sym),
             "studies": [{"id": h["id"], "verdict": h["verdict"]} for h in hyps
                         if sym in (h.get("spec") or {}).get("universe", [])],
             "chart": {"close": _points(c[recent], nd=8), "sma50": _points(sma50[recent], nd=8),
