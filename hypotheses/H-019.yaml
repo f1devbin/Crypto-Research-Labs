@@ -1,6 +1,6 @@
 id: H-019
 title: 'Everscale (EVER): hold only while BTC is above its 200-day average'
-status: registered
+status: weak
 family: trend
 created: '2026-10-14'
 author: Claude (literature review for F1DevBin)
@@ -31,3 +31,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-14'
 prereg_sha256: a32a2211c54b40fee11a943e371ca41c537151845aa45478597aa70e44674a94
+last_run: '2026-10-14'

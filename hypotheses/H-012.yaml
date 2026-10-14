@@ -1,6 +1,6 @@
 id: H-012
 title: Volatility targeting (30%/yr) beats buy-and-hold on BTC, ETH, SOL
-status: registered
+status: weak
 family: risk
 created: '2026-10-14'
 author: Claude (literature review for F1DevBin)
@@ -35,3 +35,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-14'
 prereg_sha256: 47b8d345bab41071d089c9819eedda4117639e06d631d28084375c07d0868899
+last_run: '2026-10-14'

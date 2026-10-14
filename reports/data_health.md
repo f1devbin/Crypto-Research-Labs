@@ -1,6 +1,6 @@
 # Data health
 
-Checked 2026-10-14 17:37 UTC
+Checked 2026-10-14 18:02 UTC
 
 | source | files | missing | errors |
 |---|---|---|---|
@@ -9,6 +9,7 @@ Checked 2026-10-14 17:37 UTC
 | klines BTCUSDT | 123 | 0 | — |
 | klines DOGEUSDT | 100 | 0 | — |
 | klines ETHUSDT | 123 | 0 | — |
+| klines EVERUSDT (gate) | 5 | 0 | — |
 | klines LINKUSDT | 106 | 0 | — |
 | klines LTCUSDT | 119 | 0 | — |
 | klines SOLUSDT | 87 | 0 | — |
@@ -26,6 +27,7 @@ Checked 2026-10-14 17:37 UTC
 - **warn** `ADAUSDT`: 1 daily moves > 60%, e.g. 2025-03-02
 - **warn** `BNBUSDT`: 2 daily moves > 60%, e.g. 2018-01-05
 - **warn** `DOGEUSDT`: 3 daily moves > 60%, e.g. 2021-01-02
+- **warn** `EVERUSDT`: 4 daily moves > 60%, e.g. 2023-01-30
 - **warn** `LINKUSDT`: 1 daily moves > 60%, e.g. 2019-06-13
 - **warn** `TRXUSDT`: 1 daily moves > 60%, e.g. 2024-12-03
 - **warn** `XLMUSDT`: 2 daily moves > 60%, e.g. 2021-01-06

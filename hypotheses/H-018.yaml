@@ -1,6 +1,6 @@
 id: H-018
 title: 'Everscale (EVER): SMA50 trend rule beats buy-and-hold since 2022'
-status: registered
+status: weak
 family: trend
 created: '2026-10-14'
 author: Claude (literature review for F1DevBin)
@@ -31,3 +31,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-14'
 prereg_sha256: 0244f7625ec6f29c4bc3cc03cefe4502538da321070429b33983ed27ea9de30b
+last_run: '2026-10-14'

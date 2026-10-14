@@ -1,6 +1,6 @@
 id: H-014
 title: '1-week time-series momentum: hold only after a positive 7-day return (BTC, ETH, SOL)'
-status: registered
+status: weak
 family: trend
 created: '2026-10-14'
 author: Claude (literature review for F1DevBin)
@@ -33,3 +33,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-14'
 prereg_sha256: aed33cd870fd48711ba8ddcdeebacb43c6753cbe80479f8a7460b47bf35efef6
+last_run: '2026-10-14'

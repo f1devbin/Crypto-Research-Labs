@@ -1,6 +1,6 @@
 id: H-015
 title: 'Monday effect: BTC held only on Mondays (UTC) beats buy-and-hold'
-status: registered
+status: rejected
 family: calendar
 created: '2026-10-14'
 author: Claude (literature review for F1DevBin)
@@ -32,3 +32,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-14'
 prereg_sha256: 3c9bfd9f233c355653a869b8636a3c54a84aa6b6f342714ac7f1df667f37c3a7
+last_run: '2026-10-14'

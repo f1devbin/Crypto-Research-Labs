@@ -1,6 +1,6 @@
 id: H-016
 title: 'Turn of the month: BTC held only on the last 2 and first 3 days of each month'
-status: registered
+status: rejected
 family: calendar
 created: '2026-10-14'
 author: Claude (literature review for F1DevBin)
@@ -31,3 +31,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-14'
 prereg_sha256: 5f0c331df59be2c9f78da8b9628c7e04ec5f02bd577b2aee9c1b86db82a8fead
+last_run: '2026-10-14'

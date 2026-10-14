@@ -1,0 +1,30 @@
+{
+ "id": "H-019",
+ "prereg_sha256": "a32a2211c54b40fee11a943e371ca41c537151845aa45478597aa70e44674a94",
+ "verdict": "WEAK",
+ "summary": "since_listing: wins 0/1 (need 1), beats buy-and-hold 1/1",
+ "rows": [
+  {
+   "symbol": "EVERUSDT",
+   "period": "since_listing",
+   "days": 1596,
+   "start": "2022-06-01",
+   "end": "2026-10-13",
+   "sharpe": 0.124036,
+   "cagr": -0.370327,
+   "max_dd": -0.976448,
+   "hold_sharpe": -0.174826,
+   "hold_cagr": -0.694726,
+   "hold_max_dd": -0.99657,
+   "exposure": 0.569549,
+   "trades_per_year": 3.773496,
+   "p": 0.187406,
+   "beats_hold": true,
+   "win": false
+  }
+ ],
+ "kind": "timing_rule",
+ "engine_version": "0.1.0",
+ "data_end": "2026-10-13",
+ "run_at": "2026-10-14T18:02:06Z"
+}

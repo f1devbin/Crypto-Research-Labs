@@ -1,6 +1,6 @@
 id: H-013
 title: Volatility targeting (30%/yr) beats buy-and-hold on 8 independent coins
-status: registered
+status: weak
 family: risk
 created: '2026-10-14'
 author: Claude (literature review for F1DevBin)
@@ -36,3 +36,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-14'
 prereg_sha256: cf1ebd686ca11b4a79353401b4087976141875f23bf8f63970241749a6d93302
+last_run: '2026-10-14'

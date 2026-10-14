@@ -1,0 +1,30 @@
+{
+ "id": "H-016",
+ "prereg_sha256": "5f0c331df59be2c9f78da8b9628c7e04ec5f02bd577b2aee9c1b86db82a8fead",
+ "verdict": "FAIL",
+ "summary": "since_2018: wins 0/1 (need 1), beats buy-and-hold 0/1",
+ "rows": [
+  {
+   "symbol": "BTCUSDT",
+   "period": "since_2018",
+   "days": 3208,
+   "start": "2018-01-01",
+   "end": "2026-10-13",
+   "sharpe": 0.531202,
+   "cagr": 0.102645,
+   "max_dd": -0.443946,
+   "hold_sharpe": 0.645301,
+   "hold_cagr": 0.227599,
+   "hold_max_dd": -0.811848,
+   "exposure": 0.164589,
+   "trades_per_year": 12.003585,
+   "p": 0.134433,
+   "beats_hold": false,
+   "win": false
+  }
+ ],
+ "kind": "timing_rule",
+ "engine_version": "0.1.0",
+ "data_end": "2026-10-13",
+ "run_at": "2026-10-14T18:02:06Z"
+}

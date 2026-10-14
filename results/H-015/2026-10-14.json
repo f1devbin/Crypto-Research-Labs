@@ -1,0 +1,30 @@
+{
+ "id": "H-015",
+ "prereg_sha256": "3c9bfd9f233c355653a869b8636a3c54a84aa6b6f342714ac7f1df667f37c3a7",
+ "verdict": "FAIL",
+ "summary": "post_paper: wins 0/1 (need 1), beats buy-and-hold 0/1",
+ "rows": [
+  {
+   "symbol": "BTCUSDT",
+   "period": "post_paper",
+   "days": 3208,
+   "start": "2018-01-01",
+   "end": "2026-10-13",
+   "sharpe": 0.254771,
+   "cagr": 0.032929,
+   "max_dd": -0.495545,
+   "hold_sharpe": 0.645301,
+   "hold_cagr": 0.227599,
+   "hold_max_dd": -0.811848,
+   "exposure": 0.14308,
+   "trades_per_year": 52.224127,
+   "p": 0.081459,
+   "beats_hold": false,
+   "win": false
+  }
+ ],
+ "kind": "timing_rule",
+ "engine_version": "0.1.0",
+ "data_end": "2026-10-13",
+ "run_at": "2026-10-14T18:02:05Z"
+}
