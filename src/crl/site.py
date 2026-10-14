@@ -199,7 +199,9 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
     _w(out_dir / "favicon.svg", H.FAVICON)
     _w(out_dir / "404.html", H.NOT_FOUND)
     _w(out_dir / ".nojekyll", "")
-    for f in STATIC.glob("*.png"):
+    for f in STATIC.iterdir():  # og.png, search-engine verification files, ...
+        if not f.is_file():
+            continue
         shutil.copyfile(f, out_dir / f.name)
     _w(out_dir / "data.json", json.dumps(data, separators=(",", ":"), allow_nan=False, default=str))
     log.info("site: %d pages, data.json %d KB -> %s", pages, (out_dir / "data.json").stat().st_size // 1024,
