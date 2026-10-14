@@ -1,5 +1,5 @@
 # local data cache (re-downloadable, never committed)
-data/
+/data/
 # python
 __pycache__/
 *.py[cod]
