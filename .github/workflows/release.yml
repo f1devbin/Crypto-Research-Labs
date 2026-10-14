@@ -1,8 +1,10 @@
-# Push a tag like v0.2.0 → a GitHub Release with that version's CHANGELOG section,
-# plus a snapshot of the registry, results and reports.
+# GitHub Release for the version in pyproject.toml: tag v<version>, notes from that version's
+# CHANGELOG section, the Python package and a snapshot of the registry, results and reports.
+# Run it manually (Actions → release → Run workflow) after bumping the version, or push a v* tag.
 name: release
 
 on:
+  workflow_dispatch:
   push:
     tags: ["v*"]
 
@@ -17,13 +19,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Check version matches tag
+      - name: Version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          v="${GITHUB_REF_NAME#v}"
-          grep -q "^version = \"$v\"" pyproject.toml || { echo "pyproject version != $v"; exit 1; }
+          v=$(sed -n 's/^version = "\(.*\)"/\1/p' pyproject.toml)
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] && [ "${GITHUB_REF_NAME}" != "v$v" ]; then
+            echo "tag ${GITHUB_REF_NAME} != pyproject version $v"; exit 1
+          fi
+          if gh release view "v$v" > /dev/null 2>&1; then echo "release v$v already exists"; exit 1; fi
+          echo "TAG=v$v" >> "$GITHUB_ENV"
       - name: Release notes from CHANGELOG
         run: |
-          v="${GITHUB_REF_NAME#v}"
+          v="${TAG#v}"
           awk -v v="$v" '/^## \[/{p = index($0, "[" v "]") > 0; next} p' CHANGELOG.md > notes.md
           echo "" >> notes.md
           echo "Live dashboard: https://f1devbin.github.io/Crypto-Research-Labs/" >> notes.md
@@ -32,8 +40,8 @@ jobs:
         run: |
           pip install -q build
           python -m build
-          tar -czf "dist/research-snapshot-${GITHUB_REF_NAME}.tar.gz" hypotheses results reports config docs
+          tar -czf "dist/research-snapshot-${TAG}.tar.gz" hypotheses results reports config docs
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/* --title "Crypto Research Labs $GITHUB_REF_NAME" --notes-file notes.md
+        run: gh release create "$TAG" dist/* --target "$GITHUB_SHA" --title "Crypto Research Labs $TAG" --notes-file notes.md --latest
