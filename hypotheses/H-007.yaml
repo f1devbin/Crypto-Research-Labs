@@ -1,6 +1,6 @@
 id: H-007
 title: BTC out of the market when 7-day funding is above its 1-year 80th percentile
-status: registered
+status: rejected
 family: flows
 created: '2026-09-30'
 author: F1DevBin
@@ -38,3 +38,4 @@ history:
   summary: Sharpe 0.24 vs hold 0.50, p=0.859, 83% in market.
 registered: '2026-10-14'
 prereg_sha256: fe24495151d6272c2910552e452a5a7a24a175203d2a8d22c6b56be1321a6f59
+last_run: '2026-10-14'

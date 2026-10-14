@@ -1,6 +1,6 @@
 id: H-009
 title: BTC long only when 5-day net spot-ETF flow is positive
-status: registered
+status: weak
 family: flows
 created: '2026-09-30'
 author: F1DevBin
@@ -36,3 +36,4 @@ history:
   summary: Sharpe 0.76 vs hold 0.79 (since 2024), p=0.239, 60% in market.
 registered: '2026-10-14'
 prereg_sha256: e9c2a65f7b5c3ea8a92af40d93ed506c703dda918ab56fdc659a7e03c8e90ce0
+last_run: '2026-10-14'

@@ -1,6 +1,6 @@
 id: H-008
 title: BTC out of the market when Fear & Greed >= 75
-status: registered
+status: rejected
 family: sentiment
 created: '2026-09-30'
 author: F1DevBin
@@ -36,3 +36,4 @@ history:
   summary: Sharpe 0.45 vs hold 0.50, p=0.575, 93% in market.
 registered: '2026-10-14'
 prereg_sha256: 4656caf12f69916e4a6f7aebeb8afd310b1c417e4ab5596803b36599668eeb68
+last_run: '2026-10-14'

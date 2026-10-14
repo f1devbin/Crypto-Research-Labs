@@ -1,0 +1,30 @@
+{
+ "id": "H-006",
+ "prereg_sha256": "4047b6c598dfdaeff5878fc67a62b6a68bcaf51cf071d1bd6b99f8bdd942f4aa",
+ "verdict": "WEAK",
+ "summary": "oos: wins 0/1 (need 1), beats buy-and-hold 1/1",
+ "rows": [
+  {
+   "symbol": "BTCUSDT",
+   "period": "oos",
+   "days": 1747,
+   "start": "2022-01-01",
+   "end": "2026-10-13",
+   "sharpe": 0.684609,
+   "cagr": 0.174407,
+   "max_dd": -0.414124,
+   "hold_sharpe": 0.495489,
+   "hold_cagr": 0.130604,
+   "hold_max_dd": -0.669312,
+   "exposure": 0.453921,
+   "trades_per_year": 18.594734,
+   "p": 0.101949,
+   "beats_hold": true,
+   "win": false
+  }
+ ],
+ "kind": "timing_rule",
+ "engine_version": "0.1.0",
+ "data_end": "2026-10-13",
+ "run_at": "2026-10-14T16:59:23Z"
+}

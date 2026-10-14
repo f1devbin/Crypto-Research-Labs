@@ -1,6 +1,6 @@
 id: H-006
 title: BTC long when 7-day USDT+USDC growth is above its 1-year median
-status: registered
+status: weak
 family: flows
 created: '2026-09-30'
 author: F1DevBin
@@ -39,3 +39,4 @@ history:
   summary: Sharpe 0.68 vs hold 0.50, p=0.100 (needed <0.0125), 46% in market.
 registered: '2026-10-14'
 prereg_sha256: 4047b6c598dfdaeff5878fc67a62b6a68bcaf51cf071d1bd6b99f8bdd942f4aa
+last_run: '2026-10-14'

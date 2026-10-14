@@ -1,6 +1,6 @@
 id: H-003
 title: Best daily trend rule (chosen 2018-2021) beats buy-and-hold out of sample, spot
-status: registered
+status: weak
 family: trend
 created: '2026-09-30'
 author: F1DevBin
@@ -71,3 +71,4 @@ history:
     vs 0.25, SOL 0.86 vs 0.39.
 registered: '2026-10-14'
 prereg_sha256: a67725ea171fa45ca2b836f41e7c9cab34ac6728d4836cc123f281181a0b889f
+last_run: '2026-10-14'

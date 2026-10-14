@@ -1,6 +1,6 @@
 id: H-010
 title: Stablecoin-growth timing (H-006) beats buy-and-hold on 8 independent coins
-status: registered
+status: rejected
 family: flows
 created: '2026-09-30'
 author: F1DevBin
@@ -51,3 +51,4 @@ history:
     is an effect of 46% time in market.
 registered: '2026-10-14'
 prereg_sha256: 550f16c556ec7dab41ee2bfcde94927ca8c1a916d56a6bdc2b228a4b187d1bd1
+last_run: '2026-10-14'

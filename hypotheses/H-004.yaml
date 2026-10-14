@@ -1,6 +1,6 @@
 id: H-004
 title: Best daily trend rule, long/short futures, beats buy-and-hold
-status: registered
+status: weak
 family: trend
 created: '2026-09-30'
 author: F1DevBin
@@ -68,3 +68,4 @@ history:
   summary: Drawdowns up to -81..-97%; shorts in bull phases destroy the result. Shorts are not needed.
 registered: '2026-10-14'
 prereg_sha256: 6e41e954adcd767fc0c3797bf18d21de7e2b4308059c95a8a40635d3e8d3c1a1
+last_run: '2026-10-14'

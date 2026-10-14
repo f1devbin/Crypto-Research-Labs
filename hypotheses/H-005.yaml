@@ -1,6 +1,6 @@
 id: H-005
 title: SMA50 spot long/flat beats buy-and-hold on 8 independent coins
-status: registered
+status: rejected
 family: trend
 created: '2026-09-30'
 author: F1DevBin
@@ -44,3 +44,4 @@ history:
     came from less time in the market, not timing.
 registered: '2026-10-14'
 prereg_sha256: dd6f4fa522f871a618ba0ac66d8b7281683333dd92d90fface62363b3db832bf
+last_run: '2026-10-14'
