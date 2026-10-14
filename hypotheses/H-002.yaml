@@ -1,0 +1,15 @@
+id: H-002
+title: Inverted minute signals are profitable after fees
+status: rejected
+family: intraday
+created: '2026-09-30'
+author: F1DevBin
+rationale: If the ensemble is reliably wrong, the opposite trade should win.
+rerunnable: false
+note: 'Edge 2-8x smaller than fees: a horizon limit, not a bug.'
+history:
+- date: '2026-09-30'
+  source: F1MEBOT (2026)
+  verdict: FAIL
+  summary: Better than random by the same margin, but the best case is +0.024%/trade before fees vs 0.04%
+    cheapest fee (futures maker); negative after fees everywhere.

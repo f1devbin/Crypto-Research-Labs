@@ -1,0 +1,14 @@
+# local data cache (re-downloadable, never committed)
+data/
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+build/
+dist/
+# secrets
+.env
+*.env

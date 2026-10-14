@@ -1,0 +1,70 @@
+id: H-004
+title: Best daily trend rule, long/short futures, beats buy-and-hold
+status: registered
+family: trend
+created: '2026-09-30'
+author: F1DevBin
+rationale: Same as H-003 with native shorts on USD-M futures (taker 0.05%).
+spec:
+  kind: rule_search
+  candidates:
+    SMA20:
+      type: price_above_sma
+      window: 20
+    SMA50:
+      type: price_above_sma
+      window: 50
+    SMA100:
+      type: price_above_sma
+      window: 100
+    SMA200:
+      type: price_above_sma
+      window: 200
+    SMA20/50:
+      type: sma_cross
+      fast: 20
+      slow: 50
+    SMA50/200:
+      type: sma_cross
+      fast: 50
+      slow: 200
+    TSMOM30:
+      type: tsmom
+      lookback: 30
+    TSMOM90:
+      type: tsmom
+      lookback: 90
+    TSMOM180:
+      type: tsmom
+      lookback: 180
+    DC20:
+      type: donchian
+      entry: 20
+    DC55:
+      type: donchian
+      entry: 55
+  mode: long_short
+  fee: 0.0005
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  in_sample:
+    start: '2018-01-01'
+    end: '2021-12-31'
+  out_of_sample:
+    start: '2022-01-01'
+  significance:
+    method: bootstrap
+    n: 400
+    alpha_family: 0.05
+  criterion:
+    min_strict_wins: 2
+retest_every_days: 180
+history:
+- date: '2026-09-23'
+  source: F1MEBOT (2026)
+  verdict: FAIL
+  summary: Drawdowns up to -81..-97%; shorts in bull phases destroy the result. Shorts are not needed.
+registered: '2026-10-14'
+prereg_sha256: 6e41e954adcd767fc0c3797bf18d21de7e2b4308059c95a8a40635d3e8d3c1a1

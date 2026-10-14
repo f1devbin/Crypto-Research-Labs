@@ -1,0 +1,73 @@
+id: H-003
+title: Best daily trend rule (chosen 2018-2021) beats buy-and-hold out of sample, spot
+status: registered
+family: trend
+created: '2026-09-30'
+author: F1DevBin
+rationale: Daily trend following trades a few times a month, so fees become a small fraction of the move.
+  Eleven classic rules; selection strictly in-sample.
+spec:
+  kind: rule_search
+  candidates:
+    SMA20:
+      type: price_above_sma
+      window: 20
+    SMA50:
+      type: price_above_sma
+      window: 50
+    SMA100:
+      type: price_above_sma
+      window: 100
+    SMA200:
+      type: price_above_sma
+      window: 200
+    SMA20/50:
+      type: sma_cross
+      fast: 20
+      slow: 50
+    SMA50/200:
+      type: sma_cross
+      fast: 50
+      slow: 200
+    TSMOM30:
+      type: tsmom
+      lookback: 30
+    TSMOM90:
+      type: tsmom
+      lookback: 90
+    TSMOM180:
+      type: tsmom
+      lookback: 180
+    DC20:
+      type: donchian
+      entry: 20
+    DC55:
+      type: donchian
+      entry: 55
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  in_sample:
+    start: '2018-01-01'
+    end: '2021-12-31'
+  out_of_sample:
+    start: '2022-01-01'
+  significance:
+    method: bootstrap
+    n: 400
+    alpha_family: 0.05
+  criterion:
+    min_strict_wins: 2
+retest_every_days: 90
+history:
+- date: '2026-09-23'
+  source: F1MEBOT (2026)
+  verdict: WEAK
+  summary: Out of sample (2022+) the in-sample pick beat buy-and-hold on BTC, ETH, SOL with lower drawdowns,
+    but none significant after Bonferroni (best p 0.10-0.15). SMA50 Sharpe BTC 0.80 vs 0.51, ETH 0.82
+    vs 0.25, SOL 0.86 vs 0.39.
+registered: '2026-10-14'
+prereg_sha256: a67725ea171fa45ca2b836f41e7c9cab34ac6728d4836cc123f281181a0b889f

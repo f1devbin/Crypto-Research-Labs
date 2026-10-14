@@ -1,0 +1,46 @@
+id: H-005
+title: SMA50 spot long/flat beats buy-and-hold on 8 independent coins
+status: registered
+family: trend
+created: '2026-09-30'
+author: F1DevBin
+rationale: Confirmation of the rule fixed after H-003 on coins that played no part in choosing it.
+spec:
+  kind: timing_rule
+  rule:
+    type: price_above_sma
+    window: 50
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  periods:
+  - name: full
+    start: '2019-01-01'
+  - name: recent
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 1000
+    alpha: 0.05
+  criterion:
+    min_wins:
+      full: 6
+      recent: 4
+    require_significance: false
+retest_every_days: 90
+history:
+- date: '2026-09-24'
+  source: F1MEBOT (2026)
+  verdict: FAIL
+  summary: Better than holding by Sharpe on 4/8 (needed 6), in 2022+ on 3/8 (needed 4). Lower drawdown
+    came from less time in the market, not timing.
+registered: '2026-10-14'
+prereg_sha256: dd6f4fa522f871a618ba0ac66d8b7281683333dd92d90fface62363b3db832bf

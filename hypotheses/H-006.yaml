@@ -1,0 +1,41 @@
+id: H-006
+title: BTC long when 7-day USDT+USDC growth is above its 1-year median
+status: registered
+family: flows
+created: '2026-09-30'
+author: F1DevBin
+rationale: Stablecoin issuance is dry powder entering crypto. Ported from F1MEBOT PREREG.md (H1, sha256
+  d04ffb63...).
+spec:
+  kind: timing_rule
+  rule:
+    type: feature_vs_rolling_quantile
+    feature: stablecoin_growth_7d
+    q: 0.5
+    long_when: above
+    lookback: 365
+    min_periods: 180
+    lag: 1
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  periods:
+  - name: oos
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.0125
+  criterion:
+    min_wins:
+      oos: 1
+    require_significance: true
+retest_every_days: 90
+history:
+- date: '2026-09-30'
+  source: F1MEBOT (2026)
+  verdict: WEAK
+  summary: Sharpe 0.68 vs hold 0.50, p=0.100 (needed <0.0125), 46% in market.
+registered: '2026-10-14'
+prereg_sha256: 4047b6c598dfdaeff5878fc67a62b6a68bcaf51cf071d1bd6b99f8bdd942f4aa

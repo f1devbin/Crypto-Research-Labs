@@ -1,0 +1,66 @@
+# Optional LLM layer: once a month the model drafts new hypotheses.
+# Drafts are schema-validated and de-duplicated, then opened as a pull request.
+# Nothing is tested until a human runs `crl registry register <id>` (sha256 lock) and merges.
+name: propose-hypotheses
+
+on:
+  schedule:
+    - cron: "23 8 1 * *"   # 1st of every month, 08:23 UTC
+  workflow_dispatch:
+    inputs:
+      n:
+        description: "Number of proposals"
+        default: "3"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CRL_LLM_MODEL: ${{ vars.CRL_LLM_MODEL }}
+    steps:
+      - name: Skip without an API key
+        if: env.ANTHROPIC_API_KEY == ''
+        run: echo "::notice::ANTHROPIC_API_KEY is not set — the LLM layer is disabled."
+      - uses: actions/checkout@v4
+        if: env.ANTHROPIC_API_KEY != ''
+      - uses: actions/setup-python@v5
+        if: env.ANTHROPIC_API_KEY != ''
+        with:
+          python-version: "3.12"
+          cache: pip
+      - if: env.ANTHROPIC_API_KEY != ''
+        run: pip install -e .
+      - name: Draft hypotheses
+        if: env.ANTHROPIC_API_KEY != ''
+        run: |
+          crl propose -n "${{ inputs.n || '3' }}" | tee proposals.txt
+          crl registry check
+      - name: Open pull request
+        if: env.ANTHROPIC_API_KEY != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add hypotheses
+          if git diff --cached --quiet; then echo "no valid new proposals"; exit 0; fi
+          branch="llm/proposals-$(date -u +%Y%m%d)-${GITHUB_RUN_ID}"
+          git config user.name "crl-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git commit -m "feat(hypotheses): LLM-drafted proposals $(date -u +%F)"
+          git push origin "$branch"
+          {
+            echo "Draft hypotheses proposed by \`${CRL_LLM_MODEL:-default model}\`."
+            echo
+            echo "They are **drafts**: review the rationale, edit the spec if needed, then run"
+            echo "\`crl registry register <id>\` to lock them before merging. The runner never tests drafts."
+            echo
+            echo '```'
+            cat proposals.txt
+            echo '```'
+          } > body.md
+          gh pr create --title "LLM hypothesis proposals $(date -u +%F)" --body-file body.md --base "${GITHUB_REF_NAME}" --head "$branch"

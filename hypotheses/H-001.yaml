@@ -1,0 +1,17 @@
+id: H-001
+title: Minute-level TA ensemble (RSI, MACD, EMA, momentum) predicts 1-4 h direction
+status: rejected
+family: intraday
+created: '2026-09-30'
+author: F1DevBin
+rationale: 'Original F1MEBOT strategy: ensemble of classical indicators on 1-minute candles, TP 0.8% /
+  SL 0.4%.'
+rerunnable: false
+note: Needs the private live-signal log; kept as a record, not re-runnable.
+history:
+- date: '2026-09-30'
+  source: F1MEBOT (2026)
+  verdict: FAIL
+  summary: 'Replay of 7,649 live signals (Jun-Sep 2026) on real prices: win rate 33.9% at 2:1 R:R, EV
+    -0.019%/trade before fees; direction worse than random in all 12 TP/SL x timeout scenarios (-1.7..-3.8
+    sigma). Meta-labelling AUC 0.53.'

@@ -1,0 +1,38 @@
+id: H-009
+title: BTC long only when 5-day net spot-ETF flow is positive
+status: registered
+family: flows
+created: '2026-09-30'
+author: F1DevBin
+rationale: ETF demand is the marginal buyer since 2024. Ported from F1MEBOT PREREG.md (H4).
+spec:
+  kind: timing_rule
+  rule:
+    type: feature_threshold
+    feature: etf_flow_btc_5d
+    threshold: 0
+    long_when: above
+    lag: 1
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  periods:
+  - name: oos
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.0125
+  criterion:
+    min_wins:
+      oos: 1
+    require_significance: true
+retest_every_days: 90
+history:
+- date: '2026-09-30'
+  source: F1MEBOT (2026)
+  verdict: WEAK
+  summary: Sharpe 0.76 vs hold 0.79 (since 2024), p=0.239, 60% in market.
+registered: '2026-10-14'
+prereg_sha256: e9c2a65f7b5c3ea8a92af40d93ed506c703dda918ab56fdc659a7e03c8e90ce0

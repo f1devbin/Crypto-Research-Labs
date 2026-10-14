@@ -1,0 +1,17 @@
+id: H-011
+title: BTC funding-rate carry (spot long + perp short) pays enough for the risk
+status: rejected
+family: carry
+created: '2026-09-30'
+author: F1DevBin
+rationale: Delta-neutral carry earns funding without market direction; the risk is exchange counterparty
+  and basis.
+rerunnable: false
+note: Monitored live by the regime watch (funding_carry); an alert fires if carry returns to an attractive
+  band.
+history:
+- date: '2026-09-30'
+  source: F1MEBOT (2026)
+  verdict: FAIL
+  summary: 'Yield on capital (no leverage, half per leg): 2020 +8.6%, 2021 +15.3%, 2022 +2.1%, 2023 +3.9%,
+    2024 +6.0%, 2025 +2.6%, 2026 (9 mo) +1.1%; last 365 days ~ +1.5%. Not worth full capital on one exchange.'

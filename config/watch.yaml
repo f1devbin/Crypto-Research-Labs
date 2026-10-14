@@ -1,0 +1,60 @@
+# Regime watch monitors. An alert fires only when a monitor moves to a different band.
+# bands: name: [low, high)  — null means open-ended. First matching band wins.
+monitors:
+  funding_carry:
+    label: BTC funding carry, yield on capital (30 d, annualised, after costs)
+    metric: funding_carry
+    params: {symbol: BTCUSDT, days: 30, round_trip_cost: 0.003}
+    format: "{:+.1%}"
+    bands:
+      negative: [null, 0.0]
+      low: [0.0, 0.04]
+      moderate: [0.04, 0.08]
+      attractive: [0.08, null]
+    notes:
+      attractive: "H-011 was rejected at ~1.5 %/yr. Carry this high is worth re-evaluating against exchange risk."
+      negative: "Shorts pay longs: crowded bearish positioning."
+
+  stablecoin_growth:
+    label: USDT+USDC supply growth (30 d)
+    metric: stablecoin_growth
+    params: {days: 30}
+    format: "{:+.2%}"
+    bands:
+      contracting: [null, 0.0]
+      flat: [0.0, 0.02]
+      expanding: [0.02, null]
+    notes:
+      expanding: "Liquidity entering crypto. H-006/H-010 found no reliable timing edge from this — descriptive only."
+
+  fear_greed:
+    label: Crypto Fear & Greed index
+    metric: fear_greed
+    format: "{:.0f}"
+    bands:
+      extreme_fear: [null, 20]
+      fear: [20, 45]
+      neutral: [45, 55]
+      greed: [55, 75]
+      extreme_greed: [75, null]
+    notes:
+      extreme_greed: "H-008 (exit at >= 75) did not beat holding; descriptive only."
+
+  btc_trend:
+    label: BTC vs its 200-day average
+    metric: price_vs_sma
+    params: {symbol: BTCUSDT, window: 200}
+    format: "{:+.1%}"
+    bands:
+      below: [null, 0.0]
+      above: [0.0, null]
+
+  btc_volatility:
+    label: BTC realised volatility (30 d, annualised)
+    metric: realized_vol
+    params: {symbol: BTCUSDT, days: 30}
+    format: "{:.0%}"
+    bands:
+      calm: [null, 0.4]
+      normal: [0.4, 0.8]
+      stressed: [0.8, null]
