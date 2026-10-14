@@ -23,6 +23,13 @@ All dashboard text is in [`src/crl/i18n.py`](src/crl/i18n.py). To fix a translat
 string. To add a language, copy the `"en"` block, translate it and add the language to `LANGS`.
 `pytest` checks that no key is missing. Engine output (summaries, specs) stays in English on purpose.
 
+### The beginner course
+
+The course on the website lives in [`src/crl/course.py`](src/crl/course.py), one list of lessons per
+language. Numbers come from `{placeholders}` filled from live data at every build. **When a feature changes
+what users see (a new section, coin or rule), update the lessons in every language in the same pull
+request.** `pytest` checks that all languages have the same lessons and placeholders.
+
 ## 3. Code
 
 ```bash

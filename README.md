@@ -31,6 +31,7 @@ and automated agents re-test old ideas as new market data arrives.
 
 | You want to… | Go to |
 |---|---|
+| Learn from zero, step by step | the **[course for beginners](https://f1devbin.github.io/Crypto-Research-Labs/course.html)**: 10 short lessons in 7 languages, numbers updated daily ([на русском](https://f1devbin.github.io/Crypto-Research-Labs/ru/course.html)) |
 | See today's market and every result, with plain-language explanations | the **[live dashboard](https://f1devbin.github.io/Crypto-Research-Labs/)** (7 languages) |
 | Understand the words (Sharpe, drawdown, p-value, funding…) | the glossary on the dashboard, or [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
 | Know what was found | [docs/FINDINGS.md](docs/FINDINGS.md) |

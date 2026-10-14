@@ -25,7 +25,10 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
         assert (out / ("" if lang == "en" else f"{lang}/") / "hypotheses" / "H-003.html").exists()
     sitemap = (out / "sitemap.xml").read_text()
     d = json.loads((out / "data.json").read_text())
-    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 1)
+    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 2)
+    course = (out / "ru" / "course.html").read_text(encoding="utf-8")
+    assert "Курс для новичков" in course and '"@type": "Course"' in course.replace('":"', '": "') or '"Course"' in course
+    assert "{" not in course.split("<main>")[1].split("</main>")[0]  # every placeholder filled
     assert "/ru/coins/SOLUSDT.html" in sitemap and (out / "ru" / "coins" / "SOLUSDT.html").exists()
     sol = (out / "coins" / "SOLUSDT.html").read_text(encoding="utf-8")
     assert "Solana (SOL)" in sol and "H-014" in sol and 'href="../#coins"' in sol
@@ -42,3 +45,17 @@ def test_translations_cover_english_keys():
         assert not missing, (lang, missing)
         assert len(T[lang]["glossary"]) == len(T["en"]["glossary"])
         assert len(T[lang]["how"]) == len(T["en"]["how"])
+
+
+def test_course_is_complete_in_every_language():
+    from crl import course as C
+    en = C.LESSONS["en"]
+    for lang in LANGS:
+        assert lang in C.LESSONS and lang in C.UI, lang
+        assert len(C.LESSONS[lang]) == len(en), lang
+        for (_, a), (_, b) in zip(en, C.LESSONS[lang]):
+            assert C.placeholders(a) == C.placeholders(b), lang
+            assert ("[[flow]]" in a) == ("[[flow]]" in b), lang
+    html = C.md_to_html("**a** [b](c)\n\n1. x\n2. y\n\n| h |\n| --- |\n| v |\n\n- [ ] t")
+    assert "<strong>a</strong>" in html and '<a href="c">b</a>' in html and "<ol>" in html and "<table>" in html
+    assert 'type="checkbox"' in html

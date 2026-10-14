@@ -9,6 +9,7 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - Coin pages on the dashboard (`coins/<SYMBOL>.html`, 7 languages): price, changes, trend, volatility,
   12-month chart and today's state of each tested rule; a Coins table on the home page.
 - Translated titles for H-012…H-019.
+- Course for beginners on the website (`course.html`), 10 lessons in 7 languages, live numbers, Course structured data.
 
 ## [0.2.0] - 2026-10-14
 

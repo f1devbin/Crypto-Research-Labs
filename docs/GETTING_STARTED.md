@@ -1,5 +1,9 @@
 # Getting started (no finance or coding background needed)
 
+> The full step-by-step **course for beginners** is on the website in 7 languages, with numbers updated
+> every day: [English](https://f1devbin.github.io/Crypto-Research-Labs/course.html) ·
+> [Русский](https://f1devbin.github.io/Crypto-Research-Labs/ru/course.html). This page is the short version.
+
 ## What is this project?
 
 People keep inventing trading rules: "buy when the price crosses its average", "sell when everyone

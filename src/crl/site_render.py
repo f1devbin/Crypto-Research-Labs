@@ -7,6 +7,7 @@ root (x-default), other languages under /<lang>/, linked with hreflang.
 import html
 import json
 
+from crl import course as C
 from crl.i18n import DEFAULT, LANGS, sub, t
 
 CHART_JS = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"
@@ -47,6 +48,13 @@ p,li{color:var(--text2)}
 .steps li{counter-increment:s;margin:.4em 0;padding-left:2.2em;position:relative}
 .steps li::before{content:counter(s);position:absolute;left:0;top:0;width:1.6em;height:1.6em;border-radius:50%;
 background:var(--accent);color:var(--bg);font-weight:700;text-align:center;line-height:1.6em}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}
+.flow-step{border:2px solid var(--accent);border-radius:10px;padding:10px 14px;font-weight:700;background:var(--panel)}
+.flow-arrow{font-size:1.6rem;font-weight:700;color:var(--accent)}
+.beginner{display:inline-block;background:var(--pass);color:#fff;font-weight:700;border-radius:6px;padding:2px 10px}
+.course-cta{display:block;border:2px solid var(--pass);border-radius:10px;padding:12px 16px;margin:12px 0;font-weight:700;background:var(--panel)}
+ul.tasks{list-style:none;padding-left:0}ul.tasks li{margin:.35em 0}ul.tasks input{width:1.1em;height:1.1em;vertical-align:-2px}
+.toc{columns:2;column-gap:32px}@media (max-width:640px){.toc{columns:1}}
 details{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:8px 14px;margin:8px 0}
 summary{cursor:pointer;font-weight:700;color:var(--text)}
 .chart{position:relative;width:100%;height:300px;margin:8px 0}
@@ -126,6 +134,8 @@ def _rel(key: str | None) -> str:
     """Page key -> path inside a language root: None = home, "coin:SOLUSDT", or a hypothesis id."""
     if key is None:
         return ""
+    if key == "course":
+        return "course.html"
     if key.startswith("coin:"):
         return f"coins/{key[5:]}.html"
     return f"hypotheses/{key}.html"
@@ -143,7 +153,7 @@ def page_path(lang: str, hid: str | None = None) -> str:
 
 
 def asset_root(lang: str, hid: str | None = None) -> str:
-    depth = (lang != DEFAULT) + (hid is not None)
+    depth = (lang != DEFAULT) + (hid is not None and hid != "course")
     return "../" * depth
 
 
@@ -243,6 +253,7 @@ def header(lang: str, hid: str | None, generated: str) -> str:
         langs.append(f'<a href="{e(target)}" hreflang="{hl}" lang="{hl}"{cur}>{e(name)}</a>')
     return f"""<header>
 <nav aria-label="{e(t(lang, 'nav_dashboard'))}"><a href="{home}">{e(t(lang, 'nav_dashboard'))}</a>
+<a href="{home}course.html">{e(C.UI.get(lang, C.UI['en'])['nav'])}</a>
 <a href="{home}#how-to-read">{e(t(lang, 'nav_new'))}</a><a href="{home}#regime">{e(t(lang, 'nav_regime'))}</a>
 <a href="{home}#coins">{e(t(lang, 'nav_coins'))}</a><a href="{home}#hypotheses">{e(t(lang, 'nav_hyp'))}</a><a href="{home}#glossary">{e(t(lang, 'nav_glossary'))}</a>
 <a href="{home}#methodology">{e(t(lang, 'nav_method'))}</a><a href="{REPO}">GitHub</a></nav>
@@ -350,6 +361,7 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
 <main>
 <h1>{e(t(lang, 'h1'))}</h1>
 <p class="lead">{e(t(lang, 'lead', verdict=verdict_line))}</p>
+<a class="course-cta" href="course.html">{e(C.UI.get(lang, C.UI['en'])['home_link'])} →</a>
 
 <section aria-labelledby="how-to-read"><h2 id="how-to-read">{e(t(lang, 'how_title'))}</h2>
 <ol class="steps">{how}</ol></section>
@@ -531,6 +543,41 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
                   {"@type": "ListItem", "position": 2, "name": f"{c['name']} ({c['ticker']})", "item": url}]}]
     return page(lang=lang, hid=key, base=base, title=f"{title} | Crypto Research Labs", description=description[:320],
                 body=body, charts=charts, jsonld=jsonld, verification=verification)
+
+
+def course_page(lang: str, values: dict, data: dict, base: str, verification: str = "") -> str:
+    ui = C.UI.get(lang, C.UI["en"])
+    lessons = C.LESSONS.get(lang, C.LESSONS["en"])
+    flow = C.flow_html(ui["flow"])
+    toc = "".join(f'<li><a href="#lesson-{i}">{e(ui["lesson"].format(n=i))}. {e(title)}</a></li>'
+                  for i, (title, _) in enumerate(lessons, 1))
+    parts = []
+    for i, (title, md) in enumerate(lessons, 1):
+        parts.append(f'<section aria-labelledby="lesson-{i}"><h2 id="lesson-{i}">{e(ui["lesson"].format(n=i))}. '
+                     f'{e(title)}</h2>{C.md_to_html(C.fill(md, values), flow)}</section>')
+    body = f"""{header(lang, "course", data['generated_at'])}
+<main>
+<h1>{e(ui['h1'])}</h1>
+<p><span class="beginner">{e(ui['badge'])}</span></p>
+<p class="lead">{e(ui['lead'])}</p>
+<h2>{e(ui['toc'])}</h2>
+<ol class="toc">{toc}</ol>
+{''.join(parts)}
+</main>
+{footer(lang, "course")}"""
+    url = page_url(base, lang, "course")
+    jsonld = [{"@context": "https://schema.org", "@type": "Course", "name": ui["title"], "description": ui["desc"],
+               "url": url, "inLanguage": LANGS[lang][1], "isAccessibleForFree": True, "educationalLevel": "Beginner",
+               "provider": {"@type": "Organization", "name": "Crypto Research Labs", "sameAs": REPO},
+               "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "online",
+                                     "courseWorkload": "PT1H30M"},
+               "offers": {"@type": "Offer", "price": 0, "priceCurrency": "USD", "category": "Free"},
+               "dateModified": data["generated_at"][:10]},
+              {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+                  {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
+                  {"@type": "ListItem", "position": 2, "name": ui["h1"], "item": url}]}]
+    return page(lang=lang, hid="course", base=base, title=ui["title"], description=ui["desc"][:320], body=body,
+                charts={}, jsonld=jsonld, verification=verification)
 
 
 def sitemap(base: str, entries: list[tuple[str | None, str]]) -> str:

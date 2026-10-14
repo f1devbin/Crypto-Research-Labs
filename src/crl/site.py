@@ -118,6 +118,37 @@ def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
     return out
 
 
+def course_values(data: dict, lang: str, site: str) -> dict:
+    """Live numbers for the course text, formatted for the language."""
+    from crl.course import COMMA_DECIMAL
+    from crl.i18n import t
+
+    def loc(x: str) -> str:
+        return x.replace(".", ",") if lang in COMMA_DECIMAL else x
+
+    def pc(v, signed=True):
+        return "—" if v is None else loc(f"{v:+.0%}" if signed else f"{v:.0%}")
+
+    coins_by = {c["symbol"]: c for c in data.get("coins", [])}
+    hyps = {h["id"]: h for h in data["hypotheses"]}
+
+    def row(hid, sym):
+        return next((r for r in hyps.get(hid, {}).get("rows", []) if r.get("symbol") == sym), {})
+
+    n, n_pass = len(data["hypotheses"]), sum(h["verdict"] == "PASS" for h in data["hypotheses"])
+    mom, ever = row("H-014", "SOLUSDT"), row("H-018", "EVERUSDT")
+    vol = lambda s: pc(coins_by.get(s, {}).get("vol"), signed=False)
+    return {
+        "site": site, "update_utc": "06:17", "n_hyps": n, "n_coins": len(coins_by),
+        "verdict_line": t(lang, "verdict_some", p=n_pass, n=n) if n_pass else t(lang, "verdict_none", n=n),
+        "btc_vol": vol("BTCUSDT"), "sol_vol": vol("SOLUSDT"), "ever_vol": vol("EVERUSDT"),
+        "sol_mom_sharpe": loc(f"{mom['sharpe']:.2f}") if mom.get("sharpe") is not None else "—",
+        "sol_mom_hold": loc(f"{mom['hold_sharpe']:.2f}") if mom.get("hold_sharpe") is not None else "—",
+        "ever_rule_cagr": pc(ever.get("cagr")), "ever_hold_cagr": pc(ever.get("hold_cagr")),
+        "ever_rule_dd": pc(ever.get("max_dd")), "ever_hold_dd": pc(ever.get("hold_max_dd")),
+    }
+
+
 def btc_chart(store: DataStore, since: str = "2020-01-01") -> dict | None:
     try:
         c = store.close("BTCUSDT")
@@ -238,7 +269,7 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
         shutil.rmtree(out_dir)
     today = now.date().isoformat()
     entries = ([(None, today)] + [(h["id"], (h.get("run_at") or today)[:10]) for h in data["hypotheses"]]
-               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]])
+               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("course", today)])
     pages = 0
     for lang in LANGS:
         for hid, _ in entries:
@@ -246,6 +277,8 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
             path.parent.mkdir(parents=True, exist_ok=True)
             if hid is None:
                 html = H.index_page(lang, data, base, verification)
+            elif hid == "course":
+                html = H.course_page(lang, course_values(data, lang, "./"), data, base, verification)
             elif hid.startswith("coin:"):
                 coin = next(x for x in data["coins"] if x["symbol"] == hid[5:])
                 html = H.coin_page(lang, coin, data, base, verification)

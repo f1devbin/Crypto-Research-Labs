@@ -11,7 +11,7 @@ on:
     - cron: "41 7 * * 1"   # weekly, Monday 07:41 UTC
   push:
     branches: [main]
-    paths: ["src/crl/site*.py", "src/crl/i18n.py", "site/**", "config/**", ".github/workflows/research-agents.yml"]
+    paths: ["src/crl/site*.py", "src/crl/i18n.py", "src/crl/course.py", "site/**", "config/**", ".github/workflows/research-agents.yml"]
   workflow_dispatch:
     inputs:
       full:
