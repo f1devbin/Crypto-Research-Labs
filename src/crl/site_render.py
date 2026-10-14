@@ -13,6 +13,8 @@ CHART_JS = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.
 VERDICT_CLASS = {"PASS": "pass", "WEAK": "weak", "FAIL": "fail"}
 VERDICT_KEY = {"PASS": "Pass", "WEAK": "Weak", "FAIL": "Fail"}
 REPO = "https://github.com/f1devbin/Crypto-Research-Labs"
+# coin-page rule -> hypotheses that tested it
+SIGNAL_STUDIES_R = {"sma50": ["H-005", "H-018"], "mom7": ["H-014"], "vol": ["H-012", "H-013"], "btc": ["H-017", "H-019"]}
 
 CSS = """
 :root{--bg:#0d1117;--panel:#161b22;--line:#3d444d;--text:#ffffff;--text2:#e6edf3;--link:#79c0ff;
@@ -100,6 +102,16 @@ def e(x) -> str:
     return html.escape("" if x is None else str(x), quote=True)
 
 
+def price(v) -> str:
+    if v is None:
+        return "—"
+    if v >= 1000:
+        return f"${v:,.0f}"
+    if v >= 1:
+        return f"${v:,.2f}"
+    return f"${v:.4g}"
+
+
 def pct(v, signed=False, nd=1) -> str:
     if v is None:
         return "—"
@@ -110,15 +122,24 @@ def num(v, nd=2) -> str:
     return "—" if v is None else f"{v:.{nd}f}"
 
 
+def _rel(key: str | None) -> str:
+    """Page key -> path inside a language root: None = home, "coin:SOLUSDT", or a hypothesis id."""
+    if key is None:
+        return ""
+    if key.startswith("coin:"):
+        return f"coins/{key[5:]}.html"
+    return f"hypotheses/{key}.html"
+
+
 def page_url(base: str, lang: str, hid: str | None = None) -> str:
     root = base if lang == DEFAULT else f"{base}{lang}/"
-    return f"{root}hypotheses/{hid}.html" if hid else root
+    return root + _rel(hid)
 
 
 def page_path(lang: str, hid: str | None = None) -> str:
     """Path of a page relative to the site root."""
     root = "" if lang == DEFAULT else f"{lang}/"
-    return f"{root}hypotheses/{hid}.html" if hid else f"{root}index.html"
+    return root + (_rel(hid) or "index.html")
 
 
 def asset_root(lang: str, hid: str | None = None) -> str:
@@ -223,7 +244,7 @@ def header(lang: str, hid: str | None, generated: str) -> str:
     return f"""<header>
 <nav aria-label="{e(t(lang, 'nav_dashboard'))}"><a href="{home}">{e(t(lang, 'nav_dashboard'))}</a>
 <a href="{home}#how-to-read">{e(t(lang, 'nav_new'))}</a><a href="{home}#regime">{e(t(lang, 'nav_regime'))}</a>
-<a href="{home}#hypotheses">{e(t(lang, 'nav_hyp'))}</a><a href="{home}#glossary">{e(t(lang, 'nav_glossary'))}</a>
+<a href="{home}#coins">{e(t(lang, 'nav_coins'))}</a><a href="{home}#hypotheses">{e(t(lang, 'nav_hyp'))}</a><a href="{home}#glossary">{e(t(lang, 'nav_glossary'))}</a>
 <a href="{home}#methodology">{e(t(lang, 'nav_method'))}</a><a href="{REPO}">GitHub</a></nav>
 <nav class="langs" aria-label="{e(t(lang, 'lang_label'))}">{''.join(langs)}</nav>
 <p class="meta">{e(t(lang, 'updated', t=generated))}</p>
@@ -298,6 +319,17 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
                f'<div class="chart"><canvas data-chart="btc" role="img" aria-label="{e(t(lang, "btc_title"))}">'
                f'</canvas></div></section>')
 
+    coin_rows = "".join(
+        f'<tr><td><a href="coins/{e(c["symbol"])}.html"><strong>{e(c["ticker"])}</strong> {e(c["name"])}</a></td>'
+        f'<td class=num>{price(c["price"])}</td><td class=num>{pct(c["ch7"], True)}</td>'
+        f'<td class=num>{pct(c["ch30"], True)}</td><td class=num>{pct(c["vs200"], True)}</td>'
+        f'<td class=num>{pct(c["vol"], nd=0)}</td></tr>' for c in data.get("coins", []))
+    coins_section = (f'<section aria-labelledby="coins"><h2 id="coins">{e(t(lang, "coins_title"))}</h2>'
+                     f'<p>{e(t(lang, "coins_intro"))}</p><div class="table-wrap"><table><thead><tr>'
+                     f'<th>{e(t(lang, "th_coin"))}</th><th>{e(t(lang, "th_price"))}</th><th>{e(t(lang, "th_7d"))}</th>'
+                     f'<th>{e(t(lang, "th_30d"))}</th><th>{e(t(lang, "th_vs200"))}</th><th>{e(t(lang, "th_vol"))}</th>'
+                     f'</tr></thead><tbody>{coin_rows}</tbody></table></div></section>') if coin_rows else ""
+
     rows = []
     for h in hyps:
         when = (h.get("run_at") or "")[:10] or (h["history"][-1]["date"] if h["history"] else "")
@@ -325,6 +357,8 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
 <section aria-labelledby="regime"><h2 id="regime">{e(t(lang, 'regime_title'))}</h2>
 <p>{e(t(lang, 'regime_intro'))}</p>
 <div class="cards">{''.join(cards)}</div></section>
+
+{coins_section}
 
 {btc}
 
@@ -433,6 +467,70 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
                   {"@type": "ListItem", "position": 2, "name": hid, "item": url}]}]
     return page(lang=lang, hid=hid, base=base, title=f"{hid}: {title} | Crypto Research Labs",
                 description=description[:320], body=body, charts=charts, jsonld=jsonld, verification=verification)
+
+
+def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "") -> str:
+    key = f"coin:{c['symbol']}"
+    hyps = {h["id"]: h for h in data["hypotheses"]}
+    ch = c["chart"]
+    charts = {"coin": {"d": ch["close"]["d"], "log": True, "series": [
+        {"label": t(lang, "close_label", ticker=c["ticker"]), "v": ch["close"]["v"]},
+        {"label": t(lang, "sma50"), "v": ch["sma50"]["v"], "dash": [6, 4], "color": "--weak"},
+        {"label": t(lang, "sma200"), "v": ch["sma200"]["v"], "dash": [2, 3]}]}}
+    stats = [("st_price", price(c["price"])), ("st_7d", pct(c["ch7"], True)), ("st_30d", pct(c["ch30"], True)),
+             ("st_1y", pct(c["ch365"], True)), ("st_sma50", pct(c["vs50"], True)),
+             ("st_sma200", pct(c["vs200"], True)), ("st_vol", pct(c["vol"], nd=0))]
+    stat_rows = "".join(f"<tr><th scope=row>{e(t(lang, k))}</th><td class=num>{e(v)}</td></tr>" for k, v in stats)
+
+    def state(sig, val):
+        if val is None:
+            return "—"
+        if sig == "vol":
+            return f"<strong>{pct(val, nd=0)}</strong>"
+        cls, word = ("yes", t(lang, "state_in")) if val else ("no", t(lang, "state_out"))
+        return f'<span class="{cls}">{e(word)}</span>'
+
+    sig_rows = []
+    for sig, label in (("sma50", "sig_sma50"), ("mom7", "sig_mom7"), ("vol", "sig_vol"), ("btc", "sig_btc")):
+        links = " ".join(f'<a href="../hypotheses/{i}.html">{i}</a> {badge(lang, hyps[i]["verdict"])}'
+                         for i in SIGNAL_STUDIES_R[sig] if i in hyps)
+        sig_rows.append(f"<tr><td>{e(t(lang, label))}</td><td>{state(sig, c['signals'][sig])}</td><td>{links}</td></tr>")
+    studies = "".join(f'<li><a href="../hypotheses/{e(s["id"])}.html">{e(s["id"])}: {e(title_of(lang, hyps[s["id"]]))}'
+                      f'</a> {badge(lang, s["verdict"])}</li>' for s in c["studies"] if s["id"] in hyps)
+    thin = (f'<p class="callout">{e(t(lang, "thin_note", exchange=c["exchange"]))}</p>'
+            if c["exchange"] != "Binance" else "")
+    title = t(lang, "coin_title", name=c["name"], ticker=c["ticker"])
+    body = f"""{header(lang, key, data['generated_at'])}
+<main>
+<p class="meta"><a href="../#coins">{e(t(lang, 'back_coins'))}</a></p>
+<h1>{e(title)}</h1>
+<p>{e(t(lang, 'coin_lead', exchange=c['exchange'], date=c['date']))}</p>
+{thin}
+<h2>{e(t(lang, 'chart12_h'))}</h2>
+<div class="chart"><canvas data-chart="coin" role="img" aria-label="{e(title)}"></canvas></div>
+<h2>{e(t(lang, 'stats_h'))}</h2>
+<div class="table-wrap"><table><tbody>{stat_rows}</tbody></table></div>
+<h2>{e(t(lang, 'signals_h'))}</h2>
+<p class="callout">{e(t(lang, 'signals_warn'))}</p>
+<div class="table-wrap"><table><thead><tr><th>{e(t(lang, 'th_rule'))}</th><th>{e(t(lang, 'th_state'))}</th>
+<th>{e(t(lang, 'th_tested_in'))}</th></tr></thead><tbody>{''.join(sig_rows)}</tbody></table></div>
+<h2>{e(t(lang, 'coin_studies_h'))}</h2>
+{f'<ul>{studies}</ul>' if studies else f'<p>{e(t(lang, "no_studies"))}</p>'}
+<p class="meta"><a href="../#glossary">{e(t(lang, 'nav_glossary'))}</a></p>
+</main>
+{footer(lang, key)}"""
+    url = page_url(base, lang, key)
+    description = t(lang, "coin_desc", name=c["name"], ticker=c["ticker"], price=price(c["price"]),
+                    ch30=pct(c["ch30"], True), vs200=pct(c["vs200"], True))
+    jsonld = [{"@context": "https://schema.org", "@type": "WebPage", "name": title, "description": description[:300],
+               "url": url, "inLanguage": LANGS[lang][1], "dateModified": c["date"],
+               "about": {"@type": "Thing", "name": f"{c['name']} ({c['ticker']})"},
+               "isPartOf": {"@type": "WebSite", "name": "Crypto Research Labs", "url": page_url(base, lang)}},
+              {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+                  {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
+                  {"@type": "ListItem", "position": 2, "name": f"{c['name']} ({c['ticker']})", "item": url}]}]
+    return page(lang=lang, hid=key, base=base, title=f"{title} | Crypto Research Labs", description=description[:320],
+                body=body, charts=charts, jsonld=jsonld, verification=verification)
 
 
 def sitemap(base: str, entries: list[tuple[str | None, str]]) -> str:

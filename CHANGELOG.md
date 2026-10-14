@@ -3,6 +3,13 @@
 All notable changes. Versions follow [Semantic Versioning](https://semver.org/). The engine version is
 stored with every result (`engine_version` in `results/*/latest.json`).
 
+## [Unreleased]
+
+### Added
+- Coin pages on the dashboard (`coins/<SYMBOL>.html`, 7 languages): price, changes, trend, volatility,
+  12-month chart and today's state of each tested rule; a Coins table on the home page.
+- Translated titles for H-012…H-019.
+
 ## [0.2.0] - 2026-10-14
 
 First public release.

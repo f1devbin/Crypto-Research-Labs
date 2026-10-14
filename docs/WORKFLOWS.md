@@ -18,7 +18,7 @@ Every step is a single `crl` command, so you can run the same thing locally or f
    compares it with yesterday's state (`data/state/watch_state.json`). An alert goes
    out **only** on a band change. The first run and unavailable sources stay silent.
 4. `crl site` builds the dashboard into `_site/`: 7 languages (`/`, `/ru/`, `/es/`, `/pt/`, `/tr/`,
-   `/vi/`, `/zh/`), one page per hypothesis, `sitemap.xml` with `hreflang` alternates, `robots.txt`,
+   `/vi/`, `/zh/`), one page per hypothesis and per coin (`coins/<SYMBOL>.html`), `sitemap.xml` with `hreflang` alternates, `robots.txt`,
    JSON-LD and `data.json`. The `deploy-pages` job publishes it to GitHub Pages.
    Set the repository variable `GOOGLE_SITE_VERIFICATION` to add the Search Console tag.
 5. The cache is saved, including the watch state.

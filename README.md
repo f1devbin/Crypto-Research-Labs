@@ -48,9 +48,13 @@ famous calendar effects (Monday, turn of the month) did not survive after their 
 |---|---|
 | ![Market regime](docs/screenshots/regime.png) | ![Hypothesis page](docs/screenshots/hypothesis.png) |
 
-| Russian version | Phone |
+| One coin: chart, numbers and what each tested rule says today | Russian version |
 |---|---|
-| ![Russian dashboard](docs/screenshots/dashboard-ru.png) | ![Mobile](docs/screenshots/mobile.png) |
+| ![Coin page](docs/screenshots/coin-ru.png) | ![Russian dashboard](docs/screenshots/dashboard-ru.png) |
+
+Every coin has its own page (BTC, ETH, SOL, BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX, EVER), for example
+[Solana](https://f1devbin.github.io/Crypto-Research-Labs/coins/SOLUSDT.html) or
+[Everscale](https://f1devbin.github.io/Crypto-Research-Labs/ru/coins/EVERUSDT.html).
 
 The site is rebuilt every day by GitHub Actions from real Binance, OKX, DefiLlama,
 alternative.me and BGeometrics data. Every page is fully rendered HTML, with `hreflang` language

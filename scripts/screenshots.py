@@ -13,6 +13,7 @@ SHOTS = [  # path, file, width, colour scheme, full page
     ("#regime", "regime", 1280, "dark", False),
     ("ru/", "dashboard-ru", 1280, "dark", False),
     ("hypotheses/H-003.html#equity", "hypothesis", 1280, "light", False),
+    ("ru/coins/SOLUSDT.html", "coin-ru", 1280, "dark", False),
     ("", "mobile", 390, "dark", False),
 ]
 

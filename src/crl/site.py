@@ -65,6 +65,59 @@ def regime(store: DataStore, monitors: dict, days: int = 365) -> list[dict]:
     return out
 
 
+COIN_NAMES = {"BTCUSDT": "Bitcoin", "ETHUSDT": "Ethereum", "SOLUSDT": "Solana", "BNBUSDT": "BNB",
+              "XRPUSDT": "XRP", "ADAUSDT": "Cardano", "LTCUSDT": "Litecoin", "LINKUSDT": "Chainlink",
+              "DOGEUSDT": "Dogecoin", "XLMUSDT": "Stellar", "TRXUSDT": "TRON", "EVERUSDT": "Everscale"}
+
+
+def _chg(c: pd.Series, days: int):
+    return _num(c.iloc[-1] / c.iloc[-1 - days] - 1, 6) if len(c) > days else None
+
+
+def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
+    """Per-coin snapshot: price, changes, trend, volatility, 12-month chart and today's state of each
+    tested rule. Rule states are descriptive only: none of these rules has passed its test."""
+    from crl.data.sources import OTHER_EXCHANGES
+
+    symbols = sorted({s for h in hyps for s in (h.get("spec") or {}).get("universe", [])} | {"BTCUSDT"},
+                     key=lambda x: list(COIN_NAMES).index(x) if x in COIN_NAMES else 99)
+    try:
+        btc = store.close("BTCUSDT")
+        btc_on = bool(btc.iloc[-1] > btc.rolling(200).mean().iloc[-1])
+    except (FileNotFoundError, KeyError):
+        btc_on = None
+    out = []
+    for sym in symbols:
+        try:
+            c = store.close(sym).dropna()
+        except (FileNotFoundError, KeyError):  # source down or coin not cached yet
+            continue
+        sma50, sma200 = c.rolling(50).mean(), c.rolling(200).mean()
+        vol = c.pct_change().rolling(30).std() * np.sqrt(365)
+        last, v = float(c.iloc[-1]), _num(vol.iloc[-1], 6)
+        recent = c.index > c.index[-1] - pd.Timedelta(days=days)
+        out.append({
+            "symbol": sym, "ticker": sym.removesuffix("USDT"), "name": COIN_NAMES.get(sym, sym),
+            "exchange": "Gate.io" if sym in OTHER_EXCHANGES else "Binance",
+            "date": str(c.index[-1].date()), "price": last,
+            "ch7": _chg(c, 7), "ch30": _chg(c, 30), "ch365": _chg(c, 365),
+            "vs50": _num(last / sma50.iloc[-1] - 1, 6) if sma50.notna().iloc[-1] else None,
+            "vs200": _num(last / sma200.iloc[-1] - 1, 6) if sma200.notna().iloc[-1] else None,
+            "vol": v,
+            "signals": {
+                "sma50": None if pd.isna(sma50.iloc[-1]) else bool(last > sma50.iloc[-1]),
+                "mom7": None if len(c) <= 7 else bool(last > c.iloc[-8]),
+                "vol": None if not v else _num(min(1.0, 0.3 / v), 4),
+                "btc": btc_on,
+            },
+            "studies": [{"id": h["id"], "verdict": h["verdict"]} for h in hyps
+                        if sym in (h.get("spec") or {}).get("universe", [])],
+            "chart": {"close": _points(c[recent], nd=8), "sma50": _points(sma50[recent], nd=8),
+                      "sma200": _points(sma200[recent], nd=8)},
+        })
+    return out
+
+
 def btc_chart(store: DataStore, since: str = "2020-01-01") -> dict | None:
     try:
         c = store.close("BTCUSDT")
@@ -180,18 +233,26 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
         "hypotheses": hypotheses(store),
         "data": data_health(store, now.date()),
     }
+    data["coins"] = coins(store, data["hypotheses"])
     if out_dir.exists():
         shutil.rmtree(out_dir)
     today = now.date().isoformat()
-    entries = [(None, today)] + [(h["id"], (h.get("run_at") or today)[:10]) for h in data["hypotheses"]]
+    entries = ([(None, today)] + [(h["id"], (h.get("run_at") or today)[:10]) for h in data["hypotheses"]]
+               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]])
     pages = 0
     for lang in LANGS:
         for hid, _ in entries:
             path = out_dir / H.page_path(lang, hid)
             path.parent.mkdir(parents=True, exist_ok=True)
-            h = next((x for x in data["hypotheses"] if x["id"] == hid), None)
-            _w(path, H.hypothesis_page(lang, h, data, base, verification) if hid
-                            else H.index_page(lang, data, base, verification))
+            if hid is None:
+                html = H.index_page(lang, data, base, verification)
+            elif hid.startswith("coin:"):
+                coin = next(x for x in data["coins"] if x["symbol"] == hid[5:])
+                html = H.coin_page(lang, coin, data, base, verification)
+            else:
+                html = H.hypothesis_page(lang, next(x for x in data["hypotheses"] if x["id"] == hid), data, base,
+                                         verification)
+            _w(path, html)
             pages += 1
     _w(out_dir / "sitemap.xml", H.sitemap(base, entries))
     _w(out_dir / "robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {base}sitemap.xml\n")
