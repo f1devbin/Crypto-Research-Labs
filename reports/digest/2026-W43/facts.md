@@ -1,6 +1,6 @@
 # Regime watch
 
-Updated 2026-10-21 04:38 UTC
+Updated 2026-10-21 04:43 UTC
 
 | monitor | value | band |
 |---|---|---|
@@ -17,7 +17,7 @@ Updated 2026-10-21 04:38 UTC
 
 # Data health
 
-Checked 2026-10-21 04:38 UTC
+Checked 2026-10-21 04:43 UTC
 
 | source | files | missing | errors |
 |---|---|---|---|
@@ -55,7 +55,7 @@ Checked 2026-10-21 04:38 UTC
 
 # Coverage scan: every tested rule on every coin
 
-Generated 2026-10-21T04:39:07Z · window 2022-01-01 → latest · fees included · Benjamini-Hochberg FDR q = 0.1 over 156 cells.
+Generated 2026-10-21T04:43:12Z · window 2022-01-01 → latest · fees included · Benjamini-Hochberg FDR q = 0.1 over 156 cells.
 
 Exploratory, not verdicts. ✅ beats buy-and-hold and survives the false-discovery control; ↑ better Sharpe than holding but could be chance; ✗ worse than holding; — not enough data. **Bold** = the coin was in the original hypothesis. A ✅ on a new coin is a candidate for a new pre-registered hypothesis tested on future data.
 
