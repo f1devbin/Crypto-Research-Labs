@@ -46,3 +46,15 @@ def test_diagnosis_needs_a_clear_majority():
     assert (d["up"], d["down"], d["neutral"]) == (2, 1, 3) and d["level"] == "mixed"
     reg[3] = mon("stablecoin_growth", 0.03, "expanding")
     assert site.diagnosis(reg, coins)["level"] == "up"
+
+
+def test_plain_weekly_summary_without_model(monkeypatch):
+    from crl.agents import regime_watch
+    from crl.llm import digest as D
+    monkeypatch.setattr(regime_watch, "evaluate", lambda store, m: {
+        "btc_trend": {"value": 0.14, "band": "above"}, "fear_greed": {"value": 63, "band": "greed"},
+        "stablecoin_growth": {"value": -0.01, "band": "contracting"}})
+    store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
+    text = D.plain_summary("ru", store)
+    assert text.startswith(("Рост", "Смешанная", "Спад")) and "▲ Биткоин на 14.0% выше" in text
+    assert "|" not in text and "#" not in text  # no markdown tables or headings in Telegram

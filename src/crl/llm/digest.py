@@ -96,6 +96,34 @@ def load(root: Path = DIGEST_DIR, limit: int = 12) -> list[dict]:
     return out
 
 
+def plain_summary(code: str, store=None) -> str:
+    """Model-free weekly message: today's market diagnosis in plain words (same as the dashboard)."""
+    from crl import site
+    from crl.agents import regime_watch
+    from crl.data.store import DataStore
+    from crl.i18n import t
+    from crl.site_render import diag_item_text
+    store = store or DataStore()
+    cur = regime_watch.evaluate(store, regime_watch.load_monitors())
+    reg = [{"id": k, "value": v["value"], "band": v["band"], "error": v.get("error")} for k, v in cur.items()]
+    coins = []
+    for sym in site.COIN_NAMES:
+        try:
+            c = store.close(sym).dropna()
+        except (FileNotFoundError, KeyError):
+            continue
+        sma = c.rolling(200).mean()
+        coins.append({"vs200": None if sma.isna().iloc[-1] else float(c.iloc[-1] / sma.iloc[-1] - 1)})
+    d = site.diagnosis(reg, coins)
+    if not d:
+        return ""
+    mark = {1: "▲", -1: "▼", 0: "•"}
+    lines = [t(code, "diag_level_" + d["level"]), ""]
+    lines += [f"{mark[i['tone']]} {diag_item_text(code, i)}" for i in d["items"]]
+    lines += ["", t(code, "diag_means_" + d["level"]), "", t(code, "diag_disclaimer")]
+    return "\n".join(lines)
+
+
 def main() -> int:
     facts = collect()
     if not facts:
@@ -117,6 +145,14 @@ def main() -> int:
     write(facts, texts, client.model_name() if texts else None, today, errors=errors)
     if errors:
         job_summary("## Weekly digest: model errors\n\n" + "\n".join(f"- {k}: {v}" for k, v in errors.items()))
-    body = texts.get(alert_lang()) or texts.get("en") or facts
+    body = texts.get(alert_lang())
+    if not body:
+        try:
+            body = plain_summary(alert_lang())
+        except Exception as e:  # the weekly message must not depend on every data source
+            log.warning("plain summary failed: %s", e)
+            body = ""
+    if not body:
+        return 0
     alert(a("t_digest", week=week_id(today)), [body[:3500]])
     return 0
