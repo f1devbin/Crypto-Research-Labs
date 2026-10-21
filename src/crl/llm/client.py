@@ -23,7 +23,7 @@ def complete(system: str, prompt: str, max_tokens: int = 4000, timeout: int = 18
     if not key:
         raise LLMUnavailable("ANTHROPIC_API_KEY is not set")
     body = json.dumps({
-        "model": os.environ.get("CRL_LLM_MODEL", DEFAULT_MODEL),
+        "model": os.environ.get("CRL_LLM_MODEL") or DEFAULT_MODEL,
         "max_tokens": max_tokens,
         "system": system,
         "messages": [{"role": "user", "content": prompt}],
