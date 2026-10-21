@@ -394,13 +394,16 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
     data["coins"] = coins(store, data["hypotheses"])
     data["diagnosis"] = diagnosis(data["regime"], data["coins"])
     data["scan"] = scan_data()
+    from crl.llm import digest as D
+    data["digests"] = D.load()
     for h in data["hypotheses"]:
         h["progress"] = progress(h, now.date())
     if out_dir.exists():
         shutil.rmtree(out_dir)
     today = now.date().isoformat()
     entries = ([(None, today)] + [(h["id"], (h.get("run_at") or today)[:10]) for h in data["hypotheses"]]
-               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("course", today), ("setup", today)])
+               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("course", today), ("setup", today),
+                  ("digest", data["digests"][0]["date"] if data["digests"] else today)])
     pages = 0
     for lang in LANGS:
         for hid, _ in entries:
@@ -408,6 +411,8 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
             path.parent.mkdir(parents=True, exist_ok=True)
             if hid is None:
                 html = H.index_page(lang, data, base, verification)
+            elif hid == "digest":
+                html = H.digest_page(lang, data, base, verification)
             elif hid == "setup":
                 html = H.setup_page(lang, data, base, verification)
             elif hid == "course":

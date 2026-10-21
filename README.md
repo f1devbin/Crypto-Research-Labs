@@ -68,6 +68,8 @@ hypothesis is applied to every coin since 2022 (fees included), with a false-dis
 table so lucky combinations are not mistaken for findings. The matrix is on the home page and in
 [reports/COVERAGE.md](reports/COVERAGE.md); a ✅ on a new coin is only a candidate for a new pre-registered test.
 
+Every Monday a language model retells the week in plain words, in all 7 languages: [weekly digest](https://f1devbin.github.io/Crypto-Research-Labs/digest.html) (needs a free Groq or an Anthropic key, see Setup).
+
 Tables can be sorted by clicking a column header. Hypotheses waiting for new data (H-022) show how many days
 of it have been collected.
 

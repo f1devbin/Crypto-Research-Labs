@@ -18,6 +18,7 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - Coverage scan (`crl scan`, weekly): every tested rule on every coin with FDR control; matrix on the home page, per-rule tables on hypothesis pages, per-coin tables on coin pages, `reports/COVERAGE.md`.
 - Sortable tables (coins, hypotheses, scan); forward-data progress bar for hypotheses waiting for new data (H-022).
 - Cross-section studies (`kind: cross_section`, daily ranking vs an equal-weight basket, rotation null). H-024…H-026 from a ChatGPT proposal: all fail.
+- Weekly digest page (`digest.html`, 7 languages) and the latest digest on the home page: the model writes each week's digest in every dashboard language; files in `reports/digest/<week>/`.
 - Free LLM option: any OpenAI-compatible provider via `LLM_API_KEY` (+ `CRL_LLM_BASE_URL`), Groq by default.
 - Setup page on the dashboard (`setup.html`, 7 languages): Telegram alerts, alert language, the optional AI model key (what it does, how to get it), running your own copy, all settings in one table.
 - Telegram alerts in 7 languages: repository variable `TELEGRAM_LANG`; alerts end with a link to the dashboard in that language.
