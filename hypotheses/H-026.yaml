@@ -1,6 +1,6 @@
 id: H-026
 title: 'Short-term reversal: hold the 3 coins that fell the most yesterday'
-status: registered
+status: rejected
 family: other
 created: '2026-10-21'
 author: ChatGPT proposal, formalised by Claude for F1DevBin
@@ -46,3 +46,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-21'
 prereg_sha256: 8a05cfc9919e9cbeca833bee2c6a408b80cd9357dd406c82ac03b76894cfb72b
+last_run: '2026-10-21'

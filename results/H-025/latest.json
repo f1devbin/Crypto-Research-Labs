@@ -1,0 +1,48 @@
+{
+ "id": "H-025",
+ "prereg_sha256": "1f8716d63472d7ba612caf1c4fcde53bad1c09293bd837ada317bd2d43e0fe7f",
+ "verdict": "FAIL",
+ "summary": "since_2020: does not beat the equal-weight basket; since_2022: does not beat the equal-weight basket",
+ "rows": [
+  {
+   "symbol": "PORTFOLIO",
+   "period": "since_2020",
+   "days": 2485,
+   "start": "2020-01-01",
+   "end": "2026-10-20",
+   "sharpe": 0.911393,
+   "cagr": 0.511827,
+   "max_dd": -0.86695,
+   "hold_sharpe": 1.130163,
+   "hold_cagr": 0.755993,
+   "hold_max_dd": -0.769696,
+   "exposure": 1.0,
+   "trades_per_year": 211.851777,
+   "p": 0.002997,
+   "beats_hold": false,
+   "win": false
+  },
+  {
+   "symbol": "PORTFOLIO",
+   "period": "since_2022",
+   "days": 1754,
+   "start": "2022-01-01",
+   "end": "2026-10-20",
+   "sharpe": 0.186507,
+   "cagr": -0.10392,
+   "max_dd": -0.783252,
+   "hold_sharpe": 0.409833,
+   "hold_cagr": 0.064563,
+   "hold_max_dd": -0.670346,
+   "exposure": 1.0,
+   "trades_per_year": 211.286583,
+   "p": 0.002997,
+   "beats_hold": false,
+   "win": false
+  }
+ ],
+ "kind": "cross_section",
+ "engine_version": "0.2.0",
+ "data_end": "2026-10-20",
+ "run_at": "2026-10-21T03:34:41Z"
+}

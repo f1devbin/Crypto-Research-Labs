@@ -1,7 +1,7 @@
 id: H-024
 title: 'Relative strength rotation: hold the 3 strongest coins (1- and 3-day), skip extreme one-day jumps,
   only while BTC is above its 200-day average'
-status: registered
+status: rejected
 family: trend
 created: '2026-10-21'
 author: ChatGPT proposal, formalised by Claude for F1DevBin
@@ -57,3 +57,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-21'
 prereg_sha256: 9c6fad51aee0ace830a76919e75dfcd3adf7e7825e5c0d8595900e560b00df58
+last_run: '2026-10-21'

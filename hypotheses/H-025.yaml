@@ -1,6 +1,6 @@
 id: H-025
 title: 'Plain momentum rotation: hold the 3 strongest coins over 1 and 3 days'
-status: registered
+status: rejected
 family: trend
 created: '2026-10-21'
 author: ChatGPT proposal, formalised by Claude for F1DevBin
@@ -46,3 +46,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-21'
 prereg_sha256: 1f8716d63472d7ba612caf1c4fcde53bad1c09293bd837ada317bd2d43e0fe7f
+last_run: '2026-10-21'
