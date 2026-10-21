@@ -1,15 +1,15 @@
 # Regime watch
 
-Updated 2026-10-19 14:59 UTC
+Updated 2026-10-21 02:45 UTC
 
 | monitor | value | band |
 |---|---|---|
-| BTC funding carry, yield on capital (30 d, annualised, after costs) | +1.9% | low |
-| USDT+USDC supply growth (30 d) | -0.63% | contracting |
-| Crypto Fear & Greed index | 59 | greed |
-| BTC vs its 200-day average | +13.2% | above |
+| BTC funding carry, yield on capital (30 d, annualised, after costs) | +1.8% | low |
+| USDT+USDC supply growth (30 d) | -1.02% | contracting |
+| Crypto Fear & Greed index | 63 | greed |
+| BTC vs its 200-day average | +14.2% | above |
 | BTC realised volatility (30 d, annualised) | 33% | calm |
-| BTC net flow to exchanges (7 days) | -1,876 BTC | withdrawals |
+| BTC net flow to exchanges (7 days) | +499 BTC | deposits |
 | H-020 rule today: BTC in or out of the market | 1 | rule_in |
-| Market breadth (coins above their 200-day average) | 67% | mixed |
-| Everscale (EVER) vs its 50-day average | -26.0% | below |
+| Market breadth (coins above their 200-day average) | 62% | mixed |
+| Everscale (EVER) vs its 50-day average | -23.4% | below |

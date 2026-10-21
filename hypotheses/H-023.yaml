@@ -1,6 +1,6 @@
 id: H-023
 title: 'Gram (GRAM, prev. Toncoin): SMA50 trend rule beats buy-and-hold since 2023'
-status: registered
+status: weak
 family: trend
 created: '2026-10-21'
 author: Claude (requested by F1DevBin)
@@ -31,3 +31,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-21'
 prereg_sha256: 64715ba9e3060759a28f2e6da363f1ae7a26fd6aab31f8c692e041dfa8eaa14b
+last_run: '2026-10-21'

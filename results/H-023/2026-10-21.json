@@ -1,0 +1,30 @@
+{
+ "id": "H-023",
+ "prereg_sha256": "64715ba9e3060759a28f2e6da363f1ae7a26fd6aab31f8c692e041dfa8eaa14b",
+ "verdict": "WEAK",
+ "summary": "since_listing: wins 0/1 (need 1), beats buy-and-hold 1/1",
+ "rows": [
+  {
+   "symbol": "GRAMUSDT",
+   "period": "since_listing",
+   "days": 1238,
+   "start": "2023-06-01",
+   "end": "2026-10-20",
+   "sharpe": 0.549089,
+   "cagr": 0.169316,
+   "max_dd": -0.556654,
+   "hold_sharpe": 0.264848,
+   "hold_cagr": -0.086558,
+   "hold_max_dd": -0.853165,
+   "exposure": 0.394992,
+   "trades_per_year": 12.088045,
+   "p": 0.111944,
+   "beats_hold": true,
+   "win": false
+  }
+ ],
+ "kind": "timing_rule",
+ "engine_version": "0.2.0",
+ "data_end": "2026-10-20",
+ "run_at": "2026-10-21T02:45:03Z"
+}
