@@ -4,13 +4,12 @@
  "model": "openai/gpt-oss-120b",
  "languages": [
   "en",
-  "ru"
+  "es",
+  "pt",
+  "ru",
+  "tr",
+  "vi",
+  "zh"
  ],
- "errors": {
-  "es": "HTTP 429: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kt6y53hteer91jnd36aexqxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6623, Req",
-  "pt": "HTTP 429: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kt6y53hteer91jnd36aexqxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6981, Req",
-  "tr": "HTTP 429: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kt6y53hteer91jnd36aexqxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6964, Req",
-  "vi": "HTTP 429: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kt6y53hteer91jnd36aexqxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6961, Req",
-  "zh": "HTTP 429: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kt6y53hteer91jnd36aexqxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6953, Req"
- }
+ "errors": {}
 }

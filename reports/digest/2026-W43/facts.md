@@ -1,6 +1,6 @@
 # Regime watch
 
-Updated 2026-10-21 04:46 UTC
+Updated 2026-10-21 04:50 UTC
 
 | monitor | value | band |
 |---|---|---|
@@ -16,66 +16,9 @@ Updated 2026-10-21 04:46 UTC
 
 
 # Data health
-
-Checked 2026-10-21 04:46 UTC
-
-| source | files | missing | errors |
-|---|---|---|---|
-| klines ADAUSDT | 122 | 0 | — |
-| klines BNBUSDT | 127 | 0 | — |
-| klines BTCUSDT | 130 | 0 | — |
-| klines DOGEUSDT | 107 | 0 | — |
-| klines ETHUSDT | 130 | 0 | — |
-| klines EVERUSDT (gate) | 5 | 0 | — |
-| klines GRAMUSDT (gate) | 4 | 0 | — |
-| klines LINKUSDT | 113 | 0 | — |
-| klines LTCUSDT | 126 | 0 | — |
-| klines SOLUSDT | 94 | 0 | — |
-| klines TRXUSDT | 120 | 0 | — |
-| klines XLMUSDT | 121 | 0 | — |
-| klines XRPUSDT | 121 | 0 | — |
-| etf_flow_btc | 1 | 0 | — |
-| exchange flows (Coin Metrics) | 1 | 0 | — |
-| fear_greed | 1 | 0 | — |
-| funding BTCUSDT | 81 | 0 | — |
-| stable_usdt | 1 | 0 | — |
-| stable_usdc | 1 | 0 | — |
-
 ## Findings
 
-- **warn** `ADAUSDT`: 1 daily moves > 60%, e.g. 2025-03-02
-- **warn** `BNBUSDT`: 2 daily moves > 60%, e.g. 2018-01-05
-- **warn** `DOGEUSDT`: 3 daily moves > 60%, e.g. 2021-01-02
-- **warn** `EVERUSDT`: 4 daily moves > 60%, e.g. 2023-01-30
-- **warn** `LINKUSDT`: 1 daily moves > 60%, e.g. 2019-06-13
-- **warn** `TRXUSDT`: 1 daily moves > 60%, e.g. 2024-12-03
-- **warn** `XLMUSDT`: 2 daily moves > 60%, e.g. 2021-01-06
-- **warn** `XRPUSDT`: 1 daily moves > 60%, e.g. 2023-07-13
-
-
-# Coverage scan: every tested rule on every coin
-
-Generated 2026-10-21T04:46:43Z · window 2022-01-01 → latest · fees included · Benjamini-Hochberg FDR q = 0.1 over 156 cells.
-
-Exploratory, not verdicts. ✅ beats buy-and-hold and survives the false-discovery control; ↑ better Sharpe than holding but could be chance; ✗ worse than holding; — not enough data. **Bold** = the coin was in the original hypothesis. A ✅ on a new coin is a candidate for a new pre-registered hypothesis tested on future data.
-
-| Rule | BTC | ETH | SOL | BNB | XRP | ADA | LTC | LINK | DOGE | XLM | TRX | EVER | GRAM |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| H-005 | ↑ | ↑ | ↑ | **↑** | **✗** | **↑** | **✗** | **✗** | **↑** | **✗** | **✗** | **↑** | **↑** |
-| H-006 | **↑** | ↑ | ↑ | **↑** | **↑** | **✗** | **↑** | **↑** | **✗** | **↑** | **✗** | ✗ | ↑ |
-| H-007 | **✗** | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
-| H-008 | **✗** | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ↑ | ↑ | ✗ |
-| H-009 | **↑** | ↑ | ✗ | ↑ | ✗ | ✗ | ↑ | ✗ | ↑ | ✗ | ✗ | ✗ | ↑ |
-| H-012 | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | ✗ | ✗ |
-| H-014 | **✗** | **↑** | **↑** | ✗ | ✗ | ✗ | ✗ | ✗ | ↑ | ↑ | ✗ | ↑ | ✗ |
-| H-015 | **✗** | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
-| H-016 | **✗** | ✗ | ✗ | ✗ | ✗ | ↑ | ↑ | ✗ | ✗ | ✗ | ✗ | ↑ | ✗ |
-| H-017 | ↑ | ↑ | ↑ | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **✗** | **↑** | ✗ |
-| H-020 | **↑** | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ✗ | ✗ |
-| H-021 | ↑ | **↑** | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ↑ | ↑ | ✗ |
-
-Counts: works 0, better 70, worse 86, nodata 0
-
+Coverage scan (every tested rule on every coin, exploratory): Counts: works 0, better 70, worse 86, nodata 0
 
 # Run 2026-10-14
 

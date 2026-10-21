@@ -1,9 +1,10 @@
-This week the dashboard shows modest positive funding for Bitcoin (+1.8% classified as low), a 1.02% contraction in the combined USDT + USDC supply, and a Crypto Fear & Greed index of 63, placing sentiment in the “greed” zone. Bitcoin trades 14.2% above its 200‑day average, its 30‑day realised volatility is 33% (considered calm), and 1,173 BTC were deposited to exchanges in the last week; market breadth is mixed at 62% of coins above their 200‑day average.
+This week the market shows modest optimism: BTC funding carry is +1.8% (low), the Crypto Fear & Greed index sits at 63 (greed), and BTC trades 14.2% above its 200‑day average while its 30‑day realised volatility is 33% (calm). USDT + USDC supply fell 1.02% over 30 days, and 62% of coins are above their 200‑day averages.
 
-- BTC funding carry +1.8% (low) means the cost‑adjusted return for holding Bitcoin futures is slightly positive.  
-- USDT + USDC supply fell ‑1.02% over 30 days, indicating a tightening of stablecoin availability.  
-- Fear & Greed index 63 signals optimistic market mood; “greed” can precede pull‑backs.  
-- Bitcoin’s price is +14.2% over its 200‑day average, with calm volatility (33% annualised) and net inflows of 1,173 BTC to exchanges, suggesting short‑term buying pressure.  
-- Rule testing: H‑020 (BTC out of market on high deposits) passed, beating buy‑and‑hold; H‑021 (ETH out of market) is weak; rotation rules H‑024, H‑025 and H‑026 all failed to outperform the equal‑weight benchmark, and the Sharpe improvements may be due to chance (uncertainty flagged).
+- BTC net flow to exchanges rose by 1,173 BTC in the last 7 days, triggering H‑020 “BTC in” (rule = 1).  
+- H‑020 passed: BTC out‑of‑market rule beat buy‑and‑hold with Sharpe 0.83 vs 0.50 and CAGR +31% vs +13% (in‑market 83%).  
+- H‑021 (ETH out‑of‑market) was weak: Sharpe 0.40 vs 0.22, CAGR +7% vs ‑8%, in‑market 80%.  
+- H‑024 (relative‑strength rotation) failed: since 2020 Sharpe 0.76 vs 1.13 hold, CAGR +32% vs +76%; since 2022 Sharpe 0.44 vs 0.41, CAGR +11% vs +6%.  
+- H‑025 (plain momentum) failed: since 2020 Sharpe 0.91 vs 1.13, CAGR +51% vs +76%; since 2022 Sharpe 0.19 vs 0.41, CAGR ‑10% vs +6%.  
+- H‑026 (short‑term reversal) failed: since 2020 Sharpe 0.17 vs 1.13, CAGR ‑22% vs +76%; since 2022 Sharpe ‑0.82 vs 0.41, CAGR ‑54% vs +6%.
 
-Only H‑020 stayed a pass; the other tested hypotheses either weakened or failed, with no new hypotheses
+The tested hypotheses H‑024, H‑025 and H‑026 all remained unsuccessful, while H‑020 stayed successful and H‑021 stayed weak.
