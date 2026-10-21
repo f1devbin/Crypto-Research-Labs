@@ -25,7 +25,7 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
         assert (out / ("" if lang == "en" else f"{lang}/") / "hypotheses" / "H-003.html").exists()
     sitemap = (out / "sitemap.xml").read_text()
     d = json.loads((out / "data.json").read_text())
-    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 3)
+    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 4)
     course = (out / "ru" / "course.html").read_text(encoding="utf-8")
     assert "Курс для новичков" in course and '"@type": "Course"' in course.replace('":"', '": "') or '"Course"' in course
     assert "{" not in course.split("<main>")[1].split("</main>")[0]  # every placeholder filled
@@ -73,3 +73,21 @@ def test_setup_guide_is_complete_in_every_language():
         text = " ".join(md for _, md in g["sections"])
         for name in ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "TELEGRAM_LANG", "ANTHROPIC_API_KEY", "test_alert"):
             assert name in text, (lang, name)
+
+
+def test_digest_page_shows_model_written_weeks(tmp_path, monkeypatch):
+    import datetime as _dt
+    from crl.llm import digest as D
+    D.write("facts", {"ru": "Рынок спокоен.\n\n- BTC выше средней", "en": "Calm market."}, "llama-x",
+            _dt.date(2026, 10, 19), tmp_path)
+    D.write("facts only", {}, None, _dt.date(2026, 10, 26), tmp_path)  # no model: not shown
+    weeks = D.load(tmp_path)
+    assert [w["week"] for w in weeks] == ["2026-W43"] and weeks[0]["model"] == "llama-x"
+    monkeypatch.setattr(D, "load", lambda root=None, limit=12: weeks)
+    store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
+    out = site.build(store, tmp_path / "_site", dt.datetime(2026, 10, 21, tzinfo=dt.timezone.utc), "https://x.test/")
+    ru = (out / "ru" / "digest.html").read_text(encoding="utf-8")
+    assert "Неделя 2026-W43: 2026-10-19 – 2026-10-25" in ru and "<li>BTC выше средней</li>" in ru
+    es = (out / "es" / "digest.html").read_text(encoding="utf-8")
+    assert "Calm market." in es and "se muestra en inglés" in es
+    assert "Последняя недельная сводка" in (out / "ru" / "index.html").read_text(encoding="utf-8")

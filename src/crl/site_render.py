@@ -112,6 +112,8 @@ ul.diag-list li{margin:0;padding-left:1.9em;position:relative;max-width:80ch}
 ul.diag-list li::before{position:absolute;left:0;top:.05em;font-weight:700;width:1.3em;text-align:center}
 li.t-up::before{content:"▲";color:var(--pass)}li.t-down::before{content:"▼";color:var(--fail)}li.t-0::before{content:"●";color:var(--text2);font-size:.8em;top:.25em}
 .diag h3{margin-top:1em}
+.digest{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:14px 0}
+.digest h2,.digest h3{border:0;margin:0 0 .5em;padding:0}
 /* rule x coin matrix: chips */
 td.sc{text-align:center;vertical-align:middle;padding:6px 3px}
 .chip{display:inline-flex;align-items:center;justify-content:center;width:2.1em;height:1.75em;border-radius:7px;font-weight:700;font-size:.9rem;position:relative}
@@ -245,7 +247,7 @@ def _rel(key: str | None) -> str:
     """Page key -> path inside a language root: None = home, "coin:SOLUSDT", or a hypothesis id."""
     if key is None:
         return ""
-    if key in ("course", "setup"):
+    if key in ("course", "setup", "digest"):
         return f"{key}.html"
     if key.startswith("coin:"):
         return f"coins/{key[5:]}.html"
@@ -264,7 +266,7 @@ def page_path(lang: str, hid: str | None = None) -> str:
 
 
 def asset_root(lang: str, hid: str | None = None) -> str:
-    depth = (lang != DEFAULT) + (hid is not None and hid not in ("course", "setup"))
+    depth = (lang != DEFAULT) + (hid is not None and hid not in ("course", "setup", "digest"))
     return "../" * depth
 
 
@@ -399,7 +401,7 @@ def header(lang: str, hid: str | None, generated: str) -> str:
 <div class="bar"><a class="brand" href="{home}">{LOGO}<span>Crypto Research Labs</span></a>
 <span class="updated">{e(t(lang, 'updated', t=generated))}</span></div>
 <nav class="sections bar" aria-label="{e(t(lang, 'nav_dashboard'))}"><a href="{home}">{e(t(lang, 'nav_dashboard'))}</a>
-<a href="{home}course.html">{e(C.UI.get(lang, C.UI['en'])['nav'])}</a>
+<a href="{home}course.html">{e(C.UI.get(lang, C.UI['en'])['nav'])}</a><a href="{home}digest.html">{e(t(lang, 'nav_digest'))}</a>
 <a href="{home}#how-to-read">{e(t(lang, 'nav_new'))}</a><a href="{home}#regime">{e(t(lang, 'nav_regime'))}</a>
 <a href="{home}#coins">{e(t(lang, 'nav_coins'))}</a><a href="{home}#hypotheses">{e(t(lang, 'nav_hyp'))}</a><a href="{home}#glossary">{e(t(lang, 'nav_glossary'))}</a>
 <a href="{home}#methodology">{e(t(lang, 'nav_method'))}</a><a href="{home}setup.html">{e(SG.GUIDE.get(lang, SG.GUIDE['en'])['nav'])}</a><a href="{REPO}">GitHub</a></nav>
@@ -705,6 +707,7 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
 <h1>{e(t(lang, 'h1'))}</h1>
 <p class="lead">{e(t(lang, 'lead', verdict=verdict_line))}</p>
 {diag_section(lang, data)}
+{digest_teaser(lang, data)}
 <a class="course-cta" href="course.html">{e(C.UI.get(lang, C.UI['en'])['home_link'])} →</a>
 
 <section aria-labelledby="how-to-read"><h2 id="how-to-read">{e(t(lang, 'how_title'))}</h2>
@@ -943,6 +946,58 @@ def course_page(lang: str, values: dict, data: dict, base: str, verification: st
                   {"@type": "ListItem", "position": 2, "name": ui["h1"], "item": url}]}]
     return page(lang=lang, hid="course", base=base, title=ui["title"], description=ui["desc"][:320], body=body,
                 charts={}, jsonld=jsonld, verification=verification)
+
+
+def _week_range(week: str) -> tuple[str, str]:
+    import datetime as _dt
+    y, w = week.split("-W")
+    mon = _dt.date.fromisocalendar(int(y), int(w), 1)
+    return str(mon), str(mon + _dt.timedelta(days=6))
+
+
+def _digest_block(lang: str, d: dict, level: str = "h2") -> str:
+    text = d["texts"].get(lang)
+    note = ""
+    if text is None:
+        text = d["texts"].get("en") or next(iter(d["texts"].values()))
+        note = f'<p class="meta">{e(t(lang, "digest_fallback"))}</p>'
+    start, end = _week_range(d["week"])
+    head = e(t(lang, "digest_week", week=d["week"], start=start, end=end))
+    return (f'<article class="digest"><{level} id="{e(d["week"])}">{head}</{level}>{note}{C.md_to_html(text)}'
+            f'<p class="meta">{e(t(lang, "digest_model", model=d.get("model") or "—"))}</p></article>')
+
+
+def digest_teaser(lang: str, data: dict) -> str:
+    ds = data.get("digests") or []
+    if not ds:
+        return ""
+    return (f'<section aria-labelledby="digest"><h2 id="digest">{e(t(lang, "digest_latest"))}</h2>'
+            f'{_digest_block(lang, ds[0], "h3")}<p><a href="digest.html">{e(t(lang, "digest_more"))}</a></p></section>')
+
+
+def digest_page(lang: str, data: dict, base: str, verification: str = "") -> str:
+    ds = data.get("digests") or []
+    items = "".join(_digest_block(lang, d) for d in ds) or f'<p class="callout">{e(t(lang, "digest_empty"))}</p>'
+    body = f"""{header(lang, "digest", data['generated_at'])}
+<main>
+<h1>{e(t(lang, 'digest_h1'))}</h1>
+<p class="lead">{e(t(lang, 'digest_lead'))}</p>
+{items}
+<p class="meta"><a href="{REPO}/tree/main/reports/digest">GitHub: reports/digest</a></p>
+</main>
+{footer(lang, "digest")}"""
+    url = page_url(base, lang, "digest")
+    jsonld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": t(lang, "digest_title"),
+               "description": t(lang, "digest_desc"), "url": url, "inLanguage": LANGS[lang][1],
+               "dateModified": (ds[0]["date"] if ds else data["generated_at"][:10]),
+               "hasPart": [{"@type": "Article", "headline": t(lang, "digest_week", week=d["week"],
+                                                              start=_week_range(d["week"])[0], end=_week_range(d["week"])[1]),
+                            "datePublished": d["date"], "url": f"{url}#{d['week']}"} for d in ds]},
+              {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+                  {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
+                  {"@type": "ListItem", "position": 2, "name": t(lang, "digest_title"), "item": url}]}]
+    return page(lang=lang, hid="digest", base=base, title=f"{t(lang, 'digest_title')} | Crypto Research Labs",
+                description=t(lang, "digest_desc")[:320], body=body, charts={}, jsonld=jsonld, verification=verification)
 
 
 def setup_page(lang: str, data: dict, base: str, verification: str = "") -> str:
