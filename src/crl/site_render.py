@@ -6,6 +6,7 @@ root (x-default), other languages under /<lang>/, linked with hreflang.
 """
 import html
 import json
+import re
 
 from crl import course as C
 from crl.i18n import DEFAULT, LANGS, sub, t
@@ -18,77 +19,146 @@ REPO = "https://github.com/f1devbin/Crypto-Research-Labs"
 SIGNAL_STUDIES_R = {"sma50": ["H-005", "H-018"], "mom7": ["H-014"], "vol": ["H-012", "H-013"], "btc": ["H-017", "H-019"]}
 
 CSS = """
-:root{--bg:#0d1117;--panel:#161b22;--line:#3d444d;--text:#ffffff;--text2:#e6edf3;--link:#79c0ff;
---pass:#2ea043;--weak:#d29922;--fail:#f85149;--accent:#58a6ff;--hold:#e6edf3}
-@media (prefers-color-scheme:light){:root{--bg:#ffffff;--panel:#f6f8fa;--line:#c8d1da;--text:#000000;
---text2:#1f2328;--link:#0550ae;--pass:#116329;--weak:#7d4e00;--fail:#a40e26;--accent:#0550ae;--hold:#1f2328}}
+:root{--bg:#0f1b2d;--panel:#15243b;--raised:#1b2e4a;--line:#2f4568;--text:#ffffff;--text2:#e3eaf5;
+--link:#8ccbff;--accent:#7cc4ff;--pass:#46c281;--weak:#f0b44c;--fail:#ff6b73;--hold:#e3eaf5;--ink:#0f1b2d}
+@media (prefers-color-scheme:light){:root{--bg:#f5f8fc;--panel:#ffffff;--raised:#eaf0f8;--line:#c3cfdf;
+--text:#08111f;--text2:#1c293b;--link:#0a58a8;--accent:#0a58a8;--pass:#127a43;--weak:#8a5a00;--fail:#b4232f;
+--hold:#1c293b;--ink:#ffffff}}
 *{box-sizing:border-box}
-html{font-size:18px}
-body{margin:0;background:var(--bg);color:var(--text);font:1rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-a{color:var(--link)}
-header,main,footer{max-width:1100px;margin:0 auto;padding:0 16px}
-header{padding-top:28px}
-nav{display:flex;flex-wrap:wrap;gap:6px 18px;font-weight:600;margin:6px 0 4px}
-nav.langs{gap:4px 14px;font-weight:500;font-size:.95rem}
-nav.langs a[aria-current]{color:var(--text);font-weight:700;text-decoration:none}
-h1{font-size:2rem;line-height:1.25;margin:.2em 0 .3em}
-h2{font-size:1.45rem;margin:1.8em 0 .6em;border-bottom:2px solid var(--line);padding-bottom:.25em}
-h3{font-size:1.1rem;margin:0 0 .3em}
+html{font-size:18px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+font:1rem/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+a{color:var(--link);text-underline-offset:.18em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+main,footer,.bar{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header: brand row + section nav + languages */
+.site-head{background:var(--panel);border-bottom:1px solid var(--line);margin-bottom:28px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding-top:14px;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:700;font-size:1.08rem;letter-spacing:-.01em}
+.brand svg{width:30px;height:30px;flex:none}
+.updated{margin-left:auto;color:var(--text2);font-size:.85rem}
+nav.sections{display:flex;flex-wrap:wrap;gap:4px;padding-top:0;padding-bottom:10px;margin-left:auto;margin-right:auto}
+nav.sections a:first-child{margin-left:-12px}
+nav.sections a{color:var(--text);text-decoration:none;font-weight:500;font-size:.92rem;padding:5px 12px;border-radius:999px;border:1px solid transparent}
+nav.sections a:hover{border-color:var(--line);background:var(--raised)}
+nav.langs{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:.85rem;padding-top:0;padding-bottom:14px}
+nav.langs a{color:var(--text2);text-decoration:none}
+nav.langs a[aria-current]{color:var(--text);font-weight:700;text-decoration:underline;text-underline-offset:.3em}
+h1{font-size:2.3rem;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:.1em 0 .35em;max-width:26ch}
+h2{font-size:1.5rem;line-height:1.25;letter-spacing:-.01em;font-weight:600;margin:2.4em 0 .7em;padding-bottom:.35em;border-bottom:1px solid var(--line)}
+h3{font-size:1.08rem;font-weight:600;margin:0 0 .3em}
 p,li{color:var(--text2)}
-.lead{font-size:1.12rem;max-width:62ch}
-.meta{color:var(--text2);font-size:.95rem}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.card{overflow-wrap:anywhere;background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:14px 16px}
-.value{font-size:1.9rem;font-weight:700;line-height:1.2;margin:.15em 0}
-.band{display:inline-block;border:2px solid var(--text);border-radius:6px;padding:0 8px;font-weight:700;font-size:.9rem}
-.note{font-size:.92rem;margin:.5em 0 0}
-.explain{font-size:.92rem;margin:.2em 0 .4em}
-.plain{font-size:1.05rem;border-left:6px solid var(--accent);background:var(--panel);padding:10px 14px;border-radius:6px}
+main p{max-width:78ch}
+.lead{font-size:1.15rem;max-width:64ch}
+.meta{color:var(--text2);font-size:.9rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{overflow-wrap:anywhere;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h3{font-size:1rem}
+.value{font-size:2rem;font-weight:600;letter-spacing:-.02em;line-height:1.15;margin:.2em 0}
+.band{display:inline-block;border:1px solid var(--text2);border-radius:999px;padding:0 10px;font-weight:600;font-size:.82rem}
+.note{font-size:.9rem;margin:.5em 0 0}
+.explain{font-size:.9rem;margin:.2em 0 .4em}
+.plain{font-size:1.05rem;border-left:4px solid var(--accent);background:var(--panel);padding:12px 16px;border-radius:0 10px 10px 0}
 .steps{counter-reset:s;list-style:none;padding:0}
-.steps li{counter-increment:s;margin:.4em 0;padding-left:2.2em;position:relative}
-.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:1.6em;height:1.6em;border-radius:50%;
-background:var(--accent);color:var(--bg);font-weight:700;text-align:center;line-height:1.6em}
+.steps li{counter-increment:s;margin:.5em 0;padding-left:2.4em;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:.1em;width:1.6em;height:1.6em;border-radius:50%;
+background:var(--accent);color:var(--ink);font-weight:700;text-align:center;line-height:1.6em;font-size:.9rem}
 .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}
-.flow-step{border:2px solid var(--accent);border-radius:10px;padding:10px 14px;font-weight:700;background:var(--panel)}
-.flow-arrow{font-size:1.6rem;font-weight:700;color:var(--accent)}
-.beginner{display:inline-block;background:var(--pass);color:#fff;font-weight:700;border-radius:6px;padding:2px 10px}
-.course-cta{display:block;border:2px solid var(--pass);border-radius:10px;padding:12px 16px;margin:12px 0;font-weight:700;background:var(--panel)}
+.flow-step{border:1px solid var(--accent);border-radius:10px;padding:10px 14px;font-weight:600;background:var(--panel)}
+.flow-arrow{font-size:1.5rem;font-weight:700;color:var(--accent)}
+.beginner{display:inline-block;background:var(--pass);color:var(--ink);font-weight:700;border-radius:999px;padding:2px 12px}
+.course-cta{display:flex;align-items:center;gap:10px;border:1px solid var(--pass);border-radius:12px;padding:14px 18px;margin:16px 0;
+font-weight:600;background:var(--panel);text-decoration:none;color:var(--text)}
+.course-cta:hover{background:var(--raised)}
 ul.tasks{list-style:none;padding-left:0}ul.tasks li{margin:.35em 0}ul.tasks input{width:1.1em;height:1.1em;vertical-align:-2px}
 .toc{columns:2;column-gap:32px}@media (max-width:640px){.toc{columns:1}}
-details{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:8px 14px;margin:8px 0}
-summary{cursor:pointer;font-weight:700;color:var(--text)}
-.chart{position:relative;width:100%;height:300px;margin:8px 0}
-.spark{position:relative;width:100%;height:80px;margin-top:8px}
-.table-wrap{overflow-x:auto;border:2px solid var(--line);border-radius:10px}
-table{border-collapse:collapse;width:100%;font-size:.95rem}
-td:first-child{white-space:nowrap}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-th{background:var(--panel);color:var(--text);white-space:nowrap}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin:8px 0}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+canvas{max-width:100%}
+.chart{position:relative;width:100%;height:320px;margin:8px 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+.spark{position:relative;width:100%;height:80px;margin-top:10px}
+/* tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.94rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+th{background:var(--raised);color:var(--text);vertical-align:bottom;line-height:1.25;font-size:.84rem;font-weight:600;hyphens:auto}
+tbody tr:hover td{background:color-mix(in srgb,var(--raised) 60%,transparent)}
 td{color:var(--text2)}
-td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.badge{display:inline-block;min-width:4.2em;text-align:center;border-radius:6px;padding:1px 8px;font-weight:700;color:#fff}
+th.num,td.num{text-align:right;white-space:nowrap}
+.sub{display:block;font-size:.84rem;color:var(--text2);font-weight:400;margin-top:1px}
+a .sub{text-decoration:none}
+.badge{display:inline-block;min-width:4.4em;text-align:center;border-radius:999px;padding:1px 10px;font-weight:700;font-size:.85rem;color:var(--ink)}
 .badge.pass{background:var(--pass)}.badge.weak{background:var(--weak)}.badge.fail{background:var(--fail)}
-.badge.none{background:transparent;color:var(--text);border:2px solid var(--line)}
+.badge.none{background:transparent;color:var(--text);border:1px solid var(--line)}
 .yes{color:var(--pass);font-weight:700}.no{color:var(--text2)}
-pre{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font-size:.88rem;color:var(--text)}
-.callout{border-left:6px solid var(--weak);background:var(--panel);padding:10px 14px;border-radius:6px}
-select{font:inherit;padding:4px 8px;background:var(--panel);color:var(--text);border:2px solid var(--line);border-radius:6px}
-footer{margin-top:48px;padding-bottom:40px;border-top:2px solid var(--line)}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.diag{background:var(--panel);border:2px solid var(--line);border-left:8px solid var(--weak);border-radius:10px;padding:12px 18px;margin:16px 0}
-.diag.up{border-left-color:var(--pass)}.diag.down{border-left-color:var(--fail)}
-.diag-head{font-size:1.3rem;font-weight:700;color:var(--text);margin:.2em 0 .4em}
-ul.diag-list{list-style:none;padding-left:0;margin:.4em 0}ul.diag-list li{margin:.35em 0;padding-left:1.8em;position:relative}
-ul.diag-list li::before{position:absolute;left:0;font-weight:700}
-li.t-up::before{content:"▲";color:var(--pass)}li.t-down::before{content:"▼";color:var(--fail)}li.t-0::before{content:"●";color:var(--text2)}
-td.sc{text-align:center;font-weight:700;min-width:2.6em}td.sc.works{color:var(--pass)}td.sc.better{color:var(--weak)}
-td.sc.worse,td.sc.nodata{color:var(--text2);font-weight:400}td.sc.official{outline:2px solid var(--accent);outline-offset:-4px}
-.legend{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.95rem;margin:.4em 0}
-table.sortable th{cursor:pointer;user-select:none}table.sortable th[aria-sort=ascending]::after{content:" ▲"}
-table.sortable th[aria-sort=descending]::after{content:" ▼"}
-.progress{height:14px;background:var(--bg);border:2px solid var(--line);border-radius:8px;overflow:hidden;max-width:420px;margin:.3em 0}
-.progress span{display:block;height:100%;background:var(--accent)}
-td .progress{height:10px;min-width:110px}
+pre{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto;font-size:.86rem;color:var(--text)}
+.callout{border-left:4px solid var(--weak);background:var(--panel);padding:12px 16px;border-radius:0 10px 10px 0}
+select{font:inherit;padding:6px 10px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px}
+footer{margin-top:64px;padding-top:20px;padding-bottom:48px;border-top:1px solid var(--line);font-size:.9rem}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+/* diagnosis: the one loud element on the page */
+.diag{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin:20px 0 8px;position:relative;overflow:hidden}
+.diag::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--weak)}
+.diag.up::before{background:var(--pass)}.diag.down::before{background:var(--fail)}
+.diag h2{border:0;margin:0 0 .2em;padding:0;font-size:1rem;font-weight:600;color:var(--text2)}
+.diag-head{font-size:1.6rem;line-height:1.25;font-weight:600;letter-spacing:-.015em;color:var(--text);margin:.1em 0 .5em;max-width:32ch}
+.meter{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--raised);max-width:420px;margin:.2em 0 .4em}
+.meter i{display:block}.meter .m-up{background:var(--pass)}.meter .m-0{background:var(--line)}.meter .m-down{background:var(--fail)}
+ul.diag-list{list-style:none;padding-left:0;margin:.8em 0;display:grid;gap:8px}
+ul.diag-list li{margin:0;padding-left:1.9em;position:relative;max-width:80ch}
+ul.diag-list li::before{position:absolute;left:0;top:.05em;font-weight:700;width:1.3em;text-align:center}
+li.t-up::before{content:"▲";color:var(--pass)}li.t-down::before{content:"▼";color:var(--fail)}li.t-0::before{content:"●";color:var(--text2);font-size:.8em;top:.25em}
+.diag h3{margin-top:1em}
+/* rule x coin matrix: chips */
+td.sc{text-align:center;vertical-align:middle;padding:6px 3px}
+.chip{display:inline-flex;align-items:center;justify-content:center;width:2.1em;height:1.75em;border-radius:7px;font-weight:700;font-size:.9rem;position:relative}
+.works .chip{background:var(--pass);color:var(--ink)}
+.better .chip{background:color-mix(in srgb,var(--weak) 22%,transparent);color:var(--weak);border:1px solid var(--weak)}
+.worse .chip{color:var(--text2);border:1px solid var(--line)}
+.nodata .chip{color:var(--text2);border:1px dashed var(--line)}
+.legend .official .chip{border:1px solid var(--line)}
+.official .chip::after{content:"";position:absolute;bottom:-6px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:.9rem;margin:.6em 0;align-items:center;padding:0}
+.legend li{list-style:none;display:flex;align-items:center;gap:8px}
+.legend .sc{display:inline-flex;padding:0}
+table.matrix th{font-size:.8rem;text-align:center;padding:10px 3px}
+table.matrix th:first-child,table.matrix td:first-child{text-align:left;min-width:10em;max-width:15em;position:sticky;left:0;z-index:1;background:var(--panel)}
+table.matrix th:first-child{background:var(--raised)}
+table.matrix td{padding-bottom:12px}
+table.sortable th{cursor:pointer;user-select:none}table.sortable th:hover{color:var(--accent)}
+table.sortable th[aria-sort=ascending]::after{content:" ▲"}table.sortable th[aria-sort=descending]::after{content:" ▼"}
+.progress{height:10px;background:var(--raised);border-radius:999px;overflow:hidden;max-width:420px;margin:.4em 0}
+.progress span{display:block;height:100%;background:var(--accent);border-radius:999px}
+td .progress{min-width:110px;margin:.5em 0 .2em}
+/* phones: data tables become labelled cards, the matrix becomes one chip grid per rule */
+@media (max-width:760px){
+html{font-size:16px}
+main,footer,.bar{padding:0 14px}
+.bar{padding-top:12px;padding-bottom:10px}.updated{margin-left:0;width:100%}
+nav.sections{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;padding:0 14px 10px}nav.sections a:first-child{margin-left:0}
+nav.sections a{white-space:nowrap;border-color:var(--line)}
+nav.langs{padding:0 14px 12px}
+h1{font-size:1.75rem}
+h2{font-size:1.3rem}
+.diag{padding:16px 16px 16px 20px}.diag-head{font-size:1.3rem}
+.table-wrap:has(table.rt),.table-wrap:has(table.matrix){border:0;overflow:visible;background:none}
+table.rt thead,table.matrix thead,.sort-hint{display:none}
+table.rt,table.rt tbody,table.rt tr,table.matrix,table.matrix tbody{display:block;width:100%}
+table.rt tr{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 10px;padding:6px 0}
+table.rt td{display:flex;justify-content:space-between;align-items:baseline;gap:14px;border:0;padding:4px 14px;text-align:right;white-space:normal}
+table.rt td::before{content:attr(data-label);font-weight:600;color:var(--text);text-align:left;flex:0 1 auto;font-size:.9rem}
+table.rt td:first-child{display:block;text-align:left;font-size:1.05rem;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:4px}
+table.rt td:first-child::before{content:none}
+tbody tr:hover td{background:none}
+table.matrix tr{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:10px 4px;background:var(--panel);
+border:1px solid var(--line);border-radius:12px;margin:0 0 10px;padding:12px}
+table.matrix td{border:0;padding:0}
+table.matrix td:first-child{grid-column:1/-1;position:static;max-width:none;background:none;padding-bottom:4px}
+table.matrix td.sc{display:flex;flex-direction:column;align-items:center;gap:3px}
+table.matrix td.sc::before{content:attr(data-label);font-size:.75rem;font-weight:600;color:var(--text2)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 """
 
 # sorts any <table class="sortable"> by the clicked column; cells may carry data-v with the raw value
@@ -119,7 +189,7 @@ var el=document.getElementById('chart-data');if(!el||!window.Chart)return;
 var D=JSON.parse(el.textContent),css=getComputedStyle(document.documentElement);
 function c(n){return css.getPropertyValue(n).trim()}
 Chart.defaults.color=c('--text');Chart.defaults.borderColor=c('--line');
-Chart.defaults.font.size=14;Chart.defaults.animation=false;
+Chart.defaults.font.size=14;Chart.defaults.font.family='"IBM Plex Sans",system-ui,sans-serif';Chart.defaults.animation=false;
 function draw(cv,spec){
  var ds=spec.series.map(function(s,i){return{label:s.label,data:s.v,borderColor:c(s.color||(i?'--hold':'--accent')),
   borderWidth:s.width||2,pointRadius:0,tension:0,borderDash:s.dash||[],spanGaps:true}});
@@ -225,8 +295,36 @@ def fmt_monitor(m: dict) -> str:
         return f"{m['value']:.4g}"
 
 
+_TABLE = re.compile(r"<table([^>]*)>(.*?)</table>", re.S)
+_TAG = re.compile(r"<[^>]+>")
+
+
+def responsive_tables(body: str) -> str:
+    """Give every data table (one with a header row) the class `rt` and copy each column header
+    into its cells as data-label, so on a phone the CSS shows each row as a labelled card."""
+    def fix(m):
+        attrs, inner = m.group(1), m.group(2)
+        if "matrix" in attrs or "<thead" not in inner:
+            return m.group(0)
+        head = inner.split("</thead>", 1)[0]
+        labels = [html.unescape(_TAG.sub("", x)).strip() for x in re.findall(r"<th[^>]*>(.*?)</th>", head, re.S)]
+        rest = inner.split("</thead>", 1)[1]
+
+        def row(rm):
+            i = iter(labels)
+            return re.sub(r"<td(?=[\s>])", lambda _: f'<td data-label="{e(next(i, ""))}"', rm.group(0))
+        rest = re.sub(r"<tr[^>]*>.*?</tr>", row, rest, flags=re.S)
+        if "class=" in attrs:
+            attrs = re.sub(r'class="([^"]*)"', r'class="\1 rt"', attrs, count=1)
+        else:
+            attrs += ' class="rt"'
+        return f"<table{attrs}>{head}</thead>{rest}</table>"
+    return _TABLE.sub(fix, body)
+
+
 def page(*, lang: str, hid: str | None, base: str, title: str, description: str, body: str, charts: dict,
          jsonld: list, verification: str = "") -> str:
+    body = responsive_tables(body)
     root = asset_root(lang, hid)
     canonical = page_url(base, lang, hid)
     hl, locale = LANGS[lang][1], LANGS[lang][2]
@@ -252,7 +350,7 @@ def page(*, lang: str, hid: str | None, base: str, title: str, description: str,
 <link rel="canonical" href="{e(canonical)}">
 {alternates}
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#15243b" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="color-scheme" content="dark light">
 {meta_verify}
@@ -271,6 +369,8 @@ def page(*, lang: str, hid: str | None, base: str, title: str, description: str,
 <meta name="twitter:image" content="{e(og_image)}">
 <link rel="icon" href="{root}favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>{CSS}</style>
 {ld}
 </head>
@@ -293,14 +393,15 @@ def header(lang: str, hid: str | None, generated: str) -> str:
         target = target or "./"
         cur = ' aria-current="page"' if c == lang else ""
         langs.append(f'<a href="{e(target)}" hreflang="{hl}" lang="{hl}"{cur}>{e(name)}</a>')
-    return f"""<header>
-<nav aria-label="{e(t(lang, 'nav_dashboard'))}"><a href="{home}">{e(t(lang, 'nav_dashboard'))}</a>
+    return f"""<header class="site-head">
+<div class="bar"><a class="brand" href="{home}">{LOGO}<span>Crypto Research Labs</span></a>
+<span class="updated">{e(t(lang, 'updated', t=generated))}</span></div>
+<nav class="sections bar" aria-label="{e(t(lang, 'nav_dashboard'))}"><a href="{home}">{e(t(lang, 'nav_dashboard'))}</a>
 <a href="{home}course.html">{e(C.UI.get(lang, C.UI['en'])['nav'])}</a>
 <a href="{home}#how-to-read">{e(t(lang, 'nav_new'))}</a><a href="{home}#regime">{e(t(lang, 'nav_regime'))}</a>
 <a href="{home}#coins">{e(t(lang, 'nav_coins'))}</a><a href="{home}#hypotheses">{e(t(lang, 'nav_hyp'))}</a><a href="{home}#glossary">{e(t(lang, 'nav_glossary'))}</a>
 <a href="{home}#methodology">{e(t(lang, 'nav_method'))}</a><a href="{REPO}">GitHub</a></nav>
-<nav class="langs" aria-label="{e(t(lang, 'lang_label'))}">{''.join(langs)}</nav>
-<p class="meta">{e(t(lang, 'updated', t=generated))}</p>
+<nav class="langs bar" aria-label="{e(t(lang, 'lang_label'))}">{''.join(langs)}</nav>
 </header>"""
 
 
@@ -339,7 +440,7 @@ def _badges(lang: str) -> dict:
 
 
 TONE_CLASS = {1: "t-up", -1: "t-down", 0: "t-0"}
-SCAN_MARK = {"works": "✅", "better": "↑", "worse": "✗", "nodata": "—"}
+SCAN_MARK = {"works": "✓", "better": "↑", "worse": "✗", "nodata": "·"}
 
 
 def _diag_item(lang: str, it: dict) -> str:
@@ -366,8 +467,12 @@ def diag_section(lang: str, data: dict) -> str:
     if not d:
         return ""
     items = "".join(_diag_item(lang, it) for it in d["items"])
-    return (f'<section aria-labelledby="diagnosis" class="diag {d["level"]}"><h2 id="diagnosis" style="border:0;margin-top:.3em">'
+    return (f'<section aria-labelledby="diagnosis" class="diag {d["level"]}"><h2 id="diagnosis">'
             f'{e(t(lang, "diag_title"))}</h2><p class="diag-head">{e(t(lang, "diag_level_" + d["level"]))}</p>'
+            f'<div class="meter" role="img" aria-label="{e(t(lang, "diag_count", up=d["up"], down=d["down"], neutral=d["neutral"]))}">'
+            f'<i class="m-up" style="width:{100 * d["up"] / max(d["up"] + d["neutral"] + d["down"], 1):.1f}%"></i>'
+            f'<i class="m-0" style="width:{100 * d["neutral"] / max(d["up"] + d["neutral"] + d["down"], 1):.1f}%"></i>'
+            f'<i class="m-down" style="width:{100 * d["down"] / max(d["up"] + d["neutral"] + d["down"], 1):.1f}%"></i></div>'
             f'<p class="meta">{e(t(lang, "diag_count", up=d["up"], down=d["down"], neutral=d["neutral"]))}</p>'
             f'<ul class="diag-list">{items}</ul>'
             f'<h3>{e(t(lang, "diag_means_h"))}</h3><p>{e(t(lang, "diag_means_" + d["level"]))}</p>'
@@ -428,14 +533,19 @@ def coin_diag(lang: str, c: dict, data: dict) -> str:
     if not out:
         return ""
     items = "".join(f'<li class="{TONE_CLASS[tone]}">{e(txt)}</li>' for tone, txt in out)
-    return (f'<section aria-labelledby="cdiag" class="diag"><h2 id="cdiag" style="border:0;margin-top:.3em">'
+    lvl = {1: "up", -1: "down"}.get(out[0][0], "") if out else ""
+    return (f'<section aria-labelledby="cdiag" class="diag {lvl}"><h2 id="cdiag">'
             f'{e(t(lang, "cdiag_title"))}</h2><ul class="diag-list">{items}</ul>'
             f'<p class="meta">{e(t(lang, "diag_disclaimer"))}</p></section>')
 
 
 def _legend(lang: str) -> str:
-    return ('<p class="legend">' + "".join(f"<span>{e(t(lang, k))}</span>" for k in
-                                           ("scan_works", "scan_better", "scan_worse", "scan_nodata")) + "</p>")
+    items = []
+    for st in ("works", "better", "worse", "nodata"):
+        word = t(lang, f"scan_{st}").split(" ", 1)[-1]
+        items.append(f'<li><span class="sc {st}"><span class="chip">{SCAN_MARK[st]}</span></span>{e(word)}</li>')
+    items.append(f'<li><span class="sc official"><span class="chip"></span></span>{e(t(lang, "scan_official"))}</li>')
+    return '<ul class="legend">' + "".join(items) + "</ul>"
 
 
 def scan_matrix(lang: str, data: dict) -> str:
@@ -454,8 +564,9 @@ def scan_matrix(lang: str, data: dict) -> str:
             tip = (f'{s.removesuffix("USDT")}: Sharpe {num(c.get("sharpe"))} / {num(c.get("hold_sharpe"))}'
                    if c.get("sharpe") is not None else s.removesuffix("USDT"))
             cls = f'sc {c["status"]}' + (" official" if c.get("official") else "")
-            tds.append(f'<td class="{cls}" title="{e(tip)}">{SCAN_MARK[c["status"]]}</td>')
-        rows.append(f'<tr><td><a href="hypotheses/{e(r["id"])}.html">{e(r["id"])}</a> {e(rule_label(lang, r["id"], hyps))}</td>'
+            tds.append(f'<td class="{cls}" title="{e(tip)}" data-label="{e(s.removesuffix("USDT"))}">'
+                       f'<span class="chip">{SCAN_MARK[c["status"]]}</span></td>')
+        rows.append(f'<tr><td><a href="hypotheses/{e(r["id"])}.html">{e(r["id"])}</a><span class="sub">{e(rule_label(lang, r["id"], hyps))}</span></td>'
                     + "".join(tds) + "</tr>")
     n = sum(sc["counts"].get(k, 0) for k in ("works", "better", "worse"))
     counts = t(lang, "scan_counts", works=sc["counts"].get("works", 0), better=sc["counts"].get("better", 0),
@@ -463,7 +574,7 @@ def scan_matrix(lang: str, data: dict) -> str:
     return (f'<section aria-labelledby="scan"><h2 id="scan">{e(t(lang, "scan_title"))}</h2>'
             f'<p>{e(t(lang, "scan_intro", start=sc["start"]))}</p>{_legend(lang)}<p class="meta">{e(counts)} · '
             f'{e((sc.get("generated_at") or "")[:10])}</p>'
-            f'<div class="table-wrap"><table><thead><tr><th>{e(t(lang, "th_rule_short"))}</th>{head}</tr></thead>'
+            f'<div class="table-wrap"><table class="matrix"><thead><tr><th>{e(t(lang, "th_rule_short"))}</th>{head}</tr></thead>'
             f'<tbody>{"".join(rows)}</tbody></table></div></section>')
 
 
@@ -471,7 +582,7 @@ def _scan_row(lang: str, c: dict, first: str) -> str:
     cls = f'sc {c["status"]}' + (" official" if c.get("official") else "")
     word = t(lang, f'scan_{c["status"]}').split(" ", 1)[-1]
     sh = c.get("sharpe")
-    return (f"<tr><td>{first}</td><td class=\"{cls}\">{SCAN_MARK[c['status']]}</td><td>{e(word)}</td>"
+    return (f"<tr><td>{first}</td><td class=\"{cls}\"><span class=\"chip\">{SCAN_MARK[c['status']]}</span></td><td>{e(word)}</td>"
             f'<td class=num data-v="{"" if sh is None else sh}">{num(sh)} / {num(c.get("hold_sharpe"))}</td>'
             f'<td class=num data-v="{"" if c.get("cagr") is None else c["cagr"]}">{pct(c.get("cagr"), True, 0)} / {pct(c.get("hold_cagr"), True, 0)}</td>'
             f'<td class=num>{e(c.get("start") or "—")}</td></tr>')
@@ -505,7 +616,7 @@ def scan_for_coin(lang: str, sym: str, data: dict) -> str:
     hyps = {h["id"]: h for h in data["hypotheses"]}
     cells = _scan_cells(data)
     rows = [_scan_row(lang, cells[(r["id"], sym)],
-                      f'<a href="../hypotheses/{e(r["id"])}.html">{e(r["id"])}</a> {e(rule_label(lang, r["id"], hyps))}')
+                      f'<a href="../hypotheses/{e(r["id"])}.html">{e(r["id"])}</a><span class="sub">{e(rule_label(lang, r["id"], hyps))}</span>')
             for r in sc["rules"] if (r["id"], sym) in cells]
     if not rows:
         return ""
@@ -557,17 +668,17 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
                f'</canvas></div></section>')
 
     coin_rows = "".join(
-        f'<tr><td><a href="coins/{e(c["symbol"])}.html"><strong>{e(c["ticker"])}</strong> {e(c["name"])}</a></td>'
+        f'<tr><td><a href="coins/{e(c["symbol"])}.html"><strong>{e(c["ticker"])}</strong><span class="sub">{e(c["name"])}</span></a></td>'
         f'<td class=num>{price(c["price"])}</td><td class=num>{pct(c["ch7"], True)}</td>'
         f'<td class=num>{pct(c["ch30"], True)}</td><td class=num>{pct(c["vs200"], True)}</td>'
         f'<td class=num>{pct(c["vol"], nd=0)}</td><td class=num>{pct(c.get("dd_peak"), True, 1 if abs(c.get("dd_peak") or 0) >= 0.995 else 0)}</td>'
         f'<td class=num>{usd(c.get("usd100"))}</td></tr>' for c in data.get("coins", []))
     coins_section = (f'<section aria-labelledby="coins"><h2 id="coins">{e(t(lang, "coins_title"))}</h2>'
-                     f'<p>{e(t(lang, "coins_intro"))}</p><p class="meta">{e(t(lang, "sort_hint"))}</p>'
+                     f'<p>{e(t(lang, "coins_intro"))}</p><p class="meta sort-hint">{e(t(lang, "sort_hint"))}</p>'
                      f'<div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, "sort_hint"))}"><thead><tr>'
-                     f'<th>{e(t(lang, "th_coin"))}</th><th>{e(t(lang, "th_price"))}</th><th>{e(t(lang, "th_7d"))}</th>'
-                     f'<th>{e(t(lang, "th_30d"))}</th><th>{e(t(lang, "th_vs200"))}</th><th>{e(t(lang, "th_vol"))}</th>'
-                     f'<th>{e(t(lang, "th_peak"))}</th><th>{e(t(lang, "th_100"))}</th></tr></thead><tbody>{coin_rows}</tbody></table></div></section>') if coin_rows else ""
+                     f'<th>{e(t(lang, "th_coin"))}</th><th class=num>{e(t(lang, "th_price"))}</th><th class=num>{e(t(lang, "th_7d"))}</th>'
+                     f'<th class=num>{e(t(lang, "th_30d"))}</th><th class=num>{e(t(lang, "th_vs200"))}</th><th class=num>{e(t(lang, "th_vol"))}</th>'
+                     f'<th class=num>{e(t(lang, "th_peak"))}</th><th class=num>{e(t(lang, "th_100"))}</th></tr></thead><tbody>{coin_rows}</tbody></table></div></section>') if coin_rows else ""
 
     rows = []
     for h in hyps:
@@ -606,7 +717,7 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
 
 <section aria-labelledby="hypotheses"><h2 id="hypotheses">{e(t(lang, 'hyp_title'))}</h2>
 <p>{t(lang, 'hyp_intro', **b)}</p>
-<p class="meta">{e(t(lang, 'sort_hint'))}</p>
+<p class="meta sort-hint">{e(t(lang, 'sort_hint'))}</p>
 <div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, 'sort_hint'))}"><thead><tr><th>{e(t(lang, 'th_id'))}</th><th>{e(t(lang, 'th_hyp'))}</th>
 <th>{e(t(lang, 'th_family'))}</th><th>{e(t(lang, 'th_verdict'))}</th><th>{e(t(lang, 'th_plain'))}</th>
 <th>{e(t(lang, 'th_tested'))}</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div></section>
@@ -844,9 +955,13 @@ def sitemap(base: str, entries: list[tuple[str | None, str]]) -> str:
             'xmlns:xhtml="http://www.w3.org/1999/xhtml">' + "".join(out) + "</urlset>\n")
 
 
+LOGO = ('<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#15243b"/>'
+        '<path d="M10 46 L24 30 L34 38 L54 16" fill="none" stroke="#7cc4ff" stroke-width="6" stroke-linecap="round" '
+        'stroke-linejoin="round"/><circle cx="54" cy="16" r="5.5" fill="#46c281"/></svg>')
+
 FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" '
-           'fill="#0d1117"/><path d="M10 46 L24 30 L34 38 L54 16" fill="none" stroke="#58a6ff" stroke-width="6" '
-           'stroke-linecap="round" stroke-linejoin="round"/><circle cx="54" cy="16" r="5" fill="#2ea043"/></svg>')
+           'fill="#0f1b2d"/><path d="M10 46 L24 30 L34 38 L54 16" fill="none" stroke="#7cc4ff" stroke-width="6" '
+           'stroke-linecap="round" stroke-linejoin="round"/><circle cx="54" cy="16" r="5" fill="#46c281"/></svg>')
 
 NOT_FOUND = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"
 content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found |
