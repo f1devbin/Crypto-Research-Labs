@@ -68,6 +68,7 @@ def _download(url: str, dest: Path) -> str:
 # coins that Binance does not list: symbol -> (exchange, its pair name, first day to request)
 OTHER_EXCHANGES = {
     "EVERUSDT": ("gate", "EVER_USDT", dt.date(2022, 1, 1)),  # Everscale; Gate.io spot
+    "GRAMUSDT": ("gate", "GRAM_USDT", dt.date(2023, 1, 1)),  # Gram, prev. Toncoin (TON); Gate history from 2023-03
 }
 GATE = "https://api.gateio.ws/api/v4/spot/candlesticks"
 

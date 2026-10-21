@@ -35,7 +35,7 @@ and automated agents re-test old ideas as new market data arrives.
 | See today's market and every result, with plain-language explanations | the **[live dashboard](https://f1devbin.github.io/Crypto-Research-Labs/)** (7 languages) |
 | Understand the words (Sharpe, drawdown, p-value, funding…) | the glossary on the dashboard, or [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
 | Know what was found | [docs/FINDINGS.md](docs/FINDINGS.md) |
-| Which coins | BTC, ETH, SOL; for independent confirmation BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX; Everscale (EVER) from Gate.io. Any Binance spot pair can be added |
+| Which coins | BTC, ETH, SOL; for independent confirmation BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX; Everscale (EVER) and Gram (GRAM, prev. Toncoin) from Gate.io. Any Binance spot pair can be added |
 | Run it yourself or add your own idea | [Quickstart](#quickstart) and [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 **The short answer so far: one idea passed (H-020, exchange deposits), and it is still being verified.** Daily trend rules and
@@ -53,7 +53,7 @@ famous calendar effects (Monday, turn of the month) did not survive after their 
 |---|---|
 | ![Coin page](docs/screenshots/coin-ru.png) | ![Russian dashboard](docs/screenshots/dashboard-ru.png) |
 
-Every coin has its own page (BTC, ETH, SOL, BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX, EVER) with trend, volatility,
+Every coin has its own page (BTC, ETH, SOL, BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX, EVER, GRAM) with trend, volatility,
 distance from its peak, what $100 invested a year ago is worth today and its correlation with Bitcoin, for example
 [Solana](https://f1devbin.github.io/Crypto-Research-Labs/coins/SOLUSDT.html) or
 [Everscale](https://f1devbin.github.io/Crypto-Research-Labs/ru/coins/EVERUSDT.html).
@@ -85,6 +85,7 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-017 | Altcoins only while BTC is above its 200-day average | ❌ Fail: 7/8 since 2022, 1/8 since 2019 |
 | H-018 | Everscale (EVER): SMA50 trend rule | ◐ Weak: −10 %/yr vs −70 %/yr holding, not significant |
 | H-019 | Everscale (EVER): only while BTC is above its 200-day average | ◐ Weak |
+| H-023 | Gram (GRAM, prev. Toncoin): SMA50 trend rule | ⏳ Registered, first run on the next scheduled job |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
 | H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |
 | H-022 | Forward replication of H-020 on as-published data | ⏳ collecting data, test on 2027-10-15 |

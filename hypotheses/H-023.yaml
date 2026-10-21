@@ -1,0 +1,33 @@
+id: H-023
+title: 'Gram (GRAM, prev. Toncoin): SMA50 trend rule beats buy-and-hold since 2023'
+status: registered
+family: trend
+created: '2026-10-21'
+author: Claude (requested by F1DevBin)
+rationale: 'Requested by F1DevBin. GRAM is Toncoin (TON) after its rename; Gate.io spot keeps the full
+  daily history from March 2023 under GRAM_USDT. Same rule as H-018 (EVER) so the two coins can be compared:
+  long while the close is above its 50-day average, flat otherwise. Gate fee 0.2% per side. Turnover is
+  around $2M/day, so unlike EVER the result would be tradable in practice.'
+spec:
+  kind: timing_rule
+  rule:
+    type: price_above_sma
+    window: 50
+  mode: long_flat
+  fee: 0.002
+  universe:
+  - GRAMUSDT
+  periods:
+  - name: since_listing
+    start: '2023-06-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.05
+  criterion:
+    min_wins:
+      since_listing: 1
+    require_significance: true
+retest_every_days: 90
+registered: '2026-10-21'
+prereg_sha256: 64715ba9e3060759a28f2e6da363f1ae7a26fd6aab31f8c692e041dfa8eaa14b

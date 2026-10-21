@@ -106,9 +106,9 @@ monitors:
     metric: breadth
     params:
       window: 200
-      symbols: [BTCUSDT, ETHUSDT, SOLUSDT, BNBUSDT, XRPUSDT, ADAUSDT, LTCUSDT, LINKUSDT, DOGEUSDT, XLMUSDT, TRXUSDT, EVERUSDT]
+      symbols: [BTCUSDT, ETHUSDT, SOLUSDT, BNBUSDT, XRPUSDT, ADAUSDT, LTCUSDT, LINKUSDT, DOGEUSDT, XLMUSDT, TRXUSDT, EVERUSDT, GRAMUSDT]
     explain: >-
-      Share of the 12 coins whose price is above their own 200-day average. High means most of the
+      Share of the 13 coins whose price is above their own 200-day average. High means most of the
       market is in an uptrend; low means most coins are falling.
     format: "{:.0%}"
     bands:

@@ -67,7 +67,8 @@ def regime(store: DataStore, monitors: dict, days: int = 365) -> list[dict]:
 
 COIN_NAMES = {"BTCUSDT": "Bitcoin", "ETHUSDT": "Ethereum", "SOLUSDT": "Solana", "BNBUSDT": "BNB",
               "XRPUSDT": "XRP", "ADAUSDT": "Cardano", "LTCUSDT": "Litecoin", "LINKUSDT": "Chainlink",
-              "DOGEUSDT": "Dogecoin", "XLMUSDT": "Stellar", "TRXUSDT": "TRON", "EVERUSDT": "Everscale"}
+              "DOGEUSDT": "Dogecoin", "XLMUSDT": "Stellar", "TRXUSDT": "TRON", "EVERUSDT": "Everscale",
+              "GRAMUSDT": "Gram (ex-Toncoin)"}
 
 
 def _chg(c: pd.Series, days: int):

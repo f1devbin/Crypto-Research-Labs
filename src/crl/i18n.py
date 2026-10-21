@@ -177,7 +177,7 @@ T = {
  "monitors": {
   "h020_rule": ('H-020 rule today: BTC in or out of the market', 'The only rule that has passed its test. It stays out of Bitcoin while net deposits to exchanges are in their top 20% of the past year. Not a trading signal: it is still being verified (H-022).'),
   "btc_exchange_flow": ('BTC net flow to exchanges (7 days)', 'Bitcoin moved onto exchanges minus bitcoin moved off them over the last 7 days. Plus means net deposits (often read as coming sales), minus means net withdrawals to private wallets.'),
-  "breadth": ('Market breadth: coins above their 200-day average', 'Share of the 12 coins whose price is above their own 200-day average. High means most of the market is in an uptrend; low means most coins are falling.'),
+  "breadth": ('Market breadth: coins above their 200-day average', 'Share of the 13 coins whose price is above their own 200-day average. High means most of the market is in an uptrend; low means most coins are falling.'),
   "ever_trend": ('Everscale (EVER) vs its 50-day average', 'How far EVER trades above (+) or below (−) its 50-day average on Gate.io. This is the H-018 rule: above = in the market, below = out.'),
   "funding_carry": ("BTC funding carry: yearly yield after costs",
                     "What you would earn per year by holding BTC and shorting the same amount of BTC futures, so the "
@@ -374,7 +374,7 @@ T = {
  "monitors": {
   "h020_rule": ('Правило H-020 сегодня: BTC в рынке или вне', 'Единственное правило, прошедшее проверку. Оно не держит биткоин, пока чистый завод на биржи в верхних 20% за год. Это не торговый сигнал: правило ещё перепроверяется (H-022).'),
   "btc_exchange_flow": ('Чистый приток BTC на биржи (7 дней)', 'Сколько биткоинов завели на биржи минус сколько вывели за 7 дней. Плюс — чистый завод (часто читают как будущие продажи), минус — вывод в личные кошельки.'),
-  "breadth": ('Ширина рынка: монеты выше 200-дневной средней', 'Доля из 12 монет, у которых цена выше собственной 200-дневной средней. Много — большая часть рынка в росте; мало — большинство монет падает.'),
+  "breadth": ('Ширина рынка: монеты выше 200-дневной средней', 'Доля из 13 монет, у которых цена выше собственной 200-дневной средней. Много — большая часть рынка в росте; мало — большинство монет падает.'),
   "ever_trend": ('Everscale (EVER) относительно 50-дневной средней', 'Насколько EVER на Gate.io выше (+) или ниже (−) своей средней за 50 дней. Это правило H-018: выше — в рынке, ниже — вне рынка.'),
   "funding_carry": ("Керри на фандинге BTC: годовая доходность после издержек",
                     "Сколько можно заработать за год, держа BTC и одновременно продав столько же фьючерсов BTC, — "
@@ -409,6 +409,7 @@ T = {
  },
  "titles": {
   "H-022": 'Повторная проверка H-020 на данных, собранных после 15.10.2026',
+  "H-023": 'Gram (GRAM, бывший Toncoin): правило SMA50 обыгрывает удержание с 2023 года',
   "H-020": 'BTC вне рынка, когда 7-дневный чистый завод на биржи в верхних 20%',
   "H-021": 'ETH вне рынка, когда 7-дневный чистый завод на биржи в верхних 20%',
   "H-012": 'Контроль волатильности (30% в год) обыгрывает удержание на BTC, ETH, SOL',
@@ -593,7 +594,7 @@ T = {
  "monitors": {
   "h020_rule": ('Regla H-020 hoy: BTC dentro o fuera del mercado', 'La única regla que ha superado su prueba. No mantiene Bitcoin mientras los depósitos netos a exchanges estén en su 20% superior del último año. No es una señal: aún se está verificando (H-022).'),
   "btc_exchange_flow": ('Flujo neto de BTC a exchanges (7 días)', 'Bitcoin enviado a exchanges menos bitcoin retirado en los últimos 7 días. Positivo = depósitos netos (suele leerse como ventas próximas); negativo = retiros a carteras privadas.'),
-  "breadth": ('Amplitud del mercado: monedas sobre su media de 200 días', 'Parte de las 12 monedas cuyo precio está por encima de su propia media de 200 días. Alto = la mayor parte del mercado sube; bajo = la mayoría cae.'),
+  "breadth": ('Amplitud del mercado: monedas sobre su media de 200 días', 'Parte de las 13 monedas cuyo precio está por encima de su propia media de 200 días. Alto = la mayor parte del mercado sube; bajo = la mayoría cae.'),
   "ever_trend": ('Everscale (EVER) frente a su media de 50 días', 'Cuánto cotiza EVER en Gate.io por encima (+) o por debajo (−) de su media de 50 días. Es la regla H-018: encima = dentro, debajo = fuera.'),
   "funding_carry": ("Carry de funding de BTC: rendimiento anual tras costes",
                     "Lo que ganarías al año manteniendo BTC y vendiendo en corto la misma cantidad en futuros, de modo "
@@ -628,6 +629,7 @@ T = {
  },
  "titles": {
   "H-022": 'Réplica de H-020 con datos recogidos después del 15-10-2026',
+  "H-023": 'Gram (GRAM, antes Toncoin): la regla SMA50 gana a mantener desde 2023',
   "H-020": 'BTC fuera del mercado cuando los depósitos netos de 7 días a exchanges están en su 20% superior',
   "H-021": 'ETH fuera del mercado cuando los depósitos netos de 7 días a exchanges están en su 20% superior',
   "H-012": 'Objetivo de volatilidad (30%/año) gana a mantener en BTC, ETH, SOL',
@@ -812,7 +814,7 @@ T = {
  "monitors": {
   "h020_rule": ('Regra H-020 hoje: BTC dentro ou fora do mercado', 'A única regra que passou no teste. Ela fica fora do Bitcoin enquanto os depósitos líquidos em corretoras estão nos 20% mais altos do último ano. Não é sinal de operação: ainda está sendo verificada (H-022).'),
   "btc_exchange_flow": ('Fluxo líquido de BTC para corretoras (7 dias)', 'Bitcoin enviado às corretoras menos bitcoin retirado nos últimos 7 dias. Positivo = depósitos líquidos (costuma indicar vendas à frente); negativo = saques para carteiras próprias.'),
-  "breadth": ('Amplitude do mercado: moedas acima da média de 200 dias', 'Parte das 12 moedas com preço acima da própria média de 200 dias. Alto = a maior parte do mercado está em alta; baixo = a maioria está caindo.'),
+  "breadth": ('Amplitude do mercado: moedas acima da média de 200 dias', 'Parte das 13 moedas com preço acima da própria média de 200 dias. Alto = a maior parte do mercado está em alta; baixo = a maioria está caindo.'),
   "ever_trend": ('Everscale (EVER) versus sua média de 50 dias', 'Quanto o EVER na Gate.io está acima (+) ou abaixo (−) da média de 50 dias. É a regra H-018: acima = no mercado, abaixo = fora.'),
   "funding_carry": ("Carry de funding do BTC: rendimento anual após custos",
                     "Quanto você ganharia por ano segurando BTC e vendendo a mesma quantidade em futuros, de modo que "
@@ -847,6 +849,7 @@ T = {
  },
  "titles": {
   "H-022": 'Replicação da H-020 com dados coletados após 15/10/2026',
+  "H-023": 'Gram (GRAM, antigo Toncoin): a regra SMA50 vence segurar desde 2023',
   "H-020": 'BTC fora do mercado quando os depósitos líquidos de 7 dias em corretoras estão nos 20% mais altos',
   "H-021": 'ETH fora do mercado quando os depósitos líquidos de 7 dias em corretoras estão nos 20% mais altos',
   "H-012": 'Meta de volatilidade (30%/ano) vence segurar em BTC, ETH, SOL',
@@ -1030,7 +1033,7 @@ T = {
  "monitors": {
   "h020_rule": ('H-020 kuralı bugün: BTC piyasada mı dışında mı', "Testini geçen tek kural. Borsalara net yatırmalar son bir yılın en üst %20'sindeyken Bitcoin tutmaz. İşlem sinyali değildir: hâlâ doğrulanıyor (H-022)."),
   "btc_exchange_flow": ('Borsalara net BTC akışı (7 gün)', 'Son 7 günde borsalara gönderilen bitcoin eksi çekilen bitcoin. Artı = net yatırma (çoğunlukla yaklaşan satış olarak okunur), eksi = kişisel cüzdanlara net çekim.'),
-  "breadth": ('Piyasa genişliği: 200 günlük ortalamanın üzerindeki coinler', '12 coinden fiyatı kendi 200 günlük ortalamasının üzerinde olanların payı. Yüksek = piyasanın çoğu yükselişte; düşük = coinlerin çoğu düşüyor.'),
+  "breadth": ('Piyasa genişliği: 200 günlük ortalamanın üzerindeki coinler', '13 coinden fiyatı kendi 200 günlük ortalamasının üzerinde olanların payı. Yüksek = piyasanın çoğu yükselişte; düşük = coinlerin çoğu düşüyor.'),
   "ever_trend": ('Everscale (EVER) ve 50 günlük ortalaması', "EVER'in Gate.io'da 50 günlük ortalamasının ne kadar üstünde (+) ya da altında (−) olduğu. H-018 kuralı: üstünde = piyasada, altında = dışarıda."),
   "funding_carry": ("BTC funding carry: maliyet sonrası yıllık getiri",
                     "BTC tutup aynı miktarda BTC vadeli işlemi açığa satarak yılda ne kazanacağınız; fiyatın önemi "
@@ -1065,6 +1068,7 @@ T = {
  },
  "titles": {
   "H-022": "H-020'nin 15.10.2026 sonrası toplanan verilerle tekrarı",
+  "H-023": "Gram (GRAM, eski Toncoin): SMA50 kuralı 2023'ten beri al-tut'u geçer",
   "H-020": "7 günlük net borsa yatırmaları en üst %20'deyken BTC piyasa dışında",
   "H-021": "7 günlük net borsa yatırmaları en üst %20'deyken ETH piyasa dışında",
   "H-012": "Volatilite hedefi (yıllık %30) BTC, ETH, SOL'da al-tut'u geçer",
@@ -1246,7 +1250,7 @@ T = {
  "monitors": {
   "h020_rule": ('Quy tắc H-020 hôm nay: BTC trong hay ngoài thị trường', 'Quy tắc duy nhất đã vượt qua kiểm tra. Nó không giữ Bitcoin khi lượng nạp ròng vào sàn thuộc nhóm 20% cao nhất của năm qua. Không phải tín hiệu giao dịch: vẫn đang được kiểm chứng (H-022).'),
   "btc_exchange_flow": ('Dòng BTC ròng vào sàn (7 ngày)', 'Lượng bitcoin nạp vào sàn trừ lượng rút ra trong 7 ngày qua. Dương = nạp ròng (thường được hiểu là sắp bán), âm = rút ròng về ví cá nhân.'),
-  "breadth": ('Độ rộng thị trường: coin trên trung bình 200 ngày', 'Tỷ lệ trong 12 coin có giá trên trung bình 200 ngày của chính nó. Cao = phần lớn thị trường đang tăng; thấp = đa số coin đang giảm.'),
+  "breadth": ('Độ rộng thị trường: coin trên trung bình 200 ngày', 'Tỷ lệ trong 13 coin có giá trên trung bình 200 ngày của chính nó. Cao = phần lớn thị trường đang tăng; thấp = đa số coin đang giảm.'),
   "ever_trend": ('Everscale (EVER) so với trung bình 50 ngày', 'EVER trên Gate.io cao hơn (+) hay thấp hơn (−) bao nhiêu so với trung bình 50 ngày. Đây là quy tắc H-018: trên = trong thị trường, dưới = đứng ngoài.'),
   "funding_carry": ("Carry funding BTC: lợi suất năm sau chi phí",
                     "Số tiền bạn kiếm được mỗi năm khi giữ BTC và bán khống cùng lượng BTC trên hợp đồng tương lai, nên "
@@ -1281,6 +1285,7 @@ T = {
  },
  "titles": {
   "H-022": 'Kiểm tra lặp lại H-020 trên dữ liệu thu thập sau 15/10/2026',
+  "H-023": 'Gram (GRAM, trước là Toncoin): quy tắc SMA50 thắng mua và giữ từ 2023',
   "H-020": 'BTC đứng ngoài khi lượng nạp ròng vào sàn 7 ngày thuộc nhóm 20% cao nhất',
   "H-021": 'ETH đứng ngoài khi lượng nạp ròng vào sàn 7 ngày thuộc nhóm 20% cao nhất',
   "H-012": 'Mục tiêu biến động (30%/năm) thắng mua và giữ trên BTC, ETH, SOL',
@@ -1441,7 +1446,7 @@ T = {
  "monitors": {
   "h020_rule": ('H-020 规则今日状态：BTC 持仓还是空仓', '唯一通过检验的规则。当交易所净存入处于过去一年最高 20% 时不持有比特币。这不是交易信号：仍在验证中（H-022）。'),
   "btc_exchange_flow": ('BTC 交易所净流入（7 天）', '过去 7 天转入交易所的比特币减去转出的比特币。正值 = 净存入（常被视为即将卖出），负值 = 净提取到个人钱包。'),
-  "breadth": ('市场广度：高于 200 日均线的币种', '12 个币中价格高于自身 200 日均线的比例。高 = 大部分市场处于上升趋势；低 = 大多数币在下跌。'),
+  "breadth": ('市场广度：高于 200 日均线的币种', '13 个币中价格高于自身 200 日均线的比例。高 = 大部分市场处于上升趋势；低 = 大多数币在下跌。'),
   "ever_trend": ('Everscale (EVER) 相对 50 日均线', 'EVER 在 Gate.io 上高于（+）或低于（−）其 50 日均价的幅度。这就是 H-018 规则：高于 = 持仓，低于 = 空仓。'),
   "funding_carry": ("BTC 资金费率套利：扣除成本后的年化收益",
                     "持有 BTC 同时做空等量 BTC 期货每年能赚多少，价格涨跌不影响结果。当期货市场多数人做多时，空头会收到费用。"),
@@ -1467,6 +1472,7 @@ T = {
  },
  "titles": {
   "H-022": '用 2026-10-15 之后收集的数据复现 H-020',
+  "H-023": 'Gram（GRAM，原 Toncoin）：自 2023 年起 SMA50 规则跑赢持有',
   "H-020": '当 7 日交易所净存入处于最高 20% 时 BTC 空仓',
   "H-021": '当 7 日交易所净存入处于最高 20% 时 ETH 空仓',
   "H-012": '目标波动率（年化 30%）在 BTC、ETH、SOL 上跑赢买入持有',

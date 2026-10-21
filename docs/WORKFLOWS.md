@@ -119,7 +119,7 @@ Features: `stablecoin_growth_7d`, `funding_btc_7d`, `fear_greed`, `etf_flow_btc_
 | Series | Source | Notes |
 |--------|--------|-------|
 | Spot daily klines | data.binance.vision | monthly archives, plus daily files for the last two months |
-| Coins not on Binance (EVER) | Gate.io API v4 | full history re-read each run (one request per year); listed in `OTHER_EXCHANGES` in `sources.py` |
+| Coins not on Binance (EVER, GRAM history) | Gate.io API v4 | full history re-read each run (one request per year); listed in `OTHER_EXCHANGES` in `sources.py` |
 | BTC funding | data.binance.vision (archive), fapi.binance.com, OKX as fallback | fapi answers 451 from US IPs |
 | USDT/USDC supply | DefiLlama stablecoins API | |
 | Fear & Greed | alternative.me | |
