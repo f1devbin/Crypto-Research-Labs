@@ -277,6 +277,24 @@ def _rule_for(spec: dict, row: dict) -> tuple[dict, dict] | None:
 def equity_curves(spec: dict, rows: list[dict], store: DataStore, step: int = 5) -> list[dict]:
     """Strategy vs buy-and-hold growth of 1 for each result row, fees included."""
     out = []
+    if spec.get("kind") == "cross_section":
+        from crl.engine import cross as X
+        try:
+            closes = X.panel(store, spec["universe"])
+            w = X.weights(spec, closes, store)
+        except (FileNotFoundError, KeyError, ValueError) as e:
+            log.warning("no cross-section curve: %s", e)
+            return out
+        for per in spec["periods"]:
+            ev = X.evaluate_period(w, closes, _mask(closes.index, per.get("start"), per.get("end")), spec["fee"])
+            if not ev["days"]:
+                continue
+            eq_s = pd.Series((1 + ev["_strat"]).cumprod(), index=ev["_idx"])
+            eq_h = pd.Series((1 + ev["_bench"]).cumprod(), index=ev["_idx"])
+            ps, ph = _points(eq_s, step), _points(eq_h, step)
+            out.append({"symbol": "PORTFOLIO", "period": per["name"], "rule": None,
+                        "d": ps["d"], "strategy": ps["v"], "hold": ph["v"]})
+        return out
     for row in rows:
         rule, per = _rule_for(spec, row) or (None, None)
         if not rule or not per:

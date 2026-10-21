@@ -49,6 +49,7 @@ def fingerprint(spec: dict) -> str:
         "mode": spec.get("mode", "long_flat"),
         "universe": sorted(spec.get("universe", [])),
         "rule": spec.get("rule"),
+        "signal": spec.get("signal"), "select": spec.get("select"),
         "candidates": sorted(json.dumps(c, sort_keys=True) for c in (spec.get("candidates") or {}).values()),
     }
     return spec_hash(core)[:16]
@@ -77,14 +78,17 @@ def validate(h: Hypothesis) -> list[str]:
     if not isinstance(spec, dict):
         return errs + ["missing 'spec'"]
     kind = spec.get("kind")
-    if kind not in ("timing_rule", "rule_search"):
-        return errs + ["spec.kind must be timing_rule or rule_search"]
+    if kind not in ("timing_rule", "rule_search", "cross_section"):
+        return errs + ["spec.kind must be timing_rule, rule_search or cross_section"]
     for k in ("fee", "universe", "criterion"):
         if k not in spec:
             errs.append(f"spec.{k} is required")
     if not 0 <= float(spec.get("fee", 0)) < 0.05:
         errs.append("spec.fee must be a fraction per side, e.g. 0.001")
-    rules = [spec.get("rule")] if kind == "timing_rule" else list((spec.get("candidates") or {}).values())
+    rules = ([spec.get("rule")] if kind == "timing_rule" else
+             [] if kind == "cross_section" else list((spec.get("candidates") or {}).values()))
+    if kind == "cross_section":
+        errs += _check_cross(spec)
     for r in rules:
         if not isinstance(r, dict) or r.get("type") not in RULE_TYPES:
             errs.append(f"unknown rule {r!r}; known types: {sorted(RULE_TYPES)}")
@@ -108,7 +112,7 @@ def validate(h: Hypothesis) -> list[str]:
             errs.append("permutation significance is only valid for calendar rules; use circular_shift")
         if method == "circular_shift" and rule_type in ("day_of_week", "turn_of_month"):
             errs.append("circular_shift cannot test calendar rules (shifts repeat the pattern); use permutation")
-    else:
+    elif kind == "rule_search":
         for k in ("in_sample", "out_of_sample", "candidates"):
             if k not in spec:
                 errs.append(f"spec.{k} is required for rule_search")
@@ -125,6 +129,31 @@ def validate(h: Hypothesis) -> list[str]:
             errs.append("registered hypothesis has no prereg_sha256 — run `crl registry register`")
         elif h["prereg_sha256"] != spec_hash(spec):
             errs.append("spec changed after registration (sha256 mismatch) — results would be invalid")
+    return errs
+
+
+def _check_cross(spec: dict) -> list[str]:
+    errs = []
+    sig, sel = spec.get("signal") or {}, spec.get("select") or {}
+    if sig.get("type") not in ("momentum", "reversal"):
+        errs.append("cross_section signal.type must be momentum or reversal")
+    lbs = sig.get("lookbacks")
+    if not lbs or not all(isinstance(x, int) and x > 0 for x in lbs):
+        errs.append("cross_section signal.lookbacks must be positive integers (days)")
+    top = sel.get("top")
+    if not isinstance(top, int) or not 1 <= top < len(spec.get("universe", [])):
+        errs.append("cross_section select.top must be between 1 and the universe size - 1")
+    mf = sig.get("market_filter")
+    if mf and (not mf.get("asset") or not isinstance(mf.get("window"), int)):
+        errs.append("market_filter needs asset and an integer window")
+    names = [p.get("name") for p in spec.get("periods", [])]
+    if not names:
+        errs.append("spec.periods is required for cross_section")
+    missing = set(names) - set(spec.get("criterion", {}).get("min_wins", {}))
+    if missing:
+        errs.append(f"criterion.min_wins lacks periods {sorted(missing)}")
+    if spec.get("significance", {}).get("method", "none") not in ("none", "circular_shift"):
+        errs.append("cross_section significance.method must be circular_shift")
     return errs
 
 

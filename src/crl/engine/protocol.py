@@ -46,6 +46,8 @@ def evaluate(spec: dict, store, seed: int = 2026) -> dict:
         res = _timing_rule(spec, store, np.random.default_rng(seed))
     elif kind == "rule_search":
         res = _rule_search(spec, store, np.random.default_rng(seed))
+    elif kind == "cross_section":
+        res = _cross_section(spec, store, np.random.default_rng(seed))
     else:
         raise ValueError(f"unknown study kind '{kind}'")
     ends = [r["end"] for r in res["rows"] if r.get("end")]
@@ -84,6 +86,41 @@ def _timing_rule(spec: dict, store, rng) -> dict:
         if wins < need:
             verdict = "FAIL"
         if beats * 2 <= len(pr):
+            weak_ok = False
+    if verdict == "FAIL" and weak_ok:
+        verdict = "WEAK"
+    return {"verdict": verdict, "summary": "; ".join(lines), "rows": [_public(r) for r in rows]}
+
+
+def _cross_section(spec: dict, store, rng) -> dict:
+    """Daily ranking of a universe; the portfolio passes a period when its Sharpe beats an
+    equal-weight basket of the same coins (no fees for the basket) and, if required, the
+    rotation null (cross.shift_p)."""
+    from crl.engine import cross as X
+    fee = float(spec["fee"])
+    sig = spec.get("significance", {"method": "none"})
+    crit = spec["criterion"]
+    closes = X.panel(store, spec["universe"])
+    w = X.weights(spec, closes, store)
+    rows = []
+    for per in spec["periods"]:
+        e = X.evaluate_period(w, closes, _mask(closes.index, per.get("start"), per.get("end")), fee)
+        p = None
+        if e["days"] and sig.get("method") == "circular_shift":
+            p = X.shift_p(e["_w"], e["_r"], fee, rng, int(sig.get("n", 1000)))
+        beats = e["days"] > 0 and e["sharpe"] > e["hold_sharpe"]
+        win = beats and (not crit.get("require_significance") or (p is not None and p < sig["alpha"]))
+        rows.append({"symbol": "PORTFOLIO", "period": per["name"], **e, "p": p, "beats_hold": beats, "win": win})
+    verdict, lines, weak_ok = "PASS", [], True
+    for per in spec["periods"]:
+        pr = [r for r in rows if r["period"] == per["name"]]
+        wins, beats = sum(r["win"] for r in pr), sum(r["beats_hold"] for r in pr)
+        need = crit["min_wins"][per["name"]]
+        lines.append(f"{per['name']}: {'beats' if beats else 'does not beat'} the equal-weight basket"
+                     f"{' (significant)' if wins else ''}")
+        if wins < need:
+            verdict = "FAIL"
+        if not beats:
             weak_ok = False
     if verdict == "FAIL" and weak_ok:
         verdict = "WEAK"
