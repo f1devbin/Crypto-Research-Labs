@@ -41,6 +41,8 @@ env:
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_LANG: ${{ vars.TELEGRAM_LANG }}   # en (default), ru, es, pt, tr, vi, zh
   ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # optional: plain-language weekly digest
+  LLM_API_KEY: ${{ secrets.LLM_API_KEY }}               # or a free OpenAI-compatible provider (Groq by default)
+  CRL_LLM_BASE_URL: ${{ vars.CRL_LLM_BASE_URL }}
   CRL_LLM_MODEL: ${{ vars.CRL_LLM_MODEL }}
   ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
   CRL_LLM_MODEL: ${{ vars.CRL_LLM_MODEL }}

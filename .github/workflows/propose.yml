@@ -21,27 +21,30 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}            # free OpenAI-compatible provider, e.g. Groq
+      CRL_LLM_BASE_URL: ${{ vars.CRL_LLM_BASE_URL }}
       CRL_LLM_MODEL: ${{ vars.CRL_LLM_MODEL }}
+      LLM_ON: ${{ secrets.ANTHROPIC_API_KEY != '' || secrets.LLM_API_KEY != '' }}
     steps:
       - name: Skip without an API key
-        if: env.ANTHROPIC_API_KEY == ''
-        run: echo "::notice::ANTHROPIC_API_KEY is not set — the LLM layer is disabled."
+        if: env.LLM_ON != 'true'
+        run: echo "::notice::No LLM key (LLM_API_KEY or ANTHROPIC_API_KEY) — the LLM layer is disabled."
       - uses: actions/checkout@v4
-        if: env.ANTHROPIC_API_KEY != ''
+        if: env.LLM_ON == 'true'
       - uses: actions/setup-python@v5
-        if: env.ANTHROPIC_API_KEY != ''
+        if: env.LLM_ON == 'true'
         with:
           python-version: "3.12"
           cache: pip
-      - if: env.ANTHROPIC_API_KEY != ''
+      - if: env.LLM_ON == 'true'
         run: pip install -e .
       - name: Draft hypotheses
-        if: env.ANTHROPIC_API_KEY != ''
+        if: env.LLM_ON == 'true'
         run: |
           crl propose -n "${{ inputs.n || '3' }}" | tee proposals.txt
           crl registry check
       - name: Open pull request
-        if: env.ANTHROPIC_API_KEY != ''
+        if: env.LLM_ON == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -54,7 +57,7 @@ jobs:
           git commit -m "feat(hypotheses): LLM-drafted proposals $(date -u +%F)"
           git push origin "$branch"
           {
-            echo "Draft hypotheses proposed by \`${CRL_LLM_MODEL:-default model}\`."
+            echo "Draft hypotheses proposed by \`$(python -c 'from crl.llm import client; print(client.model_name())')\`."
             echo
             echo "They are **drafts**: review the rationale, edit the spec if needed, then run"
             echo "\`crl registry register <id>\` to lock them before merging. The runner never tests drafts."

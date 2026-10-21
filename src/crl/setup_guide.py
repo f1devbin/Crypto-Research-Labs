@@ -30,12 +30,14 @@ A change applies from the next run. To run now: **Actions → research-agents �
 6. Test: **Actions → research-agents → Run workflow**, tick **test_alert**, run. You should get "Telegram alerts are connected" within a few minutes. If the step fails, the token or ID is wrong, or the bot was never started.
 
 Alerts are sent only when something changes, so quiet days are silent."""),
-  ("AI model key (optional)", f"""All tests are done by the engine with fixed rules; a model is never asked whether an idea works. A key from Anthropic adds two helpers:
+  ("AI model key (optional)", f"""All tests are done by the engine with fixed rules; a model is never asked whether an idea works. A model key adds two helpers:
 
 - **Weekly digest in plain words.** Without a key you get the raw weekly reports in English. With a key a model rewrites them into a short briefing in the language of `TELEGRAM_LANG`, using only numbers from the reports and never suggesting trades.
 - **New hypothesis drafts once a month** (the 1st). The model reads what has been tested and proposes new ideas as a pull request with status *draft*. You decide what to register; nothing is tested until you do.
 
-How to connect:
+**Free option: Groq.** Sign up at **console.groq.com** → API Keys → Create API Key, and save it as the secret `LLM_API_KEY`. No payment needed (the free tier has daily limits, plenty for a weekly digest). Default model `llama-3.3-70b-versatile`; set `CRL_LLM_MODEL` if Groq renames it. Any other OpenAI-compatible service (OpenRouter, Gemini) works too: put its address in the variable `CRL_LLM_BASE_URL`. If both keys are set, `LLM_API_KEY` is used.
+
+How to connect Anthropic (paid):
 
 1. Go to **console.anthropic.com**, sign up and add credit under Billing. The API is paid per use and separately from a Claude subscription. A weekly digest and a monthly proposal cost cents a month. Check first that your country is on Anthropic's list of supported regions.
 2. **API Keys → Create Key**, copy the key (`sk-ant-…`). It is shown only once.
@@ -59,6 +61,8 @@ To add your own idea, see [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) or
 | `TELEGRAM_CHAT_ID` | Secrets | who receives alerts |
 | `TELEGRAM_LANG` | Variables | alert language: en, ru, es, pt, tr, vi, zh |
 | `ANTHROPIC_API_KEY` | Secrets | plain-language digest and monthly hypothesis drafts |
+| `LLM_API_KEY` | Secrets | free alternative: Groq or another OpenAI-compatible key |
+| `CRL_LLM_BASE_URL` | Variables | address of that service (default Groq) |
 | `CRL_LLM_MODEL` | Variables | another model instead of claude-sonnet-5-5 |
 | `GOOGLE_SITE_VERIFICATION` | Variables | Google Search Console code |
 | `CRL_SITE_URL` | Variables | dashboard address if you use your own domain |"""),
@@ -89,12 +93,14 @@ To add your own idea, see [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) or
 6. Проверка: **Actions → research-agents → Run workflow**, отметьте **test_alert** и запустите. Через несколько минут придёт «уведомления в Telegram подключены». Если шаг упал — неверный токен или ID, либо бот не запущен.
 
 Уведомления приходят только при изменениях, в спокойные дни их нет."""),
-  ("Ключ ИИ-модели (необязательно)", f"""Все проверки делает движок по заранее зафиксированным правилам: модель никогда не решает, работает ли идея. Ключ Anthropic добавляет двух помощников:
+  ("Ключ ИИ-модели (необязательно)", f"""Все проверки делает движок по заранее зафиксированным правилам: модель никогда не решает, работает ли идея. Ключ модели добавляет двух помощников:
 
 - **Недельная сводка простыми словами.** Без ключа приходят сырые недельные отчёты на английском. С ключом модель пересказывает их коротко на языке из `TELEGRAM_LANG`, только по цифрам из отчётов и без торговых советов.
 - **Черновики новых гипотез раз в месяц** (1-го числа). Модель смотрит, что уже проверено, и предлагает идеи пулл-реквестом в статусе *draft*. Регистрировать или нет — решаете вы; без регистрации ничего не проверяется.
 
-Как подключить:
+**Бесплатный вариант: Groq.** Зарегистрируйтесь на **console.groq.com** → API Keys → Create API Key и сохраните ключ как секрет `LLM_API_KEY`. Платить не нужно: у бесплатного тарифа дневные лимиты, для недельной сводки их с запасом. Модель по умолчанию `llama-3.3-70b-versatile`; если Groq её переименует, задайте `CRL_LLM_MODEL`. Подойдёт и любой другой OpenAI-совместимый сервис (OpenRouter, Gemini): укажите его адрес в переменной `CRL_LLM_BASE_URL`. Если заданы оба ключа, используется `LLM_API_KEY`.
+
+Как подключить Anthropic (платно):
 
 1. Зайдите на **console.anthropic.com**, зарегистрируйтесь и пополните баланс в разделе Billing. API оплачивается по факту использования и отдельно от подписки Claude. Недельная сводка и ежемесячные предложения стоят центы в месяц. Заранее проверьте, что ваша страна есть в списке поддерживаемых регионов Anthropic.
 2. **API Keys → Create Key**, скопируйте ключ (`sk-ant-…`). Он показывается один раз.
@@ -118,6 +124,8 @@ To add your own idea, see [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) or
 | `TELEGRAM_CHAT_ID` | Secrets | кому приходят уведомления |
 | `TELEGRAM_LANG` | Variables | язык уведомлений: en, ru, es, pt, tr, vi, zh |
 | `ANTHROPIC_API_KEY` | Secrets | сводка простыми словами и черновики гипотез |
+| `LLM_API_KEY` | Secrets | бесплатная замена: ключ Groq или другого OpenAI-совместимого сервиса |
+| `CRL_LLM_BASE_URL` | Variables | адрес этого сервиса (по умолчанию Groq) |
 | `CRL_LLM_MODEL` | Variables | другая модель вместо claude-sonnet-5-5 |
 | `GOOGLE_SITE_VERIFICATION` | Variables | код Google Search Console |
 | `CRL_SITE_URL` | Variables | адрес дашборда при своём домене |"""),
@@ -148,12 +156,14 @@ Los cambios se aplican desde la siguiente ejecución. Para ejecutar ya: **Action
 6. Prueba: **Actions → research-agents → Run workflow**, marca **test_alert** y ejecuta. En unos minutos llegará «las alertas de Telegram están conectadas». Si el paso falla, el token o el ID son incorrectos o el bot no se inició.
 
 Las alertas solo llegan cuando algo cambia."""),
-  ("Clave de modelo de IA (opcional)", f"""Todas las pruebas las hace el motor con reglas fijas; nunca se pregunta a un modelo si una idea funciona. Una clave de Anthropic añade dos ayudantes:
+  ("Clave de modelo de IA (opcional)", f"""Todas las pruebas las hace el motor con reglas fijas; nunca se pregunta a un modelo si una idea funciona. Una clave de modelo añade dos ayudantes:
 
 - **Resumen semanal en palabras sencillas.** Sin clave recibes los informes semanales en bruto, en inglés. Con clave, un modelo los resume en el idioma de `TELEGRAM_LANG`, solo con cifras de los informes y sin sugerir operaciones.
 - **Borradores de nuevas hipótesis cada mes** (el día 1). El modelo propone ideas como pull request en estado *draft*. Tú decides qué registrar; nada se prueba hasta entonces.
 
-Cómo conectarla:
+**Opción gratuita: Groq.** Regístrate en **console.groq.com** → API Keys → Create API Key y guárdala como secreto `LLM_API_KEY`. No hay que pagar (el plan gratuito tiene límites diarios, de sobra para un resumen semanal). Modelo por defecto `llama-3.3-70b-versatile`; usa `CRL_LLM_MODEL` si Groq lo renombra. Cualquier otro servicio compatible con OpenAI (OpenRouter, Gemini) también sirve: pon su dirección en la variable `CRL_LLM_BASE_URL`. Si hay dos claves, se usa `LLM_API_KEY`.
+
+Cómo conectar Anthropic (de pago):
 
 1. Entra en **console.anthropic.com**, regístrate y añade saldo en Billing. La API se paga por uso y aparte de una suscripción de Claude; un resumen semanal y una propuesta mensual cuestan céntimos al mes. Comprueba antes que tu país está en la lista de regiones admitidas por Anthropic.
 2. **API Keys → Create Key** y copia la clave (`sk-ant-…`). Solo se muestra una vez.
@@ -177,6 +187,8 @@ Para proponer tu idea, mira [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) 
 | `TELEGRAM_CHAT_ID` | Secrets | quién recibe las alertas |
 | `TELEGRAM_LANG` | Variables | idioma: en, ru, es, pt, tr, vi, zh |
 | `ANTHROPIC_API_KEY` | Secrets | resumen en palabras sencillas y borradores de hipótesis |
+| `LLM_API_KEY` | Secrets | alternativa gratuita: clave de Groq u otro servicio compatible con OpenAI |
+| `CRL_LLM_BASE_URL` | Variables | dirección de ese servicio (Groq por defecto) |
 | `CRL_LLM_MODEL` | Variables | otro modelo en lugar de claude-sonnet-5-5 |
 | `GOOGLE_SITE_VERIFICATION` | Variables | código de Google Search Console |
 | `CRL_SITE_URL` | Variables | dirección del panel con dominio propio |"""),
@@ -207,12 +219,14 @@ As mudanças valem a partir da próxima execução. Para rodar agora: **Actions 
 6. Teste: **Actions → research-agents → Run workflow**, marque **test_alert** e execute. Em poucos minutos chega "os alertas do Telegram estão conectados". Se o passo falhar, o token ou o ID estão errados ou o bot não foi iniciado.
 
 Os alertas só chegam quando algo muda."""),
-  ("Chave de modelo de IA (opcional)", f"""Todos os testes são feitos pelo motor com regras fixas; nunca se pergunta a um modelo se uma ideia funciona. Uma chave da Anthropic adiciona dois ajudantes:
+  ("Chave de modelo de IA (opcional)", f"""Todos os testes são feitos pelo motor com regras fixas; nunca se pergunta a um modelo se uma ideia funciona. Uma chave de modelo adiciona dois ajudantes:
 
 - **Resumo semanal em palavras simples.** Sem chave você recebe os relatórios brutos em inglês. Com chave, um modelo os resume no idioma de `TELEGRAM_LANG`, só com números dos relatórios e sem sugerir operações.
 - **Rascunhos de novas hipóteses todo mês** (dia 1). O modelo propõe ideias como pull request com status *draft*. Você decide o que registrar; nada é testado antes disso.
 
-Como conectar:
+**Opção gratuita: Groq.** Cadastre-se em **console.groq.com** → API Keys → Create API Key e salve como segredo `LLM_API_KEY`. Não precisa pagar (o plano gratuito tem limites diários, mais que suficientes para um resumo semanal). Modelo padrão `llama-3.3-70b-versatile`; use `CRL_LLM_MODEL` se a Groq renomeá-lo. Qualquer outro serviço compatível com OpenAI (OpenRouter, Gemini) também funciona: coloque o endereço na variável `CRL_LLM_BASE_URL`. Com as duas chaves, usa-se `LLM_API_KEY`.
+
+Como conectar a Anthropic (pago):
 
 1. Acesse **console.anthropic.com**, cadastre-se e adicione crédito em Billing. A API é paga por uso e separada de uma assinatura do Claude; um resumo semanal e uma proposta mensal custam centavos por mês. Verifique antes se o seu país está na lista de regiões suportadas pela Anthropic.
 2. **API Keys → Create Key** e copie a chave (`sk-ant-…`). Ela aparece só uma vez.
@@ -236,6 +250,8 @@ Para sugerir uma ideia, veja [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md)
 | `TELEGRAM_CHAT_ID` | Secrets | quem recebe os alertas |
 | `TELEGRAM_LANG` | Variables | idioma: en, ru, es, pt, tr, vi, zh |
 | `ANTHROPIC_API_KEY` | Secrets | resumo em palavras simples e rascunhos de hipóteses |
+| `LLM_API_KEY` | Secrets | alternativa gratuita: chave da Groq ou de outro serviço compatível com OpenAI |
+| `CRL_LLM_BASE_URL` | Variables | endereço desse serviço (padrão Groq) |
 | `CRL_LLM_MODEL` | Variables | outro modelo em vez de claude-sonnet-5-5 |
 | `GOOGLE_SITE_VERIFICATION` | Variables | código do Google Search Console |
 | `CRL_SITE_URL` | Variables | endereço do painel com domínio próprio |"""),
@@ -266,12 +282,14 @@ Değişiklik bir sonraki çalıştırmada geçerli olur. Hemen çalıştırmak i
 6. Test: **Actions → research-agents → Run workflow**, **test_alert** kutusunu işaretleyip çalıştırın. Birkaç dakikada "Telegram bildirimleri bağlandı" gelir. Adım başarısız olursa token veya kimlik yanlıştır ya da bot başlatılmamıştır.
 
 Bildirimler yalnızca bir şey değiştiğinde gelir."""),
-  ("Yapay zekâ anahtarı (isteğe bağlı)", f"""Tüm testleri motor sabit kurallarla yapar; bir fikrin işe yarayıp yaramadığı asla bir modele sorulmaz. Anthropic anahtarı iki yardımcı ekler:
+  ("Yapay zekâ anahtarı (isteğe bağlı)", f"""Tüm testleri motor sabit kurallarla yapar; bir fikrin işe yarayıp yaramadığı asla bir modele sorulmaz. Bir model anahtarı iki yardımcı ekler:
 
 - **Sade dilde haftalık özet.** Anahtarsız ham haftalık raporlar İngilizce gelir. Anahtarla bir model bunları `TELEGRAM_LANG` dilinde kısaca özetler; yalnızca raporlardaki sayıları kullanır ve işlem önermez.
 - **Her ay yeni hipotez taslakları** (ayın 1'i). Model fikirleri *draft* durumunda pull request olarak önerir. Neyin kaydedileceğine siz karar verirsiniz; o zamana kadar hiçbir şey test edilmez.
 
-Nasıl bağlanır:
+**Ücretsiz seçenek: Groq.** **console.groq.com** → API Keys → Create API Key ile anahtar alın ve `LLM_API_KEY` gizli değeri olarak kaydedin. Ödeme gerekmez (ücretsiz katmanın günlük sınırları haftalık özet için fazlasıyla yeter). Varsayılan model `llama-3.3-70b-versatile`; Groq adını değiştirirse `CRL_LLM_MODEL` ayarlayın. OpenAI uyumlu başka bir hizmet (OpenRouter, Gemini) de olur: adresini `CRL_LLM_BASE_URL` değişkenine yazın. İki anahtar da varsa `LLM_API_KEY` kullanılır.
+
+Anthropic nasıl bağlanır (ücretli):
 
 1. **console.anthropic.com**'a girin, kaydolun ve Billing bölümünden bakiye ekleyin. API kullanım başına ve Claude aboneliğinden ayrı ücretlendirilir; haftalık özet ve aylık öneri ayda birkaç sente mal olur. Önce ülkenizin Anthropic'in desteklenen bölgeler listesinde olduğunu kontrol edin.
 2. **API Keys → Create Key**, anahtarı (`sk-ant-…`) kopyalayın. Yalnızca bir kez gösterilir.
@@ -295,6 +313,8 @@ Fikir önermek için [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) dosyas�
 | `TELEGRAM_CHAT_ID` | Secrets | bildirimleri kim alır |
 | `TELEGRAM_LANG` | Variables | bildirim dili: en, ru, es, pt, tr, vi, zh |
 | `ANTHROPIC_API_KEY` | Secrets | sade dilde özet ve hipotez taslakları |
+| `LLM_API_KEY` | Secrets | ücretsiz alternatif: Groq veya başka OpenAI uyumlu anahtar |
+| `CRL_LLM_BASE_URL` | Variables | o hizmetin adresi (varsayılan Groq) |
 | `CRL_LLM_MODEL` | Variables | claude-sonnet-5-5 yerine başka model |
 | `GOOGLE_SITE_VERIFICATION` | Variables | Google Search Console kodu |
 | `CRL_SITE_URL` | Variables | kendi alan adınızla panel adresi |"""),
@@ -325,12 +345,14 @@ Thay đổi có hiệu lực từ lần chạy tiếp theo. Chạy ngay: **Actio
 6. Kiểm tra: **Actions → research-agents → Run workflow**, chọn **test_alert** rồi chạy. Sau vài phút sẽ nhận "đã kết nối thông báo Telegram". Nếu bước này lỗi, token hoặc ID sai, hoặc bot chưa được bắt đầu.
 
 Thông báo chỉ gửi khi có thay đổi."""),
-  ("Khóa mô hình AI (tùy chọn)", f"""Mọi kiểm tra đều do bộ máy thực hiện theo quy tắc cố định; không bao giờ hỏi mô hình xem ý tưởng có hiệu quả không. Khóa Anthropic thêm hai trợ thủ:
+  ("Khóa mô hình AI (tùy chọn)", f"""Mọi kiểm tra đều do bộ máy thực hiện theo quy tắc cố định; không bao giờ hỏi mô hình xem ý tưởng có hiệu quả không. Khóa mô hình thêm hai trợ thủ:
 
 - **Tóm tắt tuần bằng lời đơn giản.** Không có khóa, bạn nhận báo cáo thô bằng tiếng Anh. Có khóa, mô hình tóm tắt bằng ngôn ngữ của `TELEGRAM_LANG`, chỉ dùng số liệu trong báo cáo và không gợi ý giao dịch.
 - **Bản nháp giả thuyết mới mỗi tháng** (ngày 1). Mô hình đề xuất ý tưởng dưới dạng pull request ở trạng thái *draft*. Bạn quyết định đăng ký cái nào; chưa đăng ký thì chưa kiểm tra.
 
-Cách kết nối:
+**Lựa chọn miễn phí: Groq.** Đăng ký tại **console.groq.com** → API Keys → Create API Key và lưu khóa thành secret `LLM_API_KEY`. Không cần trả tiền (gói miễn phí có giới hạn theo ngày, thừa đủ cho tóm tắt tuần). Mô hình mặc định `llama-3.3-70b-versatile`; đặt `CRL_LLM_MODEL` nếu Groq đổi tên. Dịch vụ tương thích OpenAI khác (OpenRouter, Gemini) cũng dùng được: điền địa chỉ vào biến `CRL_LLM_BASE_URL`. Nếu có cả hai khóa, dùng `LLM_API_KEY`.
+
+Cách kết nối Anthropic (trả phí):
 
 1. Vào **console.anthropic.com**, đăng ký và nạp tiền trong Billing. API tính phí theo mức dùng, tách biệt với gói Claude; tóm tắt tuần và đề xuất tháng chỉ tốn vài xu mỗi tháng. Hãy kiểm tra trước rằng quốc gia của bạn có trong danh sách khu vực được Anthropic hỗ trợ.
 2. **API Keys → Create Key**, sao chép khóa (`sk-ant-…`). Khóa chỉ hiện một lần.
@@ -354,6 +376,8 @@ Muốn đề xuất ý tưởng, xem [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBU
 | `TELEGRAM_CHAT_ID` | Secrets | ai nhận thông báo |
 | `TELEGRAM_LANG` | Variables | ngôn ngữ: en, ru, es, pt, tr, vi, zh |
 | `ANTHROPIC_API_KEY` | Secrets | tóm tắt dễ hiểu và bản nháp giả thuyết |
+| `LLM_API_KEY` | Secrets | lựa chọn miễn phí: khóa Groq hoặc dịch vụ tương thích OpenAI khác |
+| `CRL_LLM_BASE_URL` | Variables | địa chỉ dịch vụ đó (mặc định Groq) |
 | `CRL_LLM_MODEL` | Variables | mô hình khác thay cho claude-sonnet-5-5 |
 | `GOOGLE_SITE_VERIFICATION` | Variables | mã Google Search Console |
 | `CRL_SITE_URL` | Variables | địa chỉ bảng điều khiển khi dùng tên miền riêng |"""),
@@ -384,12 +408,14 @@ Muốn đề xuất ý tưởng, xem [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBU
 6. 测试：**Actions → research-agents → Run workflow**，勾选 **test_alert** 后运行。几分钟内会收到"Telegram 通知已连接"。如果该步骤失败，说明令牌或 ID 有误，或尚未启动机器人。
 
 只有出现变化时才会发送通知。"""),
-  ("AI 模型密钥（可选）", f"""所有检验都由引擎按固定规则完成，从不让模型判断一个想法是否有效。Anthropic 密钥会增加两个助手：
+  ("AI 模型密钥（可选）", f"""所有检验都由引擎按固定规则完成，从不让模型判断一个想法是否有效。模型密钥会增加两个助手：
 
 - **通俗的每周摘要。** 没有密钥时你收到的是英文原始周报。有密钥时，模型会用 `TELEGRAM_LANG` 的语言简要复述，只使用报告中的数字，也不给出交易建议。
 - **每月的新假设草稿**（每月 1 日）。模型以 *draft* 状态的 pull request 提出想法。是否登记由你决定，登记前不会检验任何内容。
 
-如何接入：
+**免费方案：Groq。** 在 **console.groq.com** → API Keys → Create API Key 获取密钥，保存为 secret `LLM_API_KEY`。无需付费（免费额度有每日上限，每周摘要绰绰有余）。默认模型 `llama-3.3-70b-versatile`；如果 Groq 改名，请设置 `CRL_LLM_MODEL`。其他兼容 OpenAI 的服务（OpenRouter、Gemini）也可以：把地址填入变量 `CRL_LLM_BASE_URL`。两个密钥都设置时使用 `LLM_API_KEY`。
+
+如何接入 Anthropic（付费）：
 
 1. 访问 **console.anthropic.com**，注册并在 Billing 中充值。API 按用量计费，与 Claude 订阅分开；每周摘要和每月提案每月只需几美分。请先确认你所在国家在 Anthropic 支持的地区列表中。
 2. **API Keys → Create Key**，复制密钥（`sk-ant-…`）。它只显示一次。
@@ -413,6 +439,8 @@ Muốn đề xuất ý tưởng, xem [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBU
 | `TELEGRAM_CHAT_ID` | Secrets | 通知接收者 |
 | `TELEGRAM_LANG` | Variables | 通知语言：en、ru、es、pt、tr、vi、zh |
 | `ANTHROPIC_API_KEY` | Secrets | 通俗摘要和假设草稿 |
+| `LLM_API_KEY` | Secrets | 免费替代：Groq 或其他兼容 OpenAI 的密钥 |
+| `CRL_LLM_BASE_URL` | Variables | 该服务的地址（默认 Groq） |
 | `CRL_LLM_MODEL` | Variables | 替代 claude-sonnet-5-5 的其他模型 |
 | `GOOGLE_SITE_VERIFICATION` | Variables | Google Search Console 代码 |
 | `CRL_SITE_URL` | Variables | 使用自有域名时的仪表盘地址 |"""),
