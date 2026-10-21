@@ -2,5 +2,8 @@
  "week": "2026-W43",
  "date": "2026-10-21",
  "model": null,
- "languages": []
+ "languages": [],
+ "errors": {
+  "_": "no LLM key: set LLM_API_KEY (free, e.g. Groq) or ANTHROPIC_API_KEY"
+ }
 }
