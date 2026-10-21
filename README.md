@@ -99,6 +99,9 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-018 | Everscale (EVER): SMA50 trend rule | ◐ Weak: −10 %/yr vs −70 %/yr holding, not significant |
 | H-019 | Everscale (EVER): only while BTC is above its 200-day average | ◐ Weak |
 | H-023 | Gram (GRAM, prev. Toncoin): SMA50 trend rule | ◐ Weak: +17 %/yr vs −9 %/yr holding since mid-2023, drawdown −56 % vs −85 %, p = 0.11 |
+| H-024 | Relative-strength rotation (top 3 by 1+3-day return, overheat and BTC trend filters), proposed by ChatGPT | ❌ Fail: worse than an equal-weight basket since 2020 (Sharpe 0.76 vs 1.13); slightly better since 2022 (0.44 vs 0.41, p = 0.04 > 0.0167) |
+| H-025 | Plain momentum rotation (top 3 by 1+3-day return) | ❌ Fail: Sharpe 0.91 vs 1.13 since 2020, 0.19 vs 0.41 since 2022; 210 rebalances a year |
+| H-026 | 1-day reversal (hold yesterday's 3 biggest losers) | ❌ Fail: −54 %/yr since 2022, fees eat it |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
 | H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |
 | H-022 | Forward replication of H-020 on as-published data | ⏳ collecting data, test on 2027-10-15 |
