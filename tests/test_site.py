@@ -25,10 +25,13 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
         assert (out / ("" if lang == "en" else f"{lang}/") / "hypotheses" / "H-003.html").exists()
     sitemap = (out / "sitemap.xml").read_text()
     d = json.loads((out / "data.json").read_text())
-    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 2)
+    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 3)
     course = (out / "ru" / "course.html").read_text(encoding="utf-8")
     assert "Курс для новичков" in course and '"@type": "Course"' in course.replace('":"', '": "') or '"Course"' in course
     assert "{" not in course.split("<main>")[1].split("</main>")[0]  # every placeholder filled
+    setup = (out / "ru" / "setup.html").read_text(encoding="utf-8")
+    assert "TELEGRAM_LANG" in setup and "ANTHROPIC_API_KEY" in setup and 'href="../charts.js"' not in setup
+    assert "/ru/setup.html" in sitemap and 'setup.html">' in (out / "ru" / "index.html").read_text(encoding="utf-8")
     assert "/ru/coins/SOLUSDT.html" in sitemap and (out / "ru" / "coins" / "SOLUSDT.html").exists()
     sol = (out / "coins" / "SOLUSDT.html").read_text(encoding="utf-8")
     assert "Solana (SOL)" in sol and "H-014" in sol and 'href="../#coins"' in sol
@@ -59,3 +62,14 @@ def test_course_is_complete_in_every_language():
     html = C.md_to_html("**a** [b](c)\n\n1. x\n2. y\n\n| h |\n| --- |\n| v |\n\n- [ ] t")
     assert "<strong>a</strong>" in html and '<a href="c">b</a>' in html and "<ol>" in html and "<table>" in html
     assert 'type="checkbox"' in html
+
+
+def test_setup_guide_is_complete_in_every_language():
+    from crl import setup_guide as SG
+    keys = set(SG.GUIDE["en"])
+    for lang in LANGS:
+        g = SG.GUIDE[lang]
+        assert set(g) == keys and len(g["sections"]) == len(SG.GUIDE["en"]["sections"]), lang
+        text = " ".join(md for _, md in g["sections"])
+        for name in ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "TELEGRAM_LANG", "ANTHROPIC_API_KEY", "test_alert"):
+            assert name in text, (lang, name)

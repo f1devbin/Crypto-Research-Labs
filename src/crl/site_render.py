@@ -9,6 +9,7 @@ import json
 import re
 
 from crl import course as C
+from crl import setup_guide as SG
 from crl.i18n import DEFAULT, LANGS, sub, t
 
 CHART_JS = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"
@@ -96,6 +97,7 @@ pre{background:var(--panel);border:1px solid var(--line);border-radius:12px;padd
 .callout{border-left:4px solid var(--weak);background:var(--panel);padding:12px 16px;border-radius:0 10px 10px 0}
 select{font:inherit;padding:6px 10px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px}
 footer{margin-top:64px;padding-top:20px;padding-bottom:48px;border-top:1px solid var(--line);font-size:.9rem}
+code{background:var(--raised);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.9em;overflow-wrap:anywhere}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
 /* diagnosis: the one loud element on the page */
 .diag{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin:20px 0 8px;position:relative;overflow:hidden}
@@ -243,8 +245,8 @@ def _rel(key: str | None) -> str:
     """Page key -> path inside a language root: None = home, "coin:SOLUSDT", or a hypothesis id."""
     if key is None:
         return ""
-    if key == "course":
-        return "course.html"
+    if key in ("course", "setup"):
+        return f"{key}.html"
     if key.startswith("coin:"):
         return f"coins/{key[5:]}.html"
     return f"hypotheses/{key}.html"
@@ -262,7 +264,7 @@ def page_path(lang: str, hid: str | None = None) -> str:
 
 
 def asset_root(lang: str, hid: str | None = None) -> str:
-    depth = (lang != DEFAULT) + (hid is not None and hid != "course")
+    depth = (lang != DEFAULT) + (hid is not None and hid not in ("course", "setup"))
     return "../" * depth
 
 
@@ -400,7 +402,7 @@ def header(lang: str, hid: str | None, generated: str) -> str:
 <a href="{home}course.html">{e(C.UI.get(lang, C.UI['en'])['nav'])}</a>
 <a href="{home}#how-to-read">{e(t(lang, 'nav_new'))}</a><a href="{home}#regime">{e(t(lang, 'nav_regime'))}</a>
 <a href="{home}#coins">{e(t(lang, 'nav_coins'))}</a><a href="{home}#hypotheses">{e(t(lang, 'nav_hyp'))}</a><a href="{home}#glossary">{e(t(lang, 'nav_glossary'))}</a>
-<a href="{home}#methodology">{e(t(lang, 'nav_method'))}</a><a href="{REPO}">GitHub</a></nav>
+<a href="{home}#methodology">{e(t(lang, 'nav_method'))}</a><a href="{home}setup.html">{e(SG.GUIDE.get(lang, SG.GUIDE['en'])['nav'])}</a><a href="{REPO}">GitHub</a></nav>
 <nav class="langs bar" aria-label="{e(t(lang, 'lang_label'))}">{''.join(langs)}</nav>
 </header>"""
 
@@ -409,7 +411,8 @@ def footer(lang: str, hid: str | None) -> str:
     return f"""<footer>
 <p>{t(lang, 'footer_disclaimer')}</p>
 <p>{e(t(lang, 'footer_source'))}: <a href="{REPO}">{REPO}</a> · MIT License ·
-<a href="{asset_root(lang, hid)}data.json">{e(t(lang, 'footer_data'))}</a></p>
+<a href="{asset_root(lang, hid)}data.json">{e(t(lang, 'footer_data'))}</a> ·
+<a href="{asset_root(lang, hid)}{'' if lang == DEFAULT else lang + '/'}setup.html">{e(SG.GUIDE.get(lang, SG.GUIDE['en'])['nav'])}</a></p>
 </footer>"""
 
 
@@ -939,6 +942,33 @@ def course_page(lang: str, values: dict, data: dict, base: str, verification: st
                   {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
                   {"@type": "ListItem", "position": 2, "name": ui["h1"], "item": url}]}]
     return page(lang=lang, hid="course", base=base, title=ui["title"], description=ui["desc"][:320], body=body,
+                charts={}, jsonld=jsonld, verification=verification)
+
+
+def setup_page(lang: str, data: dict, base: str, verification: str = "") -> str:
+    g = SG.GUIDE.get(lang, SG.GUIDE["en"])
+    toc = "".join(f'<li><a href="#s{i}">{e(title)}</a></li>' for i, (title, _) in enumerate(g["sections"], 1))
+    parts = "".join(f'<section aria-labelledby="s{i}"><h2 id="s{i}">{e(title)}</h2>{C.md_to_html(md)}</section>'
+                    for i, (title, md) in enumerate(g["sections"], 1))
+    body = f"""{header(lang, "setup", data['generated_at'])}
+<main>
+<h1>{e(g['h1'])}</h1>
+<p class="lead">{e(g['lead'])}</p>
+<h2>{e(g['toc'])}</h2>
+<ol>{toc}</ol>
+{parts}
+</main>
+{footer(lang, "setup")}"""
+    url = page_url(base, lang, "setup")
+    jsonld = [{"@context": "https://schema.org", "@type": "HowTo", "name": g["h1"], "description": g["desc"],
+               "url": url, "inLanguage": LANGS[lang][1],
+               "step": [{"@type": "HowToSection", "name": title, "position": i}
+                        for i, (title, _) in enumerate(g["sections"], 1)],
+               "dateModified": data["generated_at"][:10]},
+              {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+                  {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
+                  {"@type": "ListItem", "position": 2, "name": g["h1"], "item": url}]}]
+    return page(lang=lang, hid="setup", base=base, title=g["title"], description=g["desc"][:320], body=body,
                 charts={}, jsonld=jsonld, verification=verification)
 
 

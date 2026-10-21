@@ -400,7 +400,7 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
         shutil.rmtree(out_dir)
     today = now.date().isoformat()
     entries = ([(None, today)] + [(h["id"], (h.get("run_at") or today)[:10]) for h in data["hypotheses"]]
-               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("course", today)])
+               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("course", today), ("setup", today)])
     pages = 0
     for lang in LANGS:
         for hid, _ in entries:
@@ -408,6 +408,8 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
             path.parent.mkdir(parents=True, exist_ok=True)
             if hid is None:
                 html = H.index_page(lang, data, base, verification)
+            elif hid == "setup":
+                html = H.setup_page(lang, data, base, verification)
             elif hid == "course":
                 html = H.course_page(lang, course_values(data, lang, "./"), data, base, verification)
             elif hid.startswith("coin:"):

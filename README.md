@@ -161,7 +161,7 @@ crl site                  # build the dashboard into ./_site (open _site/index.h
 3. **Actions → research-agents → Run workflow.** The first run takes about 20 minutes.
    After that it runs on its own every day.
 
-Optional settings (*Settings → Secrets and variables → Actions*):
+Optional settings (*Settings → Secrets and variables → Actions*). A step-by-step guide in 7 languages, with how to get the bot token, your chat ID and an AI model key, is on the dashboard: [Setup](https://f1devbin.github.io/Crypto-Research-Labs/setup.html) · [Настройка](https://f1devbin.github.io/Crypto-Research-Labs/ru/setup.html).
 
 | Name | Kind | What it does |
 |------|------|--------------|
