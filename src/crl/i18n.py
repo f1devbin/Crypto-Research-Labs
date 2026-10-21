@@ -410,6 +410,9 @@ T = {
  "titles": {
   "H-022": 'Повторная проверка H-020 на данных, собранных после 15.10.2026',
   "H-023": 'Gram (GRAM, бывший Toncoin): правило SMA50 обыгрывает удержание с 2023 года',
+  "H-024": 'Ротация по относительной силе: 3 самые сильные монеты (1 и 3 дня), без резких скачков, только пока BTC выше 200-дневной средней',
+  "H-025": 'Простая ротация по импульсу: 3 самые сильные монеты за 1 и 3 дня',
+  "H-026": 'Краткосрочный возврат: 3 монеты, сильнее всех упавшие вчера',
   "H-020": 'BTC вне рынка, когда 7-дневный чистый завод на биржи в верхних 20%',
   "H-021": 'ETH вне рынка, когда 7-дневный чистый завод на биржи в верхних 20%',
   "H-012": 'Контроль волатильности (30% в год) обыгрывает удержание на BTC, ETH, SOL',
@@ -630,6 +633,9 @@ T = {
  "titles": {
   "H-022": 'Réplica de H-020 con datos recogidos después del 15-10-2026',
   "H-023": 'Gram (GRAM, antes Toncoin): la regla SMA50 gana a mantener desde 2023',
+  "H-024": 'Rotación por fuerza relativa: las 3 monedas más fuertes (1 y 3 días), sin subidas extremas, solo con BTC sobre su media de 200 días',
+  "H-025": 'Rotación de momentum simple: las 3 monedas más fuertes en 1 y 3 días',
+  "H-026": 'Reversión de corto plazo: las 3 monedas que más cayeron ayer',
   "H-020": 'BTC fuera del mercado cuando los depósitos netos de 7 días a exchanges están en su 20% superior',
   "H-021": 'ETH fuera del mercado cuando los depósitos netos de 7 días a exchanges están en su 20% superior',
   "H-012": 'Objetivo de volatilidad (30%/año) gana a mantener en BTC, ETH, SOL',
@@ -850,6 +856,9 @@ T = {
  "titles": {
   "H-022": 'Replicação da H-020 com dados coletados após 15/10/2026',
   "H-023": 'Gram (GRAM, antigo Toncoin): a regra SMA50 vence segurar desde 2023',
+  "H-024": 'Rotação por força relativa: as 3 moedas mais fortes (1 e 3 dias), sem saltos extremos, só com BTC acima da média de 200 dias',
+  "H-025": 'Rotação de momentum simples: as 3 moedas mais fortes em 1 e 3 dias',
+  "H-026": 'Reversão de curto prazo: as 3 moedas que mais caíram ontem',
   "H-020": 'BTC fora do mercado quando os depósitos líquidos de 7 dias em corretoras estão nos 20% mais altos',
   "H-021": 'ETH fora do mercado quando os depósitos líquidos de 7 dias em corretoras estão nos 20% mais altos',
   "H-012": 'Meta de volatilidade (30%/ano) vence segurar em BTC, ETH, SOL',
@@ -1069,6 +1078,9 @@ T = {
  "titles": {
   "H-022": "H-020'nin 15.10.2026 sonrası toplanan verilerle tekrarı",
   "H-023": "Gram (GRAM, eski Toncoin): SMA50 kuralı 2023'ten beri al-tut'u geçer",
+  "H-024": 'Göreli güç rotasyonu: en güçlü 3 coin (1 ve 3 gün), aşırı sıçramalar hariç, yalnızca BTC 200 günlük ortalamanın üzerindeyken',
+  "H-025": 'Basit momentum rotasyonu: 1 ve 3 günde en güçlü 3 coin',
+  "H-026": 'Kısa vadeli geri dönüş: dün en çok düşen 3 coin',
   "H-020": "7 günlük net borsa yatırmaları en üst %20'deyken BTC piyasa dışında",
   "H-021": "7 günlük net borsa yatırmaları en üst %20'deyken ETH piyasa dışında",
   "H-012": "Volatilite hedefi (yıllık %30) BTC, ETH, SOL'da al-tut'u geçer",
@@ -1286,6 +1298,9 @@ T = {
  "titles": {
   "H-022": 'Kiểm tra lặp lại H-020 trên dữ liệu thu thập sau 15/10/2026',
   "H-023": 'Gram (GRAM, trước là Toncoin): quy tắc SMA50 thắng mua và giữ từ 2023',
+  "H-024": 'Xoay vòng theo sức mạnh tương đối: 3 coin mạnh nhất (1 và 3 ngày), bỏ qua cú tăng đột biến, chỉ khi BTC trên trung bình 200 ngày',
+  "H-025": 'Xoay vòng động lượng đơn giản: 3 coin mạnh nhất trong 1 và 3 ngày',
+  "H-026": 'Đảo chiều ngắn hạn: 3 coin giảm mạnh nhất hôm qua',
   "H-020": 'BTC đứng ngoài khi lượng nạp ròng vào sàn 7 ngày thuộc nhóm 20% cao nhất',
   "H-021": 'ETH đứng ngoài khi lượng nạp ròng vào sàn 7 ngày thuộc nhóm 20% cao nhất',
   "H-012": 'Mục tiêu biến động (30%/năm) thắng mua và giữ trên BTC, ETH, SOL',
@@ -1473,6 +1488,9 @@ T = {
  "titles": {
   "H-022": '用 2026-10-15 之后收集的数据复现 H-020',
   "H-023": 'Gram（GRAM，原 Toncoin）：自 2023 年起 SMA50 规则跑赢持有',
+  "H-024": '相对强度轮动：持有最强的 3 个币（1 日和 3 日），跳过单日暴涨，仅在 BTC 高于 200 日均线时',
+  "H-025": '简单动量轮动：持有 1 日和 3 日最强的 3 个币',
+  "H-026": '短期反转：持有昨天跌幅最大的 3 个币',
   "H-020": '当 7 日交易所净存入处于最高 20% 时 BTC 空仓',
   "H-021": '当 7 日交易所净存入处于最高 20% 时 ETH 空仓',
   "H-012": '目标波动率（年化 30%）在 BTC、ETH、SOL 上跑赢买入持有',

@@ -1,0 +1,48 @@
+id: H-026
+title: 'Short-term reversal: hold the 3 coins that fell the most yesterday'
+status: registered
+family: other
+created: '2026-10-21'
+author: ChatGPT proposal, formalised by Claude for F1DevBin
+rationale: 'Proposed by ChatGPT (via F1DevBin) as its second experiment: after a sharp move relative to
+  the other coins, part of it is given back over the next hours. Daily version (the proposal uses 1-6
+  hours). Known risk, also noted in the proposal: the effect may exist but be eaten by fees, since the
+  basket changes almost every day.'
+spec:
+  kind: cross_section
+  signal:
+    type: reversal
+    lookbacks:
+    - 1
+  select:
+    top: 3
+  fee: 0.001
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  periods:
+  - name: since_2020
+    start: '2020-01-01'
+  - name: since_2022
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 1000
+    alpha: 0.0167
+  criterion:
+    min_wins:
+      since_2020: 1
+      since_2022: 1
+    require_significance: true
+retest_every_days: 90
+registered: '2026-10-21'
+prereg_sha256: 8a05cfc9919e9cbeca833bee2c6a408b80cd9357dd406c82ac03b76894cfb72b
