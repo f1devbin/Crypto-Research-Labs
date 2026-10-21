@@ -64,9 +64,8 @@ def _digest(_args) -> int:
 
 def _notify_test(_args) -> int:
     from crl import notify
-    ok = notify.telegram("🔬 Crypto Research Labs: Telegram alerts are connected.\n"
-                         "You will get regime changes, the H-020 rule switching, new verdicts and data errors.\n"
-                         "https://f1devbin.github.io/Crypto-Research-Labs/")
+    ok = notify.telegram(f"🔬 Crypto Research Labs: {notify.a('t_test')} ({notify.lang()}).\n"
+                         f"{notify.a('test_body')}\n{notify.site_url()}")
     print("sent" if ok else "NOT sent: check TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID and press /start in the bot")
     return 0 if ok else 1
 

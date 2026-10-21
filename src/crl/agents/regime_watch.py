@@ -16,7 +16,7 @@ import yaml
 
 from crl.config import CONFIG_DIR, REPORTS_DIR, STATE_DIR
 from crl.data.store import DataStore
-from crl.notify import alert
+from crl.notify import a, alert
 
 log = logging.getLogger(__name__)
 
@@ -111,6 +111,9 @@ def evaluate(store: DataStore, monitors: dict) -> dict:
 
 
 def transitions(current: dict, previous: dict, monitors: dict) -> list[str]:
+    from crl.i18n import sub
+    from crl.notify import a, lang
+    code = lang()
     msgs = []
     for name, cur in current.items():
         old = previous.get(name, {}).get("band")
@@ -118,8 +121,10 @@ def transitions(current: dict, previous: dict, monitors: dict) -> list[str]:
             continue
         m = monitors[name]
         fmt = m.get("format", "{:.4f}")
-        note = m.get("notes", {}).get(cur["band"], "")
-        msgs.append(f"{m['label']}: {old} → {cur['band']} ({fmt.format(cur['value'])}). {note}".strip())
+        label = sub(code, "monitors", name, (m["label"], ""))[0]
+        note = sub(code, "notes", (name, cur["band"]), m.get("notes", {}).get(cur["band"], ""))
+        msgs.append(a("regime", label=label, old=sub(code, "bands", old, old), new=sub(code, "bands", cur["band"], cur["band"]),
+                      value=fmt.format(cur["value"]), note=note).strip())
     return msgs
 
 
@@ -145,6 +150,6 @@ def main(config: Path = CONFIG_DIR / "watch.yaml", state_path: Path = STATE_DIR 
     (REPORTS_DIR / "regime.md").write_text("\n".join(lines) + "\n")
 
     if msgs:
-        alert("regime change", msgs)
+        alert(a("t_regime"), msgs)
     log.info("%d monitors, %d transitions", len(current), len(msgs))
     return 0

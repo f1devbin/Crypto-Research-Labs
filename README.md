@@ -166,6 +166,7 @@ Optional settings (*Settings → Secrets and variables → Actions*):
 | Name | Kind | What it does |
 |------|------|--------------|
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | secret | sends alerts to Telegram |
+| `TELEGRAM_LANG` | variable | language of Telegram alerts: `en` (default), `ru`, `es`, `pt`, `tr`, `vi`, `zh` |
 | `ANTHROPIC_API_KEY` | secret | turns on the proposer and the LLM digest |
 | `CRL_LLM_MODEL` | variable | overrides the model (default `claude-sonnet-5-5`) |
 | `GOOGLE_SITE_VERIFICATION` | variable | Search Console HTML-tag code, added to every page |

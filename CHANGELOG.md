@@ -18,6 +18,7 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - Coverage scan (`crl scan`, weekly): every tested rule on every coin with FDR control; matrix on the home page, per-rule tables on hypothesis pages, per-coin tables on coin pages, `reports/COVERAGE.md`.
 - Sortable tables (coins, hypotheses, scan); forward-data progress bar for hypotheses waiting for new data (H-022).
 - Cross-section studies (`kind: cross_section`, daily ranking vs an equal-weight basket, rotation null). H-024…H-026 from a ChatGPT proposal: all fail.
+- Telegram alerts in 7 languages: repository variable `TELEGRAM_LANG`; alerts end with a link to the dashboard in that language.
 - Telegram test: *Run workflow* with `test_alert`, or `crl notify-test`.
 - New look: IBM Plex Sans, deep-navy palette with high-contrast text, brand header, diagnosis panel with a signal meter, chip matrix; on phones every table turns into labelled cards and the matrix into one chip grid per rule (no horizontal scrolling).
 - `replicates` field: a declared replication is not flagged as a duplicate.

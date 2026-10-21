@@ -16,6 +16,7 @@ LANGS = {  # code: (native name, html lang / hreflang, og:locale)
     "zh": ("中文", "zh-Hans", "zh_CN"),
 }
 DEFAULT = "en"
+VERDICT_WORD_KEYS = {"PASS": "Pass", "WEAK": "Weak", "FAIL": "Fail"}
 
 T = {
 # ---------------------------------------------------------------- English
