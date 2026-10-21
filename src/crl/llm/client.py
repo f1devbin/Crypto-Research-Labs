@@ -71,21 +71,42 @@ def model_name() -> str:
     return ANTHROPIC_MODEL
 
 
-def _post(url: str, body: dict, headers: dict, timeout: int) -> dict:
-    req = urllib.request.Request(url, data=json.dumps(body).encode(),
-                                 headers={"content-type": "application/json", "user-agent": "crl/0.2", **headers})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read())
+def _post(url: str, body: dict, headers: dict, timeout: int, tries: int = 4) -> dict:
+    """POST with retries on rate limits (HTTP 429) and brief server errors, honouring Retry-After."""
+    import re
+    import time
+    import urllib.error
+    for attempt in range(tries):
+        req = urllib.request.Request(url, data=json.dumps(body).encode(),
+                                     headers={"content-type": "application/json", "user-agent": "crl/0.2", **headers})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 500, 502, 503) or attempt == tries - 1:
+                raise
+            wait = e.headers.get("retry-after") if e.headers else None
+            if not wait:
+                m = re.search(r"try again in ([0-9.]+)s", e.read().decode("utf-8", "replace"))
+                wait = m.group(1) if m else None
+            time.sleep(min(float(wait or 10 * (attempt + 1)) + 1, 90))
+    raise LLMUnavailable("unreachable")
 
 
 def complete(system: str, prompt: str, max_tokens: int = 4000, timeout: int = 180) -> str:
     kind = provider()
     if kind == "openai":
-        data = _post(f"{_base()}/chat/completions",
-                     {"model": model_name(), "max_tokens": max_tokens, "temperature": 0.3,
-                      "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]},
+        model = model_name()
+        body = {"model": model, "max_tokens": max_tokens, "temperature": 0.3,
+                "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]}
+        if "gpt-oss" in model and "groq.com" in _base():
+            body["reasoning_effort"] = "low"   # reasoning tokens count against max_tokens
+        data = _post(f"{_base()}/chat/completions", body,
                      {"authorization": f"Bearer {os.environ['LLM_API_KEY']}"}, timeout)
-        return data["choices"][0]["message"]["content"] or ""
+        choice = data["choices"][0]
+        if choice.get("finish_reason") == "length":
+            raise LLMUnavailable(f"answer cut off at max_tokens={max_tokens}")
+        return choice["message"]["content"] or ""
     if kind == "anthropic":
         data = _post(ANTHROPIC_URL,
                      {"model": model_name(), "max_tokens": max_tokens, "system": system,

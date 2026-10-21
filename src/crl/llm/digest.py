@@ -29,16 +29,27 @@ Format: one short opening paragraph with the overall picture, then 3-6 lines sta
 then one closing sentence on what changed in the tested hypotheses (or that nothing changed).
 No headings, no tables, no emojis, at most 220 words."""
 
+TRANSLATE = """Translate the user's text into {lang}. Keep every number, sign, percent, ticker and hypothesis id
+exactly as written, keep the paragraph and "- " line structure, add nothing, omit nothing. Output only the translation."""
+
 DIGEST_DIR = REPORTS_DIR / "digest"
 
 
 def collect(days: int = 7) -> str:
     today = dt.datetime.now(dt.timezone.utc).date()
     parts = []
-    for name in ("regime.md", "data_health.md", "COVERAGE.md"):
+    for name in ("regime.md", "data_health.md"):
         p = REPORTS_DIR / name
         if p.exists():
-            parts.append(p.read_text())
+            text = p.read_text()
+            if name == "data_health.md":  # only problems matter; the per-file table is noise for a briefing
+                text = "\n".join(ln for ln in text.splitlines() if ln.startswith(("#", "- **error", "- **warn"))
+                                  and "daily moves" not in ln)
+            parts.append(text)
+    cov = REPORTS_DIR / "COVERAGE.md"
+    if cov.exists():  # the matrix is big; its counts line says enough
+        counts = [ln for ln in cov.read_text().splitlines() if ln.startswith("Counts:")]
+        parts.append("Coverage scan (every tested rule on every coin, exploratory): " + (counts[0] if counts else ""))
     runs = REPORTS_DIR / "runs"
     if runs.exists():
         for p in sorted(runs.glob("*.md")):
@@ -71,6 +82,8 @@ def write(facts: str, texts: dict[str, str], model: str | None, day: dt.date, ro
           errors: dict | None = None) -> Path:
     d = root / week_id(day)
     d.mkdir(parents=True, exist_ok=True)
+    for old in d.glob("*.md"):  # a rerun replaces the whole week, no stale languages
+        old.unlink()
     (d / "facts.md").write_text(facts + "\n", encoding="utf-8")
     for code, text in texts.items():
         (d / f"{code}.md").write_text(text.strip() + "\n", encoding="utf-8")
@@ -135,10 +148,18 @@ def main() -> int:
     if not client.available():
         errors["_"] = "no LLM key: set LLM_API_KEY (free, e.g. Groq) or ANTHROPIC_API_KEY"
     else:
+        # write once in English from the facts, then translate the short text: 7x fewer input tokens,
+        # which keeps free tiers under their per-minute limits, and the numbers stay identical
+        try:
+            texts["en"] = client.complete(SYSTEM, "This week's reports:\n\n" + facts, 4000)
+        except Exception as e:
+            errors["en"] = _why(e)
+            log.warning("digest failed: %s", errors["en"])
         for code in LANGS:
+            if code == "en" or "en" not in texts:
+                continue
             try:
-                texts[code] = client.complete(SYSTEM + f" Write in {LANG_NAMES[code]}.",
-                                              "This week's reports:\n\n" + facts, 900)
+                texts[code] = client.complete(TRANSLATE.format(lang=LANG_NAMES[code]), texts["en"], 4000)
             except Exception as e:  # one language failing must not lose the others
                 errors[code] = _why(e)
                 log.warning("digest in %s failed: %s", code, errors[code])
