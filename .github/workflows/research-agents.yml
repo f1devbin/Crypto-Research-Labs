@@ -44,8 +44,6 @@ env:
   LLM_API_KEY: ${{ secrets.LLM_API_KEY }}               # or a free OpenAI-compatible provider (Groq by default)
   CRL_LLM_BASE_URL: ${{ vars.CRL_LLM_BASE_URL }}
   CRL_LLM_MODEL: ${{ vars.CRL_LLM_MODEL }}
-  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-  CRL_LLM_MODEL: ${{ vars.CRL_LLM_MODEL }}
 
 jobs:
   agents:
