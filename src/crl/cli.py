@@ -62,6 +62,15 @@ def _digest(_args) -> int:
     return digest.main()
 
 
+def _notify_test(_args) -> int:
+    from crl import notify
+    ok = notify.telegram("🔬 Crypto Research Labs: Telegram alerts are connected.\n"
+                         "You will get regime changes, the H-020 rule switching, new verdicts and data errors.\n"
+                         "https://f1devbin.github.io/Crypto-Research-Labs/")
+    print("sent" if ok else "NOT sent: check TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID and press /start in the bot")
+    return 0 if ok else 1
+
+
 def _scan(_args) -> int:
     from crl import scan
     return scan.main()
@@ -101,6 +110,7 @@ def main(argv=None) -> int:
     p.set_defaults(fn=_propose)
 
     sub.add_parser("digest", help="weekly digest").set_defaults(fn=_digest)
+    sub.add_parser("notify-test", help="send a test Telegram message").set_defaults(fn=_notify_test)
     sub.add_parser("scan", help="coverage scan: every tested rule on every coin (exploratory)").set_defaults(fn=_scan)
     sub.add_parser("site", help="build the static dashboard into _site/").set_defaults(fn=_site)
 

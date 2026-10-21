@@ -22,6 +22,10 @@ on:
         description: "Re-run every rerunnable hypothesis, not only the due ones"
         type: boolean
         default: false
+      test_alert:
+        description: "Send a test Telegram message"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -51,6 +55,10 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -e .
+
+      - name: Test Telegram alert
+        if: github.event_name == 'workflow_dispatch' && inputs.test_alert
+        run: crl notify-test
 
       - name: Restore data cache
         uses: actions/cache/restore@v4

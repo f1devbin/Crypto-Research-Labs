@@ -79,6 +79,9 @@ ended, or 2022+.
 | H-018 ◐ | **Everscale (EVER)**: SMA50 trend rule, Gate.io, 0.2 % fee | −10 %/yr vs **−70 %/yr** holding since mid-2022; max drawdown −84 % vs −100 %. Sharpe 0.23 vs −0.17, p = 0.14 |
 | H-019 ◐ | EVER only while BTC > SMA200 | −37 %/yr vs −70 %/yr, drawdown −98 %, p = 0.19 |
 | H-023 ◐ | **Gram (GRAM, prev. Toncoin)**: SMA50 trend rule, Gate.io, 0.2 % fee | +17 %/yr vs −9 %/yr holding since 2023-06; max drawdown −56 % vs −85 %. Sharpe 0.55 vs 0.26, p = 0.11 |
+| H-024 ❌ | Relative-strength rotation of 11 coins: top 3 by 1- and 3-day return, skip one-day jumps > 2.5 σ, only while BTC > SMA200 (ChatGPT proposal, daily) | Since 2020: Sharpe 0.76 vs 1.13 for an equal-weight basket, +32 %/yr vs +76 %/yr. Since 2022: 0.44 vs 0.41, drawdown −49 % vs −67 %, p = 0.04 (needed 0.0167). The filters, not the ranking, did the work |
+| H-025 ❌ | Same ranking, no filters | Sharpe 0.91 vs 1.13 (2020+), 0.19 vs 0.41 (2022+), drawdown −78 %; the null rejects it (p = 0.003) only because it is *anti*-random in 2020-21 bull runs, not better than the basket |
+| H-026 ❌ | 1-day reversal: hold the 3 biggest losers | −22 %/yr (2020+), −54 %/yr (2022+), 264 rebalances a year: whatever reversal exists is far smaller than 0.1 % fees |
 
 **What it means.** Volatility targeting is the most promising so far. It never beat holding by a
 significant margin, but it beat it on 11 of 11 coins since 2022 with roughly half the drawdown.
