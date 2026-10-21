@@ -12,4 +12,4 @@ CONFIG_DIR = ROOT / "config"
 DATASETS_DIR = Path(os.environ.get("CRL_DATASETS_DIR", ROOT / "datasets"))
 STATE_DIR = Path(os.environ.get("CRL_STATE_DIR", DATA_DIR / "state"))
 
-USER_AGENT = "crypto-research-labs/0.2 (+https://github.com/f1devbin/Crypto-Research-Labs)"
+USER_AGENT = "crypto-research-labs/0.3 (+https://github.com/f1devbin/Crypto-Research-Labs)"
