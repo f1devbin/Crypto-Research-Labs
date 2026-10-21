@@ -15,7 +15,7 @@ from pathlib import Path
 from crl.config import REPORTS_DIR
 from crl.i18n import LANGS
 from crl.llm import client
-from crl.notify import a, alert, lang as alert_lang
+from crl.notify import a, alert, job_summary, lang as alert_lang
 
 log = logging.getLogger(__name__)
 
@@ -55,14 +55,28 @@ def week_id(day: dt.date) -> str:
     return f"{y}-W{w:02d}"
 
 
-def write(facts: str, texts: dict[str, str], model: str | None, day: dt.date, root: Path = DIGEST_DIR) -> Path:
+def _why(e: Exception) -> str:
+    """Short, secret-free reason for a failed model call (shown in meta.json and the job summary)."""
+    import urllib.error
+    if isinstance(e, urllib.error.HTTPError):
+        try:
+            body = e.read().decode("utf-8", "replace")[:200]
+        except Exception:
+            body = ""
+        return f"HTTP {e.code}: {body}".strip()
+    return f"{type(e).__name__}: {e}"[:200]
+
+
+def write(facts: str, texts: dict[str, str], model: str | None, day: dt.date, root: Path = DIGEST_DIR,
+          errors: dict | None = None) -> Path:
     d = root / week_id(day)
     d.mkdir(parents=True, exist_ok=True)
     (d / "facts.md").write_text(facts + "\n", encoding="utf-8")
     for code, text in texts.items():
         (d / f"{code}.md").write_text(text.strip() + "\n", encoding="utf-8")
     (d / "meta.json").write_text(json.dumps({"week": week_id(day), "date": str(day), "model": model,
-                                             "languages": sorted(texts)}, indent=1), encoding="utf-8")
+                                             "languages": sorted(texts), "errors": errors or {}},
+                                            indent=1, ensure_ascii=False), encoding="utf-8")
     return d
 
 
@@ -89,14 +103,20 @@ def main() -> int:
         return 0
     today = dt.datetime.now(dt.timezone.utc).date()
     texts: dict[str, str] = {}
-    if client.available():
+    errors: dict[str, str] = {}
+    if not client.available():
+        errors["_"] = "no LLM key: set LLM_API_KEY (free, e.g. Groq) or ANTHROPIC_API_KEY"
+    else:
         for code in LANGS:
             try:
                 texts[code] = client.complete(SYSTEM + f" Write in {LANG_NAMES[code]}.",
                                               "This week's reports:\n\n" + facts, 900)
             except Exception as e:  # one language failing must not lose the others
-                log.warning("digest in %s failed: %s", code, type(e).__name__)
-    write(facts, texts, client.model_name() if texts else None, today)
+                errors[code] = _why(e)
+                log.warning("digest in %s failed: %s", code, errors[code])
+    write(facts, texts, client.model_name() if texts else None, today, errors=errors)
+    if errors:
+        job_summary("## Weekly digest: model errors\n\n" + "\n".join(f"- {k}: {v}" for k, v in errors.items()))
     body = texts.get(alert_lang()) or texts.get("en") or facts
     alert(a("t_digest", week=week_id(today)), [body[:3500]])
     return 0
