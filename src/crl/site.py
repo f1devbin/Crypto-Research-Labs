@@ -184,9 +184,10 @@ def diagnosis(reg: list[dict], coins_: list[dict]) -> dict | None:
         add("d_rule_in" if on else "d_rule_out", 1 if on else -1)
     if not items:
         return None
-    # the long-term BTC trend counts double: it is what most tested rules follow
+    # the long-term BTC trend counts double: it is what most tested rules follow. "up"/"down" needs a clear
+    # majority of the non-neutral signals, e.g. 3 up, 0 down with the trend up -> score 4
     score = sum(i["tone"] for i in items) + next((i["tone"] for i in items if i["key"].startswith("d_trend")), 0)
-    level = "up" if score >= 2 else ("down" if score <= -2 else "mixed")
+    level = "up" if score >= 3 else ("down" if score <= -3 else "mixed")
     return {"level": level, "score": score, "items": items,
             "up": sum(i["tone"] > 0 for i in items), "down": sum(i["tone"] < 0 for i in items),
             "neutral": sum(i["tone"] == 0 for i in items)}

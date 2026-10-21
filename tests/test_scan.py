@@ -34,3 +34,15 @@ def test_scan_covers_every_rule_and_coin(tmp_path, monkeypatch):
     assert "Диагноз простыми словами" in coin and "Какие проверенные правила сработали" in coin
     h22 = (out / "ru" / "hypotheses" / "H-022.html").read_text(encoding="utf-8")
     assert "Собрано форвардных данных: 6 из 365 дней" in h22
+
+
+def test_diagnosis_needs_a_clear_majority():
+    def mon(i, v, band):
+        return {"id": i, "value": v, "band": band}
+    reg = [mon("btc_trend", 0.14, "above"), mon("btc_volatility", 0.33, "calm"), mon("fear_greed", 63, "greed"),
+           mon("stablecoin_growth", -0.01, "contracting"), mon("h020_rule", 1, "rule_in")]
+    coins = [{"vs200": x} for x in (0.1,) * 8 + (-0.1,) * 5]
+    d = site.diagnosis(reg, coins)
+    assert (d["up"], d["down"], d["neutral"]) == (2, 1, 3) and d["level"] == "mixed"
+    reg[3] = mon("stablecoin_growth", 0.03, "expanding")
+    assert site.diagnosis(reg, coins)["level"] == "up"
