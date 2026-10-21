@@ -41,11 +41,14 @@ def main() -> int:
     text = facts
     if client.available():
         try:
-            text = client.complete(SYSTEM, "Write this week's briefing from these reports:\n\n" + facts, 800)
+            from crl.notify import a
+            text = client.complete(SYSTEM + f" Write in {a('digest_lang')}.",
+                                   "Write this week's briefing from these reports:\n\n" + facts, 800)
         except Exception as e:
             log.warning("LLM digest failed (%s), sending deterministic version", type(e).__name__)
     path = REPORTS_DIR / "digest" / f"{week.year}-W{week.week:02d}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text + "\n")
-    alert(f"weekly digest {week.year}-W{week.week:02d}", [text[:3500]])
+    from crl.notify import a
+    alert(a("t_digest", week=f"{week.year}-W{week.week:02d}"), [text[:3500]])
     return 0

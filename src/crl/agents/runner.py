@@ -79,11 +79,17 @@ def main(ids=None, force=False) -> int:
     flips = [c for c in changes if c.get("verdict") and c["verdict"] != c.get("previous")]
     passes = [c for c in changes if c.get("verdict") == "PASS"]
     errors = [c for c in changes if c.get("error")]
-    lines = [f"{c['id']}: {c['previous'] or 'new'} → {c['verdict']} — {c['title']}" for c in flips]
-    lines += [f"{c['id']} PASSED its pre-registered test. Before any real money: independent "
-              f"confirmation, fees at your real tier, paper trading." for c in passes]
-    lines += [f"{c['id']}: {c['error']}" for c in errors]
+    from crl.i18n import VERDICT_WORD_KEYS, sub, t
+    from crl.notify import a, lang
+    code = lang()
+
+    def word(v):
+        return t(code, VERDICT_WORD_KEYS[v]) if v in VERDICT_WORD_KEYS else (v or a("new"))
+    lines = [a("flip", id=c["id"], old=word(c.get("previous")), new=word(c["verdict"]),
+               title=sub(code, "titles", c["id"], c["title"])) for c in flips]
+    lines += [a("passed", id=c["id"]) for c in passes]
+    lines += [a("error", id=c["id"], error=c["error"]) for c in errors]
     if lines:
-        alert("hypothesis runner", lines)
+        alert(a("t_runner"), lines)
     log.info("ran %d studies, %d verdict changes, %d errors", len(changes) - len(errors), len(flips), len(errors))
     return 1 if errors else 0

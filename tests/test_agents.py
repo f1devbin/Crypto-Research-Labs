@@ -46,3 +46,20 @@ def test_proposer_extracts_json_from_chatty_reply():
     text = 'Sure! Here you go:\n[{"title": "a"}]\nGood luck.'
     assert proposer._extract_json(text) == [{"title": "a"}]
     assert json.loads(json.dumps(proposer.EXAMPLE))  # example stays serialisable
+
+
+def test_alerts_follow_telegram_lang(monkeypatch):
+    from crl import notify
+    from crl.i18n import LANGS
+    from crl.i18n_alerts import A
+    for code in LANGS:
+        assert set(A[code]) == set(A["en"]), code
+    monkeypatch.setenv("TELEGRAM_LANG", "ru")
+    monitors = {"btc_trend": {"label": "BTC vs SMA200", "bands": {"below": [None, 0], "above": [0, None]},
+                              "format": "{:+.1%}"}}
+    msg = regime_watch.transitions({"btc_trend": {"value": 0.05, "band": "above"}},
+                                   {"btc_trend": {"band": "below"}}, monitors)[0]
+    assert msg.startswith("BTC относительно 200-дневной средней") or "→" in msg
+    assert "ниже → выше" in msg and notify.site_url().endswith("/ru/")
+    monkeypatch.setenv("TELEGRAM_LANG", "xx")
+    assert notify.lang() == "en"

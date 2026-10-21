@@ -100,8 +100,9 @@ def main() -> int:
     errors = [f for f in findings if f.level == "error"] + \
              [f"{r.name}: {e}" for r in reports if r.name.startswith("klines") for e in r.errors]
     if errors:
-        alert("data steward: problems", [str(e) if isinstance(e, str) else f"{e.series}: {e.message}"
-                                         for e in errors])
+        from crl.notify import a, lang
+        lines = [str(e) if isinstance(e, str) else f"{e.series}: {e.message}" for e in errors]
+        alert(a("t_data"), lines + ([a("data_note")] if lang() != "en" else []))
         return 1
     log.info("data OK: %d sources, %d warnings", len(reports), len(findings))
     return 0
