@@ -5,6 +5,11 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-21
+
+Plain-language dashboard, every rule checked on every coin, weekly digest and alerts in 7 languages,
+a free LLM option, and a redesign that works on phones.
+
 ### Added
 - Coin pages on the dashboard (`coins/<SYMBOL>.html`, 7 languages): price, changes, trend, volatility,
   12-month chart and today's state of each tested rule; a Coins table on the home page.
@@ -26,8 +31,15 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - New look: IBM Plex Sans, deep-navy palette with high-contrast text, brand header, diagnosis panel with a signal meter, chip matrix; on phones every table turns into labelled cards and the matrix into one chip grid per rule (no horizontal scrolling).
 - `replicates` field: a declared replication is not flagged as a duplicate.
 - `test_after` field: a hypothesis is not run (even with `--force`) before its pre-registered start date.
-- Market breadth monitor: share of the 12 coins above their 200-day average (regime card + alerts).
+- Market breadth monitor: share of the 13 coins above their 200-day average (regime card + alerts).
 - Course for beginners on the website (`course.html`), 10 lessons in 7 languages, live numbers, Course structured data.
+
+### Fixed
+- `research-agents` stopped parsing after duplicated env keys; a test now loads every workflow with a strict YAML loader.
+- Weekly Telegram message without a model is the plain-language diagnosis, not a dump of raw reports.
+- LLM model is discovered from the provider's `/models` list (Groq retired the hard-coded one); the digest is written
+  once in English and translated, retries rate limits and never publishes a cut-off answer.
+- Diagnosis says "uptrend"/"downtrend" only with a clear majority of signals.
 
 ## [0.2.0] - 2026-10-14
 

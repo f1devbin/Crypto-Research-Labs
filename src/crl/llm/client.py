@@ -10,6 +10,8 @@ import json
 import os
 import urllib.request
 
+from crl import __version__
+
 ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_MODEL = "claude-sonnet-5-5"
 OPENAI_BASE = "https://api.groq.com/openai/v1"   # Groq: free tier, OpenAI-compatible
@@ -54,7 +56,7 @@ def _discover() -> str:
     global _discovered
     if _discovered is None:
         req = urllib.request.Request(f"{_base()}/models", headers={
-            "authorization": f"Bearer {os.environ['LLM_API_KEY']}", "user-agent": "crl/0.2"})
+            "authorization": f"Bearer {os.environ['LLM_API_KEY']}", "user-agent": f"crl/{__version__}"})
         with urllib.request.urlopen(req, timeout=30) as r:
             ids = [m.get("id", "") for m in json.loads(r.read()).get("data", []) if m.get("active", True)]
         _discovered = pick_model(ids)
@@ -78,7 +80,7 @@ def _post(url: str, body: dict, headers: dict, timeout: int, tries: int = 4) -> 
     import urllib.error
     for attempt in range(tries):
         req = urllib.request.Request(url, data=json.dumps(body).encode(),
-                                     headers={"content-type": "application/json", "user-agent": "crl/0.2", **headers})
+                                     headers={"content-type": "application/json", "user-agent": f"crl/{__version__}", **headers})
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return json.loads(r.read())
