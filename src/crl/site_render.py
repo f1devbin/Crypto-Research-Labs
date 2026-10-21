@@ -448,7 +448,7 @@ TONE_CLASS = {1: "t-up", -1: "t-down", 0: "t-0"}
 SCAN_MARK = {"works": "✓", "better": "↑", "worse": "✗", "nodata": "·"}
 
 
-def _diag_item(lang: str, it: dict) -> str:
+def diag_item_text(lang: str, it: dict) -> str:
     kw = {}
     if it["key"].startswith("d_trend") or it["key"].startswith("d_money"):
         kw["v"] = pct(it.get("v"), nd=1)
@@ -464,7 +464,11 @@ def _diag_item(lang: str, it: dict) -> str:
         text += " " + t(lang, "d_mood_fear")
     elif it["key"] == "d_mood" and it["band"] in ("extreme_greed", "greed"):
         text += " " + t(lang, "d_mood_greed")
-    return f'<li class="{TONE_CLASS[it["tone"]]}">{e(text)}</li>'
+    return text
+
+
+def _diag_item(lang: str, it: dict) -> str:
+    return f'<li class="{TONE_CLASS[it["tone"]]}">{e(diag_item_text(lang, it))}</li>'
 
 
 def diag_section(lang: str, data: dict) -> str:
