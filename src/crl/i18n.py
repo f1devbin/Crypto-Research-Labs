@@ -1499,6 +1499,12 @@ T = {
 }
 
 
+from crl.i18n_diag import D as _DIAG  # noqa: E402  diagnosis + coverage-scan strings
+
+for _code, _strings in _DIAG.items():
+    T[_code].update(_strings)
+
+
 def t(lang: str, key: str, **kw):
     """Translated string (or list) with English fallback."""
     v = T.get(lang, {}).get(key)

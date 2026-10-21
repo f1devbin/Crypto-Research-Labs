@@ -74,6 +74,11 @@ jobs:
         run: crl run ${{ inputs.force && '--force' || '' }}
         continue-on-error: true   # a data error in one study must not block the digest and the commit
 
+      - name: Coverage scan (every tested rule on every coin)
+        if: env.FULL == 'true'
+        run: crl scan
+        continue-on-error: true
+
       - name: Digest
         if: env.FULL == 'true'
         run: crl digest

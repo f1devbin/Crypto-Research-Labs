@@ -58,6 +58,18 @@ distance from its peak, what $100 invested a year ago is worth today and its cor
 [Solana](https://f1devbin.github.io/Crypto-Research-Labs/coins/SOLUSDT.html) or
 [Everscale](https://f1devbin.github.io/Crypto-Research-Labs/ru/coins/EVERUSDT.html).
 
+The home page opens with a **market diagnosis in plain words**: one line (uptrend / mixed / downtrend)
+and the reasons behind it (Bitcoin's trend, how many coins are rising, volatility, mood, stablecoin money,
+the one rule that passed). Every coin page has the same kind of diagnosis for that coin.
+
+**Which rule works on which coin.** A rule that works on Bitcoin may fail on Solana. Every rule tested in any
+hypothesis is applied to every coin since 2022 (fees included), with a false-discovery check across the whole
+table so lucky combinations are not mistaken for findings. The matrix is on the home page and in
+[reports/COVERAGE.md](reports/COVERAGE.md); a ✅ on a new coin is only a candidate for a new pre-registered test.
+
+Tables can be sorted by clicking a column header. Hypotheses waiting for new data (H-022) show how many days
+of it have been collected.
+
 The site is rebuilt every day by GitHub Actions from real Binance, OKX, DefiLlama,
 alternative.me and BGeometrics data. Every page is fully rendered HTML, with `hreflang` language
 versions, a sitemap and structured data, so it is readable without JavaScript and by search engines.
@@ -85,7 +97,7 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-017 | Altcoins only while BTC is above its 200-day average | ❌ Fail: 7/8 since 2022, 1/8 since 2019 |
 | H-018 | Everscale (EVER): SMA50 trend rule | ◐ Weak: −10 %/yr vs −70 %/yr holding, not significant |
 | H-019 | Everscale (EVER): only while BTC is above its 200-day average | ◐ Weak |
-| H-023 | Gram (GRAM, prev. Toncoin): SMA50 trend rule | ⏳ Registered, first run on the next scheduled job |
+| H-023 | Gram (GRAM, prev. Toncoin): SMA50 trend rule | ◐ Weak: +17 %/yr vs −9 %/yr holding since mid-2023, drawdown −56 % vs −85 %, p = 0.11 |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
 | H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |
 | H-022 | Forward replication of H-020 on as-published data | ⏳ collecting data, test on 2027-10-15 |
@@ -134,6 +146,7 @@ crl registry check        # every hypothesis valid, locked and unique
 crl data refresh          # download market data into ./data (first run: ~15 minutes)
 crl run --force           # re-test all hypotheses
 crl watch                 # today's market regime -> reports/regime.md
+crl scan                  # every tested rule on every coin -> reports/COVERAGE.md
 crl site                  # build the dashboard into ./_site (open _site/index.html)
 ```
 

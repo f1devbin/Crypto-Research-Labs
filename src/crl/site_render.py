@@ -75,6 +75,41 @@ pre{background:var(--panel);border:2px solid var(--line);border-radius:10px;padd
 select{font:inherit;padding:4px 8px;background:var(--panel);color:var(--text);border:2px solid var(--line);border-radius:6px}
 footer{margin-top:48px;padding-bottom:40px;border-top:2px solid var(--line)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.diag{background:var(--panel);border:2px solid var(--line);border-left:8px solid var(--weak);border-radius:10px;padding:12px 18px;margin:16px 0}
+.diag.up{border-left-color:var(--pass)}.diag.down{border-left-color:var(--fail)}
+.diag-head{font-size:1.3rem;font-weight:700;color:var(--text);margin:.2em 0 .4em}
+ul.diag-list{list-style:none;padding-left:0;margin:.4em 0}ul.diag-list li{margin:.35em 0;padding-left:1.8em;position:relative}
+ul.diag-list li::before{position:absolute;left:0;font-weight:700}
+li.t-up::before{content:"▲";color:var(--pass)}li.t-down::before{content:"▼";color:var(--fail)}li.t-0::before{content:"●";color:var(--text2)}
+td.sc{text-align:center;font-weight:700;min-width:2.6em}td.sc.works{color:var(--pass)}td.sc.better{color:var(--weak)}
+td.sc.worse,td.sc.nodata{color:var(--text2);font-weight:400}td.sc.official{outline:2px solid var(--accent);outline-offset:-4px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.95rem;margin:.4em 0}
+table.sortable th{cursor:pointer;user-select:none}table.sortable th[aria-sort=ascending]::after{content:" ▲"}
+table.sortable th[aria-sort=descending]::after{content:" ▼"}
+.progress{height:14px;background:var(--bg);border:2px solid var(--line);border-radius:8px;overflow:hidden;max-width:420px;margin:.3em 0}
+.progress span{display:block;height:100%;background:var(--accent)}
+td .progress{height:10px;min-width:110px}
+"""
+
+# sorts any <table class="sortable"> by the clicked column; cells may carry data-v with the raw value
+SORT_SCRIPT = """
+(function(){
+function val(td){var v=td.getAttribute('data-v');if(v===null)v=td.textContent.trim();
+ if(v===''||v==='—')return null;var n=parseFloat(v.replace(/[$,%+\\s]/g,'').replace('−','-'));return isNaN(n)?v.toLowerCase():n}
+document.querySelectorAll('table.sortable').forEach(function(t){
+ var ths=t.tHead?t.tHead.rows[0].cells:[];
+ Array.prototype.forEach.call(ths,function(th,i){th.tabIndex=0;th.title=t.dataset.hint||'';
+  function go(){var asc=th.getAttribute('aria-sort')!=='ascending';
+   Array.prototype.forEach.call(ths,function(o){o.removeAttribute('aria-sort')});
+   th.setAttribute('aria-sort',asc?'ascending':'descending');
+   var b=t.tBodies[0],rows=Array.prototype.slice.call(b.rows);
+   rows.sort(function(x,y){var a=val(x.cells[i]),c=val(y.cells[i]);
+    if(a===null)return 1;if(c===null)return -1;
+    var r=(typeof a==='number'&&typeof c==='number')?a-c:String(a).localeCompare(String(c));return asc?r:-r});
+   rows.forEach(function(r){b.appendChild(r)})}
+  th.addEventListener('click',go);th.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go()}});
+ })})
+})();
 """
 
 # draws every <canvas data-chart="key"> from the JSON in #chart-data
@@ -205,6 +240,7 @@ def page(*, lang: str, hid: str | None, base: str, title: str, description: str,
     if charts:
         scripts = (f'<script type="application/json" id="chart-data">{_safe_json(charts)}</script>'
                    f'<script src="{CHART_JS}" defer></script><script defer src="{root}charts.js"></script>')
+    scripts += f'<script defer src="{root}sort.js"></script>'
     ld = "".join('<script type="application/ld+json">' + _safe_json(j) + "</script>" for j in jsonld)
     return f"""<!doctype html>
 <html lang="{hl}">
@@ -302,6 +338,190 @@ def _badges(lang: str) -> dict:
     return {"pass": badge(lang, "PASS"), "weak": badge(lang, "WEAK"), "fail": badge(lang, "FAIL")}
 
 
+TONE_CLASS = {1: "t-up", -1: "t-down", 0: "t-0"}
+SCAN_MARK = {"works": "✅", "better": "↑", "worse": "✗", "nodata": "—"}
+
+
+def _diag_item(lang: str, it: dict) -> str:
+    kw = {}
+    if it["key"].startswith("d_trend") or it["key"].startswith("d_money"):
+        kw["v"] = pct(it.get("v"), nd=1)
+    elif it["key"].startswith("d_vol"):
+        kw["v"] = pct(it.get("v"), nd=0)
+    elif it["key"] == "d_mood":
+        kw["v"] = f"{it['v']:.0f}"
+        kw["band"] = sub(lang, "bands", it["band"], it["band"])
+    elif it["key"].startswith("d_breadth"):
+        kw = {"k": it["k"], "n": it["n"]}
+    text = t(lang, it["key"], **kw)
+    if it["key"] == "d_mood" and it["band"] in ("extreme_fear", "fear"):
+        text += " " + t(lang, "d_mood_fear")
+    elif it["key"] == "d_mood" and it["band"] in ("extreme_greed", "greed"):
+        text += " " + t(lang, "d_mood_greed")
+    return f'<li class="{TONE_CLASS[it["tone"]]}">{e(text)}</li>'
+
+
+def diag_section(lang: str, data: dict) -> str:
+    d = data.get("diagnosis")
+    if not d:
+        return ""
+    items = "".join(_diag_item(lang, it) for it in d["items"])
+    return (f'<section aria-labelledby="diagnosis" class="diag {d["level"]}"><h2 id="diagnosis" style="border:0;margin-top:.3em">'
+            f'{e(t(lang, "diag_title"))}</h2><p class="diag-head">{e(t(lang, "diag_level_" + d["level"]))}</p>'
+            f'<p class="meta">{e(t(lang, "diag_count", up=d["up"], down=d["down"], neutral=d["neutral"]))}</p>'
+            f'<ul class="diag-list">{items}</ul>'
+            f'<h3>{e(t(lang, "diag_means_h"))}</h3><p>{e(t(lang, "diag_means_" + d["level"]))}</p>'
+            f'<p class="meta">{e(t(lang, "diag_intro"))} {e(t(lang, "diag_disclaimer"))}</p></section>')
+
+
+def _scan_cells(data: dict) -> dict:
+    sc = data.get("scan") or {}
+    return {(c["rule"], c["symbol"]): c for c in sc.get("cells", [])}
+
+
+def rule_label(lang: str, rid: str, hyps: dict) -> str:
+    return sub(lang, "rule_short", rid) or (title_of(lang, hyps[rid]) if rid in hyps else rid)
+
+
+def coin_diag(lang: str, c: dict, data: dict) -> str:
+    out = []
+    v50, v200 = c.get("vs50"), c.get("vs200")
+    if v50 is not None and v200 is not None:
+        key = ("cd_trend_up" if v50 > 0 else "cd_trend_pullback") if v200 > 0 else \
+              ("cd_trend_turn" if v50 > 0 else "cd_trend_down")
+        tone = {"cd_trend_up": 1, "cd_trend_down": -1}.get(key, 0)
+        out.append((tone, t(lang, key)))
+    elif v50 is not None:
+        out.append((1 if v50 > 0 else -1, t(lang, "cd_trend_short_up" if v50 > 0 else "cd_trend_short_down")))
+    dd = c.get("dd_peak")
+    if dd is not None:
+        if dd > -0.02:
+            out.append((1, t(lang, "cd_atpeak", date=c.get("peak_date", ""))))
+        else:
+            need = 1 / (1 + dd) - 1
+            out.append((-1 if dd < -0.5 else 0, t(lang, "cd_peak", dd=pct(dd, True, 0), date=c.get("peak_date", ""),
+                                                  need=pct(need, False, 0) if need < 10 else f"{need + 1:,.0f}×")))
+    btc = next((x for x in data.get("coins", []) if x["symbol"] == "BTCUSDT"), None)
+    if c.get("vol"):
+        if c["symbol"] == "BTCUSDT" or not btc or not btc.get("vol"):
+            out.append((0, t(lang, "cd_vol_btc", v=pct(c["vol"], nd=0))))
+        else:
+            x = c["vol"] / btc["vol"]
+            out.append((-1 if x >= 2 else 0, t(lang, "cd_vol", x=f"{x:.1f}")))
+    if c.get("corr_btc") is not None:
+        r = c["corr_btc"]
+        key = "cd_corr_high" if r >= 0.7 else ("cd_corr_mid" if r >= 0.4 else "cd_corr_low")
+        out.append((0, t(lang, key, c=f"{r:.2f}")))
+    sc = data.get("scan")
+    if sc:
+        hyps = {h["id"]: h for h in data["hypotheses"]}
+        mine = [x for x in sc["cells"] if x["symbol"] == c["symbol"] and x["status"] != "nodata"]
+        works = [x["rule"] for x in mine if x["status"] == "works"]
+        better = sum(x["status"] == "better" for x in mine)
+        start = max(sc.get("start") or "", c.get("since") or "")
+        if works:
+            txt = t(lang, "cd_rules_works", start=start, rules="; ".join(rule_label(lang, r, hyps) for r in works))
+            out.append((1, txt + (" " + t(lang, "cd_rules_better", k=better) if better else "")))
+        elif mine:
+            txt = t(lang, "cd_rules_none", n=len(mine), start=start)
+            out.append((0, txt + (" " + t(lang, "cd_rules_better", k=better) if better else "")))
+    if not out:
+        return ""
+    items = "".join(f'<li class="{TONE_CLASS[tone]}">{e(txt)}</li>' for tone, txt in out)
+    return (f'<section aria-labelledby="cdiag" class="diag"><h2 id="cdiag" style="border:0;margin-top:.3em">'
+            f'{e(t(lang, "cdiag_title"))}</h2><ul class="diag-list">{items}</ul>'
+            f'<p class="meta">{e(t(lang, "diag_disclaimer"))}</p></section>')
+
+
+def _legend(lang: str) -> str:
+    return ('<p class="legend">' + "".join(f"<span>{e(t(lang, k))}</span>" for k in
+                                           ("scan_works", "scan_better", "scan_worse", "scan_nodata")) + "</p>")
+
+
+def scan_matrix(lang: str, data: dict) -> str:
+    sc = data.get("scan")
+    if not sc or not sc.get("cells"):
+        return ""
+    hyps = {h["id"]: h for h in data["hypotheses"]}
+    cells = _scan_cells(data)
+    coins = sc["coins"]
+    head = "".join(f'<th><a href="coins/{e(s)}.html">{e(s.removesuffix("USDT"))}</a></th>' for s in coins)
+    rows = []
+    for r in sc["rules"]:
+        tds = []
+        for s in coins:
+            c = cells.get((r["id"], s), {"status": "nodata"})
+            tip = (f'{s.removesuffix("USDT")}: Sharpe {num(c.get("sharpe"))} / {num(c.get("hold_sharpe"))}'
+                   if c.get("sharpe") is not None else s.removesuffix("USDT"))
+            cls = f'sc {c["status"]}' + (" official" if c.get("official") else "")
+            tds.append(f'<td class="{cls}" title="{e(tip)}">{SCAN_MARK[c["status"]]}</td>')
+        rows.append(f'<tr><td><a href="hypotheses/{e(r["id"])}.html">{e(r["id"])}</a> {e(rule_label(lang, r["id"], hyps))}</td>'
+                    + "".join(tds) + "</tr>")
+    n = sum(sc["counts"].get(k, 0) for k in ("works", "better", "worse"))
+    counts = t(lang, "scan_counts", works=sc["counts"].get("works", 0), better=sc["counts"].get("better", 0),
+               worse=sc["counts"].get("worse", 0), total=n)
+    return (f'<section aria-labelledby="scan"><h2 id="scan">{e(t(lang, "scan_title"))}</h2>'
+            f'<p>{e(t(lang, "scan_intro", start=sc["start"]))}</p>{_legend(lang)}<p class="meta">{e(counts)} · '
+            f'{e((sc.get("generated_at") or "")[:10])}</p>'
+            f'<div class="table-wrap"><table><thead><tr><th>{e(t(lang, "th_rule_short"))}</th>{head}</tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table></div></section>')
+
+
+def _scan_row(lang: str, c: dict, first: str) -> str:
+    cls = f'sc {c["status"]}' + (" official" if c.get("official") else "")
+    word = t(lang, f'scan_{c["status"]}').split(" ", 1)[-1]
+    sh = c.get("sharpe")
+    return (f"<tr><td>{first}</td><td class=\"{cls}\">{SCAN_MARK[c['status']]}</td><td>{e(word)}</td>"
+            f'<td class=num data-v="{"" if sh is None else sh}">{num(sh)} / {num(c.get("hold_sharpe"))}</td>'
+            f'<td class=num data-v="{"" if c.get("cagr") is None else c["cagr"]}">{pct(c.get("cagr"), True, 0)} / {pct(c.get("hold_cagr"), True, 0)}</td>'
+            f'<td class=num>{e(c.get("start") or "—")}</td></tr>')
+
+
+def _scan_table(lang: str, rows: list[str], first_head: str) -> str:
+    return (f'<div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, "sort_hint"))}"><thead><tr>'
+            f'<th>{e(first_head)}</th><th>✓</th><th>{e(t(lang, "th_result"))}</th><th>{e(t(lang, "th_sharpe_pair"))}</th>'
+            f'<th>CAGR</th><th>{e(t(lang, "th_from"))}</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>')
+
+
+def scan_for_rule(lang: str, hid: str, data: dict) -> str:
+    sc = data.get("scan")
+    if not sc:
+        return ""
+    r = next((x for x in sc["rules"] if x["id"] == hid or hid in x.get("also", [])), None)
+    if not r:
+        return ""
+    cells = _scan_cells(data)
+    rows = [_scan_row(lang, cells[(r["id"], s)],
+                      f'<a href="../coins/{e(s)}.html">{e(s.removesuffix("USDT"))}</a>')
+            for s in sc["coins"] if (r["id"], s) in cells]
+    return (f'<h2 id="scan">{e(t(lang, "scan_rule_h"))}</h2><p>{e(t(lang, "scan_rule_intro", start=sc["start"]))}</p>'
+            f'{_legend(lang)}{_scan_table(lang, rows, t(lang, "th_coin"))}')
+
+
+def scan_for_coin(lang: str, sym: str, data: dict) -> str:
+    sc = data.get("scan")
+    if not sc:
+        return ""
+    hyps = {h["id"]: h for h in data["hypotheses"]}
+    cells = _scan_cells(data)
+    rows = [_scan_row(lang, cells[(r["id"], sym)],
+                      f'<a href="../hypotheses/{e(r["id"])}.html">{e(r["id"])}</a> {e(rule_label(lang, r["id"], hyps))}')
+            for r in sc["rules"] if (r["id"], sym) in cells]
+    if not rows:
+        return ""
+    return (f'<h2 id="scan">{e(t(lang, "scan_coin_h"))}</h2><p>{e(t(lang, "scan_coin_intro", start=sc["start"]))}</p>'
+            f'{_legend(lang)}{_scan_table(lang, rows, t(lang, "th_rule_short"))}')
+
+
+def progress_bar(lang: str, pr: dict | None, inline: bool = False) -> str:
+    if not pr:
+        return ""
+    bar = f'<div class="progress" role="img" aria-label="{pr["share"]:.0%}"><span style="width:{pr["share"] * 100:.1f}%"></span></div>'
+    if inline:
+        return f'{bar}<span class="meta">{pr["done"]}/{pr["total"]}</span>'
+    return f'<p>{e(t(lang, "progress", done=pr["done"], total=pr["total"], share=pct(pr["share"], nd=1), date=pr["date"]))}</p>{bar}'
+
+
 def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
     hyps, reg = data["hypotheses"], data["regime"]
     n, n_pass = len(hyps), sum(h["verdict"] == "PASS" for h in hyps)
@@ -343,7 +563,8 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         f'<td class=num>{pct(c["vol"], nd=0)}</td><td class=num>{pct(c.get("dd_peak"), True, 1 if abs(c.get("dd_peak") or 0) >= 0.995 else 0)}</td>'
         f'<td class=num>{usd(c.get("usd100"))}</td></tr>' for c in data.get("coins", []))
     coins_section = (f'<section aria-labelledby="coins"><h2 id="coins">{e(t(lang, "coins_title"))}</h2>'
-                     f'<p>{e(t(lang, "coins_intro"))}</p><div class="table-wrap"><table><thead><tr>'
+                     f'<p>{e(t(lang, "coins_intro"))}</p><p class="meta">{e(t(lang, "sort_hint"))}</p>'
+                     f'<div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, "sort_hint"))}"><thead><tr>'
                      f'<th>{e(t(lang, "th_coin"))}</th><th>{e(t(lang, "th_price"))}</th><th>{e(t(lang, "th_7d"))}</th>'
                      f'<th>{e(t(lang, "th_30d"))}</th><th>{e(t(lang, "th_vs200"))}</th><th>{e(t(lang, "th_vol"))}</th>'
                      f'<th>{e(t(lang, "th_peak"))}</th><th>{e(t(lang, "th_100"))}</th></tr></thead><tbody>{coin_rows}</tbody></table></div></section>') if coin_rows else ""
@@ -354,7 +575,8 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         href = f'hypotheses/{e(h["id"])}.html'
         rows.append(f'<tr><td><a href="{href}">{e(h["id"])}</a></td><td><a href="{href}">{e(title_of(lang, h))}</a></td>'
                     f'<td>{e(sub(lang, "families", h["family"], h["family"]))}</td><td>{badge(lang, h["verdict"])}</td>'
-                    f'<td>{e(plain(lang, h["verdict"], h.get("test_after")))}</td><td class=num>{e(when)}</td></tr>')
+                    f'<td>{e(plain(lang, h["verdict"], h.get("test_after")))}{progress_bar(lang, h.get("progress"), True)}</td>'
+                    f'<td class=num>{e(when)}</td></tr>')
 
     fresh = "".join(f'<tr><td>{e(d["series"])}</td><td class=num>{e(d.get("first") or "—")}</td>'
                     f'<td class=num>{e(d.get("last") or "—")}</td>'
@@ -368,6 +590,7 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
 <main>
 <h1>{e(t(lang, 'h1'))}</h1>
 <p class="lead">{e(t(lang, 'lead', verdict=verdict_line))}</p>
+{diag_section(lang, data)}
 <a class="course-cta" href="course.html">{e(C.UI.get(lang, C.UI['en'])['home_link'])} →</a>
 
 <section aria-labelledby="how-to-read"><h2 id="how-to-read">{e(t(lang, 'how_title'))}</h2>
@@ -383,9 +606,12 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
 
 <section aria-labelledby="hypotheses"><h2 id="hypotheses">{e(t(lang, 'hyp_title'))}</h2>
 <p>{t(lang, 'hyp_intro', **b)}</p>
-<div class="table-wrap"><table><thead><tr><th>{e(t(lang, 'th_id'))}</th><th>{e(t(lang, 'th_hyp'))}</th>
+<p class="meta">{e(t(lang, 'sort_hint'))}</p>
+<div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, 'sort_hint'))}"><thead><tr><th>{e(t(lang, 'th_id'))}</th><th>{e(t(lang, 'th_hyp'))}</th>
 <th>{e(t(lang, 'th_family'))}</th><th>{e(t(lang, 'th_verdict'))}</th><th>{e(t(lang, 'th_plain'))}</th>
 <th>{e(t(lang, 'th_tested'))}</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div></section>
+
+{scan_matrix(lang, data)}
 
 <section aria-labelledby="glossary"><h2 id="glossary">{e(t(lang, 'glossary_title'))}</h2>{glossary}</section>
 
@@ -461,12 +687,14 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
 · {e(t(lang, 'status'))}: <strong>{e(sub(lang, 'statuses', h['status'], h['status']))}</strong></p>
 {caution}
 <p class="plain"><strong>{e(t(lang, 'in_plain'))}:</strong> {e(plain(lang, h['verdict'], h.get('test_after')))}</p>
+{progress_bar(lang, h.get('progress'))}
 <h2>{e(t(lang, 'result_h'))}</h2>
 {en_note}
 <p lang="en">{e(h['summary'])}</p>
 <p class="meta">{e(t(lang, 'metrics_note'))} <a href="../#glossary">{e(t(lang, 'nav_glossary'))}</a></p>
 {results_table(lang, h['rows'], (h.get('spec') or {}).get('kind', ''))}
 {curve_block}
+{scan_for_rule(lang, hid, data)}
 <h2>{e(t(lang, 'why_h'))}</h2><p lang="en">{e(h['rationale'])}</p>
 <h2>{e(t(lang, 'history_h'))}</h2><ul>{history}{engine}</ul>
 {spec}
@@ -538,6 +766,7 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
 <h1>{e(title)}</h1>
 <p>{e(t(lang, 'coin_lead', exchange=c['exchange'], date=c['date']))}</p>
 {thin}
+{coin_diag(lang, c, data)}
 <h2>{e(t(lang, 'chart12_h'))}</h2>
 <div class="chart"><canvas data-chart="coin" role="img" aria-label="{e(title)}"></canvas></div>
 <h2>{e(t(lang, 'stats_h'))}</h2>
@@ -547,6 +776,7 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
 <p class="callout">{e(t(lang, 'signals_warn'))}</p>
 <div class="table-wrap"><table><thead><tr><th>{e(t(lang, 'th_rule'))}</th><th>{e(t(lang, 'th_state'))}</th>
 <th>{e(t(lang, 'th_tested_in'))}</th></tr></thead><tbody>{''.join(sig_rows)}</tbody></table></div>
+{scan_for_coin(lang, c['symbol'], data)}
 <h2>{e(t(lang, 'coin_studies_h'))}</h2>
 {f'<ul>{studies}</ul>' if studies else f'<p>{e(t(lang, "no_studies"))}</p>'}
 <p class="meta"><a href="../#glossary">{e(t(lang, 'nav_glossary'))}</a></p>

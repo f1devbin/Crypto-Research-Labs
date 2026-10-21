@@ -78,6 +78,7 @@ ended, or 2022+.
 | H-017 ❌ | Altcoins only while BTC > SMA200 | 7/8 better since 2022, but 1/8 since 2019: in 2019–2021 the filter left the market during alt rallies |
 | H-018 ◐ | **Everscale (EVER)**: SMA50 trend rule, Gate.io, 0.2 % fee | −10 %/yr vs **−70 %/yr** holding since mid-2022; max drawdown −84 % vs −100 %. Sharpe 0.23 vs −0.17, p = 0.14 |
 | H-019 ◐ | EVER only while BTC > SMA200 | −37 %/yr vs −70 %/yr, drawdown −98 %, p = 0.19 |
+| H-023 ◐ | **Gram (GRAM, prev. Toncoin)**: SMA50 trend rule, Gate.io, 0.2 % fee | +17 %/yr vs −9 %/yr holding since 2023-06; max drawdown −56 % vs −85 %. Sharpe 0.55 vs 0.26, p = 0.11 |
 
 **What it means.** Volatility targeting is the most promising so far. It never beat holding by a
 significant margin, but it beat it on 11 of 11 coins since 2022 with roughly half the drawdown.

@@ -62,6 +62,11 @@ def _digest(_args) -> int:
     return digest.main()
 
 
+def _scan(_args) -> int:
+    from crl import scan
+    return scan.main()
+
+
 def _site(_args) -> int:
     from crl import site
     return site.main()
@@ -96,6 +101,7 @@ def main(argv=None) -> int:
     p.set_defaults(fn=_propose)
 
     sub.add_parser("digest", help="weekly digest").set_defaults(fn=_digest)
+    sub.add_parser("scan", help="coverage scan: every tested rule on every coin (exploratory)").set_defaults(fn=_scan)
     sub.add_parser("site", help="build the static dashboard into _site/").set_defaults(fn=_site)
 
     args = ap.parse_args(argv)

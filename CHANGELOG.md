@@ -14,6 +14,9 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - Coin pages show today's state of every data-driven rule tested on the coin (e.g. H-020 on BTC); an "H-020 rule today" regime card alerts when the rule switches.
 - H-022: forward replication of H-020 on as-published flow data (rows older than 14 days are never rewritten), first test 2027-10-15.
 - Gram (GRAM, prev. Toncoin) from Gate.io: coin page, market breadth (now 13 coins), H-023 (SMA50 trend rule, same as H-018 for EVER).
+- Market diagnosis in plain words on the home page (7 languages) and a diagnosis on every coin page.
+- Coverage scan (`crl scan`, weekly): every tested rule on every coin with FDR control; matrix on the home page, per-rule tables on hypothesis pages, per-coin tables on coin pages, `reports/COVERAGE.md`.
+- Sortable tables (coins, hypotheses, scan); forward-data progress bar for hypotheses waiting for new data (H-022).
 - `replicates` field: a declared replication is not flagged as a duplicate.
 - `test_after` field: a hypothesis is not run (even with `--force`) before its pre-registered start date.
 - Market breadth monitor: share of the 12 coins above their 200-day average (regime card + alerts).

@@ -31,7 +31,11 @@ Every step is a single `crl` command, so you can run the same thing locally or f
    and `reports/runs/<date>.md` are regenerated. An alert goes out when a verdict
    changes, when anything passes (with a reminder of the steps required before
    real money) and on errors.
-7. `crl digest` writes `reports/digest/<year>-W<week>.md`. With an API key, Claude
+7. `crl scan` applies every distinct tested timing rule to every coin since 2022 (fees included,
+   circular-shift or permutation p-values, Benjamini-Hochberg FDR q = 0.10 over the whole matrix) and writes
+   `reports/coverage.json` + `reports/COVERAGE.md`. Exploratory only: a cell that survives is a candidate
+   for a new pre-registered hypothesis with `test_after`, never a verdict.
+7b. `crl digest` writes `reports/digest/<year>-W<week>.md`. With an API key, Claude
    rewrites it into a short briefing. It's told to use only numbers from the input
    and never to recommend trades.
 8. README screenshots are refreshed (`scripts/screenshots.py`), then `results/`, `reports/`,

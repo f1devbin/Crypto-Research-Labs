@@ -153,6 +153,73 @@ def coins(store: DataStore, hyps: list[dict], days: int = 365) -> list[dict]:
     return out
 
 
+def diagnosis(reg: list[dict], coins_: list[dict]) -> dict | None:
+    """Market diagnosis from the regime monitors and the coin table. Language-neutral: each item is
+    a message key, a tone (+1 up, 0 neutral, -1 down) and raw values; site_render words it."""
+    m = {x["id"]: x for x in reg if x.get("value") is not None and not x.get("error")}
+    items = []
+
+    def add(key, tone, **kw):
+        items.append({"key": key, "tone": tone, **kw})
+
+    if "btc_trend" in m:
+        v = m["btc_trend"]["value"]
+        add("d_trend_up" if v >= 0 else "d_trend_down", 1 if v >= 0 else -1, v=abs(v))
+    with200 = [c for c in coins_ if c.get("vs200") is not None]
+    if with200:
+        k, n = sum(c["vs200"] > 0 for c in with200), len(with200)
+        share = k / n
+        band = "strong" if share >= 0.7 else ("weak" if share < 0.3 else "mixed")
+        add(f"d_breadth_{band}", {"strong": 1, "weak": -1}.get(band, 0), k=k, n=n)
+    if "btc_volatility" in m:
+        b = m["btc_volatility"]["band"]
+        add(f"d_vol_{b}", -1 if b == "stressed" else 0, v=m["btc_volatility"]["value"])
+    if "fear_greed" in m:
+        add("d_mood", 0, v=m["fear_greed"]["value"], band=m["fear_greed"]["band"])
+    if "stablecoin_growth" in m:
+        b = m["stablecoin_growth"]["band"]
+        add(f"d_money_{b}", {"expanding": 1, "contracting": -1}.get(b, 0), v=abs(m["stablecoin_growth"]["value"]))
+    if "h020_rule" in m:
+        on = m["h020_rule"]["band"] == "rule_in"
+        add("d_rule_in" if on else "d_rule_out", 1 if on else -1)
+    if not items:
+        return None
+    # the long-term BTC trend counts double: it is what most tested rules follow
+    score = sum(i["tone"] for i in items) + next((i["tone"] for i in items if i["key"].startswith("d_trend")), 0)
+    level = "up" if score >= 2 else ("down" if score <= -2 else "mixed")
+    return {"level": level, "score": score, "items": items,
+            "up": sum(i["tone"] > 0 for i in items), "down": sum(i["tone"] < 0 for i in items),
+            "neutral": sum(i["tone"] == 0 for i in items)}
+
+
+def progress(h: dict, today: dt.date) -> dict | None:
+    """Forward-data counter for hypotheses that wait for new data (`test_after`)."""
+    if not h.get("test_after") or h.get("verdict"):
+        return None
+    periods = (h.get("spec") or {}).get("periods") or []
+    start = periods[0].get("start") if periods else None
+    try:
+        a, b = dt.date.fromisoformat(start or h.get("registered") or ""), dt.date.fromisoformat(h["test_after"])
+    except ValueError:
+        return None
+    total = max((b - a).days, 1)
+    done = min(max((today - a).days, 0), total)
+    return {"done": done, "total": total, "share": round(done / total, 4), "date": h["test_after"]}
+
+
+def scan_data() -> dict | None:
+    from crl import scan
+    res = scan.load()
+    if not res:
+        return None
+    keep = ("rule", "symbol", "official", "status", "sharpe", "hold_sharpe", "cagr", "hold_cagr", "start", "p", "q")
+    return {"generated_at": res.get("generated_at"), "start": res.get("start"), "fdr_q": res.get("fdr_q"),
+            "coins": res.get("coins", []), "counts": res.get("counts", {}),
+            "rules": [{"id": r["id"], "also": r.get("also", []), "tested_on": r.get("tested_on", [])}
+                      for r in res.get("rules", [])],
+            "cells": [{k: c.get(k) for k in keep if k in c} for c in res.get("cells", [])]}
+
+
 def course_values(data: dict, lang: str, site: str) -> dict:
     """Live numbers for the course text, formatted for the language."""
     from crl.course import COMMA_DECIMAL
@@ -246,6 +313,7 @@ def hypotheses(store: DataStore, curves: bool = True) -> list[dict]:
                 "history": [{"date": x.get("date"), "verdict": x.get("verdict"), "source": x.get("source")}
                             for x in hist],
                 "spec": h.get("spec"), "rows": [], "curves": [], "test_after": h.get("test_after"),
+                "registered": h.get("registered"),
                 "replicates": h.get("replicates")}
         if res:
             item["rows"] = [{k: (_num(r[k], 6) if isinstance(r.get(k), float) else r.get(k))
@@ -305,6 +373,10 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
         "data": data_health(store, now.date()),
     }
     data["coins"] = coins(store, data["hypotheses"])
+    data["diagnosis"] = diagnosis(data["regime"], data["coins"])
+    data["scan"] = scan_data()
+    for h in data["hypotheses"]:
+        h["progress"] = progress(h, now.date())
     if out_dir.exists():
         shutil.rmtree(out_dir)
     today = now.date().isoformat()
@@ -330,6 +402,7 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
     _w(out_dir / "sitemap.xml", H.sitemap(base, entries))
     _w(out_dir / "robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {base}sitemap.xml\n")
     _w(out_dir / "charts.js", H.CHART_SCRIPT)
+    _w(out_dir / "sort.js", H.SORT_SCRIPT)
     _w(out_dir / "favicon.svg", H.FAVICON)
     _w(out_dir / "404.html", H.NOT_FOUND)
     _w(out_dir / ".nojekyll", "")
