@@ -1,0 +1,31 @@
+title: "[Idea] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Suggest a trading idea to be tested. Any language is fine, no code needed.
+        If it can be checked on free daily data it gets written up as a hypothesis, locked (SHA-256) and tested
+        automatically; the result appears on the [dashboard](https://f1devbin.github.io/Crypto-Research-Labs/).
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea in one or two sentences
+      placeholder: "Example: hold SOL only while BTC is above its 200-day average."
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why should it work?
+      description: The reason you expect an edge (behaviour, flows, costs...). Write it before looking at charts.
+  - type: input
+    id: coins
+    attributes:
+      label: Coins
+      placeholder: BTC, ETH, SOL...
+  - type: input
+    id: data
+    attributes:
+      label: Data needed (if not price)
+      placeholder: "funding rate, stablecoin supply, exchange flows, ..."

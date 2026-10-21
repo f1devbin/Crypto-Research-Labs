@@ -1,0 +1,18 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ask anything about the dashboard, a result or the method. Beginners welcome; any language is fine.
+        Check the [course for beginners](https://f1devbin.github.io/Crypto-Research-Labs/course.html) and the
+        glossary on the dashboard first, the answer may already be there.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page or hypothesis it is about (optional)
+      placeholder: "H-020, coins/SOLUSDT.html, ..."

@@ -3,3 +3,6 @@ contact_links:
   - name: Live dashboard
     url: https://f1devbin.github.io/Crypto-Research-Labs/
     about: Today's market regime and every result, in 7 languages.
+  - name: Suggest an idea or ask a question
+    url: https://github.com/f1devbin/Crypto-Research-Labs/discussions
+    about: Ideas for new hypotheses and questions about results go to Discussions.
