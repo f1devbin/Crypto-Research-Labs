@@ -36,7 +36,8 @@ and automated agents re-test old ideas as new market data arrives.
 | Understand the words (Sharpe, drawdown, p-value, funding…) | the glossary on the dashboard, or [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
 | Know what was found | [docs/FINDINGS.md](docs/FINDINGS.md) |
 | Which coins | BTC, ETH, SOL; for independent confirmation BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX; Everscale (EVER) and Gram (GRAM, prev. Toncoin) from Gate.io. Any Binance spot pair can be added |
-| Run it yourself or add your own idea | [Quickstart](#quickstart) and [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Run it yourself or add your own idea | [Quickstart](#quickstart), [CONTRIBUTING.md](CONTRIBUTING.md) or just post it in [Discussions → Ideas](https://github.com/f1devbin/Crypto-Research-Labs/discussions/categories/ideas) |
+| Ask a question | [Discussions → Q&A](https://github.com/f1devbin/Crypto-Research-Labs/discussions/categories/q-a) |
 
 **The short answer so far: one idea passed (H-020, exchange deposits), and it is still being verified.** Daily trend rules and
 volatility targeting lower drawdowns, mostly because they spend less time in the market, but they

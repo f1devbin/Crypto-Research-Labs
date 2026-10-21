@@ -15,7 +15,7 @@ Thanks for helping. Three kinds of contribution are especially useful.
 Rules of the game: no tuning after seeing results (make a new hypothesis instead), always
 include fees, and prefer confirmation on coins that weren't used to design the idea.
 
-Not a coder? Open an issue with the **Hypothesis idea** template.
+Not a coder? Post it in [Discussions → Ideas](https://github.com/f1devbin/Crypto-Research-Labs/discussions/categories/ideas) (or open an issue with the **Hypothesis idea** template). Questions about results go to [Discussions → Q&A](https://github.com/f1devbin/Crypto-Research-Labs/discussions/categories/q-a).
 
 ## 2. Translations
 
