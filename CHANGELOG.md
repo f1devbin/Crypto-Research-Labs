@@ -5,9 +5,6 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 
 ## [Unreleased]
 
-### Added
-- `research/ever-gate-sweep/`: weekly log of an on-chain watch for a Gate.io sweep of EVER, to find the exchange's hot wallet for the planned EVER "smart wallets" study.
-
 ## [0.3.0] - 2026-10-21
 
 Plain-language dashboard, every rule checked on every coin, weekly digest and alerts in 7 languages,
