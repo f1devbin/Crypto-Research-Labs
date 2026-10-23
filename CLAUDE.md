@@ -85,6 +85,14 @@ Never print or commit secrets; if one appears in a screenshot, say so and sugges
 
 - A copy of the repo runs on the owner's home server for local checks; servers are reached through ssh-mcp profiles
   he has configured. Don't delete or reboot anything without «да»; back up configs before editing.
-- Open ideas, only when he asks: Google Search Console API report via a service account (secret `GSC_SERVICE_ACCOUNT`);
-  promotion (blog posts, Reddit r/algotrading, Show HN, PRs to awesome-lists); better digest prompt (the free model
-  sometimes misreads cause and effect); an exchange "smart wallets" study for EVER once the exchange's hot wallet is known.
+- Open tasks, only when he says so:
+  - `SECURITY.md` and how to turn on private vulnerability reporting (Settings → Code security).
+  - GitHub Developer Program: he registers himself; Claude prepares the project description (it uses the GitHub API
+    in workflows: `gh release`, `gh pr`).
+  - Promotion for stars: texts for Practical AI, Habr, Reddit r/algotrading, Show HN; PRs to awesome-lists
+    (awesome-quant and similar).
+  - Discussions are on: answer beginners' questions about the course.
+  - Google Search Console API report via a service account, once he creates the secret `GSC_SERVICE_ACCOUNT`.
+  - Better digest prompt (the free model sometimes misreads cause and effect).
+  - Exchange "smart wallets" study for EVER once the exchange's hot wallet is known; send the spec for approval first.
+- No automated commits, PRs or posts made only for GitHub achievements.
