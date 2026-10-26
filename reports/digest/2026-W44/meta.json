@@ -1,0 +1,15 @@
+{
+ "week": "2026-W44",
+ "date": "2026-10-26",
+ "model": "openai/gpt-oss-120b",
+ "languages": [
+  "en",
+  "es",
+  "pt",
+  "ru",
+  "tr",
+  "vi",
+  "zh"
+ ],
+ "errors": {}
+}
