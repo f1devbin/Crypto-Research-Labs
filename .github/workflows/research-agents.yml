@@ -113,6 +113,7 @@ jobs:
 
       - name: Commit the forecast log
         if: steps.forecast.outcome == 'success'
+        continue-on-error: true   # never block the dashboard; a failed push shows up as a failed step
         run: |
           git config user.name "crl-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -121,7 +122,7 @@ jobs:
           done
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -m "chore(forecast): model forecast $(date -u +%F)"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"   # the data refresh leaves other files changed
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Hypothesis runner
@@ -173,7 +174,7 @@ jobs:
           git add results reports hypotheses docs/screenshots datasets
           if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
           git commit -m "chore(results): scheduled run $(date -u +%F)"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Fail if the data steward failed
