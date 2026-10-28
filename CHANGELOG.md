@@ -45,6 +45,9 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - H-032 failed: 17 "smart" wallets picked on 2022–23 (EVER −8.7 % in the 7 days after their deposits) — only 6 still
   deposited from 2024, and after their 33 deposits EVER moved −1.5 % vs −3.7 % for random matched wallets
   (p = 0.93); the exit rule did not beat holding.
+- H-033 failed like H-032: 36 "smart" wallets picked on 2023–24 (GRAM −3.8 % in the 7 days after their $500+
+  deposits) — only 12 still deposited from 2025, and after their 144 deposits GRAM moved −0.5 % vs −1.9 % for
+  random matched wallets (p = 0.77); the exit rule did not beat holding (Sharpe −1.80 vs −0.71).
 
 ### Fixed
 - Home page: each idea that passed showed "the only one of N ideas"; the text now counts the passes, a risk

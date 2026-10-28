@@ -123,7 +123,7 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-029 | Live replication of H-027: forecasts published daily before 12:00 UTC, scored noon to noon | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
 | H-030 | Live replication of H-028 | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
 | H-032 | EVER "smart wallets" on Gate.io: wallets whose 2022–23 deposits came before the biggest 7-day drops vs random wallets from 2024 (on-chain, Everscale) | ❌ Fail: of 17 "smart" wallets only 6 were still active; after their 33 deposits EVER moved −1.5 % in 7 days vs −3.7 % for random wallets (p = 0.93). They were lucky, not smart |
-| H-033 | GRAM "smart wallets" on Gate.io: $500+ deposits by wallets picked on 2023–24 vs random wallets from 2025 (on-chain, TON) | ⏳ registered 2026-10-29, runs once its deposit data are merged |
+| H-033 | GRAM "smart wallets" on Gate.io: $500+ deposits by wallets picked on 2023–24 vs random wallets from 2025 (on-chain, TON) | ❌ Fail: of 36 "smart" wallets only 12 were still active; after their 144 deposits GRAM moved −0.5 % in 7 days vs −1.9 % for random wallets (p = 0.77). Lucky, not smart, as on EVER |
 | H-031 | Live only: improved direction model (a base level per coin, probabilities recalibrated on a held-out year), designed after H-027 failed | ⏳ collecting from 2026-11-01, first test 2027-11-01 (α = 0.0125) |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
 | H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |

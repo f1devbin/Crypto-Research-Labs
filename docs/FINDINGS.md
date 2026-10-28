@@ -189,11 +189,20 @@ the "smart" wallets were lucky, not informed.
 
 Data: 206 817 transfers of 1+ GRAM from 75 000 wallets, 2022-11 → 2026-10.
 
-⏳ **Pending.** The spec is locked; it runs on the first full run after the data are merged.
+| Step | Result |
+|------|--------|
+| Selection 2023-03-13 → 2024-12-24 | 183 wallets with 5+ events (1 565 events); 36 "smart": GRAM moved −3.8 % in the 7 days after their deposits vs +1.3 % after all eligible wallets' deposits |
+| Test from 2025-01-01 | only 12 of the 36 still deposited (144 events): −0.5 % after them vs −1.9 % after random matched wallets; p = 0.77 (needed < 0.05) |
+| Exit rule (out 7 days after a smart deposit, 0.4 % per side) | Sharpe −1.80 vs −0.71 holding; −38 %/yr vs −56 %/yr; in the coin 16 % of days |
+
+❌ **Fail**, the same answer as on EVER. The wallets whose $500+ deposits came before the biggest GRAM drops in
+2023–24 did no better than random ones afterwards (GRAM fell less after their deposits, not more), and two thirds
+of them stopped depositing. The exit rule was out of the coin 84 % of the time, so it lost less than holding, but
+its Sharpe was worse (p = 0.93). Wallet-level deposit timing on Gate.io shows no persistent skill on either chain.
 
 ## Bottom line
 
 Apart from H-020 (pending its forward replication) and H-028 (risk, not direction), none of these ideas has a
-statistically reliable edge after fees — including following "smart" on-chain wallets (H-032). Daily trend rules
-are a risk-reduction tool, not an alpha source. Further work should only go to ideas
+statistically reliable edge after fees — including following "smart" on-chain wallets (H-032 on EVER,
+H-033 on GRAM). Daily trend rules are a risk-reduction tool, not an alpha source. Further work should only go to ideas
 with a clear economic reason, tested on independent assets.
