@@ -17,7 +17,7 @@ VERDICT_CLASS = {"PASS": "pass", "WEAK": "weak", "FAIL": "fail"}
 VERDICT_KEY = {"PASS": "Pass", "WEAK": "Weak", "FAIL": "Fail"}
 REPO = "https://github.com/f1devbin/Crypto-Research-Labs"
 # coin-page rule -> hypotheses that tested it
-TOP_PAGES = ("market", "research", "digest", "course", "about", "setup")
+TOP_PAGES = ("market", "research", "forecast", "digest", "course", "about", "setup")
 SIGNAL_STUDIES_R = {"sma50": ["H-005", "H-018"], "mom7": ["H-014"], "vol": ["H-012", "H-013"], "btc": ["H-017", "H-019"]}
 
 CSS = """
@@ -130,6 +130,9 @@ ol.flow3d li{counter-increment:f;padding:16px 18px;font-weight:600;color:var(--t
 ol.flow3d li::before{content:counter(f);display:block;font:600 1.5rem var(--mono);color:var(--accent)}
 .howto{padding:6px 24px 14px}
 .crumbs{margin-top:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:14px 0}
+.stat{padding:14px 18px;display:flex;flex-direction:column;gap:4px}.stat span{font-weight:600;color:var(--text2)}
+.stat b{font:600 1.6rem var(--mono);color:var(--text)}
 #hyp-table td:first-child{white-space:nowrap}
 h1{font-size:2.3rem;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:.1em 0 .35em;max-width:26ch;text-wrap:balance}
 h2{font-size:1.5rem;line-height:1.25;letter-spacing:-.01em;font-weight:600;margin:2.4em 0 .7em;padding-bottom:.35em;border-bottom:1px solid var(--line)}
@@ -515,6 +518,8 @@ def _section_of(hid: str | None) -> str | None:
         return "market"
     if hid == "setup":
         return "about"
+    if hid == "forecast":
+        return "research"
     return hid if hid in TOP_PAGES else "research"
 
 
@@ -877,9 +882,10 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
                      f'<h3><a href="hypotheses/{e(h["id"])}.html">{e(h["id"])}. {e(title_of(lang, h))}</a></h3>'
                      f'<p>{e(t(lang, "pass_text", n=n))}</p>'
                      f'<a class="more" href="hypotheses/{e(h["id"])}.html">{e(t(lang, "open_hyp"))}</a></article>')
+    passed = {h["id"] for h in hyps if h["verdict"] == "PASS"}
     for h in hyps:
         pr = h.get("progress")
-        if not pr:
+        if not pr or h.get("replicates") not in passed:
             continue
         cards.append(f'<article class="slab tilt card"><span class="badge wait">{e(t(lang, "recheck"))}</span>'
                      f'<h3><a href="hypotheses/{e(h["id"])}.html">{e(h["id"])}. {e(title_of(lang, h))}</a></h3>'
@@ -895,6 +901,10 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         _, start, end = _digest_range(ds[0])
         digest = (f'<p class="slab digest-line"><strong>{e(t(lang, "digest_line", start=start, end=end))}</strong>'
                   f'<a href="digest.html">{e(t(lang, "read"))}</a></p>')
+    td = (data.get("forecast") or {}).get("today")
+    if td:
+        digest = (f'<p class="slab digest-line"><strong>{e(t(lang, "fc_home", n=len(td["rows"]), d=td["date"]))}</strong>'
+                  f'<a href="forecast.html">{e(t(lang, "fc_open"))}</a></p>') + digest
 
     body = f"""{header(lang, None, data['generated_at'])}
 <main>
@@ -1043,6 +1053,7 @@ def research_page(lang: str, data: dict, base: str, verification: str = "") -> s
 <main>
 <h1>{e(t(lang, 'research_h1'))}</h1>
 <p class="lead">{e(t(lang, 'research_lead'))}</p>
+<p class="slab digest-line"><a href="forecast.html"><strong>{e(t(lang, 'fc_research'))}</strong></a></p>
 <div class="vblocks" role="group" aria-label="{e(t(lang, 'th_verdict'))}">
 <button type="button" class="vblock all" data-filter="ALL" aria-pressed="true"><b>{len(hyps)}</b><span>{e(t(lang, 'filter_all'))}</span></button>
 {blocks}</div>
@@ -1109,6 +1120,140 @@ def about_page(lang: str, data: dict, base: str, verification: str = "") -> str:
                 verification=verification)
 
 
+GATE_SYMBOLS = ("EVERUSDT", "GRAMUSDT")
+
+
+def _f(v, fmt) -> str:
+    return "—" if v is None else format(v, fmt)
+
+
+def forecast_results_table(lang: str, rows: list[dict]) -> str:
+    """Per-coin (and pooled) scores of a forecast hypothesis."""
+    if not rows:
+        return f"<p>{e(t(lang, 'no_results'))}</p>"
+    port = any("sharpe" in r for r in rows)
+    cols = ["c_asset", "c_days", "c_bss", "c_p", "c_q", "c_hits"] + (["c_sharpe", "c_hsharpe", "c_csharpe", "c_exp"] if port else [])
+    head = "<tr>" + "".join(f"<th>{e(t(lang, c))}</th>" for c in cols) + "</tr>"
+    body = []
+    for r in rows:
+        name = "∑" if r["symbol"] == "ALL" else e(r["symbol"].removesuffix("USDT"))
+        cells = [f"<td><strong>{name}</strong></td>", f"<td class=num>{r.get('days', '—')}</td>",
+                 f"<td class=num>{_f(r.get('bss'), '+.4f')}</td>", f"<td class=num>{_f(r.get('p'), '.3f')}</td>",
+                 f"<td class=num>{_f(r.get('q'), '.3f')}</td>", f"<td class=num>{pct(r.get('hits'), nd=1)}</td>"]
+        if port:
+            cells += [f"<td class=num>{num(r.get('sharpe'))}</td>", f"<td class=num>{num(r.get('hold_sharpe'))}</td>",
+                      f"<td class=num>{num(r.get('const_sharpe'))}</td>", f"<td class=num>{pct(r.get('exposure'), nd=0)}</td>"]
+        body.append("<tr>" + "".join(cells) + "</tr>")
+    return f'<div class="table-wrap"><table><thead>{head}</thead><tbody>{"".join(body)}</tbody></table></div>'
+
+
+def calibration_table(lang: str, bins: list[dict]) -> str:
+    if not bins:
+        return ""
+    rows = "".join(f'<tr><td>{b["lo"]:.0%}–{b["hi"]:.0%}</td><td class=num>{pct(b["p"], nd=1)}</td>'
+                   f'<td class=num>{pct(b["y"], nd=1)}</td><td class=num>{b["n"]}</td></tr>' for b in bins)
+    return (f'<h2 id="calibration">{e(t(lang, "cal_h"))}</h2><div class="table-wrap"><table><thead><tr>'
+            f'<th>{e(t(lang, "cal_said"))}</th><th class=num>{e(t(lang, "cal_said"))} ⌀</th>'
+            f'<th class=num>{e(t(lang, "cal_happened"))}</th><th class=num>{e(t(lang, "cal_n"))}</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>')
+
+
+def _coin_label(c: dict | None, sym: str, prefix: str = "") -> str:
+    tick = (c or {}).get("ticker") or sym.removesuffix("USDT")
+    name = (c or {}).get("name") or ""
+    gate = " †" if sym in GATE_SYMBOLS else ""
+    return f'<a href="{prefix}coins/{e(sym)}.html"><strong>{e(tick)}</strong>{gate}<span class="sub">{e(name)}</span></a>'
+
+
+def forecast_page(lang: str, data: dict, base: str, verification: str = "") -> str:
+    fc = data.get("forecast") or {}
+    coins = {c["symbol"]: c for c in data.get("coins", [])}
+    n = len((next((h for h in data["hypotheses"] if h["id"] == "H-029"), {}).get("spec") or {}).get("universe", [])) or 13
+    td = fc.get("today")
+    if td:
+        rows = []
+        for r in td["rows"]:
+            ch = "—"
+            if r.get("w_exec") is not None and r.get("w_prev") is not None:
+                ch = t(lang, "fc_pp", v=f"{(r['w_exec'] - r['w_prev']) * 100:+.0f}")
+            rows.append(f'<tr><td>{_coin_label(coins.get(r["symbol"]), r["symbol"])}</td>'
+                        f'<td class=num>{pct(r.get("p_direction"), nd=0)}</td><td class=num>{pct(r.get("p_risk"), nd=0)}</td>'
+                        f'<td class=num>{pct(r.get("w_exec"), nd=0)}</td><td class=num>{e(ch)}</td></tr>')
+        late = "" if td["on_time"] else f'<p class="callout">{e(t(lang, "fc_late"))}</p>'
+        stamp = td["published"].replace("T", " ").replace("Z", " UTC")
+        today = (f'<p class="meta">{e(t(lang, "fc_published", t=stamp, d=td["decision_date"]))}</p>{late}'
+                 f'<p class="meta sort-hint">{e(t(lang, "sort_hint"))}</p>'
+                 f'<div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, "sort_hint"))}"><thead><tr>'
+                 f'<th>{e(t(lang, "th_coin"))}</th><th class=num>{e(t(lang, "fc_th_up"))}</th>'
+                 f'<th class=num>{e(t(lang, "fc_th_move"))}</th><th class=num>{e(t(lang, "fc_th_share"))}</th>'
+                 f'<th class=num>{e(t(lang, "fc_th_change"))}</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
+                 f'<p class="meta">{e(t(lang, "fc_gate"))}</p>')
+    else:
+        today = f'<p class="callout">{e(t(lang, "fc_none"))}</p>'
+
+    live = fc.get("live") or {}
+    start, test_after = fc.get("start") or "—", fc.get("test_after") or "—"
+    if live.get("direction"):
+        pd_ = live["direction"]["pooled"]
+        pr_ = (live.get("risk") or {}).get("pooled") or {}
+        kv = [(t(lang, "fc_days"), str(pd_.get("days", "—"))), (t(lang, "fc_hits"), pct(pd_.get("hits"), nd=1)),
+              (t(lang, "fc_skill_dir"), _f(pd_.get("bss"), "+.4f")), (t(lang, "fc_skill_risk"), _f(pr_.get("bss"), "+.4f"))]
+        tiles = "".join(f'<div class="slab stat"><span>{e(k)}</span><b>{e(v)}</b></div>' for k, v in kv)
+        monthly = live["direction"].get("monthly") or []
+        month_html = ""
+        if monthly:
+            last = max(m["month"] for m in monthly)
+            mrows = "".join(f'<tr><td>{_coin_label(coins.get(m["symbol"]), m["symbol"])}</td><td class=num>{usd(m["model"])}</td>'
+                            f'<td class=num>{usd(m["hold"])}</td><td class=num>{usd(m["const"])}</td></tr>'
+                            for m in monthly if m["month"] == last)
+            month_html = (f'<h3>{e(t(lang, "fc_month_h", m=last))}</h3><div class="table-wrap"><table><thead><tr>'
+                          f'<th>{e(t(lang, "th_coin"))}</th><th class=num>{e(t(lang, "fc_th_model"))}</th>'
+                          f'<th class=num>{e(t(lang, "fc_th_hold"))}</th><th class=num>{e(t(lang, "fc_th_const"))}</th>'
+                          f'</tr></thead><tbody>{mrows}</tbody></table></div><p class="meta">{e(t(lang, "fc_month_note"))}</p>')
+        live_html = (f'<p>{e(t(lang, "fc_live_text", start=start, date=test_after))}</p><div class="stats">{tiles}</div>'
+                     f'<p class="meta">{e(t(lang, "fc_skill_note"))}</p>{month_html}')
+    else:
+        live_html = (f'<p>{e(t(lang, "fc_live_text", start=start, date=test_after))}</p>'
+                     f'<p class="callout">{e(t(lang, "fc_live_wait"))}</p>')
+
+    hist = fc.get("history") or {}
+    items = []
+    for target, label in (("direction", "fc_back_dir"), ("risk", "fc_back_risk")):
+        h = hist.get(target)
+        if not h:
+            continue
+        pooled = h.get("pooled") or {}
+        line = (e(t(lang, "fc_back_line", bss=_f(pooled.get("bss"), "+.4f"), p=_f(pooled.get("p"), ".3f")))
+                if h.get("verdict") else e(t(lang, "fc_back_wait")))
+        items.append(f'<li><a href="hypotheses/{e(h["id"])}.html">{e(h["id"])}</a> · {e(t(lang, label))}: '
+                     f'{badge(lang, h.get("verdict"))} {line}</li>')
+    how = "".join(f"<li>{x}</li>" for x in t(lang, "fc_how"))
+    body = f"""{header(lang, "forecast", data['generated_at'])}
+<main>
+<p class="meta crumbs"><a href="research.html">← {e(t(lang, 'nav_research'))}</a></p>
+<h1>{e(t(lang, 'fc_h1'))}</h1>
+<p class="lead">{e(t(lang, 'fc_lead', n=n))}</p>
+<section aria-labelledby="today">{today}</section>
+<section aria-labelledby="live"><h2 id="live">{e(t(lang, 'fc_live_h'))}</h2>{live_html}</section>
+<section aria-labelledby="history"><h2 id="history">{e(t(lang, 'fc_back_h'))}</h2>
+<p>{e(t(lang, 'fc_back_text'))}</p><ul>{''.join(items)}</ul></section>
+<section aria-labelledby="how"><h2 id="how">{e(t(lang, 'fc_how_h'))}</h2><ul>{how}</ul></section>
+</main>
+{footer(lang, "forecast")}"""
+    url = page_url(base, lang, "forecast")
+    jsonld = [{"@context": "https://schema.org", "@type": "Dataset", "name": t(lang, "fc_h1"),
+               "description": t(lang, "fc_lead", n=n), "url": url, "inLanguage": LANGS[lang][1],
+               "license": "https://opensource.org/licenses/MIT", "isAccessibleForFree": True,
+               "creator": {"@type": "Person", "name": "F1DevBin", "url": "https://github.com/f1devbin"},
+               "dateModified": (td or {}).get("date") or data["generated_at"][:10],
+               "distribution": [{"@type": "DataDownload", "encodingFormat": "text/csv",
+                                 "contentUrl": f"{REPO}/blob/main/datasets/forecast_log.csv"}]},
+              _crumbs(lang, base, "forecast", t(lang, "fc_h1"))]
+    return page(lang=lang, hid="forecast", base=base, title=f"{t(lang, 'fc_h1')} | Crypto Research Labs",
+                description=t(lang, "fc_lead", n=n)[:320], body=body, charts={}, jsonld=jsonld,
+                verification=verification)
+
+
 def spec_text(spec: dict) -> str:
     import yaml
     return yaml.safe_dump(spec, sort_keys=False, allow_unicode=True)
@@ -1151,7 +1296,8 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
 {en_note}
 <p lang="en">{e(h['summary'])}</p>
 <p class="meta">{e(t(lang, 'metrics_note'))} <a href="../course.html#glossary">{e(t(lang, 'nav_glossary'))}</a></p>
-{results_table(lang, h['rows'], (h.get('spec') or {}).get('kind', ''))}
+{forecast_results_table(lang, h['rows']) if (h.get('spec') or {}).get('kind') in ('forecast', 'forecast_live') else results_table(lang, h['rows'], (h.get('spec') or {}).get('kind', ''))}
+{calibration_table(lang, h.get('calibration') or [])}
 {curve_block}
 {scan_for_rule(lang, hid, data)}
 <h2>{e(t(lang, 'why_h'))}</h2><p lang="en">{e(h['rationale'])}</p>

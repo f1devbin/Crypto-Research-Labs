@@ -11,15 +11,16 @@ SHA-256 hash *before* it is tested, then tested by a fixed engine and re-tested 
 GitHub Actions. Results, a market diagnosis and a beginners' course are published as a static dashboard in 7
 languages: <https://f1devbin.github.io/Crypto-Research-Labs/> (en at root, `/ru/ /es/ /pt/ /tr/ /vi/ /zh/`).
 
-Current state: 26 hypotheses (H-001…H-026), one passed (H-020, BTC exchange deposits), H-022 is its forward
-replication with first test on 2027-10-15. Version 0.4.0. Honest negative results are the point of the project.
+Current state: 30 hypotheses (H-001…H-030), one passed (H-020, BTC exchange deposits), H-022 is its forward
+replication with first test on 2027-10-15. H-027…H-030: daily model forecast for all coins (history + live,
+published before 12:00 UTC on the forecast page; first live test 2027-11-01). Version 0.4.0. Honest negative results are the point of the project.
 
 ## Layout
 
 | Path | What |
 |---|---|
 | `hypotheses/H-0xx.yaml` | one spec per idea; `status`, `spec`, `prereg_sha256`, optional `test_after`, `replicates` |
-| `src/crl/engine/` | `rules.py` (timing rules), `protocol.py` (timing_rule, rule_search, cross_section), `cross.py`, `backtest.py`, `stats.py` |
+| `src/crl/engine/` | `rules.py` (timing rules), `protocol.py` (timing_rule, rule_search, cross_section, forecast), `cross.py`, `backtest.py`, `stats.py`, `forecast.py` (pooled daily model, Brier skill, paper portfolio, live log) |
 | `src/crl/registry.py` | validation, SHA-256 lock, duplicates, `is_due` |
 | `src/crl/agents/` | `data_steward` (data refresh + integrity), `regime_watch` (monitors, alerts), `runner` (due hypotheses) |
 | `src/crl/data/` | `sources.py` (Binance vision, Gate.io for EVER/GRAM, OKX funding, Coin Metrics flows, DefiLlama, alternative.me, BGeometrics), `store.py` |
@@ -28,7 +29,7 @@ replication with first test on 2027-10-15. Version 0.4.0. Honest negative result
 | `src/crl/site.py`, `site_render.py` | dashboard build (`crl site` → `_site/`): home, market, research, about, hypothesis pages, coin pages, course, setup, digest |
 | `src/crl/i18n.py`, `i18n_diag.py`, `i18n_alerts.py`, `course.py`, `setup_guide.py` | all UI text, 7 languages |
 | `config/watch.yaml` | regime monitors and bands |
-| `results/`, `reports/`, `datasets/` | written by the bot (`crl-bot`) on the weekly run; don't hand-edit |
+| `results/`, `reports/`, `datasets/` | written by the bot (`crl-bot`) on the weekly run; don't hand-edit. `datasets/forecast_log.csv`, `noon_prices.csv`, `forecast_models/` are written daily by `crl forecast` and must never be edited |
 | `docs/` | FINDINGS, METHODOLOGY, WORKFLOWS, GETTING_STARTED, INEFFICIENCIES |
 
 ## Commands
@@ -37,7 +38,7 @@ replication with first test on 2027-10-15. Version 0.4.0. Honest negative result
 pip install -e . && python -m pytest -q        # all tests must pass before any PR
 crl registry check                              # validate every hypothesis
 crl registry register H-0xx                     # lock a draft (writes registered date + sha256)
-crl data refresh | crl watch | crl run [ids] [--force] | crl scan | crl digest | crl site | crl notify-test
+crl data refresh | crl watch | crl forecast | crl run [ids] [--force] | crl scan | crl digest | crl site | crl notify-test
 ```
 
 Real data is not available in the cloud container (network allowlist). Run studies on GitHub Actions

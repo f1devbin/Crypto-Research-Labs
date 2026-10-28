@@ -1,0 +1,81 @@
+id: H-029
+title: 'Live replication of H-027: daily direction forecasts published before 12:00 UTC'
+status: registered
+family: forecast
+created: '2026-10-28'
+author: F1DevBin (idea), Claude (spec)
+rationale: 'H-027 can only use history, where the model is fitted with hindsight about which inputs exist
+  and external data may have been revised. This repeats the exact model live from 2026-10-29. Every morning
+  the workflow computes the forecasts from yesterday''s close with that month''s model (fitted on the
+  month''s first day, stored once in datasets/forecast_models/ and never refitted) and appends them to
+  datasets/forecast_log.csv; the commit to GitHub proves they existed before the outcome. Only forecasts
+  published before 12:00 UTC count; the outcome runs from the open of the 12:00 UTC hourly candle to the
+  next day''s (datasets/noon_prices.csv: Binance hourly files, Gate.io API), so the real delay between
+  data and trade is in the test. Same pooled Brier-skill test against the base rate and the same paper
+  portfolio (share = probability, 10-point band, fees and slippage), first tested after about a year of
+  live forecasts. Shares alpha with H-030 (0.05 / 2).'
+spec:
+  kind: forecast_live
+  target: direction
+  model:
+    type: pooled_logit
+    features:
+    - r1
+    - r3
+    - r7
+    - r30
+    - d50
+    - d200
+    - v7
+    - v30
+    - btc_r1
+    - btc_r7
+    - funding
+    - fear_greed
+    - stable30
+    - flow7
+    zscore_window: 365
+    zscore_min_periods: 180
+    clip: 5
+    l2: 1.0
+    refit: monthly
+    external_lag: 1
+    ffill_limit: 3
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  - EVERUSDT
+  - GRAMUSDT
+  costs:
+    default: 0.001
+    EVERUSDT: 0.004
+    GRAMUSDT: 0.004
+  portfolio:
+    weight: probability
+    band: 0.1
+  execution:
+    time_utc: '12:00'
+  periods:
+  - name: forward
+    start: '2026-10-29'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.025
+  criterion:
+    metric: brier_skill
+    pooled: true
+replicates: H-027
+retest_every_days: 90
+test_after: '2027-11-01'
+registered: '2026-10-28'
+prereg_sha256: c9005ce564fc123b6ba462e481eb1a349266ac65c25ad4df55316fc54b8f3f51

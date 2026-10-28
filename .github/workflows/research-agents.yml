@@ -1,6 +1,7 @@
 # Scheduled research agents.
 #   daily  : data steward (refresh cache + integrity) and regime watch (alerts on band changes)
 #   weekly : the above, then the hypothesis runner and the digest; results/ and reports/ are committed
+#   daily  : also the model forecast (H-029/H-030), committed at once so its time proves it came before 12:00 UTC
 #   always : the dashboard is rebuilt from the fresh data and deployed to GitHub Pages
 # The data cache and the watch state live in actions/cache, so nothing is re-downloaded from scratch.
 # Schedule: GitHub starts scheduled runs hours late, so the workflow wakes every hour of the morning and the
@@ -28,6 +29,10 @@ on:
         description: "Send a test Telegram message"
         type: boolean
         default: false
+      digest:
+        description: "Write and send the weekly digest (full runs only)"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -101,6 +106,24 @@ jobs:
       - name: Regime watch
         run: crl watch
 
+      - name: Daily model forecast (H-029/H-030)
+        id: forecast
+        run: crl forecast
+        continue-on-error: true   # a missing input must not stop the dashboard
+
+      - name: Commit the forecast log
+        if: steps.forecast.outcome == 'success'
+        run: |
+          git config user.name "crl-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for f in datasets/forecast_log.csv datasets/noon_prices.csv datasets/forecast_models; do
+            if [ -e "$f" ]; then git add "$f"; fi
+          done
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -m "chore(forecast): model forecast $(date -u +%F)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
       - name: Hypothesis runner
         if: env.FULL == 'true'
         run: crl run ${{ inputs.force && '--force' || '' }}
@@ -112,7 +135,7 @@ jobs:
         continue-on-error: true
 
       - name: Digest
-        if: env.FULL == 'true'
+        if: env.FULL == 'true' && inputs.digest != false
         run: crl digest
 
       - name: Build dashboard

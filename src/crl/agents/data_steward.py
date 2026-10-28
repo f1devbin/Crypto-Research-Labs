@@ -20,6 +20,7 @@ log = logging.getLogger(__name__)
 
 FEATURE_SOURCES = {
     "stablecoin_growth_7d": [("external", "stable_usdt"), ("external", "stable_usdc")],
+    "stablecoin_growth_30d": [("external", "stable_usdt"), ("external", "stable_usdc")],
     "funding_btc_7d": [("funding", "BTCUSDT")],
     "fear_greed": [("external", "fear_greed")],
     "etf_flow_btc_5d": [("external", "etf_flow_btc")],
@@ -30,6 +31,8 @@ FEATURE_MAX_STALE = {"etf_flow_btc_5d": 6, "funding_btc_7d": 3, "exnetflow_btc_7
 WATCH_SYMBOLS = ["BTCUSDT"]
 # always collected, even before any hypothesis uses them (exchange flows can't be backfilled later)
 WATCH_FEATURES = ["stablecoin_growth_7d", "funding_btc_7d", "fear_greed", "exnetflow_btc_7d", "exnetflow_eth_7d"]
+# inputs of the daily forecast model (engine/forecast.py)
+FORECAST_FEATURES = ["stablecoin_growth_30d", "funding_btc_7d", "fear_greed", "exnetflow_btc_7d"]
 
 
 def required_inputs(hyps: list) -> tuple[set, set]:
@@ -39,6 +42,9 @@ def required_inputs(hyps: list) -> tuple[set, set]:
         if not h.get("rerunnable", True) or h.get("status") == "archived":
             continue
         symbols.update(spec.get("universe", []))
+        if spec.get("kind") in ("forecast", "forecast_live"):
+            symbols.add("BTCUSDT")
+            features.update(FORECAST_FEATURES)
         rules = [spec.get("rule")] + list((spec.get("candidates") or {}).values())
         features.update(r["feature"] for r in rules if isinstance(r, dict) and "feature" in r)
         symbols.update(r["asset"] for r in rules if isinstance(r, dict) and "asset" in r)
