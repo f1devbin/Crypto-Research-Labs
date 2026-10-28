@@ -242,7 +242,7 @@ def course_values(data: dict, lang: str, site: str) -> dict:
     mom, ever = row("H-014", "SOLUSDT"), row("H-018", "EVERUSDT")
     vol = lambda s: pc(coins_by.get(s, {}).get("vol"), signed=False)
     return {
-        "site": site, "update_utc": "06:17", "n_hyps": n, "n_coins": len(coins_by),
+        "site": site, "update_utc": "03:00–07:00", "n_hyps": n, "n_coins": len(coins_by),
         "verdict_line": t(lang, "verdict_some", p=n_pass, n=n) if n_pass else t(lang, "verdict_none", n=n),
         "btc_vol": vol("BTCUSDT"), "sol_vol": vol("SOLUSDT"), "ever_vol": vol("EVERUSDT"),
         "sol_mom_sharpe": loc(f"{mom['sharpe']:.2f}") if mom.get("sharpe") is not None else "—",
