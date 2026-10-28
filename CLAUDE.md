@@ -12,7 +12,7 @@ GitHub Actions. Results, a market diagnosis and a beginners' course are publishe
 languages: <https://f1devbin.github.io/Crypto-Research-Labs/> (en at root, `/ru/ /es/ /pt/ /tr/ /vi/ /zh/`).
 
 Current state: 26 hypotheses (H-001…H-026), one passed (H-020, BTC exchange deposits), H-022 is its forward
-replication with first test on 2027-10-15. Version 0.3.0. Honest negative results are the point of the project.
+replication with first test on 2027-10-15. Version 0.4.0. Honest negative results are the point of the project.
 
 ## Layout
 
@@ -25,7 +25,7 @@ replication with first test on 2027-10-15. Version 0.3.0. Honest negative result
 | `src/crl/data/` | `sources.py` (Binance vision, Gate.io for EVER/GRAM, OKX funding, Coin Metrics flows, DefiLlama, alternative.me, BGeometrics), `store.py` |
 | `src/crl/scan.py` | coverage scan: every tested timing rule × every coin, BH-FDR q=0.10 → `reports/coverage.json`, `COVERAGE.md` |
 | `src/crl/llm/` | `client.py` (OpenAI-compatible: Groq via `LLM_API_KEY`, model auto-discovered; or Anthropic), `digest.py` (weekly digest: English from facts, then translated), `proposer.py` (monthly drafts) |
-| `src/crl/site.py`, `site_render.py` | dashboard build (`crl site` → `_site/`): home, hypothesis pages, coin pages, course, setup, digest |
+| `src/crl/site.py`, `site_render.py` | dashboard build (`crl site` → `_site/`): home, market, research, about, hypothesis pages, coin pages, course, setup, digest |
 | `src/crl/i18n.py`, `i18n_diag.py`, `i18n_alerts.py`, `course.py`, `setup_guide.py` | all UI text, 7 languages |
 | `config/watch.yaml` | regime monitors and bands |
 | `results/`, `reports/`, `datasets/` | written by the bot (`crl-bot`) on the weekly run; don't hand-edit |
