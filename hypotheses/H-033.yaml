@@ -1,7 +1,7 @@
 id: H-033
 title: 'Gate.io GRAM ''smart wallets'': deposits of $500+ by wallets picked on 2023-24 foretell 7-day
   drops better than random wallets'
-status: registered
+status: rejected
 family: flows
 created: '2026-10-28'
 author: F1DevBin (idea), Claude (spec)
@@ -67,3 +67,4 @@ spec:
     slippage: 0.002
 registered: '2026-10-29'
 prereg_sha256: 1dace528c24f74c4290f8d56407ad6ac371a22707113eb13071e17d1972f6fde
+last_run: '2026-10-28'
