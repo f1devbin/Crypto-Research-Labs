@@ -878,21 +878,20 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
         now = ""
         if m and m.get("value") is not None:
             now = f' <span class="badge in">{e(t(lang, "now_in" if m["value"] >= 0.5 else "now_out"))}</span>'
+        note = (f'<p>{e(t(lang, "pass_risk_note"))}</p>'
+                if (h.get("spec") or {}).get("target") == "risk" else "")
+        rep = next((r for r in hyps if r.get("replicates") == h["id"] and r.get("progress")), None)
+        recheck = ""
+        if rep:
+            pr = rep["progress"]
+            days = t(lang, "recheck_days", done=pr["done"], total=pr["total"])
+            recheck = (f'<p class="kv"><a href="hypotheses/{e(rep["id"])}.html">{e(t(lang, "recheck_of", id=rep["id"]))}</a></p>'
+                       f'<div class="progress3d" role="img" aria-label="{e(days)}"><span style="width:{pr["share"] * 100:.1f}%"></span></div>'
+                       f'<p class="kv"><span>{e(days)}</span><span>{e(t(lang, "recheck_date", date=pr["date"]))}</span></p>')
         cards.append(f'<article class="slab tilt card">{badge(lang, "PASS")}{now}'
                      f'<h3><a href="hypotheses/{e(h["id"])}.html">{e(h["id"])}. {e(title_of(lang, h))}</a></h3>'
-                     f'<p>{e(t(lang, "pass_text", n=n))}</p>'
+                     f'<p>{e(t(lang, "pass_text", n=n, k=cnt["PASS"]))}</p>{note}{recheck}'
                      f'<a class="more" href="hypotheses/{e(h["id"])}.html">{e(t(lang, "open_hyp"))}</a></article>')
-    passed = {h["id"] for h in hyps if h["verdict"] == "PASS"}
-    for h in hyps:
-        pr = h.get("progress")
-        if not pr or h.get("replicates") not in passed:
-            continue
-        cards.append(f'<article class="slab tilt card"><span class="badge wait">{e(t(lang, "recheck"))}</span>'
-                     f'<h3><a href="hypotheses/{e(h["id"])}.html">{e(h["id"])}. {e(title_of(lang, h))}</a></h3>'
-                     f'<div class="progress3d" role="img" aria-label="{e(t(lang, "recheck_days", done=pr["done"], total=pr["total"]))}">'
-                     f'<span style="width:{pr["share"] * 100:.1f}%"></span></div>'
-                     f'<p class="kv"><span>{e(t(lang, "recheck_days", done=pr["done"], total=pr["total"]))}</span>'
-                     f'<span>{e(t(lang, "recheck_date", date=pr["date"]))}</span></p></article>')
     found = (f'<section aria-labelledby="found"><p class="eyebrow" id="found">{e(t(lang, "passed_eyebrow"))}</p>'
              f'<div class="found">{"".join(cards)}</div></section>') if cards else ""
     ds = data.get("digests") or []
