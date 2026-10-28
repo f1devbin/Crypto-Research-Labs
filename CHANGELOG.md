@@ -17,6 +17,10 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   proves they came before noon. New page "Today's model forecast" (7 languages), linked from home and Research.
 - `research-agents` manual runs can skip the weekly digest (`digest: false`).
 
+### Fixed
+- The forecast-log commit failed when the data refresh had changed other tracked files (`git pull --rebase`
+  refused); it now autostashes, and a failed commit no longer blocks the dashboard.
+
 ## [0.4.0] - 2026-10-28
 
 A dashboard that answers one question per page, a 3D look that keeps high contrast, and daily updates that
