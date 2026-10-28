@@ -126,14 +126,31 @@ rolling z-score of its own past year; the model is refitted monthly on outcomes 
 skill against each coin's base rate with a circular-shift null; a paper portfolio (share of the coin = chance of
 a rise, 10-point band, fees and Gate slippage) is compared with holding and with a constant share.
 
-- History test (2022+): pending, runs right after registration.
+History test, 2022-01-01 → 2026-10-26, 21 612 coin-days, walk-forward with monthly refits:
+
+| ID | Question | Brier skill (pooled) | p (needed) | Coins with skill | Calibration |
+|----|----------|----------------------|------------|------------------|-------------|
+| H-027 ❌ | Next day's return beats the round-trip cost | −0.0089 | 0.012 (< 0.025, but skill must be above zero) | 5/13 | overconfident: says 53 %, happens 46 %; says 38 %, happens 44 % |
+| H-028 ✅ | Next day's move bigger than the coin's usual one | +0.0383 | < 0.001 (< 0.025) | 13/13 | close: says 74 %, happens 74 %; says 84 %, happens 84 % |
+
+- **Direction is not forecastable this way.** The forecasts carry a trace of information (rotating them in time
+  makes them worse, hence p = 0.012), but they are biased and overconfident, so they lose to simply quoting each
+  coin's base rate. The pooled model also ignores that Gate.io coins need a larger move to beat their costs, which
+  costs it most on EVER (−0.10) and GRAM (−0.03). The paper portfolio held about half a position on average: much
+  smaller drawdowns, but its Sharpe beat holding on only 4 of 13 coins; on Sharpe a constant half position is the
+  same as holding, so there is no timing skill.
+- **The size of moves is forecastable**, on every coin and well calibrated: calm and nervous stretches persist.
+  This is the second pass in the project and the first that is not a trading rule. It helps size positions and
+  judge risk; it says nothing about which way the price will go.
 - Live (H-029/H-030): every forecast is committed to `datasets/forecast_log.csv` before 12:00 UTC and scored from
   the 12:00 UTC price to the next day's; first test 2027-11-01. Today's numbers:
   [forecast page](https://f1devbin.github.io/Crypto-Research-Labs/forecast.html).
 - Expectation written before any result: direction close to luck, risk with real skill (volatility clusters).
+  That is what happened.
 
 ## Bottom line
 
-Apart from H-020 (pending its forward replication), none of these ideas has a statistically reliable edge after fees. Daily trend rules
+Apart from H-020 (pending its forward replication) and H-028 (risk, not direction), none of these ideas has a
+statistically reliable edge after fees. Daily trend rules
 are a risk-reduction tool, not an alpha source. Further work should only go to ideas
 with a clear economic reason, tested on independent assets.

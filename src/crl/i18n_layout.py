@@ -18,8 +18,9 @@ L = {
  "today_eyebrow": "Market today", "all_market": "All market indicators →",
  "passed_eyebrow": "What passed the test",
  "now_in": "now: in the market", "now_out": "now: out of the market",
- "pass_text": "The only one of {n} ideas that met the bar set before testing. It is not a promise of profit: it is "
-              "being re-checked on new data.",
+ "pass_text": "Met the bar set before testing ({k} of {n} ideas have). It is not a promise of profit: it is being re-checked "
+              "on new data.",
+ "pass_risk_note": "This forecasts how big the next day's move will be, not its direction: on its own it does not beat holding, it helps judge risk.", "recheck_of": 'Re-check {id}',
  "open_hyp": "Open the hypothesis →", "recheck": "Re-check",
  "recheck_days": "{done} of {total} days", "recheck_date": "test on {date}",
  "digest_line": "Weekly digest: {start} – {end}", "read": "Read →",
@@ -73,8 +74,9 @@ L = {
  "today_eyebrow": "Рынок сегодня", "all_market": "Все показатели рынка →",
  "passed_eyebrow": "Что прошло проверку",
  "now_in": "сейчас: в рынке", "now_out": "сейчас: вне рынка",
- "pass_text": "Единственная из {n} идей, которая выполнила планку, заданную до проверки. Это не обещание прибыли: "
-              "её перепроверяют на новых данных.",
+ "pass_text": "Выполнила планку, заданную до проверки (таких {k} из {n} идей). Это не обещание прибыли: её "
+              "перепроверяют на новых данных.",
+ "pass_risk_note": 'Это прогноз силы завтрашнего движения, а не его направления: сам по себе он не обгоняет удержание, а помогает оценивать риск.', "recheck_of": 'Перепроверка {id}',
  "open_hyp": "Открыть гипотезу →", "recheck": "Перепроверка",
  "recheck_days": "{done} из {total} дней", "recheck_date": "проверка {date}",
  "digest_line": "Недельная сводка: {start} – {end}", "read": "Читать →",
@@ -129,8 +131,9 @@ L = {
  "today_eyebrow": "Mercado hoy", "all_market": "Todos los indicadores del mercado →",
  "passed_eyebrow": "Lo que pasó la prueba",
  "now_in": "ahora: en el mercado", "now_out": "ahora: fuera del mercado",
- "pass_text": "La única de {n} ideas que superó el listón fijado antes de la prueba. No es una promesa de ganancias: "
-              "se está volviendo a comprobar con datos nuevos.",
+ "pass_text": "Superó el listón fijado antes de la prueba ({k} de {n} ideas lo han hecho). No es una promesa de ganancias: "
+              "se vuelve a comprobar con datos nuevos.",
+ "pass_risk_note": 'Prevé el tamaño del movimiento de mañana, no su dirección: por sí sola no gana a mantener; ayuda a valorar el riesgo.', "recheck_of": 'Nueva comprobación {id}',
  "open_hyp": "Abrir la hipótesis →", "recheck": "Nueva comprobación",
  "recheck_days": "{done} de {total} días", "recheck_date": "prueba el {date}",
  "digest_line": "Resumen semanal: {start} – {end}", "read": "Leer →",
@@ -185,8 +188,9 @@ L = {
  "today_eyebrow": "Mercado hoje", "all_market": "Todos os indicadores do mercado →",
  "passed_eyebrow": "O que passou no teste",
  "now_in": "agora: no mercado", "now_out": "agora: fora do mercado",
- "pass_text": "A única de {n} ideias que atingiu a meta definida antes do teste. Não é promessa de lucro: ela está "
-              "sendo verificada de novo com dados novos.",
+ "pass_text": "Atingiu a meta definida antes do teste ({k} de {n} ideias conseguiram). Não é promessa de lucro: ela é "
+              "verificada de novo com dados novos.",
+ "pass_risk_note": 'Prevê o tamanho do movimento de amanhã, não a direção: sozinha não vence segurar; ajuda a avaliar o risco.', "recheck_of": 'Nova verificação {id}',
  "open_hyp": "Abrir a hipótese →", "recheck": "Nova verificação",
  "recheck_days": "{done} de {total} dias", "recheck_date": "teste em {date}",
  "digest_line": "Resumo semanal: {start} – {end}", "read": "Ler →",
@@ -241,8 +245,9 @@ L = {
  "today_eyebrow": "Bugün piyasa", "all_market": "Tüm piyasa göstergeleri →",
  "passed_eyebrow": "Testi geçen",
  "now_in": "şu an: piyasada", "now_out": "şu an: piyasa dışında",
- "pass_text": "{n} fikir arasında testten önce belirlenen çıtayı geçen tek fikir. Bu bir kâr vaadi değildir: yeni "
+ "pass_text": "Testten önce belirlenen çıtayı geçti ({n} fikirden {k} tanesi geçti). Bu bir kâr vaadi değildir: yeni "
               "verilerle yeniden kontrol ediliyor.",
+ "pass_risk_note": 'Yarınki hareketin yönünü değil büyüklüğünü tahmin eder: tek başına tutmayı yenmez, riski değerlendirmeye yardım eder.', "recheck_of": 'Yeniden kontrol {id}',
  "open_hyp": "Hipotezi aç →", "recheck": "Yeniden kontrol",
  "recheck_days": "{total} günün {done} günü", "recheck_date": "test tarihi {date}",
  "digest_line": "Haftalık özet: {start} – {end}", "read": "Oku →",
@@ -296,8 +301,9 @@ L = {
  "today_eyebrow": "Thị trường hôm nay", "all_market": "Tất cả chỉ số thị trường →",
  "passed_eyebrow": "Điều đã vượt qua kiểm tra",
  "now_in": "hiện tại: trong thị trường", "now_out": "hiện tại: ngoài thị trường",
- "pass_text": "Ý tưởng duy nhất trong {n} ý tưởng đạt ngưỡng đặt ra trước khi kiểm tra. Đây không phải lời hứa lợi "
-              "nhuận: nó đang được kiểm tra lại trên dữ liệu mới.",
+ "pass_text": "Đã đạt ngưỡng đặt ra trước khi kiểm tra ({k}/{n} ý tưởng làm được). Đây không phải lời hứa lợi nhuận: "
+              "nó đang được kiểm tra lại trên dữ liệu mới.",
+ "pass_risk_note": 'Đây là dự báo độ lớn của biến động ngày mai, không phải hướng: tự nó không thắng việc giữ, mà giúp đánh giá rủi ro.', "recheck_of": 'Kiểm tra lại {id}',
  "open_hyp": "Mở giả thuyết →", "recheck": "Kiểm tra lại",
  "recheck_days": "{done}/{total} ngày", "recheck_date": "kiểm tra ngày {date}",
  "digest_line": "Tóm tắt tuần: {start} – {end}", "read": "Đọc →",
@@ -348,7 +354,8 @@ L = {
  "today_eyebrow": "今日市场", "all_market": "全部市场指标 →",
  "passed_eyebrow": "通过检验的",
  "now_in": "当前：在场", "now_out": "当前：离场",
- "pass_text": "{n} 个想法中唯一达到检验前设定标准的一个。这不是盈利承诺：它正在用新数据重新检验。",
+ "pass_text": "达到了检验前设定的标准（{n} 个想法中有 {k} 个做到）。这不是盈利承诺：它正在用新数据重新检验。",
+ "pass_risk_note": '这是对明天波动大小的预测，而不是方向：单靠它跑不赢持有，但有助于判断风险。', "recheck_of": '重新检验 {id}',
  "open_hyp": "打开该假设 →", "recheck": "重新检验",
  "recheck_days": "{done}/{total} 天", "recheck_date": "检验日期 {date}",
  "digest_line": "每周摘要：{start} – {end}", "read": "阅读 →",
@@ -426,7 +433,7 @@ FC = {
  "fc_home": "Today's model forecast for {n} coins ({d})", "fc_research": "Daily model forecast for every coin →",
  "fc_open": "Open →",
  "cal_h": "Calibration: forecast vs what happened", "cal_said": "Forecast", "cal_happened": "Happened",
- "cal_n": "Days", "c_bss": "Brier skill", "c_hits": "Direction right", "c_q": "q (FDR)",
+ "cal_n": "Days", "c_bss": "Brier skill", "c_hits": "Guessed right", "c_q": "q (FDR)",
  "c_csharpe": "Constant share Sharpe", "c_days": "Days",
 },
 "ru": {
@@ -471,7 +478,7 @@ FC = {
  "fc_home": "Прогноз модели на сегодня для {n} монет ({d})", "fc_research": "Ежедневный прогноз модели для каждой монеты →",
  "fc_open": "Открыть →",
  "cal_h": "Калибровка: прогноз и что сбылось", "cal_said": "Прогноз", "cal_happened": "Сбылось",
- "cal_n": "Дней", "c_bss": "Brier skill", "c_hits": "Направление угадано", "c_q": "q (FDR)",
+ "cal_n": "Дней", "c_bss": "Brier skill", "c_hits": "Угадано", "c_q": "q (FDR)",
  "c_csharpe": "Sharpe постоянной доли", "c_days": "Дней",
 },
 "es": {
@@ -516,7 +523,7 @@ FC = {
  "fc_home": "Previsión del modelo para hoy en {n} monedas ({d})", "fc_research": "Previsión diaria del modelo para cada moneda →",
  "fc_open": "Abrir →",
  "cal_h": "Calibración: previsión frente a lo ocurrido", "cal_said": "Previsión", "cal_happened": "Ocurrió",
- "cal_n": "Días", "c_bss": "Brier skill", "c_hits": "Dirección acertada", "c_q": "q (FDR)",
+ "cal_n": "Días", "c_bss": "Brier skill", "c_hits": "Aciertos", "c_q": "q (FDR)",
  "c_csharpe": "Sharpe de la parte constante", "c_days": "Días",
 },
 "pt": {
@@ -561,7 +568,7 @@ FC = {
  "fc_home": "Previsão do modelo para hoje em {n} moedas ({d})", "fc_research": "Previsão diária do modelo para cada moeda →",
  "fc_open": "Abrir →",
  "cal_h": "Calibração: previsão contra o que aconteceu", "cal_said": "Previsão", "cal_happened": "Aconteceu",
- "cal_n": "Dias", "c_bss": "Brier skill", "c_hits": "Direção certa", "c_q": "q (FDR)",
+ "cal_n": "Dias", "c_bss": "Brier skill", "c_hits": "Acertos", "c_q": "q (FDR)",
  "c_csharpe": "Sharpe da fração constante", "c_days": "Dias",
 },
 "tr": {
@@ -606,7 +613,7 @@ FC = {
  "fc_home": "{n} coin için modelin bugünkü tahmini ({d})", "fc_research": "Her coin için modelin günlük tahmini →",
  "fc_open": "Aç →",
  "cal_h": "Kalibrasyon: tahmin ve gerçekleşen", "cal_said": "Tahmin", "cal_happened": "Gerçekleşen",
- "cal_n": "Gün", "c_bss": "Brier skill", "c_hits": "Doğru yön", "c_q": "q (FDR)",
+ "cal_n": "Gün", "c_bss": "Brier skill", "c_hits": "Doğru tahmin", "c_q": "q (FDR)",
  "c_csharpe": "Sabit pay Sharpe", "c_days": "Gün",
 },
 "vi": {
@@ -651,7 +658,7 @@ FC = {
  "fc_home": "Dự báo của mô hình hôm nay cho {n} coin ({d})", "fc_research": "Dự báo hằng ngày của mô hình cho từng coin →",
  "fc_open": "Mở →",
  "cal_h": "Hiệu chuẩn: dự báo và thực tế", "cal_said": "Dự báo", "cal_happened": "Thực tế",
- "cal_n": "Ngày", "c_bss": "Brier skill", "c_hits": "Đoán đúng hướng", "c_q": "q (FDR)",
+ "cal_n": "Ngày", "c_bss": "Brier skill", "c_hits": "Đoán đúng", "c_q": "q (FDR)",
  "c_csharpe": "Sharpe tỷ trọng cố định", "c_days": "Ngày",
 },
 "zh": {
@@ -690,7 +697,7 @@ FC = {
  "fc_home": "模型今日对 {n} 个币的预测（{d}）", "fc_research": "模型对每个币的每日预测 →",
  "fc_open": "打开 →",
  "cal_h": "校准：预测与实际", "cal_said": "预测", "cal_happened": "实际",
- "cal_n": "天数", "c_bss": "Brier skill", "c_hits": "方向猜中", "c_q": "q (FDR)",
+ "cal_n": "天数", "c_bss": "Brier skill", "c_hits": "猜中", "c_q": "q (FDR)",
  "c_csharpe": "固定仓位 Sharpe", "c_days": "天数",
 },
 }

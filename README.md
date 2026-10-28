@@ -39,7 +39,7 @@ and automated agents re-test old ideas as new market data arrives.
 | Run it yourself or add your own idea | [Quickstart](#quickstart), [CONTRIBUTING.md](CONTRIBUTING.md) or just post it in [Discussions → Ideas](https://github.com/f1devbin/Crypto-Research-Labs/discussions/categories/ideas) |
 | Ask a question | [Discussions → Q&A](https://github.com/f1devbin/Crypto-Research-Labs/discussions/categories/q-a) |
 
-**The short answer so far: one idea passed (H-020, exchange deposits), and it is still being verified.** Daily trend rules and
+**The short answer so far: two ideas passed, and neither is a money machine.** H-020 (stay out of Bitcoin after heavy exchange deposits) is a trading rule that is still being re-checked on live data. H-028 shows that a model can forecast how big tomorrow's move will be (risk), while the same model cannot forecast its direction (H-027 failed). Daily trend rules and
 volatility targeting lower drawdowns, mostly because they spend less time in the market, but they
 don't win by a margin that luck can't explain. Fast minute-level signals lose to fees, and the
 famous calendar effects (Monday, turn of the month) did not survive after their papers were published.
@@ -118,8 +118,8 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-024 | Relative-strength rotation (top 3 by 1+3-day return, overheat and BTC trend filters), proposed by ChatGPT | ❌ Fail: worse than an equal-weight basket since 2020 (Sharpe 0.76 vs 1.13); slightly better since 2022 (0.44 vs 0.41, p = 0.04 > 0.0167) |
 | H-025 | Plain momentum rotation (top 3 by 1+3-day return) | ❌ Fail: Sharpe 0.91 vs 1.13 since 2020, 0.19 vs 0.41 since 2022; 210 rebalances a year |
 | H-026 | 1-day reversal (hold yesterday's 3 biggest losers) | ❌ Fail: −54 %/yr since 2022, fees eat it |
-| H-027 | Daily model: each coin's chance of rising above fees, better than its base rate (all 13 coins, 2022+) | ⏳ registered 2026-10-28, history test right after registration |
-| H-028 | Same model: chance of a bigger move than usual (volatility clusters, so skill is likelier here) | ⏳ registered 2026-10-28 |
+| H-027 | Daily model: each coin's chance of rising above fees, better than its base rate (all 13 coins, 2022+) | ❌ Fail: Brier skill −0.009 (worse than the base rate), overconfident (says 53 %, happens 46 %); paper portfolio beats holding on 4/13 coins |
+| H-028 | Same model: chance of a bigger move than usual (volatility clusters, so skill is likelier here) | ✅ Pass: Brier skill +0.038, p < 0.001, skill on 13/13 coins, well calibrated (says 74 %, happens 74 %). Forecasts risk, not direction |
 | H-029 | Live replication of H-027: forecasts published daily before 12:00 UTC, scored noon to noon | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
 | H-030 | Live replication of H-028 | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |

@@ -17,7 +17,14 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   proves they came before noon. New page "Today's model forecast" (7 languages), linked from home and Research.
 - `research-agents` manual runs can skip the weekly digest (`digest: false`).
 
+### Results
+- H-027 (direction) failed: pooled Brier skill −0.009, overconfident. H-028 (size of the next move) passed:
+  Brier skill +0.038, p < 0.001, skill on all 13 coins, well calibrated — the second pass in the project and the
+  first that forecasts risk rather than direction.
+
 ### Fixed
+- Home page: each idea that passed showed "the only one of N ideas"; the text now counts the passes, a risk
+  forecast says it predicts the size of moves, not their direction, and each card carries its live re-check.
 - The forecast-log commit failed when the data refresh had changed other tracked files (`git pull --rebase`
   refused); it now autostashes, and a failed commit no longer blocks the dashboard.
 - The forecast log, noon prices and monthly models are reset to their committed versions after the Actions cache
