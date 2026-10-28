@@ -31,23 +31,22 @@ Everything runs by itself on GitHub's servers. Nobody needs to keep a computer s
 - **Every Monday** old hypotheses are re-tested on the new data. If a verdict changes, an alert is sent.
 - **Once a month** an AI model may suggest new ideas. A person checks and locks each one before it is tested.
 """),
-("A tour of the home page", """
-Open the [home page]({site}). The menu at the top jumps to each section; the language links are below it.
+("The site's pages", """
+Open the [home page]({site}): it answers two questions — what has been found and what the market looks like today. The menu at the top leads to five pages; the language list is on the right.
 
-| Section | What is there | Why look |
+| Page | What is there | Why look |
 | --- | --- | --- |
-| New here? | 5 steps to read the page | once, to get the logic |
-| Market regime | cards: funding, stablecoins, fear & greed, BTC trend, BTC volatility, market breadth, EVER | today's "weather" in the market |
-| Coins | {n_coins} coins: price, 7 and 30 days, trend, volatility | quick overview, entry to each coin |
-| Bitcoin vs its 200-day average | BTC chart since 2020 | the long-term trend of the whole market |
-| Hypotheses | all {n_hyps} ideas with verdicts | what has been tested and how it ended |
-| Glossary | 10 terms in plain words | when a word is unclear |
-| Data freshness | last day of each data source | if numbers look old |
+| Home | the answer so far, today's market diagnosis, the rule that passed | a 30-second check |
+| [Market]({site}market.html) | diagnosis, cards (trend, nervousness, money flows), BTC chart, {n_coins} coins | today's "weather" in the market |
+| [Research]({site}research.html) | all {n_hyps} ideas with verdicts, which rule works on which coin, how we test | what has been tested and how it ended |
+| [Digest]({site}digest.html) | the week in plain words | once a week |
+| New here? | this course, how to read the site, the glossary | when something is unclear |
+| [About]({site}about.html) | how it runs, methodology, data sources and freshness | if numbers look old or you want details |
 
-**How to read a market card.** The big number is today's value. The framed word under it is the zone (for example "greed" or "above"). The line at the bottom shows the last 12 months. What matters is not the number itself but **a change of zone**: that is when an alert is sent (lesson 7).
+**How to read a market card.** The big number is today's value. The framed word under it is the zone (for example "greed" or "above"). The line at the bottom shows the last 12 months. "What is this?" opens a short explanation. What matters is not the number itself but **a change of zone**: that is when an alert is sent (lesson 7).
 """),
 ("How to read a coin page — SOL as an example", """
-Every coin has its own page. Home page → "Coins" → click **SOL Solana**, or open [Solana]({site}coins/SOLUSDT.html) directly. For other coins only the ticker in the address changes: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
+Every coin has its own page. Market → "Coins" → click **SOL Solana**, or open [Solana]({site}coins/SOLUSDT.html) directly. For other coins only the ticker in the address changes: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
 
 A coin page is read in four steps:
 
@@ -59,7 +58,7 @@ A coin page is read in four steps:
 **Three questions to ask about any coin:** is the price above or below its 200-day average? Is volatility higher or lower than usual? Is Bitcoin rising or falling (the last row of the rules table)?
 """),
 ("How to read a hypothesis", """
-Open any hypothesis from the table on the home page, for example [H-003]({site}hypotheses/H-003.html). At the top is a coloured verdict and a sentence "in plain words".
+Open any hypothesis from the table on the Research page, for example [H-003]({site}hypotheses/H-003.html). At the top is a coloured verdict and a sentence "in plain words".
 
 | Verdict | Meaning |
 | --- | --- |
@@ -79,7 +78,7 @@ Under the table is a chart of how 1 dollar would have grown with the rule (solid
 ("Watching Everscale (EVER)", """
 EVER is not on Binance, so its prices come from Gate.io. You can follow it in three places:
 
-1. **The EVER card** in "Market regime" on the home page: how far the price is from its 50-day average. Plus means the H-018 rule is "in the market", minus means "out".
+1. **The EVER card** on the Market page ("Coins" section): how far the price is from its 50-day average. Plus means the H-018 rule is "in the market", minus means "out".
 2. **The EVER page**: [Everscale]({site}coins/EVERUSDT.html), with a chart, numbers and the state of each rule.
 3. **Hypotheses H-018 and H-019**, tested on EVER. Since mid-2022 the SMA50 rule returned {ever_rule_cagr} a year against {ever_hold_cagr} for holding, with a worst drawdown of {ever_rule_dd} against {ever_hold_dd}.
 
@@ -116,7 +115,7 @@ If you know a little Python, read [CONTRIBUTING.md](https://github.com/f1devbin/
 If you want to act on something here, first ask: what happens to me if the rule stops working tomorrow?
 """),
 ("Practice: tasks for one week", """
-- [ ] Open the home page and find today's Fear & Greed zone.
+- [ ] Open the Market page and find today's Fear & Greed zone.
 - [ ] Find the coin with the highest volatility in the "Coins" table.
 - [ ] Open the SOL page: is the price above or below its 200-day average?
 - [ ] Open H-005 and explain in one sentence why it failed.
@@ -148,23 +147,22 @@ RU = [
 - **Каждый понедельник** старые гипотезы перепроверяются на новых данных. Если вердикт изменился, приходит уведомление.
 - **Раз в месяц** ИИ-модель может предложить новые идеи. Человек проверяет и фиксирует каждую до того, как её начнут тестировать.
 """),
-("Главная страница", """
-Откройте [главную страницу]({site}). Меню вверху ведёт к разделам, ниже — переключатель языка.
+("Страницы сайта", """
+Откройте [главную страницу]({site}): она отвечает на два вопроса — что найдено и какой рынок сегодня. Меню вверху ведёт на пять страниц, справа — выбор языка.
 
-| Раздел | Что там | Зачем смотреть |
+| Страница | Что там | Зачем смотреть |
 | --- | --- | --- |
-| Новичкам | 5 шагов «как читать страницу» | один раз, чтобы понять логику |
-| Рынок сейчас | карточки: фандинг, стейблкоины, страх и жадность, тренд BTC, волатильность BTC, ширина рынка, EVER | какая «погода» на рынке сегодня |
-| Монеты | {n_coins} монет: цена, 7 и 30 дней, тренд, волатильность | быстрый обзор и вход на страницу монеты |
-| Биткоин и 200-дневная | график BTC с 2020 года | долгосрочный тренд всего рынка |
-| Гипотезы | все {n_hyps} идей с вердиктами | что уже проверено и чем закончилось |
-| Словарь | 10 терминов простыми словами | когда встретилось непонятное слово |
-| Свежесть данных | последний день по каждому источнику | если цифры кажутся старыми |
+| Главная | итог исследований, диагноз рынка на сегодня, прошедшее правило | проверка за 30 секунд |
+| [Рынок]({site}market.html) | диагноз, карточки (тренд, нервозность, приток денег), график BTC, {n_coins} монет | какая «погода» на рынке сегодня |
+| [Исследования]({site}research.html) | все {n_hyps} идей с вердиктами, какое правило на какой монете работает, как мы проверяем | что уже проверено и чем закончилось |
+| [Сводки]({site}digest.html) | неделя простыми словами | раз в неделю |
+| Новичкам | этот курс, как читать сайт, словарь | когда что-то непонятно |
+| [О проекте]({site}about.html) | как всё работает, методика, источники и свежесть данных | если цифры кажутся старыми или нужны подробности |
 
-**Как читать карточку рынка.** Большое число — значение сегодня. Рамка под ним — зона (например, «жадность» или «выше»). Линия внизу — как показатель менялся за 12 месяцев. Важна не сама цифра, а **смена зоны**: именно тогда приходит уведомление (урок 7).
+**Как читать карточку рынка.** Большое число — значение сегодня. Рамка под ним — зона (например, «жадность» или «выше»). Линия внизу — как показатель менялся за 12 месяцев. «Что это?» раскрывает короткое пояснение. Важна не сама цифра, а **смена зоны**: именно тогда приходит уведомление (урок 7).
 """),
 ("Как смотреть монету — на примере SOL", """
-У каждой монеты своя страница. Главная → раздел «Монеты» → нажать **SOL Solana**, или сразу открыть [Solana]({site}coins/SOLUSDT.html). Для других монет меняется только тикер в адресе: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
+У каждой монеты своя страница. Рынок → раздел «Монеты» → нажать **SOL Solana**, или сразу открыть [Solana]({site}coins/SOLUSDT.html). Для других монет меняется только тикер в адресе: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
 
 Страница монеты читается за 4 шага:
 
@@ -176,7 +174,7 @@ RU = [
 **Три вопроса по любой монете:** цена выше или ниже 200-дневной средней? Волатильность выше или ниже обычного? Биткоин сейчас растёт или падает (последняя строка таблицы правил)?
 """),
 ("Как читать гипотезу", """
-Откройте любую гипотезу из таблицы на главной, например [H-003]({site}hypotheses/H-003.html). Вверху — цветной вердикт и фраза «простыми словами».
+Откройте любую гипотезу из таблицы на странице «Исследования», например [H-003]({site}hypotheses/H-003.html). Вверху — цветной вердикт и фраза «простыми словами».
 
 | Вердикт | Что значит |
 | --- | --- |
@@ -196,7 +194,7 @@ RU = [
 ("Следим за Everscale (EVER)", """
 EVER нет на Binance, поэтому цены берутся с Gate.io. Следить за ним можно в трёх местах:
 
-1. **Карточка EVER** в разделе «Рынок сейчас» на главной: насколько цена выше или ниже 50-дневной средней. Плюс — правило H-018 «в рынке», минус — «вне рынка».
+1. **Карточка EVER** на странице «Рынок» (раздел «Монеты»): насколько цена выше или ниже 50-дневной средней. Плюс — правило H-018 «в рынке», минус — «вне рынка».
 2. **Страница EVER**: [Everscale]({site}coins/EVERUSDT.html) — график, цифры и состояние каждого правила.
 3. **Гипотезы H-018 и H-019**, проверенные на EVER. С середины 2022 года правило SMA50 дало {ever_rule_cagr} в год против {ever_hold_cagr} при удержании, худшая просадка {ever_rule_dd} против {ever_hold_dd}.
 
@@ -233,7 +231,7 @@ EVER нет на Binance, поэтому цены берутся с Gate.io. С�
 Если хотите действовать по чему-то отсюда, сначала спросите себя: что будет со мной, если правило завтра перестанет работать?
 """),
 ("Практика: задания на неделю", """
-- [ ] Откройте главную и найдите сегодняшнюю зону индекса страха и жадности.
+- [ ] Откройте страницу «Рынок» и найдите сегодняшнюю зону индекса страха и жадности.
 - [ ] Найдите в таблице «Монеты» монету с самой высокой волатильностью.
 - [ ] Откройте страницу SOL: цена выше или ниже 200-дневной средней?
 - [ ] Откройте H-005 и объясните одной фразой, почему она не прошла.
@@ -265,23 +263,22 @@ Todo funciona solo en los servidores de GitHub. Nadie necesita tener un ordenado
 - **Cada lunes** las hipótesis antiguas se vuelven a probar con los datos nuevos. Si cambia un veredicto, se envía una alerta.
 - **Una vez al mes** un modelo de IA puede proponer ideas nuevas. Una persona revisa y bloquea cada una antes de probarla.
 """),
-("Un recorrido por la página principal", """
-Abre la [página principal]({site}). El menú de arriba lleva a cada sección; los idiomas están debajo.
+("Las páginas del sitio", """
+Abre la [página principal]({site}): responde dos preguntas — qué se ha encontrado y cómo está hoy el mercado. El menú de arriba lleva a cinco páginas; la lista de idiomas está a la derecha.
 
-| Sección | Qué hay | Para qué mirarla |
+| Página | Qué hay | Para qué mirarla |
 | --- | --- | --- |
-| ¿Eres nuevo? | 5 pasos para leer la página | una vez, para entender la lógica |
-| Mercado hoy | tarjetas: funding, stablecoins, miedo y codicia, tendencia BTC, volatilidad BTC, amplitud del mercado, EVER | el "clima" del mercado hoy |
-| Monedas | {n_coins} monedas: precio, 7 y 30 días, tendencia, volatilidad | vista rápida y acceso a cada moneda |
-| Bitcoin y su media de 200 días | gráfico de BTC desde 2020 | la tendencia de largo plazo del mercado |
-| Hipótesis | las {n_hyps} ideas con veredicto | qué se ha probado y cómo terminó |
-| Glosario | 10 términos en palabras sencillas | cuando una palabra no está clara |
-| Actualidad de los datos | último día de cada fuente | si los números parecen viejos |
+| Inicio | el resultado hasta ahora, el diagnóstico del mercado de hoy, la regla que pasó | un vistazo de 30 segundos |
+| [Mercado]({site}market.html) | diagnóstico, tarjetas (tendencia, nerviosismo, flujos de dinero), gráfico de BTC, {n_coins} monedas | el "clima" del mercado hoy |
+| [Investigación]({site}research.html) | las {n_hyps} ideas con veredicto, qué regla funciona en qué moneda, cómo probamos | qué se ha probado y cómo terminó |
+| [Resumen]({site}digest.html) | la semana en palabras sencillas | una vez por semana |
+| ¿Eres nuevo? | este curso, cómo leer el sitio, el glosario | cuando algo no está claro |
+| [Acerca de]({site}about.html) | cómo funciona, metodología, fuentes y actualidad de los datos | si los números parecen viejos o quieres detalles |
 
-**Cómo leer una tarjeta del mercado.** El número grande es el valor de hoy. La palabra enmarcada debajo es la zona (por ejemplo "codicia" o "por encima"). La línea inferior muestra los últimos 12 meses. Lo importante no es el número sino **el cambio de zona**: entonces llega una alerta (lección 7).
+**Cómo leer una tarjeta del mercado.** El número grande es el valor de hoy. La palabra enmarcada debajo es la zona (por ejemplo "codicia" o "por encima"). La línea inferior muestra los últimos 12 meses. "¿Qué es esto?" abre una explicación breve. Lo importante no es el número sino **el cambio de zona**: entonces se envía un aviso (lección 7).
 """),
 ("Cómo leer la página de una moneda — SOL como ejemplo", """
-Cada moneda tiene su página. Página principal → "Monedas" → pulsa **SOL Solana**, o abre [Solana]({site}coins/SOLUSDT.html) directamente. Para otras monedas solo cambia el ticker en la dirección: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
+Cada moneda tiene su página. Mercado → "Monedas" → pulsa **SOL Solana**, o abre [Solana]({site}coins/SOLUSDT.html) directamente. Para otras monedas solo cambia el ticker en la dirección: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
 
 La página se lee en cuatro pasos:
 
@@ -313,7 +310,7 @@ Bajo la tabla hay un gráfico de cómo habría crecido 1 dólar con la regla (l�
 ("Seguir a Everscale (EVER)", """
 EVER no está en Binance, así que sus precios vienen de Gate.io. Puedes seguirlo en tres lugares:
 
-1. **La tarjeta de EVER** en "Mercado hoy": cuánto se aleja el precio de su media de 50 días. Positivo = la regla H-018 está "dentro", negativo = "fuera".
+1. **La tarjeta de EVER** en la página Mercado (sección "Monedas"): cuánto se aleja el precio de su media de 50 días. Positivo = la regla H-018 está "dentro", negativo = "fuera".
 2. **La página de EVER**: [Everscale]({site}coins/EVERUSDT.html), con gráfico, cifras y el estado de cada regla.
 3. **Las hipótesis H-018 y H-019**, probadas en EVER. Desde mediados de 2022 la regla SMA50 rindió {ever_rule_cagr} al año frente a {ever_hold_cagr} manteniendo, con una caída máxima de {ever_rule_dd} frente a {ever_hold_dd}.
 
@@ -350,7 +347,7 @@ Si sabes algo de Python, lee [CONTRIBUTING.md](https://github.com/f1devbin/Crypt
 Si quieres actuar según algo de aquí, pregúntate primero: ¿qué me pasa si la regla deja de funcionar mañana?
 """),
 ("Práctica: tareas para una semana", """
-- [ ] Abre la página principal y encuentra la zona de hoy del índice de miedo y codicia.
+- [ ] Abre la página Mercado y encuentra la zona de hoy del índice de miedo y codicia.
 - [ ] Encuentra en la tabla "Monedas" la moneda con mayor volatilidad.
 - [ ] Abre la página de SOL: ¿el precio está por encima o por debajo de su media de 200 días?
 - [ ] Abre H-005 y explica en una frase por qué no superó la prueba.
@@ -382,23 +379,22 @@ Tudo roda sozinho nos servidores do GitHub. Ninguém precisa deixar um computado
 - **Toda segunda-feira** as hipóteses antigas são testadas de novo com os dados novos. Se um veredicto muda, um alerta é enviado.
 - **Uma vez por mês** um modelo de IA pode sugerir ideias novas. Uma pessoa revisa e trava cada uma antes do teste.
 """),
-("Um passeio pela página principal", """
-Abra a [página principal]({site}). O menu no topo leva a cada seção; os idiomas ficam logo abaixo.
+("As páginas do site", """
+Abra a [página principal]({site}): ela responde duas perguntas — o que foi encontrado e como está o mercado hoje. O menu no topo leva a cinco páginas; a lista de idiomas fica à direita.
 
-| Seção | O que tem | Por que olhar |
+| Página | O que tem | Por que olhar |
 | --- | --- | --- |
-| Novo aqui? | 5 passos para ler a página | uma vez, para entender a lógica |
-| Mercado hoje | cartões: funding, stablecoins, medo e ganância, tendência do BTC, volatilidade do BTC, amplitude do mercado, EVER | o "clima" do mercado hoje |
-| Moedas | {n_coins} moedas: preço, 7 e 30 dias, tendência, volatilidade | visão rápida e acesso a cada moeda |
-| Bitcoin e sua média de 200 dias | gráfico do BTC desde 2020 | a tendência de longo prazo do mercado |
-| Hipóteses | todas as {n_hyps} ideias com veredicto | o que já foi testado e como terminou |
-| Glossário | 10 termos em palavras simples | quando uma palavra não está clara |
-| Atualização dos dados | último dia de cada fonte | se os números parecem antigos |
+| Início | o resultado até agora, o diagnóstico do mercado de hoje, a regra que passou | uma checagem de 30 segundos |
+| [Mercado]({site}market.html) | diagnóstico, cartões (tendência, nervosismo, fluxos de dinheiro), gráfico do BTC, {n_coins} moedas | o "clima" do mercado hoje |
+| [Pesquisa]({site}research.html) | todas as {n_hyps} ideias com veredicto, qual regra funciona em qual moeda, como testamos | o que já foi testado e como terminou |
+| [Resumo]({site}digest.html) | a semana em palavras simples | uma vez por semana |
+| Novo aqui? | este curso, como ler o site, o glossário | quando algo não está claro |
+| [Sobre]({site}about.html) | como funciona, metodologia, fontes e atualização dos dados | se os números parecem antigos ou você quer detalhes |
 
-**Como ler um cartão do mercado.** O número grande é o valor de hoje. A palavra emoldurada abaixo é a faixa (por exemplo "ganância" ou "acima"). A linha de baixo mostra os últimos 12 meses. O que importa não é o número, e sim **a mudança de faixa**: é quando chega um alerta (lição 7).
+**Como ler um cartão do mercado.** O número grande é o valor de hoje. A palavra emoldurada abaixo é a faixa (por exemplo "ganância" ou "acima"). A linha de baixo mostra os últimos 12 meses. "O que é isto?" abre uma explicação curta. O que importa não é o número, mas **a mudança de faixa**: é quando chega um alerta (lição 7).
 """),
 ("Como ler a página de uma moeda — SOL como exemplo", """
-Cada moeda tem sua página. Página principal → "Moedas" → clique em **SOL Solana**, ou abra [Solana]({site}coins/SOLUSDT.html) direto. Para outras moedas só muda o ticker no endereço: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
+Cada moeda tem sua página. Mercado → "Moedas" → clique em **SOL Solana**, ou abra [Solana]({site}coins/SOLUSDT.html) direto. Para outras moedas só muda o ticker no endereço: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
 
 A página é lida em quatro passos:
 
@@ -430,7 +426,7 @@ Abaixo da tabela há um gráfico de como 1 dólar teria crescido com a regra (li
 ("Acompanhando a Everscale (EVER)", """
 A EVER não está na Binance, então os preços vêm da Gate.io. Dá para acompanhar em três lugares:
 
-1. **O cartão da EVER** em "Mercado hoje": quanto o preço está longe da média de 50 dias. Positivo = a regra H-018 está "no mercado", negativo = "fora".
+1. **O cartão da EVER** na página Mercado (seção "Moedas"): quanto o preço está longe da média de 50 dias. Positivo = a regra H-018 está "no mercado", negativo = "fora".
 2. **A página da EVER**: [Everscale]({site}coins/EVERUSDT.html), com gráfico, números e o estado de cada regra.
 3. **As hipóteses H-018 e H-019**, testadas na EVER. Desde meados de 2022 a regra SMA50 rendeu {ever_rule_cagr} ao ano contra {ever_hold_cagr} segurando, com pior queda de {ever_rule_dd} contra {ever_hold_dd}.
 
@@ -467,7 +463,7 @@ Se você sabe um pouco de Python, leia o [CONTRIBUTING.md](https://github.com/f1
 Se quiser agir com base em algo daqui, pergunte-se antes: o que acontece comigo se a regra parar de funcionar amanhã?
 """),
 ("Prática: tarefas para uma semana", """
-- [ ] Abra a página principal e encontre a faixa de hoje do índice de medo e ganância.
+- [ ] Abra a página Mercado e encontre a faixa de hoje do índice de medo e ganância.
 - [ ] Encontre na tabela "Moedas" a moeda com maior volatilidade.
 - [ ] Abra a página da SOL: o preço está acima ou abaixo da média de 200 dias?
 - [ ] Abra a H-005 e explique em uma frase por que ela foi reprovada.
@@ -499,23 +495,22 @@ Her şey GitHub sunucularında kendiliğinden çalışır. Kimsenin bilgisayarı
 - **Her pazartesi** eski hipotezler yeni verilerle yeniden test edilir. Bir karar değişirse uyarı gönderilir.
 - **Ayda bir** bir yapay zekâ modeli yeni fikirler önerebilir. Bir insan her birini test edilmeden önce kontrol eder ve kilitler.
 """),
-("Ana sayfa turu", """
-[Ana sayfayı]({site}) açın. Üstteki menü her bölüme götürür; dil bağlantıları hemen altındadır.
+("Sitenin sayfaları", """
+[Ana sayfayı]({site}) açın: iki soruyu yanıtlar — ne bulundu ve piyasa bugün nasıl. Üstteki menü beş sayfaya götürür; dil listesi sağdadır.
 
-| Bölüm | Ne var | Neden bakılır |
+| Sayfa | Ne var | Neden bakılır |
 | --- | --- | --- |
-| Yeni misiniz? | sayfayı okumak için 5 adım | bir kez, mantığı anlamak için |
-| Piyasa bugün | kartlar: funding, stablecoinler, korku ve açgözlülük, BTC trendi, BTC volatilitesi, piyasa genişliği, EVER | bugün piyasanın "havası" |
-| Coinler | {n_coins} coin: fiyat, 7 ve 30 gün, trend, volatilite | hızlı bakış ve her coinin sayfası |
-| Bitcoin ve 200 günlük ortalaması | 2020'den beri BTC grafiği | tüm piyasanın uzun vadeli trendi |
-| Hipotezler | {n_hyps} fikrin tümü ve kararları | neler test edildi, nasıl sonuçlandı |
-| Sözlük | basit dille 10 terim | bir kelime anlaşılmadığında |
-| Veri güncelliği | her kaynağın son günü | rakamlar eski görünürse |
+| Ana sayfa | şimdiye kadarki sonuç, bugünkü piyasa teşhisi, geçen kural | 30 saniyelik kontrol |
+| [Piyasa]({site}market.html) | teşhis, kartlar (trend, gerginlik, para akışı), BTC grafiği, {n_coins} coin | bugün piyasanın "havası" |
+| [Araştırma]({site}research.html) | {n_hyps} fikrin tümü ve kararları, hangi kural hangi coinde işe yarıyor, nasıl test ediyoruz | neler test edildi, nasıl sonuçlandı |
+| [Özet]({site}digest.html) | basit dille hafta | haftada bir |
+| Yeni misiniz? | bu kurs, siteyi okuma, sözlük | bir şey anlaşılmadığında |
+| [Hakkında]({site}about.html) | nasıl çalışır, yöntem, veri kaynakları ve güncellik | rakamlar eski görünürse ya da ayrıntı isterseniz |
 
-**Piyasa kartı nasıl okunur.** Büyük sayı bugünkü değerdir. Altındaki çerçeveli kelime aralıktır (örneğin "açgözlülük" ya da "üstünde"). Alttaki çizgi son 12 ayı gösterir. Önemli olan sayının kendisi değil, **aralığın değişmesidir**: uyarı o zaman gelir (ders 7).
+**Piyasa kartı nasıl okunur.** Büyük sayı bugünkü değerdir. Altındaki çerçeveli kelime aralıktır (örneğin "açgözlülük" ya da "üstünde"). Alttaki çizgi son 12 ayı gösterir. "Bu nedir?" kısa bir açıklama açar. Önemli olan sayının kendisi değil, **aralık değişimidir**: o zaman bildirim gelir (7. ders).
 """),
 ("Bir coin sayfası nasıl okunur — SOL örneği", """
-Her coinin kendi sayfası var. Ana sayfa → "Coinler" → **SOL Solana**'ya tıklayın ya da doğrudan [Solana]({site}coins/SOLUSDT.html) sayfasını açın. Diğer coinler için adreste yalnızca ticker değişir: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
+Her coinin kendi sayfası var. Piyasa → "Coinler" → **SOL Solana**'ya tıklayın ya da doğrudan [Solana]({site}coins/SOLUSDT.html) sayfasını açın. Diğer coinler için adreste yalnızca ticker değişir: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
 
 Sayfa dört adımda okunur:
 
@@ -527,7 +522,7 @@ Sayfa dört adımda okunur:
 **Her coin için üç soru:** fiyat 200 günlük ortalamanın üstünde mi altında mı? Volatilite normalden yüksek mi düşük mü? Bitcoin yükseliyor mu düşüyor mu (kural tablosunun son satırı)?
 """),
 ("Bir hipotez nasıl okunur", """
-Ana sayfadaki tablodan herhangi bir hipotezi açın, örneğin [H-003]({site}hypotheses/H-003.html). Üstte renkli bir karar ve "kısaca" cümlesi var.
+Araştırma sayfasındaki tablodan herhangi bir hipotezi açın, örneğin [H-003]({site}hypotheses/H-003.html). Üstte renkli bir karar ve "kısaca" cümlesi var.
 
 | Karar | Anlamı |
 | --- | --- |
@@ -547,7 +542,7 @@ Tablonun altında 1 doların kuralla (düz çizgi) ve tutarak (kesikli) nasıl b
 ("Everscale (EVER) takibi", """
 EVER Binance'te yok, bu yüzden fiyatlar Gate.io'dan geliyor. Üç yerden takip edebilirsiniz:
 
-1. Ana sayfada "Piyasa bugün" bölümündeki **EVER kartı**: fiyatın 50 günlük ortalamadan ne kadar uzak olduğu. Artı = H-018 kuralı "piyasada", eksi = "dışarıda".
+1. Piyasa sayfasındaki ("Coinler" bölümü) **EVER kartı**: fiyatın 50 günlük ortalamadan ne kadar uzak olduğu. Artı = H-018 kuralı "piyasada", eksi = "dışarıda".
 2. **EVER sayfası**: [Everscale]({site}coins/EVERUSDT.html) — grafik, rakamlar ve her kuralın durumu.
 3. EVER üzerinde test edilen **H-018 ve H-019 hipotezleri**. 2022 ortasından beri SMA50 kuralı yılda {ever_rule_cagr} getirdi, tutmak ise {ever_hold_cagr}; en kötü düşüş {ever_rule_dd}, tutmada {ever_hold_dd}.
 
@@ -584,7 +579,7 @@ Biraz Python biliyorsanız [CONTRIBUTING.md](https://github.com/f1devbin/Crypto-
 Buradaki bir şeye göre hareket etmek isterseniz önce kendinize sorun: kural yarın çalışmayı bırakırsa bana ne olur?
 """),
 ("Pratik: bir haftalık görevler", """
-- [ ] Ana sayfayı açın ve korku ve açgözlülük endeksinin bugünkü aralığını bulun.
+- [ ] Piyasa sayfasını açın ve korku ve açgözlülük endeksinin bugünkü aralığını bulun.
 - [ ] "Coinler" tablosunda volatilitesi en yüksek coini bulun.
 - [ ] SOL sayfasını açın: fiyat 200 günlük ortalamanın üstünde mi altında mı?
 - [ ] H-005'i açın ve neden kaldığını bir cümleyle açıklayın.
@@ -616,23 +611,22 @@ Mọi thứ tự chạy trên máy chủ của GitHub. Không ai cần để má
 - **Mỗi thứ Hai** các giả thuyết cũ được kiểm tra lại với dữ liệu mới. Nếu kết luận thay đổi, cảnh báo được gửi đi.
 - **Mỗi tháng một lần** một mô hình AI có thể đề xuất ý tưởng mới. Con người xem xét và khóa từng ý tưởng trước khi kiểm tra.
 """),
-("Tham quan trang chủ", """
-Mở [trang chủ]({site}). Menu phía trên dẫn tới từng mục; liên kết ngôn ngữ nằm ngay bên dưới.
+("Các trang của website", """
+Mở [trang chủ]({site}): trang trả lời hai câu hỏi — đã tìm ra gì và thị trường hôm nay thế nào. Menu phía trên dẫn tới năm trang; danh sách ngôn ngữ ở bên phải.
 
-| Mục | Có gì | Xem để làm gì |
+| Trang | Có gì | Xem để làm gì |
 | --- | --- | --- |
-| Người mới? | 5 bước để đọc trang | một lần, để hiểu logic |
-| Thị trường hôm nay | các thẻ: funding, stablecoin, sợ hãi & tham lam, xu hướng BTC, biến động BTC, độ rộng thị trường, EVER | "thời tiết" thị trường hôm nay |
-| Đồng coin | {n_coins} coin: giá, 7 và 30 ngày, xu hướng, biến động | xem nhanh và vào trang từng coin |
-| Bitcoin và trung bình 200 ngày | biểu đồ BTC từ 2020 | xu hướng dài hạn của cả thị trường |
-| Giả thuyết | toàn bộ {n_hyps} ý tưởng kèm kết luận | đã kiểm tra gì và kết quả ra sao |
-| Thuật ngữ | 10 thuật ngữ bằng lời đơn giản | khi gặp từ khó hiểu |
-| Độ mới của dữ liệu | ngày cuối của từng nguồn | nếu số liệu có vẻ cũ |
+| Trang chủ | kết quả đến nay, chẩn đoán thị trường hôm nay, quy tắc đã đạt | kiểm tra trong 30 giây |
+| [Thị trường]({site}market.html) | chẩn đoán, các thẻ (xu hướng, mức căng thẳng, dòng tiền), biểu đồ BTC, {n_coins} coin | "thời tiết" thị trường hôm nay |
+| [Nghiên cứu]({site}research.html) | toàn bộ {n_hyps} ý tưởng kèm kết luận, quy tắc nào hợp với coin nào, cách chúng tôi kiểm tra | đã kiểm tra gì và kết quả ra sao |
+| [Tóm tắt]({site}digest.html) | một tuần bằng lời đơn giản | mỗi tuần một lần |
+| Người mới | khóa học này, cách đọc trang, thuật ngữ | khi có điều chưa rõ |
+| [Giới thiệu]({site}about.html) | cách vận hành, phương pháp, nguồn và độ mới của dữ liệu | nếu số liệu có vẻ cũ hoặc bạn muốn chi tiết |
 
-**Cách đọc thẻ thị trường.** Số lớn là giá trị hôm nay. Chữ đóng khung bên dưới là vùng (ví dụ "tham lam" hoặc "trên"). Đường ở dưới cùng là 12 tháng gần nhất. Điều quan trọng không phải con số mà là **việc đổi vùng**: lúc đó cảnh báo được gửi (bài 7).
+**Cách đọc thẻ thị trường.** Số lớn là giá trị hôm nay. Chữ đóng khung bên dưới là vùng (ví dụ "tham lam" hoặc "trên"). Đường ở dưới cùng là 12 tháng gần nhất. "Đây là gì?" mở phần giải thích ngắn. Điều quan trọng không phải con số mà là **sự đổi vùng**: lúc đó thông báo được gửi (bài 7).
 """),
 ("Cách đọc trang một đồng coin — ví dụ SOL", """
-Mỗi đồng coin có trang riêng. Trang chủ → "Đồng coin" → nhấn **SOL Solana**, hoặc mở thẳng [Solana]({site}coins/SOLUSDT.html). Với coin khác chỉ đổi mã trong địa chỉ: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
+Mỗi đồng coin có trang riêng. Thị trường → "Các đồng coin" → nhấn **SOL Solana**, hoặc mở thẳng [Solana]({site}coins/SOLUSDT.html). Với coin khác chỉ đổi mã trong địa chỉ: `ETHUSDT`, `BTCUSDT`, `EVERUSDT`…
 
 Trang được đọc trong bốn bước:
 
@@ -644,7 +638,7 @@ Trang được đọc trong bốn bước:
 **Ba câu hỏi cho mọi đồng coin:** giá trên hay dưới trung bình 200 ngày? Biến động cao hay thấp hơn thường lệ? Bitcoin đang tăng hay giảm (dòng cuối bảng quy tắc)?
 """),
 ("Cách đọc một giả thuyết", """
-Mở bất kỳ giả thuyết nào trong bảng ở trang chủ, ví dụ [H-003]({site}hypotheses/H-003.html). Phía trên có kết luận màu và một câu "nói đơn giản".
+Mở bất kỳ giả thuyết nào trong bảng ở trang Nghiên cứu, ví dụ [H-003]({site}hypotheses/H-003.html). Phía trên có kết luận màu và một câu "nói đơn giản".
 
 | Kết luận | Ý nghĩa |
 | --- | --- |
@@ -664,7 +658,7 @@ Dưới bảng là biểu đồ 1 đô la tăng thế nào theo quy tắc (nét 
 ("Theo dõi Everscale (EVER)", """
 EVER không có trên Binance, nên giá lấy từ Gate.io. Bạn có thể theo dõi ở ba nơi:
 
-1. **Thẻ EVER** trong "Thị trường hôm nay" ở trang chủ: giá cách trung bình 50 ngày bao xa. Dương = quy tắc H-018 "trong thị trường", âm = "đứng ngoài".
+1. **Thẻ EVER** ở trang Thị trường (mục "Các đồng coin"): giá cách trung bình 50 ngày bao xa. Dương = quy tắc H-018 "trong thị trường", âm = "đứng ngoài".
 2. **Trang EVER**: [Everscale]({site}coins/EVERUSDT.html), có biểu đồ, số liệu và trạng thái từng quy tắc.
 3. **Giả thuyết H-018 và H-019**, kiểm tra trên EVER. Từ giữa 2022 quy tắc SMA50 đạt {ever_rule_cagr} mỗi năm so với {ever_hold_cagr} khi giữ, sụt giảm tệ nhất {ever_rule_dd} so với {ever_hold_dd}.
 
@@ -701,7 +695,7 @@ Nếu biết chút Python, hãy đọc [CONTRIBUTING.md](https://github.com/f1de
 Nếu muốn hành động theo điều gì đó ở đây, trước hết hãy tự hỏi: chuyện gì xảy ra với tôi nếu ngày mai quy tắc ngừng hiệu quả?
 """),
 ("Thực hành: bài tập trong một tuần", """
-- [ ] Mở trang chủ và tìm vùng hôm nay của chỉ số sợ hãi & tham lam.
+- [ ] Mở trang Thị trường và tìm vùng hôm nay của chỉ số sợ hãi & tham lam.
 - [ ] Tìm trong bảng "Đồng coin" đồng có biến động cao nhất.
 - [ ] Mở trang SOL: giá trên hay dưới trung bình 200 ngày?
 - [ ] Mở H-005 và giải thích bằng một câu vì sao nó không đạt.
@@ -733,23 +727,22 @@ ZH = [
 - **每周一**：用新数据重新检验旧假设。结论发生变化时会发送提醒。
 - **每月一次**：AI 模型可以提出新想法。每个想法在检验前都由人审核并锁定。
 """),
-("首页导览", """
-打开[首页]({site})。顶部菜单可跳转到各个部分，语言链接在其下方。
+("网站的各个页面", """
+打开[首页]({site})：它回答两个问题——发现了什么，以及今天的市场如何。顶部菜单通往五个页面，右侧是语言列表。
 
-| 部分 | 内容 | 为什么看 |
+| 页面 | 内容 | 为什么看 |
 | --- | --- | --- |
-| 新手指南 | 阅读本页的 5 个步骤 | 看一次，理解逻辑 |
-| 今日市场 | 卡片：资金费率、稳定币、恐惧与贪婪、BTC 趋势、BTC 波动率、市场广度、EVER | 今天市场的“天气” |
-| 币种 | {n_coins} 个币：价格、7 天和 30 天、趋势、波动率 | 快速概览并进入各币页面 |
-| 比特币与其 200 日均线 | 2020 年以来的 BTC 图表 | 整个市场的长期趋势 |
-| 假设 | 全部 {n_hyps} 个想法及结论 | 检验过什么、结果如何 |
-| 术语 | 10 个术语的通俗解释 | 遇到看不懂的词时 |
-| 数据新鲜度 | 每个数据源的最新日期 | 数字看起来过时时 |
+| 首页 | 目前的结论、今日市场诊断、通过检验的规则 | 30 秒速览 |
+| [市场]({site}market.html) | 诊断、卡片（趋势、紧张程度、资金流向）、BTC 图表、{n_coins} 个币 | 今天市场的“天气” |
+| [研究]({site}research.html) | 全部 {n_hyps} 个想法及结论、哪条规则适用于哪个币、我们如何检验 | 检验过什么、结果如何 |
+| [摘要]({site}digest.html) | 用通俗语言讲一周 | 每周一次 |
+| 新手入门 | 本课程、如何阅读网站、术语表 | 遇到不明白的地方时 |
+| [关于]({site}about.html) | 运行方式、方法、数据来源与新鲜度 | 数字看起来过时或想了解细节时 |
 
-**如何阅读市场卡片。**大数字是今天的数值。下方带框的词是所处区间（例如“贪婪”或“高于”）。底部的线显示最近 12 个月。重要的不是数字本身，而是**区间的变化**：这时会发送提醒（第 7 课）。
+**如何阅读市场卡片。**大数字是今天的数值。下方带框的词是所处区间（例如“贪婪”或“高于”）。底部的线显示最近 12 个月。“这是什么？”会展开简短说明。重要的不是数字本身，而是**区间的变化**：这时会发送提醒（第 7 课）。
 """),
 ("如何阅读币种页面——以 SOL 为例", """
-每个币都有自己的页面。首页 →“币种”→ 点击 **SOL Solana**，或直接打开 [Solana]({site}coins/SOLUSDT.html)。其他币只需改地址里的代码：`ETHUSDT`、`BTCUSDT`、`EVERUSDT`……
+每个币都有自己的页面。市场 →“币种”→ 点击 **SOL Solana**，或直接打开 [Solana]({site}coins/SOLUSDT.html)。其他币只需改地址里的代码：`ETHUSDT`、`BTCUSDT`、`EVERUSDT`……
 
 页面分四步阅读：
 
@@ -761,7 +754,7 @@ ZH = [
 **对任何币都可以问的三个问题：**价格高于还是低于 200 日均线？波动率高于还是低于平常？比特币在涨还是在跌（规则表最后一行）？
 """),
 ("如何阅读一个假设", """
-从首页表格打开任意假设，例如 [H-003]({site}hypotheses/H-003.html)。顶部是带颜色的结论和一句“通俗地说”。
+从“研究”页的表格打开任意假设，例如 [H-003]({site}hypotheses/H-003.html)。顶部是带颜色的结论和一句“通俗地说”。
 
 | 结论 | 含义 |
 | --- | --- |
@@ -781,7 +774,7 @@ ZH = [
 ("关注 Everscale (EVER)", """
 EVER 不在 Binance 上市，所以价格来自 Gate.io。可以在三个地方关注它：
 
-1. 首页“今日市场”中的 **EVER 卡片**：价格离 50 日均线有多远。正值 = H-018 规则“持仓”，负值 = “空仓”。
+1. “市场”页（“币种”部分）中的 **EVER 卡片**：价格离 50 日均线有多远。正值 = H-018 规则“持仓”，负值 = “空仓”。
 2. **EVER 页面**：[Everscale]({site}coins/EVERUSDT.html)，包含图表、数据和每条规则的状态。
 3. 在 EVER 上检验的 **H-018 和 H-019 假设**。自 2022 年中以来，SMA50 规则的年化收益为 {ever_rule_cagr}，持有为 {ever_hold_cagr}；最大回撤 {ever_rule_dd}，持有为 {ever_hold_dd}。
 
@@ -818,7 +811,7 @@ EVER 不在 Binance 上市，所以价格来自 Gate.io。可以在三个地方�
 如果你想根据这里的内容采取行动，请先问自己：如果规则明天失效，我会怎样？
 """),
 ("练习：一周任务", """
-- [ ] 打开首页，找到恐惧与贪婪指数今天所处的区间。
+- [ ] 打开“市场”页，找到恐惧与贪婪指数今天所处的区间。
 - [ ] 在“币种”表中找到波动率最高的币。
 - [ ] 打开 SOL 页面：价格高于还是低于 200 日均线？
 - [ ] 打开 H-005，用一句话解释它为什么未通过。

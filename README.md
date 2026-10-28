@@ -33,7 +33,7 @@ and automated agents re-test old ideas as new market data arrives.
 |---|---|
 | Learn from zero, step by step | the **[course for beginners](https://f1devbin.github.io/Crypto-Research-Labs/course.html)**: 10 short lessons in 7 languages, numbers updated daily ([на русском](https://f1devbin.github.io/Crypto-Research-Labs/ru/course.html)) |
 | See today's market and every result, with plain-language explanations | the **[live dashboard](https://f1devbin.github.io/Crypto-Research-Labs/)** (7 languages) |
-| Understand the words (Sharpe, drawdown, p-value, funding…) | the glossary on the dashboard, or [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
+| Understand the words (Sharpe, drawdown, p-value, funding…) | the [glossary](https://f1devbin.github.io/Crypto-Research-Labs/course.html#glossary) on the beginners' page, or [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
 | Know what was found | [docs/FINDINGS.md](docs/FINDINGS.md) |
 | Which coins | BTC, ETH, SOL; for independent confirmation BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX; Everscale (EVER) and Gram (GRAM, prev. Toncoin) from Gate.io. Any Binance spot pair can be added |
 | Run it yourself or add your own idea | [Quickstart](#quickstart), [CONTRIBUTING.md](CONTRIBUTING.md) or just post it in [Discussions → Ideas](https://github.com/f1devbin/Crypto-Research-Labs/discussions/categories/ideas) |
@@ -46,26 +46,38 @@ famous calendar effects (Monday, turn of the month) did not survive after their 
 
 ## What the dashboard shows
 
-| Market regime: what the market looks like today | One hypothesis: numbers and equity curve |
-|---|---|
-| ![Market regime](docs/screenshots/regime.png) | ![Hypothesis page](docs/screenshots/hypothesis.png) |
+The site has five pages, each answering one question. The home page stays short: what has been found and what
+the market looks like today; everything for beginners is one click away.
 
-| One coin: chart, numbers and what each tested rule says today | Russian version |
+| Page | Question it answers |
 |---|---|
-| ![Coin page](docs/screenshots/coin-ru.png) | ![Russian dashboard](docs/screenshots/dashboard-ru.png) |
+| [Home](https://f1devbin.github.io/Crypto-Research-Labs/) | What has been found, and what does the market look like today? |
+| [Market](https://f1devbin.github.io/Crypto-Research-Labs/market.html) | Today's diagnosis, indicators grouped by trend, nervousness and money flows, the BTC chart, every coin |
+| [Research](https://f1devbin.github.io/Crypto-Research-Labs/research.html) | Every hypothesis and its verdict (filter by verdict), which rule works on which coin, how we test |
+| [Digest](https://f1devbin.github.io/Crypto-Research-Labs/digest.html) | What happened this week, in plain words |
+| [New here?](https://f1devbin.github.io/Crypto-Research-Labs/course.html) | How to read the site, a 10-lesson course and the glossary |
+| [About](https://f1devbin.github.io/Crypto-Research-Labs/about.html) | How it runs, methodology, data sources and freshness |
+
+| Market: what the market looks like today | Research: every idea and its verdict |
+|---|---|
+| ![Market page](docs/screenshots/market.png) | ![Research page](docs/screenshots/research.png) |
+
+| One hypothesis: numbers and equity curve | One coin: chart, numbers and what each tested rule says today |
+|---|---|
+| ![Hypothesis page](docs/screenshots/hypothesis.png) | ![Coin page](docs/screenshots/coin.png) |
 
 Every coin has its own page (BTC, ETH, SOL, BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX, EVER, GRAM) with trend, volatility,
 distance from its peak, what $100 invested a year ago is worth today and its correlation with Bitcoin, for example
 [Solana](https://f1devbin.github.io/Crypto-Research-Labs/coins/SOLUSDT.html) or
-[Everscale](https://f1devbin.github.io/Crypto-Research-Labs/ru/coins/EVERUSDT.html).
+[Everscale](https://f1devbin.github.io/Crypto-Research-Labs/coins/EVERUSDT.html).
 
-The home page opens with a **market diagnosis in plain words**: one line (uptrend / mixed / downtrend)
+The home and Market pages open with a **market diagnosis in plain words**: one line (uptrend / mixed / downtrend)
 and the reasons behind it (Bitcoin's trend, how many coins are rising, volatility, mood, stablecoin money,
 the one rule that passed). Every coin page has the same kind of diagnosis for that coin.
 
 **Which rule works on which coin.** A rule that works on Bitcoin may fail on Solana. Every rule tested in any
 hypothesis is applied to every coin since 2022 (fees included), with a false-discovery check across the whole
-table so lucky combinations are not mistaken for findings. The matrix is on the home page and in
+table so lucky combinations are not mistaken for findings. The matrix is on the Research page and in
 [reports/COVERAGE.md](reports/COVERAGE.md); a ✅ on a new coin is only a candidate for a new pre-registered test.
 
 Every Monday a language model retells the week in plain words, in all 7 languages: [weekly digest](https://f1devbin.github.io/Crypto-Research-Labs/digest.html) (needs a free Groq or an Anthropic key, see Setup).
@@ -73,7 +85,8 @@ Every Monday a language model retells the week in plain words, in all 7 language
 Tables can be sorted by clicking a column header. Hypotheses waiting for new data (H-022) show how many days
 of it have been collected.
 
-The site is rebuilt every day by GitHub Actions from real Binance, OKX, DefiLlama,
+The design is high-contrast with depth (raised cards, a 3D verdict field, a 3D gauge) that never touches the text or the charts; motion turns off with the system "reduce motion" setting.
+The site is rebuilt every morning by GitHub Actions, as soon as every source has published yesterday's data, from real Binance, OKX, DefiLlama,
 alternative.me and BGeometrics data. Every page is fully rendered HTML, with `hreflang` language
 versions, a sitemap and structured data, so it is readable without JavaScript and by search engines.
 

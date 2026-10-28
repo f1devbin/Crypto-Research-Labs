@@ -402,7 +402,8 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
         shutil.rmtree(out_dir)
     today = now.date().isoformat()
     entries = ([(None, today)] + [(h["id"], (h.get("run_at") or today)[:10]) for h in data["hypotheses"]]
-               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("course", today), ("setup", today),
+               + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("market", today), ("research", today),
+                  ("about", today), ("course", today), ("setup", today),
                   ("digest", data["digests"][0]["date"] if data["digests"] else today)])
     pages = 0
     for lang in LANGS:
@@ -411,6 +412,8 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
             path.parent.mkdir(parents=True, exist_ok=True)
             if hid is None:
                 html = H.index_page(lang, data, base, verification)
+            elif hid in ("market", "research", "about"):
+                html = getattr(H, f"{hid}_page")(lang, data, base, verification)
             elif hid == "digest":
                 html = H.digest_page(lang, data, base, verification)
             elif hid == "setup":
@@ -429,6 +432,7 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
     _w(out_dir / "robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {base}sitemap.xml\n")
     _w(out_dir / "charts.js", H.CHART_SCRIPT)
     _w(out_dir / "sort.js", H.SORT_SCRIPT)
+    _w(out_dir / "ui.js", H.UI_SCRIPT)
     _w(out_dir / "favicon.svg", H.FAVICON)
     _w(out_dir / "404.html", H.NOT_FOUND)
     _w(out_dir / ".nojekyll", "")
