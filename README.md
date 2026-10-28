@@ -54,6 +54,7 @@ the market looks like today; everything for beginners is one click away.
 | [Home](https://f1devbin.github.io/Crypto-Research-Labs/) | What has been found, and what does the market look like today? |
 | [Market](https://f1devbin.github.io/Crypto-Research-Labs/market.html) | Today's diagnosis, indicators grouped by trend, nervousness and money flows, the BTC chart, every coin |
 | [Research](https://f1devbin.github.io/Crypto-Research-Labs/research.html) | Every hypothesis and its verdict (filter by verdict), which rule works on which coin, how we test |
+| [Today's model forecast](https://f1devbin.github.io/Crypto-Research-Labs/forecast.html) | For each coin, a model's chance of a rise above fees and of a bigger move than usual, published every morning before 12:00 UTC and scored in public (H-027…H-030) |
 | [Digest](https://f1devbin.github.io/Crypto-Research-Labs/digest.html) | What happened this week, in plain words |
 | [New here?](https://f1devbin.github.io/Crypto-Research-Labs/course.html) | How to read the site, a 10-lesson course and the glossary |
 | [About](https://f1devbin.github.io/Crypto-Research-Labs/about.html) | How it runs, methodology, data sources and freshness |
@@ -117,6 +118,10 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-024 | Relative-strength rotation (top 3 by 1+3-day return, overheat and BTC trend filters), proposed by ChatGPT | ❌ Fail: worse than an equal-weight basket since 2020 (Sharpe 0.76 vs 1.13); slightly better since 2022 (0.44 vs 0.41, p = 0.04 > 0.0167) |
 | H-025 | Plain momentum rotation (top 3 by 1+3-day return) | ❌ Fail: Sharpe 0.91 vs 1.13 since 2020, 0.19 vs 0.41 since 2022; 210 rebalances a year |
 | H-026 | 1-day reversal (hold yesterday's 3 biggest losers) | ❌ Fail: −54 %/yr since 2022, fees eat it |
+| H-027 | Daily model: each coin's chance of rising above fees, better than its base rate (all 13 coins, 2022+) | ⏳ registered 2026-10-28, history test right after registration |
+| H-028 | Same model: chance of a bigger move than usual (volatility clusters, so skill is likelier here) | ⏳ registered 2026-10-28 |
+| H-029 | Live replication of H-027: forecasts published daily before 12:00 UTC, scored noon to noon | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
+| H-030 | Live replication of H-028 | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
 | H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |
 | H-022 | Forward replication of H-020 on as-published data | ⏳ collecting data, test on 2027-10-15 |

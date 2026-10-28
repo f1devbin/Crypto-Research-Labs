@@ -1,0 +1,85 @@
+id: H-027
+title: A daily model gives every coin's chance of rising above fees better than its base rate
+status: registered
+family: forecast
+created: '2026-10-28'
+author: F1DevBin (idea), Claude (spec)
+rationale: 'Idea by F1DevBin: an honest service could publish a daily buy/sell view with a confidence
+  level for every coin and keep score in public. Rephrased as a forecast: every day, for every coin, the
+  probability that the next day''s return beats the round-trip cost. One logistic regression shared by
+  all 13 coins. Inputs at the close of day D: log returns over 1, 3, 7 and 30 days, distance from the
+  50- and 200-day averages, 7- and 30-day volatility, Bitcoin''s 1- and 7-day returns, and, lagged one
+  day for publication delay, BTC funding (7-day mean), Fear & Greed, 30-day USDT+USDC supply growth and
+  7-day BTC net exchange flow. Every input is a rolling 365-day z-score of its own past (min. 180 days,
+  clipped at ±5), so coins with very different volatility share one model. The model is refitted on the
+  first day of every month on decisions whose outcome was already known (up to two days before), L2 =
+  1. Costs: 0.1 % per side on Binance, 0.4 % per side on Gate.io coins (0.2 % fee + 0.2 % slippage). It
+  passes only if, pooled over all coins from 2022 on, its probabilities beat each coin''s base rate in
+  the training window (Brier skill above zero) by more than rotating the forecasts in time does (one shift
+  for all coins, 2000 shifts). Per-coin results are exploratory (Benjamini-Hochberg). Our earlier results
+  (no rule beat luck on any of 156 rule x coin pairs; minute-level direction, H-001/H-002, failed) make
+  a pass unlikely. A paper portfolio holds a share of the coin equal to the probability, trading only
+  when the share moves by 10 points or more; it is reported against holding and against a constant share
+  equal to its own average (timing skill would beat the constant share). Shares alpha with H-028 (0.05
+  / 2).'
+spec:
+  kind: forecast
+  target: direction
+  model:
+    type: pooled_logit
+    features:
+    - r1
+    - r3
+    - r7
+    - r30
+    - d50
+    - d200
+    - v7
+    - v30
+    - btc_r1
+    - btc_r7
+    - funding
+    - fear_greed
+    - stable30
+    - flow7
+    zscore_window: 365
+    zscore_min_periods: 180
+    clip: 5
+    l2: 1.0
+    refit: monthly
+    external_lag: 1
+    ffill_limit: 3
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  - EVERUSDT
+  - GRAMUSDT
+  costs:
+    default: 0.001
+    EVERUSDT: 0.004
+    GRAMUSDT: 0.004
+  portfolio:
+    weight: probability
+    band: 0.1
+  periods:
+  - name: oos
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.025
+  criterion:
+    metric: brier_skill
+    pooled: true
+retest_every_days: 90
+registered: '2026-10-28'
+prereg_sha256: 5b9f1bf62503713d0d026559271de1553b8014c27f51ae519f02302beacafedf

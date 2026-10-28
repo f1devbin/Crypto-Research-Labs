@@ -128,8 +128,9 @@ def _netflow_7d(asset: str) -> pd.Series:
 
 
 FEATURES = {
-    # 7-day growth of USDT+USDC supply
+    # 7- and 30-day growth of USDT+USDC supply
     "stablecoin_growth_7d": lambda st: (lambda s: s / s.shift(7) - 1)(st.stablecoin_supply()),
+    "stablecoin_growth_30d": lambda st: (lambda s: s / s.shift(30) - 1)(st.stablecoin_supply()),
     # 7-day mean BTC perpetual funding rate
     "funding_btc_7d": lambda st: st.funding_daily("BTCUSDT").rolling(7, min_periods=5).mean(),
     "fear_greed": lambda st: st.fear_greed(),

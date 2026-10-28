@@ -1526,6 +1526,12 @@ for _code, _strings in _DIAG.items():
     T[_code].update(_strings)
 for _code, _strings in _LAYOUT.items():
     T[_code].update(_strings)
+from crl.i18n_layout import FAMILIES as _FAM, FC as _FC, TITLES as _TIT  # noqa: E402  daily forecast page
+
+for _code in T:
+    T[_code].update(_FC.get(_code, {}))
+    T[_code].setdefault("titles", {}).update(_TIT.get(_code, {}))
+    T[_code].setdefault("families", {})["forecast"] = _FAM[_code]
 
 
 def t(lang: str, key: str, **kw):

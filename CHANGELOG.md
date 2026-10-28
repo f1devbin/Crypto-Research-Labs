@@ -5,6 +5,18 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 
 ## [Unreleased]
 
+### Added
+- Daily model forecast for all 13 coins (idea by F1DevBin), pre-registered as H-027 (direction: chance of a rise
+  above fees), H-028 (risk: chance of a bigger move than usual) on history from 2022, and H-029/H-030, their live
+  replications. New study kinds `forecast` / `forecast_live` (`engine/forecast.py`): one pooled logistic
+  regression, inputs lagged and z-scored on their own past, refitted monthly on known outcomes; Brier skill vs base
+  rate with a circular-shift null; paper portfolio vs holding and vs a constant share, fees and Gate slippage
+  included. Tests check that rewriting future prices and external data changes no past forecast.
+- `crl forecast` appends today's forecasts to `datasets/forecast_log.csv` once per UTC day, freezes each month's
+  model in `datasets/forecast_models/` and records 12:00 UTC prices; the workflow commits them at once so the time
+  proves they came before noon. New page "Today's model forecast" (7 languages), linked from home and Research.
+- `research-agents` manual runs can skip the weekly digest (`digest: false`).
+
 ## [0.4.0] - 2026-10-28
 
 A dashboard that answers one question per page, a 3D look that keeps high contrast, and daily updates that

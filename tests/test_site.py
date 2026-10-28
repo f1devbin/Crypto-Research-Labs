@@ -25,7 +25,7 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
         assert (out / ("" if lang == "en" else f"{lang}/") / "hypotheses" / "H-003.html").exists()
     sitemap = (out / "sitemap.xml").read_text()
     d = json.loads((out / "data.json").read_text())
-    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 7)
+    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 8)
     course = (out / "ru" / "course.html").read_text(encoding="utf-8")
     assert "Курс для новичков" in course and '"@type": "Course"' in course.replace('":"', '": "') or '"Course"' in course
     assert "{" not in course.split("<main>")[1].split("</main>")[0]  # every placeholder filled
@@ -47,7 +47,8 @@ def test_one_question_per_page(tmp_path):
     out = site.build(store, tmp_path / "_site", dt.datetime(2026, 10, 14, tzinfo=dt.timezone.utc), "https://x.test/")
     for lang in LANGS:
         root = out if lang == "en" else out / lang
-        for name in ("index.html", "market.html", "research.html", "about.html", "course.html", "coins/BTCUSDT.html"):
+        for name in ("index.html", "market.html", "research.html", "forecast.html", "about.html", "course.html",
+                     "coins/BTCUSDT.html"):
             html = (root / name).read_text(encoding="utf-8")
             menu = html.split('<nav class="menu"', 1)[1].split("</nav>", 1)[0]
             assert menu.count("<a ") == 5 and "#" not in menu, (lang, name)  # five pages, no in-page anchors

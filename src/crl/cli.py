@@ -75,6 +75,13 @@ def _scan(_args) -> int:
     return scan.main()
 
 
+def _forecast(_args) -> int:
+    from crl.engine import forecast
+    res = forecast.publish()
+    print(res)
+    return 0 if res["status"] in ("published", "already published") else 1
+
+
 def _site(_args) -> int:
     from crl import site
     return site.main()
@@ -112,6 +119,7 @@ def main(argv=None) -> int:
     sub.add_parser("notify-test", help="send a test Telegram message").set_defaults(fn=_notify_test)
     sub.add_parser("scan", help="coverage scan: every tested rule on every coin (exploratory)").set_defaults(fn=_scan)
     sub.add_parser("site", help="build the static dashboard into _site/").set_defaults(fn=_site)
+    sub.add_parser("forecast", help="publish today's model forecasts (H-029/H-030 log)").set_defaults(fn=_forecast)
 
     args = ap.parse_args(argv)
     return args.fn(args)

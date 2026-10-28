@@ -17,6 +17,10 @@ Every step is a single `crl` command, so you can run the same thing locally or f
 3. `crl watch` computes each monitor in `config/watch.yaml`, assigns it to a band and
    compares it with yesterday's state (`data/state/watch_state.json`). An alert goes
    out **only** on a band change. The first run and unavailable sources stay silent.
+   `crl forecast` then appends today's model forecasts (H-029/H-030) to `datasets/forecast_log.csv`,
+   fits the month's model once on its first day (`datasets/forecast_models/`), records the 12:00 UTC
+   prices (`datasets/noon_prices.csv`) and the workflow commits these files at once: the commit time
+   shows each forecast existed before 12:00 UTC. One publication per UTC day; later runs leave it as is.
 4. `crl site` builds the dashboard into `_site/`: 7 languages (`/`, `/ru/`, `/es/`, `/pt/`, `/tr/`,
    `/vi/`, `/zh/`), one page per hypothesis and per coin (`coins/<SYMBOL>.html`), the beginner course (`course.html`, numbers filled from live data), `sitemap.xml` with `hreflang` alternates, `robots.txt`,
    JSON-LD and `data.json`. The `deploy-pages` job publishes it to GitHub Pages.

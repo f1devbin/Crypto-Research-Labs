@@ -116,6 +116,22 @@ net deposit to exchanges is above its trailing one-year 80th percentile.
 Wallet-level analysis (which wallets deposit before moves) needs labelled exchange addresses; for Everscale it
 waits for an Evercloud API key.
 
+## Daily model forecast (H-027…H-030, registered 2026-10-28)
+
+Idea by F1DevBin: an honest service publishes a daily view with a confidence level for every coin and keeps
+score. One logistic regression shared by all 13 coins gives, every morning, two probabilities per coin: the next
+day's return beats the round-trip cost (direction, H-027) and the next day's move is bigger than the coin's
+usual one (risk, H-028). Inputs are prices to yesterday's close and external series to the day before, each a
+rolling z-score of its own past year; the model is refitted monthly on outcomes already known. Scored by Brier
+skill against each coin's base rate with a circular-shift null; a paper portfolio (share of the coin = chance of
+a rise, 10-point band, fees and Gate slippage) is compared with holding and with a constant share.
+
+- History test (2022+): pending, runs right after registration.
+- Live (H-029/H-030): every forecast is committed to `datasets/forecast_log.csv` before 12:00 UTC and scored from
+  the 12:00 UTC price to the next day's; first test 2027-11-01. Today's numbers:
+  [forecast page](https://f1devbin.github.io/Crypto-Research-Labs/forecast.html).
+- Expectation written before any result: direction close to luck, risk with real skill (volatility clusters).
+
 ## Bottom line
 
 Apart from H-020 (pending its forward replication), none of these ideas has a statistically reliable edge after fees. Daily trend rules

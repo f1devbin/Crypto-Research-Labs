@@ -11,6 +11,9 @@ rule_search  a set of candidate rules; for each asset the best candidate is chos
              on the in-sample period only and then judged out of sample against
              a bootstrap null, Bonferroni-corrected for the number of selections.
 
+forecast, forecast_live  daily probabilities from a pooled model, scored by Brier skill
+             (see engine/forecast.py).
+
 Verdicts: PASS (criterion met), WEAK (beats buy-and-hold more often than not, but the
 pre-registered bar is not met — never evidence on its own), FAIL.
 """
@@ -48,6 +51,12 @@ def evaluate(spec: dict, store, seed: int = 2026) -> dict:
         res = _rule_search(spec, store, np.random.default_rng(seed))
     elif kind == "cross_section":
         res = _cross_section(spec, store, np.random.default_rng(seed))
+    elif kind == "forecast":
+        from crl.engine import forecast as F
+        res = F.evaluate(spec, store, np.random.default_rng(seed))
+    elif kind == "forecast_live":
+        from crl.engine import forecast as F
+        res = F.evaluate_live(spec, store, np.random.default_rng(seed))
     else:
         raise ValueError(f"unknown study kind '{kind}'")
     ends = [r["end"] for r in res["rows"] if r.get("end")]
@@ -168,6 +177,8 @@ def _rule_search(spec: dict, store, rng) -> dict:
 
 
 def to_markdown(hyp: dict, res: dict) -> str:
+    if res.get("kind") in ("forecast", "forecast_live"):
+        return _forecast_markdown(hyp, res)
     out = [f"### {MARK[res['verdict']]} {hyp['id']} — {hyp['title']}",
            "",
            f"Verdict **{res['verdict']}** · data to {res['data_end']} · engine {res['engine_version']} · "
@@ -184,4 +195,19 @@ def to_markdown(hyp: dict, res: dict) -> str:
         out.append(f"| {r['symbol']} | {r['period']} | {rule} | {r['days']} | {r['sharpe']:.2f} | "
                    f"{r['hold_sharpe']:.2f} | {r['cagr']:+.0%} | {r['hold_cagr']:+.0%} | {r['max_dd']:.0%} | "
                    f"{r['hold_max_dd']:.0%} | {r['exposure']:.0%} | {p} |")
+    return "\n".join(out) + "\n"
+
+
+def _forecast_markdown(hyp: dict, res: dict) -> str:
+    def f(v, fmt):
+        return "—" if v is None else format(v, fmt)
+    out = [f"### {MARK[res['verdict']]} {hyp['id']} — {hyp['title']}", "",
+           f"Verdict **{res['verdict']}** · data to {res['data_end']} · engine {res['engine_version']} · "
+           f"run {res['run_at']}", "", res["summary"], "",
+           "| asset | days | Brier skill | p | q | hits | Sharpe | hold Sharpe | constant-share Sharpe | in market |",
+           "|---|---|---|---|---|---|---|---|---|---|"]
+    for r in res["rows"]:
+        out.append(f"| {r['symbol']} | {r['days']} | {r['bss']:+.4f} | {r['p']:.4f} | {f(r.get('q'), '.3f')} | "
+                   f"{r['hits']:.1%} | {f(r.get('sharpe'), '.2f')} | {f(r.get('hold_sharpe'), '.2f')} | "
+                   f"{f(r.get('const_sharpe'), '.2f')} | {f(r.get('exposure'), '.0%')} |")
     return "\n".join(out) + "\n"

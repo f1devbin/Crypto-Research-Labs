@@ -30,7 +30,9 @@ log = logging.getLogger(__name__)
 SITE_DIR = Path(os.environ.get("CRL_SITE_DIR", ROOT / "_site"))
 REPO_URL = "https://github.com/f1devbin/Crypto-Research-Labs"
 ROW_FIELDS = ("symbol", "period", "selected", "sharpe", "hold_sharpe", "cagr", "hold_cagr", "max_dd",
-              "hold_max_dd", "exposure", "trades_per_year", "p", "alpha", "beats_hold", "win", "start", "end")
+              "hold_max_dd", "exposure", "trades_per_year", "p", "alpha", "beats_hold", "win", "start", "end",
+              "days", "bss", "brier", "brier_ref", "hits", "q", "const_sharpe", "const_cagr", "beats_const")
+FORECAST_KINDS = ("forecast", "forecast_live")
 
 
 def _num(v, nd=4):
@@ -277,6 +279,8 @@ def _rule_for(spec: dict, row: dict) -> tuple[dict, dict] | None:
 def equity_curves(spec: dict, rows: list[dict], store: DataStore, step: int = 5) -> list[dict]:
     """Strategy vs buy-and-hold growth of 1 for each result row, fees included."""
     out = []
+    if spec.get("kind") in FORECAST_KINDS:
+        return out  # forecasts carry their own monthly curves (see hypotheses())
     if spec.get("kind") == "cross_section":
         from crl.engine import cross as X
         try:
@@ -317,6 +321,63 @@ def equity_curves(spec: dict, rows: list[dict], store: DataStore, step: int = 5)
     return out
 
 
+def forecast_curves(monthly: list[dict]) -> list[dict]:
+    """Growth of 1 month by month: the model's paper portfolio vs holding, per coin."""
+    out = []
+    for sym in dict.fromkeys(m["symbol"] for m in monthly):
+        ms = [m for m in monthly if m["symbol"] == sym]
+        eq_s = np.cumprod([m["model"] / 100 for m in ms])
+        eq_h = np.cumprod([m["hold"] / 100 for m in ms])
+        out.append({"symbol": sym, "period": "monthly", "rule": None, "d": [m["month"] for m in ms],
+                    "strategy": [_num(v) for v in eq_s], "hold": [_num(v) for v in eq_h]})
+    return out
+
+
+def forecast_data(hyps: list[dict]) -> dict | None:
+    """Today's published forecasts, the live track record so far and the history test results."""
+    from crl.config import DATASETS_DIR
+    from crl.engine import forecast as F
+    live = {h["spec"]["target"]: h for h in hyps if (h.get("spec") or {}).get("kind") == "forecast_live"}
+    hist = {h["spec"]["target"]: h for h in hyps if (h.get("spec") or {}).get("kind") == "forecast"}
+    if not live and not hist:
+        return None
+    pooled = lambda h: next((r for r in h["rows"] if r.get("symbol") == "ALL"), None)
+    out = {"history": {t: {"id": h["id"], "verdict": h["verdict"], "pooled": pooled(h), "data_end": h["data_end"]}
+                       for t, h in hist.items()},
+           "live_ids": {t: h["id"] for t, h in live.items()}, "today": None, "live": {},
+           "start": None, "test_after": None}
+    if live:
+        any_live = next(iter(live.values()))
+        out["start"] = any_live["spec"]["periods"][0]["start"]
+        out["test_after"] = any_live.get("test_after")
+    log_ = F.read_log(DATASETS_DIR)
+    if len(log_):
+        last = log_["date"].max()
+        day = log_[log_["date"] == last]
+        prev = log_[(log_["date"] < last) & (log_["on_time"] == 1)]
+        rows = []
+        for _, r in day.iterrows():
+            pw = prev[prev["symbol"] == r["symbol"]]["w_exec"].dropna()
+            rows.append({"symbol": r["symbol"], "p_direction": _num(r["p_direction"]), "p_risk": _num(r["p_risk"]),
+                         "w_exec": None if pd.isna(r["w_exec"]) else _num(r["w_exec"]),
+                         "w_prev": _num(pw.iloc[-1]) if len(pw) else None})
+        out["today"] = {"date": str(last.date()), "published": str(day["published"].iloc[0]),
+                        "decision_date": str(pd.Timestamp(day["decision_date"].iloc[0]).date()),
+                        "on_time": bool(day["on_time"].iloc[0]), "rows": rows}
+    noon = F.read_noon(DATASETS_DIR)
+    for target, h in live.items():
+        if not len(log_) or not len(noon):
+            break
+        spec = {**h["spec"], "significance": {**h["spec"]["significance"], "n": 200}}
+        fc = F.live_frame(spec, log_, noon)
+        if fc.empty or not fc["p"].notna().any():
+            continue
+        sc = F.score(spec, fc, target, np.random.default_rng(0), "forward")
+        if sc["rows"]:
+            out["live"][target] = {"pooled": sc["rows"][-1], "monthly": sc.get("monthly", [])}
+    return out
+
+
 def hypotheses(store: DataStore, curves: bool = True) -> list[dict]:
     out = []
     for h in registry.load_all():
@@ -339,6 +400,10 @@ def hypotheses(store: DataStore, curves: bool = True) -> list[dict]:
                              for k in ROW_FIELDS if k in r} for r in res["rows"]]
             if curves and h.get("spec"):
                 item["curves"] = equity_curves(h["spec"], res["rows"], store)
+            if (h.get("spec") or {}).get("kind") in FORECAST_KINDS:
+                item["monthly"] = res.get("monthly") or []
+                item["calibration"] = res.get("calibration") or []
+                item["curves"] = forecast_curves(item["monthly"])
         out.append(item)
     return out
 
@@ -398,11 +463,13 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
     data["digests"] = D.load()
     for h in data["hypotheses"]:
         h["progress"] = progress(h, now.date())
+    data["forecast"] = forecast_data(data["hypotheses"])
     if out_dir.exists():
         shutil.rmtree(out_dir)
     today = now.date().isoformat()
     entries = ([(None, today)] + [(h["id"], (h.get("run_at") or today)[:10]) for h in data["hypotheses"]]
                + [(f"coin:{c['symbol']}", c["date"]) for c in data["coins"]] + [("market", today), ("research", today),
+                  ("forecast", today),
                   ("about", today), ("course", today), ("setup", today),
                   ("digest", data["digests"][0]["date"] if data["digests"] else today)])
     pages = 0
@@ -412,7 +479,7 @@ def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.date
             path.parent.mkdir(parents=True, exist_ok=True)
             if hid is None:
                 html = H.index_page(lang, data, base, verification)
-            elif hid in ("market", "research", "about"):
+            elif hid in ("market", "research", "about", "forecast"):
                 html = getattr(H, f"{hid}_page")(lang, data, base, verification)
             elif hid == "digest":
                 html = H.digest_page(lang, data, base, verification)

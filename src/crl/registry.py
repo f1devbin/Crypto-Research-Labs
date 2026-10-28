@@ -51,6 +51,7 @@ def fingerprint(spec: dict) -> str:
         "rule": spec.get("rule"),
         "signal": spec.get("signal"), "select": spec.get("select"),
         "candidates": sorted(json.dumps(c, sort_keys=True) for c in (spec.get("candidates") or {}).values()),
+        "target": spec.get("target"), "model": spec.get("model"),
     }
     return spec_hash(core)[:16]
 
@@ -78,8 +79,10 @@ def validate(h: Hypothesis) -> list[str]:
     if not isinstance(spec, dict):
         return errs + ["missing 'spec'"]
     kind = spec.get("kind")
-    if kind not in ("timing_rule", "rule_search", "cross_section"):
-        return errs + ["spec.kind must be timing_rule, rule_search or cross_section"]
+    if kind not in ("timing_rule", "rule_search", "cross_section", "forecast", "forecast_live"):
+        return errs + ["spec.kind must be timing_rule, rule_search, cross_section, forecast or forecast_live"]
+    if kind in ("forecast", "forecast_live"):
+        return errs + _check_forecast(h, spec)
     for k in ("fee", "universe", "criterion"):
         if k not in spec:
             errs.append(f"spec.{k} is required")
@@ -119,6 +122,58 @@ def validate(h: Hypothesis) -> list[str]:
         if spec.get("significance", {}).get("method") == "bootstrap":
             if any(r.get("type") not in ("price_above_sma", "sma_cross", "tsmom", "donchian") for r in rules):
                 errs.append("bootstrap significance supports price rules only; use circular_shift")
+    if h.get("test_after"):
+        try:
+            dt.date.fromisoformat(str(h["test_after"]))
+        except ValueError:
+            errs.append("test_after must be a date YYYY-MM-DD")
+    if h.get("status") != "draft":
+        if not h.get("prereg_sha256"):
+            errs.append("registered hypothesis has no prereg_sha256 — run `crl registry register`")
+        elif h["prereg_sha256"] != spec_hash(spec):
+            errs.append("spec changed after registration (sha256 mismatch) — results would be invalid")
+    return errs
+
+
+def _check_forecast(h: Hypothesis, spec: dict) -> list[str]:
+    from crl.engine.forecast import MARKET_FEATURES, PRICE_FEATURES, TARGETS
+    errs = []
+    m = spec.get("model") or {}
+    if m.get("type") != "pooled_logit":
+        errs.append("forecast model.type must be pooled_logit")
+    feats = m.get("features") or []
+    unknown = set(feats) - set(PRICE_FEATURES) - set(MARKET_FEATURES)
+    if not feats or unknown:
+        errs.append(f"forecast model.features must be a non-empty subset of "
+                    f"{list(PRICE_FEATURES) + list(MARKET_FEATURES)}; unknown {sorted(unknown)}")
+    for k in ("zscore_window", "zscore_min_periods", "clip", "l2", "external_lag", "ffill_limit"):
+        if not isinstance(m.get(k), (int, float)):
+            errs.append(f"forecast model.{k} must be a number")
+    if m.get("refit") != "monthly":
+        errs.append("forecast model.refit must be monthly")
+    if isinstance(m.get("external_lag"), int) and m["external_lag"] < 1:
+        errs.append("forecast model.external_lag must be at least 1 day (publication delay)")
+    if spec.get("target") not in TARGETS:
+        errs.append(f"forecast target must be one of {list(TARGETS)}")
+    if not spec.get("universe"):
+        errs.append("spec.universe is required")
+    costs = spec.get("costs") or {}
+    if not all(isinstance(v, (int, float)) and 0 <= v < 0.05 for v in costs.values()) or "default" not in costs:
+        errs.append("spec.costs needs `default` and per-side fractions below 0.05")
+    if spec.get("target") == "direction":
+        band = (spec.get("portfolio") or {}).get("band")
+        if (spec.get("portfolio") or {}).get("weight") != "probability" or not isinstance(band, (int, float)):
+            errs.append("direction forecasts need portfolio.weight: probability and a numeric portfolio.band")
+    if not spec.get("periods"):
+        errs.append("spec.periods is required for forecasts")
+    sig = spec.get("significance") or {}
+    if sig.get("method") != "circular_shift" or "alpha" not in sig:
+        errs.append("forecast significance must be circular_shift with an alpha")
+    if spec.get("kind") == "forecast_live":
+        if (spec.get("execution") or {}).get("time_utc") != "12:00":
+            errs.append("forecast_live execution.time_utc must be 12:00")
+        if not h.get("test_after"):
+            errs.append("forecast_live needs test_after (enough live data first)")
     if h.get("test_after"):
         try:
             dt.date.fromisoformat(str(h["test_after"]))

@@ -1,0 +1,78 @@
+id: H-028
+title: A daily model gives every coin's chance of a bigger move than usual better than its base rate
+status: registered
+family: forecast
+created: '2026-10-28'
+author: F1DevBin (idea), Claude (spec)
+rationale: 'Same model and inputs as H-027, different question: the probability that the next day''s absolute
+  log move is larger than the coin''s median absolute daily move over the past 365 days (measured up to
+  D, so the base rate is near one half). Price direction is close to unpredictable, but the size of moves
+  clusters in calm and nervous stretches, so this is where a model can show real skill; it would help
+  size positions and avoid big losses, not make money by itself. One logistic regression shared by all
+  13 coins. Inputs at the close of day D: log returns over 1, 3, 7 and 30 days, distance from the 50-
+  and 200-day averages, 7- and 30-day volatility, Bitcoin''s 1- and 7-day returns, and, lagged one day
+  for publication delay, BTC funding (7-day mean), Fear & Greed, 30-day USDT+USDC supply growth and 7-day
+  BTC net exchange flow. Every input is a rolling 365-day z-score of its own past (min. 180 days, clipped
+  at ±5), so coins with very different volatility share one model. The model is refitted on the first
+  day of every month on decisions whose outcome was already known (up to two days before), L2 = 1. Costs:
+  0.1 % per side on Binance, 0.4 % per side on Gate.io coins (0.2 % fee + 0.2 % slippage). Passes on the
+  same pooled Brier-skill test from 2022 on; the circular shift is conservative here, because rotated
+  forecasts still overlap long volatility regimes. Shares alpha with H-027 (0.05 / 2).'
+spec:
+  kind: forecast
+  target: risk
+  model:
+    type: pooled_logit
+    features:
+    - r1
+    - r3
+    - r7
+    - r30
+    - d50
+    - d200
+    - v7
+    - v30
+    - btc_r1
+    - btc_r7
+    - funding
+    - fear_greed
+    - stable30
+    - flow7
+    zscore_window: 365
+    zscore_min_periods: 180
+    clip: 5
+    l2: 1.0
+    refit: monthly
+    external_lag: 1
+    ffill_limit: 3
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  - EVERUSDT
+  - GRAMUSDT
+  costs:
+    default: 0.001
+    EVERUSDT: 0.004
+    GRAMUSDT: 0.004
+  periods:
+  - name: oos
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.025
+  criterion:
+    metric: brier_skill
+    pooled: true
+retest_every_days: 90
+registered: '2026-10-28'
+prereg_sha256: 6aa44712ae3df4719823820c81d53ccb0cc12fe36a57d5524f72b8fe614138ad
