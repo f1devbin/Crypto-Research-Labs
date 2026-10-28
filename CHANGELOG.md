@@ -16,6 +16,12 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   model in `datasets/forecast_models/` and records 12:00 UTC prices; the workflow commits them at once so the time
   proves they came before noon. New page "Today's model forecast" (7 languages), linked from home and Research.
 - `research-agents` manual runs can skip the weekly digest (`digest: false`).
+- H-031 (registered 2026-10-28, live only from 2026-11-01): an improved direction model with a separate intercept
+  per coin and Platt recalibration on a held-out year, designed after H-027 failed and therefore never judged on
+  the history it was designed from. Forecast models get the options `coin_intercepts` and `calibration:
+  platt_365`; live variants publish their own columns in the same log (`log_suffix`, here `_v2`) with their own
+  frozen monthly models. The forecast page shows the improved model's chance of a rise and its live score.
+  H-027…H-030 compute exactly as before (checked against a saved fingerprint of the engine's output).
 
 ### Results
 - H-027 (direction) failed: pooled Brier skill −0.009, overconfident. H-028 (size of the next move) passed:

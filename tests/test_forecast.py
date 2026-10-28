@@ -35,9 +35,12 @@ def make_store(seed=0, n=1600, start="2019-01-01"):
     return MemoryStore(closes, feats)
 
 
-@pytest.mark.parametrize("target", F.TARGETS)
-def test_changing_the_future_does_not_change_past_forecasts(target):
-    s = spec(target)
+IMPROVED = {**MODEL, "coin_intercepts": True, "calibration": "platt_365"}
+
+
+@pytest.mark.parametrize("target,model", [("direction", MODEL), ("risk", MODEL), ("direction", IMPROVED)])
+def test_changing_the_future_does_not_change_past_forecasts(target, model):
+    s = {**spec(target), "model": model}
     cut = pd.Timestamp("2022-03-15")
     a = F.walk_forward(s, F.panel(s, make_store()), target, s["periods"][0]["start"])
     st = make_store()
@@ -66,7 +69,7 @@ def test_model_of_a_month_uses_only_outcomes_known_on_its_first_day():
     cutoff = F.month_cutoff(month)
     assert cutoff == pd.Timestamp("2022-01-30")
     # the outcome of the decision on Jan 30 is the close of Jan 31, known when February starts
-    mod = F.fit_month(pnl, MODEL["features"], "direction", month, 1.0)
+    mod = F.fit_month(pnl, MODEL, "direction", month, SYMS)
     assert mod["cutoff"] == "2022-01-30"
     tr = pnl[pnl[MODEL["features"]].notna().all(axis=1) & pnl["y_direction"].notna() & (pnl["date"] <= cutoff)]
     assert mod["n_train"] == len(tr)
@@ -159,3 +162,77 @@ def test_live_scoring_runs_noon_to_noon(tmp_path):
     res = F.evaluate_live(d, None, rng, tmp_path)
     pooled = res["rows"][-1]
     assert pooled["symbol"] == "ALL" and pooled["bss"] > 0.5 and res["verdict"] == "PASS"
+
+
+def test_coin_intercepts_and_calibration_fix_a_biased_pooled_model():
+    """Same kind of random walks, but EVER pays ten times the costs, so its base rate of 'beats the cost' is far
+    lower. A pooled model gives every coin about the same probability; coin intercepts give each its own level."""
+    plain = {**spec(), "costs": {"default": 0.001, "EVERUSDT": 0.01}}
+    better = {**plain, "model": IMPROVED}
+    st = make_store()
+    fa = F.walk_forward(plain, F.panel(plain, st), "direction", "2021-06-01")
+    fb = F.walk_forward(better, F.panel(better, make_store()), "direction", "2021-06-01")
+    gap = lambda fc: abs(fc[fc.symbol == "EVERUSDT"]["p"].mean() - fc[fc.symbol == "EVERUSDT"]["y_direction"].mean())
+    assert gap(fb) < gap(fa) / 2
+    mod = F.fit_month(F.panel(better, make_store()), IMPROVED, "direction", pd.Period("2022-06", "M"), SYMS)
+    assert mod["coins"] == SYMS and len(mod["w"]) == 1 + len(IMPROVED["features"]) + len(SYMS)
+    a, b = mod["platt"]
+    assert 0 <= b < 1          # on pure noise the scores of a model fitted earlier are shrunk, not stretched
+    mean_gap = lambda fc: fc.groupby("symbol").apply(lambda g: abs(g["p"].mean() - g["y_direction"].mean())).mean()
+    assert mean_gap(fb) < mean_gap(fa) / 2
+
+
+def test_publish_adds_variant_columns_with_their_own_frozen_model(tmp_path):
+    st = make_store(n=1700)
+    utc = dt.timezone.utc
+    d, r = live_specs()
+    v = {**d, "model": IMPROVED, "log_suffix": "_v2"}
+    res = F.publish(st, dt.datetime(2023, 6, 1, 8, 0, tzinfo=utc), tmp_path, (d, r, [v]), fetch_noon=False)
+    assert res["status"] == "published" and res["variants"] == ["_v2"]
+    log = F.read_log(tmp_path)
+    assert F.variant_columns(v) == ["p_direction_v2", "base_direction_v2", "w_target_v2", "w_exec_v2"]
+    assert set(F.variant_columns(v)) <= set(log.columns) and log["p_direction_v2"].notna().all()
+    assert not np.allclose(log["p_direction_v2"], log["p_direction"])
+    vfile = tmp_path / "forecast_models" / "2023-05_v2.json"
+    frozen = vfile.read_text()
+    assert "platt" in json.loads(frozen)["direction"] and (tmp_path / "forecast_models" / "2023-05.json").exists()
+    F.publish(st, dt.datetime(2023, 6, 2, 13, 0, tzinfo=utc), tmp_path, (d, r, [v]), fetch_noon=False)
+    log = F.read_log(tmp_path)
+    d1, d2 = log[log["date"] == "2023-06-01"], log[log["date"] == "2023-06-02"]
+    np.testing.assert_allclose(d2["w_exec_v2"].to_numpy(), d1["w_exec_v2"].to_numpy())   # late: no trade
+    assert vfile.read_text() == frozen
+
+
+def test_live_specs_need_one_base_spec_per_target_and_distinct_variants():
+    d, r = live_specs()
+    v = {**d, "model": IMPROVED, "log_suffix": "_v2"}
+    assert F._check_live([d, r, v])[2] == [v]
+    with pytest.raises(KeyError):
+        F._check_live([d, v])
+    with pytest.raises(ValueError):
+        F._check_live([d, r, v, dict(v)])
+
+
+def test_live_scoring_reads_the_variant_columns(tmp_path):
+    days = pd.date_range("2024-01-01", periods=120, freq="D")
+    noon = pd.DataFrame([{"date": dd.date(), "symbol": s, "price": x}
+                         for s in SYMS for dd, x in zip(days, random_walk(n=120, seed=len(s)))])
+    noon.to_csv(tmp_path / "noon_prices.csv", index=False)
+    px = noon.pivot_table(index="date", columns="symbol", values="price")
+    rows = []
+    for s in SYMS:
+        nxt = px[s].shift(-1) / px[s] - 1
+        for dd in days[:-1]:
+            up = float(nxt.loc[dd.date()] > 0.002)
+            rows.append({"published": f"{dd.date()}T06:00:00Z", "date": dd.date(), "decision_date": dd.date(), "symbol": s,
+                         "p_direction": 0.5, "p_risk": 0.5, "base_direction": 0.5, "base_risk": 0.5, "med_move": 0.02,
+                         "w_target": 0.5, "w_exec": 0.5, "model": "2023-12", "on_time": 1,
+                         "p_direction_v2": 0.8 if up else 0.2, "base_direction_v2": 0.5,
+                         "w_target_v2": 0.5, "w_exec_v2": 0.5})
+    pd.DataFrame(rows).to_csv(tmp_path / "forecast_log.csv", index=False)
+    d, _ = live_specs()
+    d["periods"] = [{"name": "forward", "start": "2024-01-01"}]
+    v = {**d, "model": IMPROVED, "log_suffix": "_v2"}
+    rng = np.random.default_rng(0)
+    assert F.evaluate_live(v, None, rng, tmp_path)["rows"][-1]["bss"] > 0.3
+    assert abs(F.evaluate_live(d, None, rng, tmp_path)["rows"][-1]["bss"]) < 0.05

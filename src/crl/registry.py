@@ -8,6 +8,7 @@ import datetime as dt
 import hashlib
 import inspect
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -151,6 +152,17 @@ def _check_forecast(h: Hypothesis, spec: dict) -> list[str]:
             errs.append(f"forecast model.{k} must be a number")
     if m.get("refit") != "monthly":
         errs.append("forecast model.refit must be monthly")
+    allowed = {"type", "features", "zscore_window", "zscore_min_periods", "clip", "l2", "refit", "external_lag",
+               "ffill_limit", "coin_intercepts", "calibration"}
+    if set(m) - allowed:
+        errs.append(f"forecast model has unknown keys {sorted(set(m) - allowed)}")
+    if "coin_intercepts" in m and not isinstance(m["coin_intercepts"], bool):
+        errs.append("forecast model.coin_intercepts must be true or false")
+    if m.get("calibration") not in (None, "none", "platt_365"):
+        errs.append("forecast model.calibration must be none or platt_365")
+    sfx = spec.get("log_suffix")
+    if sfx is not None and (spec.get("kind") != "forecast_live" or not re.fullmatch(r"_[a-z0-9]+", str(sfx))):
+        errs.append("log_suffix is only for forecast_live and looks like _v2")
     if isinstance(m.get("external_lag"), int) and m["external_lag"] < 1:
         errs.append("forecast model.external_lag must be at least 1 day (publication delay)")
     if spec.get("target") not in TARGETS:

@@ -11,10 +11,10 @@ SHA-256 hash *before* it is tested, then tested by a fixed engine and re-tested 
 GitHub Actions. Results, a market diagnosis and a beginners' course are published as a static dashboard in 7
 languages: <https://f1devbin.github.io/Crypto-Research-Labs/> (en at root, `/ru/ /es/ /pt/ /tr/ /vi/ /zh/`).
 
-Current state: 30 hypotheses (H-001…H-030), two passed: H-020 (BTC exchange deposits; H-022 is its forward
+Current state: 31 hypotheses (H-001…H-031), two passed: H-020 (BTC exchange deposits; H-022 is its forward
 replication, first test 2027-10-15) and H-028 (the daily model forecasts the size of the next move, not its
 direction — H-027 failed). H-029/H-030 replicate H-027/H-028 live (forecast page, published before 12:00 UTC,
-first test 2027-11-01). Version 0.4.0. Honest negative results are the point of the project.
+first test 2027-11-01); H-031 is a live-only improved direction model (coin intercepts + Platt, log columns `_v2`). Version 0.4.0. Honest negative results are the point of the project.
 
 ## Layout
 

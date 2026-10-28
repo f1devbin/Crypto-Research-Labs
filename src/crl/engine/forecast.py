@@ -16,7 +16,13 @@ that rotates forecasts against outcomes (one shift for all coins, so their corre
 for direction, a paper portfolio that holds a share of the coin equal to the forecast probability,
 trading only when the share moves by at least `band`.
 
-Live forecasts (`crl forecast`, H-029/H-030) reuse the same features and fitting. Each month's
+Model options (H-031): `coin_intercepts` adds one ridge-penalised indicator per coin, so each coin keeps its own
+base level; `calibration: platt_365` maps scores to probabilities with a one-variable logistic regression fitted on
+the last 365 days before the cutoff, scored by a model trained only on earlier data, and applies that map to the
+model trained on all data.
+
+Live forecasts (`crl forecast`, H-029/H-030, and variants such as H-031 with their own `log_suffix` columns)
+reuse the same features and fitting. Each month's
 model is stored once in datasets/forecast_models/ and never refitted; every forecast is appended
 to datasets/forecast_log.csv and committed before 12:00 UTC, when the paper portfolio trades at
 the open of the 12:00 hourly candle (datasets/noon_prices.csv).
@@ -38,6 +44,7 @@ TARGETS = ("direction", "risk")
 MIN_SHIFT = 30
 MIN_TRAIN = 500        # rows needed before a model is fitted
 MIN_COIN_BASE = 30     # rows a coin needs for its own base rate (otherwise the pooled one)
+MIN_CAL = 200          # rows needed in the calibration year
 LOG_COLUMNS = ["published", "date", "decision_date", "symbol", "p_direction", "p_risk", "base_direction",
                "base_risk", "med_move", "w_target", "w_exec", "model", "on_time"]
 
@@ -141,17 +148,57 @@ def month_cutoff(month: pd.Period) -> pd.Timestamp:
     return month.to_timestamp() - pd.Timedelta(days=2)
 
 
-def fit_month(pnl: pd.DataFrame, feats: list[str], target: str, month: pd.Period, l2: float) -> dict | None:
+def _design(df: pd.DataFrame, m: dict, coins: list[str] | None = None) -> np.ndarray:
+    """Model inputs: the z-scored features, plus one indicator per coin when the model has coin intercepts."""
+    X = df[list(m["features"])].to_numpy(float)
+    if coins:
+        sym = df["symbol"].to_numpy()
+        X = np.hstack([X, np.column_stack([(sym == c).astype(float) for c in coins])])
+    return X
+
+
+def _score(w, X: np.ndarray) -> np.ndarray:
+    return w[0] + X @ np.asarray(w[1:])
+
+
+def predict_model(mod: dict, df: pd.DataFrame, m: dict) -> np.ndarray:
+    """Probabilities from a month model (with its coin intercepts and Platt map, if it has them)."""
+    z = _score(np.asarray(mod["w"]), _design(df, m, mod.get("coins")))
+    if mod.get("platt"):
+        a, b = mod["platt"]
+        z = a + b * z
+    return 1.0 / (1.0 + np.exp(-np.clip(z, -30, 30)))
+
+
+def fit_month(pnl: pd.DataFrame, m: dict, target: str, month: pd.Period, universe: list[str]) -> dict | None:
+    """The model used for decisions in `month`, fitted only on outcomes known on its first day."""
+    feats, l2 = list(m["features"]), float(m["l2"])
     ycol = f"y_{target}"
-    tr = pnl[pnl[feats].notna().all(axis=1) & pnl[ycol].notna() & (pnl["date"] <= month_cutoff(month))]
+    cutoff = month_cutoff(month)
+    tr = pnl[pnl[feats].notna().all(axis=1) & pnl[ycol].notna() & (pnl["date"] <= cutoff)]
     if len(tr) < MIN_TRAIN:
         return None
-    w = fit_logit(tr[feats].to_numpy(float), tr[ycol].to_numpy(float), l2)
+    coins = list(universe) if m.get("coin_intercepts") else None
+    w = fit_logit(_design(tr, m, coins), tr[ycol].to_numpy(float), l2)
     g = tr.groupby("symbol")[ycol]
     pooled = float(tr[ycol].mean())
     base = {s: float(v) for s, v in g.mean().items() if g.count()[s] >= MIN_COIN_BASE}
-    return {"w": [float(x) for x in w], "base": base, "pooled": pooled, "n_train": int(len(tr)),
-            "cutoff": str(month_cutoff(month).date())}
+    out = {"w": [float(x) for x in w], "base": base, "pooled": pooled, "n_train": int(len(tr)),
+           "cutoff": str(cutoff.date())}
+    if coins:
+        out["coins"] = coins
+    if m.get("calibration") == "platt_365":
+        split = cutoff - pd.Timedelta(days=365)
+        early, late = tr[tr["date"] <= split], tr[tr["date"] > split]
+        if len(early) < MIN_TRAIN or len(late) < MIN_CAL:
+            return None
+        w_early = fit_logit(_design(early, m, coins), early[ycol].to_numpy(float), l2)
+        z = _score(w_early, _design(late, m, coins))
+        ab = fit_logit(z[:, None], late[ycol].to_numpy(float), 0.0)
+        out["platt"] = [float(ab[0]), float(ab[1])]
+    elif m.get("calibration") not in (None, "none"):
+        raise ValueError(f"unknown calibration {m['calibration']!r}")
+    return out
 
 
 def walk_forward(spec: dict, pnl: pd.DataFrame, target: str, start, end=None) -> pd.DataFrame:
@@ -164,10 +211,10 @@ def walk_forward(spec: dict, pnl: pd.DataFrame, target: str, start, end=None) ->
     oos = pnl[ok]
     out = []
     for month, chunk in oos.groupby(oos["date"].dt.to_period("M")):
-        mod = fit_month(pnl, feats, target, month, float(m["l2"]))
+        mod = fit_month(pnl, m, target, month, spec["universe"])
         if mod is None:
             continue
-        p = predict(np.asarray(mod["w"]), chunk[feats].to_numpy(float))
+        p = predict_model(mod, chunk, m)
         b = chunk["symbol"].map(mod["base"]).fillna(mod["pooled"]).to_numpy(float)
         out.append(chunk.assign(p=p, b=b, model=str(month)))
     cols = list(pnl.columns) + ["p", "b", "model"]
@@ -363,6 +410,10 @@ def live_frame(spec: dict, log: pd.DataFrame, noon: pd.DataFrame) -> pd.DataFram
     """Scored live forecasts: on-time rows from the period start, with the noon-to-noon return.
     Days without an on-time forecast stay in the frame with p = NaN (the share is carried)."""
     target = spec["target"]
+    sfx = spec.get("log_suffix", "")
+    pcol, bcol = f"p_{target}{sfx}", f"base_{target}{sfx}"
+    if pcol not in log.columns or noon.empty:
+        return pd.DataFrame()
     start = pd.Timestamp(spec["periods"][0]["start"])
     px = noon.pivot_table(index="date", columns="symbol", values="price").sort_index()
     out = []
@@ -378,8 +429,8 @@ def live_frame(spec: dict, log: pd.DataFrame, noon: pd.DataFrame) -> pd.DataFram
         lg = log[(log["symbol"] == sym) & (log["on_time"] == 1)].set_index("date")
         lg = lg[~lg.index.duplicated(keep="first")]
         df = pd.DataFrame({"date": s.index, "symbol": sym, "ret_next": ret.to_numpy()})
-        df["p"] = lg[f"p_{target}"].reindex(s.index).to_numpy()
-        df["b"] = lg[f"base_{target}"].reindex(s.index).to_numpy()
+        df["p"] = lg[pcol].reindex(s.index).to_numpy()
+        df["b"] = lg[bcol].reindex(s.index).to_numpy()
         cost = cost_of(spec, sym)
         if target == "direction":
             df["y_direction"] = (df["ret_next"] > 2 * cost).astype(float).where(df["ret_next"].notna())
@@ -401,27 +452,73 @@ def evaluate_live(spec: dict, store, rng: np.random.Generator, root: Path | None
     return score(spec, fc, spec["target"], rng, spec["periods"][0]["name"])
 
 
-def _load_live_specs() -> tuple[dict, dict]:
-    from crl import registry
-    specs = {h["spec"]["target"]: h["spec"] for h in registry.load_all()
-             if (h.get("spec") or {}).get("kind") == "forecast_live" and h.get("status") != "draft"}
-    if set(specs) != set(TARGETS):
-        raise KeyError("registered forecast_live hypotheses for both targets are required")
-    d, r = specs["direction"], specs["risk"]
+def variant_columns(spec: dict) -> list[str]:
+    """Log columns of a live variant (a spec with `log_suffix`)."""
+    sfx, t = spec["log_suffix"], spec["target"]
+    cols = [f"p_{t}{sfx}", f"base_{t}{sfx}"]
+    return cols + ([f"w_target{sfx}", f"w_exec{sfx}"] if t == "direction" else [])
+
+
+def _check_live(specs: list[dict]) -> tuple[dict, dict, list[dict]]:
+    base = {s["target"]: s for s in specs if not s.get("log_suffix")}
+    if len([s for s in specs if not s.get("log_suffix")]) != 2 or set(base) != set(TARGETS):
+        raise KeyError("exactly one registered forecast_live hypothesis per target is required (without log_suffix)")
+    d, r = base["direction"], base["risk"]
     if d["model"] != r["model"] or d["universe"] != r["universe"]:
         raise ValueError("live direction and risk specs must share the model and the universe")
-    return d, r
+    variants = [s for s in specs if s.get("log_suffix")]
+    if len({v["log_suffix"] for v in variants}) != len(variants):
+        raise ValueError("live variants need distinct log_suffix values")
+    if any(v["universe"] != d["universe"] for v in variants):
+        raise ValueError("live variants must use the same universe")
+    return d, r, variants
+
+
+def _load_live_specs() -> tuple[dict, dict, list[dict]]:
+    from crl import registry
+    return _check_live([h["spec"] for h in registry.load_all()
+                        if (h.get("spec") or {}).get("kind") == "forecast_live" and h.get("status") != "draft"])
+
+
+def _panel_key(spec: dict) -> str:
+    m = spec["model"]
+    keys = ("features", "zscore_window", "zscore_min_periods", "clip", "external_lag", "ffill_limit")
+    return json.dumps({"m": {k: m[k] for k in keys}, "u": spec["universe"], "c": spec["costs"]}, sort_keys=True)
+
+
+def _month_model(path: Path, fit, stamp: str, extra: dict) -> dict | None:
+    """Load the month's frozen model, or fit and store it the first time it is needed."""
+    if path.exists():
+        return json.loads(path.read_text())
+    mod = fit()
+    if mod is None:
+        return None
+    mod.update(extra, fitted_at=stamp)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(mod, indent=1))
+    return mod
+
+
+def _exec_share(log: pd.DataFrame, col: str, sym: str, tgt: float, band: float, on_time: int):
+    """Paper share after this forecast: trade only on time and only on a move of at least `band`."""
+    prev = log[(log["symbol"] == sym) & (log["on_time"] == 1)][col].dropna() if col in log.columns else pd.Series()
+    w_prev = float(prev.iloc[-1]) if len(prev) else None
+    if on_time and (w_prev is None or abs(tgt - w_prev) >= band):
+        return tgt
+    return w_prev
 
 
 def publish(store=None, now: dt.datetime | None = None, root: Path | None = None,
-            specs: tuple[dict, dict] | None = None, fetch_noon: bool = True) -> dict:
-    """Append today's forecasts to the log (once per UTC day: the first publication is final)."""
+            specs: tuple | None = None, fetch_noon: bool = True) -> dict:
+    """Append today's forecasts to the log (once per UTC day: the first publication is final).
+    `specs`: (direction, risk[, variants]) live specs; read from the registry when omitted."""
     from crl.config import DATASETS_DIR
     from crl.data.store import DataStore
     root = Path(root or DATASETS_DIR)
     now = now or dt.datetime.now(dt.timezone.utc)
     store = store or DataStore()
-    spec_d, _ = specs or _load_live_specs()
+    spec_d, spec_r, *rest = specs or _load_live_specs()
+    variants = list(rest[0]) if rest else []
     today = pd.Timestamp(now.date())
     log = read_log(root)
     if len(log) and (log["date"] == today).any():
@@ -430,18 +527,17 @@ def publish(store=None, now: dt.datetime | None = None, root: Path | None = None
     m = spec_d["model"]
     feats = list(m["features"])
     pnl = panel(spec_d, store)
+    panels = {_panel_key(spec_d): pnl}
     month = decision.to_period("M")
     models = root / "forecast_models"
-    path = models / f"{month}.json"
-    if path.exists():
-        mod = json.loads(path.read_text())
-    else:
-        mod = {t: fit_month(pnl, feats, t, month, float(m["l2"])) for t in TARGETS}
-        if any(v is None for v in mod.values()):
-            return {"status": "not enough history to fit the model"}
-        mod.update(month=str(month), features=feats, fitted_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"))
-        models.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(mod, indent=1))
+    stamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    def fit_base():
+        mods = {t: fit_month(pnl, m, t, month, spec_d["universe"]) for t in TARGETS}
+        return None if any(v is None for v in mods.values()) else mods
+    mod = _month_model(models / f"{month}.json", fit_base, stamp, {"month": str(month), "features": feats})
+    if mod is None:
+        return {"status": "not enough history to fit the model"}
     rows = pnl[(pnl["date"] == decision) & pnl[feats].notna().all(axis=1)]
     if rows.empty:
         return {"status": f"no inputs for {decision.date()} yet"}
@@ -450,32 +546,59 @@ def publish(store=None, now: dt.datetime | None = None, root: Path | None = None
     X = rows[feats].to_numpy(float)
     p_dir = predict(np.asarray(mod["direction"]["w"]), X)
     p_risk = predict(np.asarray(mod["risk"]["w"]), X)
-    stamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    var_preds = []   # (spec, model, {symbol: p})
+    for v in variants:
+        key = _panel_key(v)
+        vp = panels[key] if key in panels else panels.setdefault(key, panel(v, store))
+        vm, t = v["model"], v["target"]
+        vmod = _month_model(models / f"{month}{v['log_suffix']}.json",
+                            lambda: (lambda x: None if x is None else {t: x})(fit_month(vp, vm, t, month, v["universe"])),
+                            stamp, {"month": str(month), "features": list(vm["features"])})
+        if vmod is None:
+            continue
+        vr = vp[(vp["date"] == decision) & vp[list(vm["features"])].notna().all(axis=1)]
+        if vr.empty:
+            continue
+        var_preds.append((v, vmod[t], dict(zip(vr["symbol"], predict_model(vmod[t], vr, vm)))))
+
     new = []
     for (_, r), pd_, pr_ in zip(rows.iterrows(), p_dir, p_risk):
         sym = r["symbol"]
-        prev = log[(log["symbol"] == sym) & (log["on_time"] == 1)]["w_exec"].dropna()
-        w_prev = float(prev.iloc[-1]) if len(prev) else None
         tgt = min(max(float(pd_), 0.0), 1.0)
-        if on_time and (w_prev is None or abs(tgt - w_prev) >= band):
-            w_exec = tgt
-        else:
-            w_exec = w_prev
-        new.append({"published": stamp, "date": today.date(), "decision_date": decision.date(), "symbol": sym,
-                    "p_direction": round(float(pd_), 6), "p_risk": round(float(pr_), 6),
-                    "base_direction": round(mod["direction"]["base"].get(sym, mod["direction"]["pooled"]), 6),
-                    "base_risk": round(mod["risk"]["base"].get(sym, mod["risk"]["pooled"]), 6),
-                    "med_move": round(float(r["med_move"]), 6) if pd.notna(r["med_move"]) else None,
-                    "w_target": round(tgt, 6), "w_exec": None if w_exec is None else round(w_exec, 6),
-                    "model": str(month), "on_time": on_time})
-    out = pd.concat([log, pd.DataFrame(new)], ignore_index=True)[LOG_COLUMNS]
+        w_exec = _exec_share(log, "w_exec", sym, tgt, band, on_time)
+        row = {"published": stamp, "date": today.date(), "decision_date": decision.date(), "symbol": sym,
+               "p_direction": round(float(pd_), 6), "p_risk": round(float(pr_), 6),
+               "base_direction": round(mod["direction"]["base"].get(sym, mod["direction"]["pooled"]), 6),
+               "base_risk": round(mod["risk"]["base"].get(sym, mod["risk"]["pooled"]), 6),
+               "med_move": round(float(r["med_move"]), 6) if pd.notna(r["med_move"]) else None,
+               "w_target": round(tgt, 6), "w_exec": None if w_exec is None else round(w_exec, 6),
+               "model": str(month), "on_time": on_time}
+        for v, vmod, preds in var_preds:
+            if sym not in preds:
+                continue
+            sfx, t = v["log_suffix"], v["target"]
+            row[f"p_{t}{sfx}"] = round(float(preds[sym]), 6)
+            row[f"base_{t}{sfx}"] = round(vmod["base"].get(sym, vmod["pooled"]), 6)
+            if t == "direction":
+                vt = min(max(float(preds[sym]), 0.0), 1.0)
+                vw = _exec_share(log, f"w_exec{sfx}", sym, vt, float(v["portfolio"]["band"]), on_time)
+                row[f"w_target{sfx}"] = round(vt, 6)
+                row[f"w_exec{sfx}"] = None if vw is None else round(vw, 6)
+        new.append(row)
+    cols = list(LOG_COLUMNS)
+    for v in variants:
+        cols += [c for c in variant_columns(v) if c not in cols]
+    cols += [c for c in log.columns if c not in cols]
+    out = pd.concat([log, pd.DataFrame(new)], ignore_index=True).reindex(columns=cols)
     out["date"] = pd.to_datetime(out["date"]).dt.date
     out["decision_date"] = pd.to_datetime(out["decision_date"]).dt.date
     root.mkdir(parents=True, exist_ok=True)
     out.to_csv(root / "forecast_log.csv", index=False)
     if fetch_noon:
         update_noon(root, spec_d["universe"], pd.Timestamp(spec_d["periods"][0]["start"]), today)
-    return {"status": "published", "date": str(today.date()), "coins": len(new), "on_time": bool(on_time)}
+    return {"status": "published", "date": str(today.date()), "coins": len(new), "on_time": bool(on_time),
+            "variants": [v["log_suffix"] for v, _, _ in var_preds]}
 
 
 def _noon_binance(sym: str, day: dt.date) -> float | None:

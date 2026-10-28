@@ -139,6 +139,11 @@ History test, 2022-01-01 → 2026-10-26, 21 612 coin-days, walk-forward with mon
   costs it most on EVER (−0.10) and GRAM (−0.03). The paper portfolio held about half a position on average: much
   smaller drawdowns, but its Sharpe beat holding on only 4 of 13 coins; on Sharpe a constant half position is the
   same as holding, so there is no timing skill.
+- **Improved direction model, live only (H-031).** Designed after seeing these results, so it may not be judged on
+  them: a separate intercept per coin (fixes the Gate.io bias) and Platt recalibration on a held-out year (fixes the
+  overconfidence). Its forecasts are published next to H-029's from 2026-11-01 (log columns `_v2`) and first
+  tested on 2027-11-01 at α = 0.0125. Expectation written before any result: the bias goes, the skill moves to
+  about zero.
 - **The size of moves is forecastable**, on every coin and well calibrated: calm and nervous stretches persist.
   This is the second pass in the project and the first that is not a trading rule. It helps size positions and
   judge risk; it says nothing about which way the price will go.
