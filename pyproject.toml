@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "crypto-research-labs"
-version = "0.3.0"
+version = "0.4.0"
 description = "Pre-registered, reproducible crypto trading research with proactive automated workflows"
 readme = "README.md"
 license = { text = "MIT" }

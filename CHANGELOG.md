@@ -5,6 +5,11 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-28
+
+A dashboard that answers one question per page, a 3D look that keeps high contrast, and daily updates that
+start as soon as every data source has published.
+
 ### Changed
 - Dashboard restructured into five pages, one question each, with the same five-item menu everywhere
   (Market · Research · Digest · New here? · About; a menu button on phones, languages in a drop-down).
