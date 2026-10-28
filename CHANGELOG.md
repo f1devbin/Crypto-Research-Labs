@@ -30,6 +30,13 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   2024 against 1000 random matched wallet sets; exit-rule line with Gate fee and slippage. Tests include the
   null's calibration (about 5 % passes when no wallet knows anything) and that later prices never change the
   selection.
+- H-033 (registered 2026-10-29): GRAM "smart wallets" on Gate.io, the H-032 question on TON. `crl data ton` reads
+  text-comment transfers into Gate.io's shared TON deposit wallet (users add their account number as a memo, so
+  there are no sweeps) from the public toncenter v3 index, paging back by logical time, and stores only short
+  hashes of the senders (`datasets/gram_gate_deposits.csv.gz`; Gate.io-labelled accounts and the owner's addresses
+  are dropped). `wallet_deposits` gets an optional `filters.min_usd`: a transfer counts only if it was worth that
+  many dollars at the close of its day. The $500 size was picked by a rule fixed before counting
+  (`scripts/h033_threshold.py`, counts only, no returns).
 
 ### Results
 - H-027 (direction) failed: pooled Brier skill −0.009, overconfident. H-028 (size of the next move) passed:

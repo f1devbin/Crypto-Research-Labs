@@ -173,6 +173,24 @@ Data: 34 327 transfers from 3 062 wallets into 2 528 deposit addresses, 2021-10 
 them stopped depositing. Deposits in general came before falls only because EVER kept falling (−72 %/yr from
 2024). Wallet-level timing on this exchange shows no persistent skill.
 
+## GRAM "smart wallets" on Gate.io (H-033, registered 2026-10-29)
+
+The H-032 question on Gram (GRAM, prev. Toncoin), asked for by F1DevBin after H-032 failed. On TON, Gate.io takes
+deposits on one shared wallet (0:b496b8f7…60bc281f, labelled "Gate.io"): users send GRAM straight to it with their
+Gate account number as a text comment (memo), so there are no deposit addresses or sweeps, and a "wallet" is the
+sending address (`crl data ton`: public toncenter index, addresses stored only as short hashes, the owner's
+excluded). F1DevBin found 10 GRAM too small to matter, so an event is a transfer worth at least $500 at the close
+of its day. The size was picked by a rule written down before the data were counted (`scripts/h033_threshold.py`:
+the highest of $10 000, $5 000, $1 000, $500 with at least 75 wallets having 5+ selection events and 300+
+test-period events; counts only, no return looked at): $10 000 gave 81 wallets and 109 events, $5 000 88 and 135,
+$1 000 137 and 219, $500 183 and 342. Selection 2023-03-13 → 2024-12-24 (GRAM's prices on Gate.io start on
+2023-03-13), test from 2025-01-01, everything else as in H-032. Expectation written before any result: like H-032,
+the "smart" wallets were lucky, not informed.
+
+Data: 206 817 transfers of 1+ GRAM from 75 000 wallets, 2022-11 → 2026-10.
+
+⏳ **Pending.** The spec is locked; it runs on the first full run after the data are merged.
+
 ## Bottom line
 
 Apart from H-020 (pending its forward replication) and H-028 (risk, not direction), none of these ideas has a

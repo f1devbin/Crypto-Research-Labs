@@ -151,6 +151,8 @@ def _check_wallets(h: Hypothesis, spec: dict) -> list[str]:
     for k in ("min_value", "merge_days", "max_monthly"):
         if not isinstance(spec["filters"].get(k), (int, float)):
             errs.append(f"filters.{k} must be a number")
+    if "min_usd" in spec["filters"] and not isinstance(spec["filters"]["min_usd"], (int, float)):
+        errs.append("filters.min_usd must be a number")
     sel = spec["selection"]
     for k in ("start", "end", "min_events", "horizon_days", "smart_share", "min_wallets"):
         if k not in sel:
