@@ -4,8 +4,9 @@ selection period keep doing so later, more than wallets picked at random?
 Input: datasets/<dataset> from crl.data.everscale — one row per transfer from a user's wallet into an exchange
 deposit address (ts, wallet, deposit, value, first_sweep_ts). Prices: daily closes of `asset`.
 
-1. Transfers below `min_value` are dust. A wallet with more than `max_monthly` transfers in any calendar month of
-   the selection period is a service (another exchange, a bot) and is dropped everywhere.
+1. Transfers below `min_value` are dust. A wallet with more than `max_monthly` such transfers in any calendar month
+   of the selection period is a service (another exchange, a bot) and is dropped everywhere. With `min_usd`, only
+   transfers worth at least that many dollars at the close of their day count as events.
 2. A transfer counts only if its deposit address had already been swept into the hot wallet before it (so an
    observer at that moment could know the address belongs to the exchange). Transfers of one wallet less than
    `merge_days` after its previous counted transfer join that event.
@@ -63,6 +64,9 @@ def events(spec: dict, raw: pd.DataFrame, close: pd.Series) -> pd.DataFrame:
     df = raw[raw["value"] >= float(f["min_value"])]
     svc = services(df, sel["start"], sel["end"], int(f["max_monthly"]))
     df = df[~df["wallet"].isin(svc)]
+    if f.get("min_usd"):   # size in dollars at the close of the transfer's day (known when the event is decided)
+        px = close.reindex(pd.to_datetime(df["ts"], unit="s").dt.normalize()).to_numpy()
+        df = df[df["value"].to_numpy() * px >= float(f["min_usd"])]
     if f.get("swept_before", True):
         df = df[df["first_sweep_ts"] < df["ts"]]
     df = merge_close(df, int(f["merge_days"])).copy()

@@ -41,6 +41,9 @@ def _data(args) -> int:
     if args.action == "everscale":
         from crl.data import everscale
         return everscale.main()
+    if args.action == "ton":
+        from crl.data import ton
+        return ton.main()
     from crl.agents import data_steward
     return data_steward.main()
 
@@ -104,8 +107,9 @@ def main(argv=None) -> int:
     r.set_defaults(fn=_registry_register)
 
     d = sub.add_parser("data", help="data steward: refresh cache + integrity checks")
-    d.add_argument("action", choices=["refresh", "everscale"],
-                   help="refresh: prices and features; everscale: Gate.io EVER deposits for H-032 (slow)")
+    d.add_argument("action", choices=["refresh", "everscale", "ton"],
+                   help="refresh: prices and features; everscale / ton: Gate.io EVER / GRAM deposits for H-032 / "
+                        "H-033 (slow)")
     d.set_defaults(fn=_data)
 
     r = sub.add_parser("run", help="run due hypotheses (or the given ids)")

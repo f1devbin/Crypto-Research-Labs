@@ -842,3 +842,14 @@ TITLES_H032 = {
 }
 for _code, _title in TITLES_H032.items():
     TITLES[_code]["H-032"] = _title
+
+TITLES_H033 = {
+ "ru": "«Умные кошельки» GRAM на Gate.io: крупные пополнения кошельков, отобранных на 2023–2024, предсказывают падение цены за 7 дней лучше случайных",
+ "es": "Carteras «inteligentes» de GRAM en Gate.io: los depósitos grandes de las carteras elegidas en 2023–2024 anticipan caídas a 7 días mejor que carteras aleatorias",
+ "pt": "Carteiras «espertas» de GRAM na Gate.io: depósitos grandes das carteiras escolhidas em 2023–2024 antecipam quedas de 7 dias melhor que carteiras aleatórias",
+ "tr": "Gate.io'da GRAM «akıllı cüzdanları»: 2023–2024'te seçilen cüzdanların büyük yatırımları 7 günlük düşüşleri rastgele cüzdanlardan iyi öngörür",
+ "vi": "«Ví thông minh» GRAM trên Gate.io: lệnh nạp lớn của các ví chọn trong 2023–2024 báo trước giá giảm 7 ngày tốt hơn ví ngẫu nhiên",
+ "zh": "Gate.io 上的 GRAM“聪明钱包”：2023–2024 年选出的钱包大额充值后 7 天的下跌比随机钱包更可预测",
+}
+for _code, _title in TITLES_H033.items():
+    TITLES[_code]["H-033"] = _title

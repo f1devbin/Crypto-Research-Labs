@@ -1,0 +1,69 @@
+id: H-033
+title: 'Gate.io GRAM ''smart wallets'': deposits of $500+ by wallets picked on 2023-24 foretell 7-day
+  drops better than random wallets'
+status: registered
+family: flows
+created: '2026-10-28'
+author: F1DevBin (idea), Claude (spec)
+rationale: 'Same question as H-032 on Gram (GRAM, prev. Toncoin), asked for by F1DevBin after H-032 failed.
+  On TON, Gate.io takes deposits on one shared wallet (0:b496b8f7...60bc281f, labelled ''Gate.io'' and
+  whitelisted by tonapi, active since 2022-11-04): users send GRAM straight to it with their Gate account
+  number as a text comment, so there are no sweeps and a ''wallet'' is the sending address (crl data ton:
+  public toncenter v3 index, text-comment transfers that did not bounce, addresses stored only as short
+  SHA-256 ids; the deposit wallet itself and other Gate.io-labelled accounts are dropped, as are the owner''s
+  addresses if he names any). Differences from H-032, all decided before any outcome: windows follow GRAM''s
+  price history on Gate.io (from 2023-03-13): selection 2023-03-13 to 2024-12-24, test from 2025-01-01;
+  no sweep rule. Size: F1DevBin found 10 coins too small to matter, so an event is a transfer worth at
+  least $500 at the close of its day (when the event is decided). The size was picked by a rule written
+  down before the data were counted (scripts/h033_threshold.py): the highest of $10 000, $5 000, $1 000,
+  $500 with at least 75 wallets having 5+ selection events and at least 300 test-period events for them;
+  counts only, no return was computed ($10 000: 81 wallets and 109 test-period events; $5 000: 88 and
+  135; $1 000: 137 and 219; $500: 183 and 342, so $500). Services: wallets with more than 100 transfers
+  of 1+ GRAM in a calendar month of the selection period. Everything else as in H-032: events of one wallet
+  within 7 days join; outcome = log return of GRAM (Gate.io daily closes) from the close of the event''s
+  day to 7 days later; ''smart'' = lowest 20 % mean outcome among wallets with 5+ selection events (need
+  25+); test: their events'' mean outcome (need 30+) vs 1000 random sets matched on selection-event counts,
+  pass if p < 0.05 (one-sided); exit rule with Gate''s 0.2 % fee + 0.2 % slippage vs holding. GRAM only:
+  wallet-level data is per chain (exception to the all-coins rule). Expectation written before any result:
+  like H-032, the ''smart'' wallets were lucky, not informed.'
+spec:
+  kind: wallet_deposits
+  asset: GRAMUSDT
+  universe:
+  - GRAMUSDT
+  deposit_wallet: 0:b496b8f73b469ff06a2d89e62c4d70a103fc228c821537b49dff092060bc281f
+  dataset: gram_gate_deposits.csv.gz
+  filters:
+    min_value: 1
+    min_usd: 500
+    swept_before: false
+    merge_days: 7
+    max_monthly: 100
+  selection:
+    start: '2023-03-13'
+    end: '2024-12-24'
+    min_events: 5
+    horizon_days: 7
+    smart_share: 0.2
+    min_wallets: 25
+  test:
+    start: '2025-01-01'
+    min_events: 30
+  'null':
+    method: random_wallets_matched
+    n: 1000
+    buckets:
+    - 5
+    - 6
+    - 8
+    - 11
+    - 16
+    - 26
+  significance:
+    alpha: 0.05
+  rule:
+    exit_days: 7
+    fee: 0.002
+    slippage: 0.002
+registered: '2026-10-29'
+prereg_sha256: 1dace528c24f74c4290f8d56407ad6ac371a22707113eb13071e17d1972f6fde

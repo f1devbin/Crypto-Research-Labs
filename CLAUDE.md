@@ -11,12 +11,15 @@ SHA-256 hash *before* it is tested, then tested by a fixed engine and re-tested 
 GitHub Actions. Results, a market diagnosis and a beginners' course are published as a static dashboard in 7
 languages: <https://f1devbin.github.io/Crypto-Research-Labs/> (en at root, `/ru/ /es/ /pt/ /tr/ /vi/ /zh/`).
 
-Current state: 32 hypotheses (H-001…H-032), two passed: H-020 (BTC exchange deposits; H-022 is its forward
+Current state: 33 hypotheses (H-001…H-033), two passed: H-020 (BTC exchange deposits; H-022 is its forward
 replication, first test 2027-10-15) and H-028 (the daily model forecasts the size of the next move, not its
 direction — H-027 failed). H-029/H-030 replicate H-027/H-028 live (forecast page, published before 12:00 UTC,
 first test 2027-11-01); H-031 is a live-only improved direction model (coin intercepts + Platt, log columns `_v2`).
 H-032 (failed: the "smart" 2022–23 wallets were no better than random from 2024): EVER "smart wallets" on Gate.io (on-chain deposits, `engine/wallets.py`, data `crl data everscale` →
-`datasets/ever_gate_deposits.csv.gz`; hot wallet 0:3addd84b…; never store or publish the owner's own addresses). Version 0.4.0. Honest negative results are the point of the project.
+`datasets/ever_gate_deposits.csv.gz`; hot wallet 0:3addd84b…; never store or publish the owner's own addresses).
+H-033 (registered 2026-10-29, runs once its data are merged) asks the same on GRAM: Gate.io's shared TON deposit
+wallet 0:b496b8f7… (users add a memo, no sweeps), data `crl data ton` → `datasets/gram_gate_deposits.csv.gz`,
+events of $500+ at the day's close (`filters.min_usd`). Version 0.4.0. Honest negative results are the point of the project.
 
 ## Layout
 
@@ -26,7 +29,7 @@ H-032 (failed: the "smart" 2022–23 wallets were no better than random from 202
 | `src/crl/engine/` | `rules.py` (timing rules), `protocol.py` (timing_rule, rule_search, cross_section, forecast), `cross.py`, `backtest.py`, `stats.py`, `forecast.py` (pooled daily model, Brier skill, paper portfolio, live log) |
 | `src/crl/registry.py` | validation, SHA-256 lock, duplicates, `is_due` |
 | `src/crl/agents/` | `data_steward` (data refresh + integrity), `regime_watch` (monitors, alerts), `runner` (due hypotheses) |
-| `src/crl/data/` | `sources.py` (Binance vision, Gate.io for EVER/GRAM, OKX funding, Coin Metrics flows, DefiLlama, alternative.me, BGeometrics), `store.py`, `everscale.py` (Gate.io EVER deposits traced on-chain, H-032) |
+| `src/crl/data/` | `sources.py` (Binance vision, Gate.io for EVER/GRAM, OKX funding, Coin Metrics flows, DefiLlama, alternative.me, BGeometrics), `store.py`, `everscale.py` (Gate.io EVER deposits traced on-chain, H-032), `ton.py` (deposits to Gate.io's shared TON wallet, H-033) |
 | `src/crl/scan.py` | coverage scan: every tested timing rule × every coin, BH-FDR q=0.10 → `reports/coverage.json`, `COVERAGE.md` |
 | `src/crl/llm/` | `client.py` (OpenAI-compatible: Groq via `LLM_API_KEY`, model auto-discovered; or Anthropic), `digest.py` (weekly digest: English from facts, then translated), `proposer.py` (monthly drafts) |
 | `src/crl/site.py`, `site_render.py` | dashboard build (`crl site` → `_site/`): home, market, research, about, hypothesis pages, coin pages, course, setup, digest |

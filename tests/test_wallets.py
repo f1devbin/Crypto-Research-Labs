@@ -91,3 +91,16 @@ def test_too_few_wallets_is_reported_as_insufficient(tmp_path):
     close = price()
     res = run(tmp_path, dataset(close, n=10, informed=2), close)
     assert res["verdict"] == "FAIL" and res["summary"].startswith("insufficient data")
+
+
+def test_dollar_threshold_and_no_sweep_rule():
+    close = price()
+    day = close.index[400]
+    spec = {**SPEC, "filters": {**SPEC["filters"], "min_value": 1, "min_usd": 1000, "swept_before": False}}
+    p = float(close.loc[day])
+    raw = pd.DataFrame([
+        {"ts": ts(day), "wallet": "big", "deposit": "g", "value": 1001 / p, "first_sweep_ts": 0},   # $1001: counts
+        {"ts": ts(day), "wallet": "small", "deposit": "g", "value": 999 / p, "first_sweep_ts": 0},  # $999: dropped
+    ])
+    ev = W.events(spec, raw, close)
+    assert list(ev["wallet"]) == ["big"]
