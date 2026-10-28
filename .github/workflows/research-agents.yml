@@ -4,6 +4,7 @@
 #   daily  : also the model forecast (H-029/H-030), committed at once so its time proves it came before 12:00 UTC
 #   always : the dashboard is rebuilt from the fresh data and deployed to GitHub Pages
 # The data cache and the watch state live in actions/cache, so nothing is re-downloaded from scratch.
+# The forecast files are reset to their committed versions after the cache restore: git is their only source.
 # Schedule: GitHub starts scheduled runs hours late, so the workflow wakes every hour of the morning and the
 # gate job (src/crl/schedule_gate.py) lets the first run that finds yesterday's data published by every source
 # (Binance, Coin Metrics, alternative.me, DefiLlama) do the work; on Mondays that run is the weekly one.
@@ -97,6 +98,13 @@ jobs:
             datasets
           key: crl-data-${{ github.run_id }}
           restore-keys: crl-data-
+
+      - name: Take the forecast log from git, not from the cache
+        run: |   # a forecast exists only if its commit was pushed; the cache must never resurrect one
+          for f in datasets/forecast_log.csv datasets/noon_prices.csv datasets/forecast_models; do
+            git checkout -q -- "$f" 2>/dev/null || true
+            git clean -fdq -- "$f"
+          done
 
       - name: Data steward
         id: steward

@@ -20,6 +20,9 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 ### Fixed
 - The forecast-log commit failed when the data refresh had changed other tracked files (`git pull --rebase`
   refused); it now autostashes, and a failed commit no longer blocks the dashboard.
+- The forecast log, noon prices and monthly models are reset to their committed versions after the Actions cache
+  is restored: git is their only source, so a forecast that failed to be pushed is re-published (marked late after
+  12:00 UTC) instead of being committed later with its earlier timestamp.
 
 ## [0.4.0] - 2026-10-28
 
