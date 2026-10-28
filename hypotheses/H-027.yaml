@@ -1,6 +1,6 @@
 id: H-027
 title: A daily model gives every coin's chance of rising above fees better than its base rate
-status: registered
+status: rejected
 family: forecast
 created: '2026-10-28'
 author: F1DevBin (idea), Claude (spec)
@@ -83,3 +83,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-28'
 prereg_sha256: 5b9f1bf62503713d0d026559271de1553b8014c27f51ae519f02302beacafedf
+last_run: '2026-10-28'

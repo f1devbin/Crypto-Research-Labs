@@ -1,6 +1,6 @@
 id: H-028
 title: A daily model gives every coin's chance of a bigger move than usual better than its base rate
-status: registered
+status: passed
 family: forecast
 created: '2026-10-28'
 author: F1DevBin (idea), Claude (spec)
@@ -76,3 +76,4 @@ spec:
 retest_every_days: 90
 registered: '2026-10-28'
 prereg_sha256: 6aa44712ae3df4719823820c81d53ccb0cc12fe36a57d5524f72b8fe614138ad
+last_run: '2026-10-28'

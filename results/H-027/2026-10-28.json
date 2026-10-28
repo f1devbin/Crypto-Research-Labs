@@ -1,0 +1,6826 @@
+{
+ "id": "H-027",
+ "prereg_sha256": "5b9f1bf62503713d0d026559271de1553b8014c27f51ae519f02302beacafedf",
+ "verdict": "FAIL",
+ "summary": "pooled Brier skill -0.0089 (p = 0.012, need p < 0.025); skill above zero on 5/13 coins; paper portfolio beats holding on 4/13 and the constant share on 4/13",
+ "rows": [
+  {
+   "symbol": "BTCUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": -0.0074336057545081324,
+   "brier": 0.25001374766012563,
+   "brier_ref": 0.24816895746978793,
+   "hits": 0.522159090909091,
+   "p": 0.2193903048475762,
+   "sharpe": 0.39984924886547707,
+   "cagr": 0.07160828961311583,
+   "max_dd": -0.4333151771935252,
+   "hold_sharpe": 0.46868879813987735,
+   "hold_cagr": 0.11546990575906713,
+   "hold_max_dd": -0.6673056490171778,
+   "const_sharpe": 0.46910463095754124,
+   "const_cagr": 0.08836045329353359,
+   "exposure": 0.48420040942036396,
+   "trades_per_year": 2.64870608202907,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.31689710700205453,
+   "win": false
+  },
+  {
+   "symbol": "ETHUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": -0.002307216210594598,
+   "brier": 0.25156310854186636,
+   "brier_ref": 0.2509840341097679,
+   "hits": 0.5102272727272728,
+   "p": 0.3658170914542729,
+   "sharpe": 0.16088400908972814,
+   "cagr": -0.004128067886483677,
+   "max_dd": -0.5134420046269401,
+   "hold_sharpe": 0.19720419660614502,
+   "hold_cagr": -0.09330576607258478,
+   "hold_max_dd": -0.7400575194539573,
+   "const_sharpe": 0.1975061064693068,
+   "const_cagr": 0.010306714900683023,
+   "exposure": 0.4898246648234392,
+   "trades_per_year": 2.7275807440935727,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.4755622188905548,
+   "win": false
+  },
+  {
+   "symbol": "SOLUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": -0.011672992775894286,
+   "brier": 0.25180569917541534,
+   "brier_ref": 0.24890028791269247,
+   "hits": 0.5119318181818182,
+   "p": 0.5052473763118441,
+   "sharpe": 0.2244261387552101,
+   "cagr": -0.005095848106603795,
+   "max_dd": -0.7554247082484442,
+   "hold_sharpe": 0.3379886247891458,
+   "hold_cagr": -0.11151967674860253,
+   "hold_max_dd": -0.9453359795860504,
+   "const_sharpe": 0.3382142513170137,
+   "const_cagr": 0.05201580358026736,
+   "exposure": 0.48881199376858964,
+   "trades_per_year": 2.3815681363512216,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.5971105356412704,
+   "win": false
+  },
+  {
+   "symbol": "BNBUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": 0.0041963777196545315,
+   "brier": 0.24945845773479017,
+   "brier_ref": 0.25050969102074716,
+   "hits": 0.5125,
+   "p": 0.022488755622188907,
+   "sharpe": 0.44558763993425776,
+   "cagr": 0.08861469330771676,
+   "max_dd": -0.3578235790024511,
+   "hold_sharpe": 0.4077356960464537,
+   "hold_cagr": 0.0740676712611179,
+   "hold_max_dd": -0.6290018832391713,
+   "const_sharpe": 0.40810646207032664,
+   "const_cagr": 0.07603845435995771,
+   "exposure": 0.47931771428219566,
+   "trades_per_year": 2.6274828087878004,
+   "beats_hold": true,
+   "beats_const": true,
+   "q": 0.0487256371814093,
+   "win": true
+  },
+  {
+   "symbol": "XRPUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": 0.0027850582511709243,
+   "brier": 0.24822379287133658,
+   "brier_ref": 0.24891704133115297,
+   "hits": 0.5409090909090909,
+   "p": 0.0029985007496251873,
+   "sharpe": 0.49780068021361346,
+   "cagr": 0.13157924170139568,
+   "max_dd": -0.42029650878566105,
+   "hold_sharpe": 0.4998174005584461,
+   "hold_cagr": 0.0971026437021012,
+   "hold_max_dd": -0.7201442091031994,
+   "const_sharpe": 0.5000643064370008,
+   "const_cagr": 0.13242728824294336,
+   "exposure": 0.4896648590218284,
+   "trades_per_year": 2.051230947011514,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.021114442778610694,
+   "win": true
+  },
+  {
+   "symbol": "ADAUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": -0.0042027563980995275,
+   "brier": 0.2496988116367351,
+   "brier_ref": 0.2486537803703719,
+   "hits": 0.5392045454545454,
+   "p": 0.09545227386306847,
+   "sharpe": -0.0568571621854844,
+   "cagr": -0.11161700905359817,
+   "max_dd": -0.5790325788365114,
+   "hold_sharpe": -0.026633002425858154,
+   "hold_cagr": -0.32608349241433643,
+   "hold_max_dd": -0.9102932002495324,
+   "const_sharpe": -0.026397844134701014,
+   "const_cagr": -0.0976068883315262,
+   "exposure": 0.4915315152539082,
+   "trades_per_year": 2.4104297625982145,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.17726850860284143,
+   "win": false
+  },
+  {
+   "symbol": "LTCUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": 0.0008395653184322116,
+   "brier": 0.24954944027312295,
+   "brier_ref": 0.24975912937610895,
+   "hits": 0.5261363636363636,
+   "p": 0.015492253873063468,
+   "sharpe": 0.1327822128042501,
+   "cagr": -0.01843616915499091,
+   "max_dd": -0.4522883283399448,
+   "hold_sharpe": 0.09613951988771346,
+   "hold_cagr": -0.18226024768982796,
+   "hold_max_dd": -0.7293650793650805,
+   "const_sharpe": 0.09642069346289056,
+   "const_cagr": -0.02940279400531587,
+   "exposure": 0.4874109830595211,
+   "trades_per_year": 2.495996841164476,
+   "beats_hold": true,
+   "beats_const": true,
+   "q": 0.04027986006996502,
+   "win": true
+  },
+  {
+   "symbol": "LINKUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": -0.011921071313118148,
+   "brier": 0.25321898680156035,
+   "brier_ref": 0.2502359067125374,
+   "hits": 0.49829545454545454,
+   "p": 0.68015992003998,
+   "sharpe": 0.27244613419234315,
+   "cagr": 0.025937398628485875,
+   "max_dd": -0.5547596570400521,
+   "hold_sharpe": 0.2865780188451311,
+   "hold_cagr": -0.11414742006465783,
+   "hold_max_dd": -0.8165475339528235,
+   "const_sharpe": 0.28681508450503007,
+   "const_cagr": 0.03384522360155051,
+   "exposure": 0.4827412056411093,
+   "trades_per_year": 2.71959654743506,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.68015992003998,
+   "win": false
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": -0.0008942104663720585,
+   "brier": 0.24809069558108685,
+   "brier_ref": 0.2478690484836431,
+   "hits": 0.5352272727272728,
+   "p": 0.00399800099950025,
+   "sharpe": 0.20310314134906754,
+   "cagr": -0.0044326775927588935,
+   "max_dd": -0.5518572966964065,
+   "hold_sharpe": 0.25407269753194345,
+   "hold_cagr": -0.15023391050946067,
+   "hold_max_dd": -0.8518494692827276,
+   "const_sharpe": 0.25430501801423083,
+   "const_cagr": 0.017514999134209397,
+   "exposure": 0.48699170693020716,
+   "trades_per_year": 2.502802909660855,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.021114442778610694,
+   "win": false
+  },
+  {
+   "symbol": "XLMUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": 0.0030832268722341682,
+   "brier": 0.24805303367711873,
+   "brier_ref": 0.24882020281278586,
+   "hits": 0.5329545454545455,
+   "p": 0.006496751624187906,
+   "sharpe": 0.2866216906290977,
+   "cagr": 0.037032097753493476,
+   "max_dd": -0.443090638622072,
+   "hold_sharpe": 0.28880438611597575,
+   "hold_cagr": -0.09558109411976035,
+   "hold_max_dd": -0.7569325573433761,
+   "const_sharpe": 0.28903651967143573,
+   "const_cagr": 0.0368622111696566,
+   "exposure": 0.4895668012464433,
+   "trades_per_year": 2.116086369408806,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.021114442778610694,
+   "win": true
+  },
+  {
+   "symbol": "TRXUSDT",
+   "period": "oos",
+   "days": 1760,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": 0.003370538111415411,
+   "brier": 0.2492006414362833,
+   "brier_ref": 0.250043422320724,
+   "hits": 0.5375,
+   "p": 0.004997501249375313,
+   "sharpe": 0.8092251174887991,
+   "cagr": 0.23978979595420058,
+   "max_dd": -0.26976346434752574,
+   "hold_sharpe": 0.7395572628878359,
+   "hold_cagr": 0.35475772030834496,
+   "hold_max_dd": -0.5110752191970467,
+   "const_sharpe": 0.7398733574235261,
+   "const_cagr": 0.20593512761175714,
+   "exposure": 0.48235504236646604,
+   "trades_per_year": 1.9786187225300298,
+   "beats_hold": true,
+   "beats_const": true,
+   "q": 0.021114442778610694,
+   "win": true
+  },
+  {
+   "symbol": "EVERUSDT",
+   "period": "oos",
+   "days": 1306,
+   "start": "2023-03-31",
+   "end": "2026-10-26",
+   "bss": -0.10211795452817651,
+   "brier": 0.2467347505961374,
+   "brier_ref": 0.22387327017257974,
+   "hits": 0.5467075038284839,
+   "p": 0.6756621689155422,
+   "sharpe": -0.06025665757683673,
+   "cagr": -0.27324508575428297,
+   "max_dd": -0.7944769664435802,
+   "hold_sharpe": -0.10858720298769921,
+   "hold_cagr": -0.7009233801210499,
+   "hold_max_dd": -0.989911127800726,
+   "const_sharpe": -0.10785883412109348,
+   "const_cagr": -0.28731834932357525,
+   "exposure": 0.4875389089169205,
+   "trades_per_year": 2.1585924272526,
+   "beats_hold": true,
+   "beats_const": true,
+   "q": 0.68015992003998,
+   "win": false
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "period": "oos",
+   "days": 946,
+   "start": "2024-03-25",
+   "end": "2026-10-26",
+   "bss": -0.03138087987337279,
+   "brier": 0.24517745039977035,
+   "brier_ref": 0.23771766103505027,
+   "hits": 0.5771670190274841,
+   "p": 0.16091954022988506,
+   "sharpe": -0.4648489708017575,
+   "cagr": -0.20773038914150022,
+   "max_dd": -0.5638190881663696,
+   "hold_sharpe": -0.3524499068584279,
+   "hold_cagr": -0.43325771294586257,
+   "hold_max_dd": -0.8531654852114394,
+   "const_sharpe": -0.3504996060509137,
+   "const_cagr": -0.17522642368251817,
+   "exposure": 0.4704054908583546,
+   "trades_per_year": 1.523895909099724,
+   "beats_hold": false,
+   "beats_const": false,
+   "q": 0.2614942528735632,
+   "win": false
+  },
+  {
+   "symbol": "ALL",
+   "period": "oos",
+   "days": 21612,
+   "start": "2022-01-01",
+   "end": "2026-10-26",
+   "bss": -0.008887372651952052,
+   "brier": 0.24950008992421596,
+   "brier_ref": 0.24730222291154494,
+   "hits": 0.5279474366092911,
+   "p": 0.01199400299850075,
+   "win": false
+  }
+ ],
+ "monthly": [
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 90.51,
+   "hold": 80.52,
+   "const": 90.13,
+   "share": 0.4958
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 107.28,
+   "hold": 112.2,
+   "const": 106.69,
+   "share": 0.5064
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 101.34,
+   "hold": 105.45,
+   "const": 102.99,
+   "share": 0.4796
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 91.25,
+   "hold": 82.69,
+   "const": 90.67,
+   "share": 0.5285
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 91.12,
+   "hold": 84.51,
+   "const": 91.65,
+   "share": 0.5582
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 78.99,
+   "hold": 62.71,
+   "const": 78.25,
+   "share": 0.5447
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 107.11,
+   "hold": 116.8,
+   "const": 108.08,
+   "share": 0.4739
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 93.07,
+   "hold": 86.08,
+   "const": 93.33,
+   "share": 0.4804
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 99.01,
+   "hold": 96.87,
+   "const": 98.91,
+   "share": 0.4761
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 102.67,
+   "hold": 105.5,
+   "const": 102.67,
+   "share": 0.472
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 91.15,
+   "hold": 83.76,
+   "const": 92.06,
+   "share": 0.506
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 97.97,
+   "hold": 96.38,
+   "const": 98.31,
+   "share": 0.4846
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 116.52,
+   "hold": 139.79,
+   "const": 116.54,
+   "share": 0.4499
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 100.56,
+   "hold": 100.07,
+   "const": 100.28,
+   "share": 0.5362
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 109.75,
+   "hold": 123.01,
+   "const": 111.34,
+   "share": 0.4946
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 101.5,
+   "hold": 102.7,
+   "const": 101.5,
+   "share": 0.5009
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 96.59,
+   "hold": 93.08,
+   "const": 96.59,
+   "share": 0.5009
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 106.11,
+   "hold": 111.99,
+   "const": 106.06,
+   "share": 0.499
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 97.98,
+   "hold": 95.93,
+   "const": 97.98,
+   "share": 0.5081
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 94.08,
+   "hold": 88.74,
+   "const": 94.03,
+   "share": 0.5304
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 102.06,
+   "hold": 103.94,
+   "const": 101.81,
+   "share": 0.4509
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 110.95,
+   "hold": 128.47,
+   "const": 111.48,
+   "share": 0.4252
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 105.52,
+   "hold": 108.9,
+   "const": 104.03,
+   "share": 0.4428
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 105.19,
+   "hold": 112.09,
+   "const": 105.65,
+   "share": 0.4631
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 101.5,
+   "hold": 100.7,
+   "const": 100.66,
+   "share": 0.4869
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 118.01,
+   "hold": 143.57,
+   "const": 119.07,
+   "share": 0.4755
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 112.61,
+   "hold": 116.6,
+   "const": 108.42,
+   "share": 0.4885
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 93.02,
+   "hold": 85.12,
+   "const": 92.43,
+   "share": 0.5067
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 105.81,
+   "hold": 111.32,
+   "const": 105.81,
+   "share": 0.4992
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 95.97,
+   "hold": 92.94,
+   "const": 96.41,
+   "share": 0.5148
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 100.92,
+   "hold": 102.96,
+   "const": 101.62,
+   "share": 0.4745
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 95.5,
+   "hold": 91.25,
+   "const": 96.18,
+   "share": 0.4782
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 103.72,
+   "hold": 107.38,
+   "const": 103.72,
+   "share": 0.4879
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 105.39,
+   "hold": 111.0,
+   "const": 105.39,
+   "share": 0.4879
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 117.37,
+   "hold": 137.15,
+   "const": 116.19,
+   "share": 0.4624
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 98.67,
+   "hold": 97.06,
+   "const": 98.68,
+   "share": 0.5116
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 105.24,
+   "hold": 109.46,
+   "const": 104.62,
+   "share": 0.4782
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 90.98,
+   "hold": 82.35,
+   "const": 91.13,
+   "share": 0.4863
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 99.65,
+   "hold": 97.87,
+   "const": 99.38,
+   "share": 0.5008
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 106.98,
+   "hold": 114.08,
+   "const": 106.53,
+   "share": 0.4575
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 104.54,
+   "hold": 111.06,
+   "const": 105.15,
+   "share": 0.4654
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 101.27,
+   "hold": 102.44,
+   "const": 101.19,
+   "share": 0.4484
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 103.58,
+   "hold": 108.04,
+   "const": 103.58,
+   "share": 0.445
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 96.95,
+   "hold": 93.51,
+   "const": 96.87,
+   "share": 0.4941
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 103.54,
+   "hold": 105.36,
+   "const": 102.64,
+   "share": 0.4878
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 99.32,
+   "hold": 96.11,
+   "const": 98.31,
+   "share": 0.4799
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 90.66,
+   "hold": 82.44,
+   "const": 90.66,
+   "share": 0.5187
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 98.51,
+   "hold": 97.0,
+   "const": 98.63,
+   "share": 0.4999
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 94.91,
+   "hold": 89.84,
+   "const": 94.91,
+   "share": 0.5062
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 94.78,
+   "hold": 85.06,
+   "const": 92.88,
+   "share": 0.4956
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 101.99,
+   "hold": 101.96,
+   "const": 101.15,
+   "share": 0.4586
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 104.93,
+   "hold": 111.81,
+   "const": 104.93,
+   "share": 0.4189
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 98.59,
+   "hold": 96.5,
+   "const": 98.59,
+   "share": 0.4189
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 89.63,
+   "hold": 79.57,
+   "const": 89.85,
+   "share": 0.4776
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 103.44,
+   "hold": 107.27,
+   "const": 103.44,
+   "share": 0.4674
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 111.19,
+   "hold": 124.95,
+   "const": 111.19,
+   "share": 0.4674
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 103.12,
+   "hold": 106.42,
+   "const": 103.12,
+   "share": 0.4674
+  },
+  {
+   "symbol": "BTCUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 98.53,
+   "hold": 96.75,
+   "const": 98.53,
+   "share": 0.4674
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 83.71,
+   "hold": 71.29,
+   "const": 83.34,
+   "share": 0.5616
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 105.72,
+   "hold": 108.71,
+   "const": 105.19,
+   "share": 0.5141
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 104.78,
+   "hold": 112.34,
+   "const": 106.0,
+   "share": 0.4671
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 90.54,
+   "hold": 83.09,
+   "const": 91.44,
+   "share": 0.5034
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 85.63,
+   "hold": 71.22,
+   "const": 84.18,
+   "share": 0.54
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 72.32,
+   "hold": 55.15,
+   "const": 71.21,
+   "share": 0.5952
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 124.68,
+   "hold": 156.69,
+   "const": 124.51,
+   "share": 0.4609
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 97.24,
+   "hold": 92.61,
+   "const": 97.21,
+   "share": 0.4768
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 95.33,
+   "hold": 85.5,
+   "const": 93.61,
+   "share": 0.4622
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 108.71,
+   "hold": 118.36,
+   "const": 108.71,
+   "share": 0.4775
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 90.66,
+   "hold": 82.31,
+   "const": 92.19,
+   "share": 0.4909
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 96.34,
+   "hold": 92.4,
+   "const": 96.52,
+   "share": 0.4768
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 113.72,
+   "hold": 132.54,
+   "const": 114.65,
+   "share": 0.4744
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 101.0,
+   "hold": 101.26,
+   "const": 100.92,
+   "share": 0.5407
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 107.97,
+   "hold": 113.47,
+   "const": 106.8,
+   "share": 0.4871
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 101.3,
+   "hold": 102.67,
+   "const": 101.6,
+   "share": 0.5122
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 100.26,
+   "hold": 100.19,
+   "const": 100.26,
+   "share": 0.5259
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 101.97,
+   "hold": 103.21,
+   "const": 101.9,
+   "share": 0.5191
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 98.02,
+   "hold": 95.98,
+   "const": 98.02,
+   "share": 0.5145
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 94.16,
+   "hold": 88.67,
+   "const": 93.95,
+   "share": 0.5304
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 100.72,
+   "hold": 101.53,
+   "const": 100.85,
+   "share": 0.5147
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 103.7,
+   "hold": 108.6,
+   "const": 103.94,
+   "share": 0.4494
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 107.38,
+   "hold": 113.08,
+   "const": 106.32,
+   "share": 0.4693
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 106.2,
+   "hold": 111.2,
+   "const": 105.5,
+   "share": 0.4796
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 101.64,
+   "hold": 100.06,
+   "const": 100.41,
+   "share": 0.4717
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 119.37,
+   "hold": 146.29,
+   "const": 119.04,
+   "share": 0.4529
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 108.42,
+   "hold": 109.14,
+   "const": 105.02,
+   "share": 0.4885
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 92.02,
+   "hold": 82.68,
+   "const": 90.78,
+   "share": 0.5343
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 113.92,
+   "hold": 124.83,
+   "const": 111.72,
+   "share": 0.4741
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 95.53,
+   "hold": 91.38,
+   "const": 95.85,
+   "share": 0.4854
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 97.2,
+   "hold": 94.03,
+   "const": 97.53,
+   "share": 0.4563
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 89.6,
+   "hold": 77.74,
+   "const": 88.8,
+   "share": 0.5035
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 102.43,
+   "hold": 103.55,
+   "const": 101.99,
+   "share": 0.484
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 98.7,
+   "hold": 96.79,
+   "const": 98.7,
+   "share": 0.4833
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 119.29,
+   "hold": 147.05,
+   "const": 121.68,
+   "share": 0.4919
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 95.4,
+   "hold": 90.12,
+   "const": 95.4,
+   "share": 0.4927
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 99.42,
+   "hold": 98.9,
+   "const": 99.87,
+   "share": 0.4873
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 82.4,
+   "hold": 67.79,
+   "const": 82.37,
+   "share": 0.5127
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 93.69,
+   "hold": 81.45,
+   "const": 91.11,
+   "share": 0.4989
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 100.49,
+   "hold": 98.42,
+   "const": 100.09,
+   "share": 0.4804
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 117.57,
+   "hold": 140.95,
+   "const": 117.98,
+   "share": 0.4567
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 99.61,
+   "hold": 98.32,
+   "const": 99.61,
+   "share": 0.4558
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 120.31,
+   "hold": 148.8,
+   "const": 120.31,
+   "share": 0.4558
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 109.06,
+   "hold": 118.75,
+   "const": 109.06,
+   "share": 0.4558
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 98.35,
+   "hold": 94.38,
+   "const": 97.53,
+   "share": 0.4741
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 97.52,
+   "hold": 92.83,
+   "const": 97.12,
+   "share": 0.4729
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 88.62,
+   "hold": 77.74,
+   "const": 88.2,
+   "share": 0.5182
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 99.54,
+   "hold": 99.34,
+   "const": 100.03,
+   "share": 0.4976
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 91.23,
+   "hold": 82.51,
+   "const": 91.23,
+   "share": 0.5026
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 91.47,
+   "hold": 80.12,
+   "const": 90.84,
+   "share": 0.4782
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 103.74,
+   "hold": 107.17,
+   "const": 103.74,
+   "share": 0.4725
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 103.63,
+   "hold": 107.22,
+   "const": 103.63,
+   "share": 0.4725
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 94.68,
+   "hold": 88.9,
+   "const": 94.68,
+   "share": 0.4725
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 89.5,
+   "hold": 78.33,
+   "const": 89.5,
+   "share": 0.4725
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 108.58,
+   "hold": 118.49,
+   "const": 108.58,
+   "share": 0.4725
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 113.79,
+   "hold": 132.48,
+   "const": 114.89,
+   "share": 0.476
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 104.79,
+   "hold": 108.85,
+   "const": 104.14,
+   "share": 0.4564
+  },
+  {
+   "symbol": "ETHUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 93.4,
+   "hold": 87.5,
+   "const": 93.4,
+   "share": 0.5201
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 73.21,
+   "hold": 55.51,
+   "const": 72.08,
+   "share": 0.579
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 102.52,
+   "hold": 100.19,
+   "const": 101.39,
+   "share": 0.577
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 108.86,
+   "hold": 123.16,
+   "const": 111.73,
+   "share": 0.4994
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 83.6,
+   "hold": 68.93,
+   "const": 83.28,
+   "share": 0.5165
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 75.34,
+   "hold": 54.08,
+   "const": 73.07,
+   "share": 0.5602
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 84.94,
+   "hold": 73.76,
+   "const": 86.12,
+   "share": 0.5572
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 110.73,
+   "hold": 125.44,
+   "const": 112.47,
+   "share": 0.467
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 86.28,
+   "hold": 74.38,
+   "const": 86.28,
+   "share": 0.5209
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 104.13,
+   "hold": 105.56,
+   "const": 103.26,
+   "share": 0.4696
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 100.73,
+   "hold": 97.92,
+   "const": 99.36,
+   "share": 0.4659
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 66.28,
+   "hold": 43.49,
+   "const": 67.18,
+   "share": 0.5531
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 85.1,
+   "hold": 70.41,
+   "const": 84.24,
+   "share": 0.5074
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 150.09,
+   "hold": 239.92,
+   "const": 156.61,
+   "share": 0.4799
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 96.13,
+   "hold": 91.51,
+   "const": 96.29,
+   "share": 0.5126
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 99.14,
+   "hold": 96.67,
+   "const": 99.14,
+   "share": 0.491
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 104.07,
+   "hold": 107.47,
+   "const": 104.07,
+   "share": 0.491
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 96.0,
+   "hold": 91.51,
+   "const": 96.0,
+   "share": 0.491
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 95.67,
+   "hold": 90.63,
+   "const": 95.89,
+   "share": 0.514
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 112.8,
+   "hold": 125.82,
+   "const": 112.75,
+   "share": 0.4886
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 91.78,
+   "hold": 83.19,
+   "const": 91.78,
+   "share": 0.4873
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 104.2,
+   "hold": 108.26,
+   "const": 104.2,
+   "share": 0.4873
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 130.68,
+   "hold": 179.69,
+   "const": 130.93,
+   "share": 0.4437
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 124.9,
+   "hold": 154.43,
+   "const": 123.36,
+   "share": 0.4396
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 130.03,
+   "hold": 171.53,
+   "const": 131.99,
+   "share": 0.4898
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 100.6,
+   "hold": 95.32,
+   "const": 98.69,
+   "share": 0.4662
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 113.94,
+   "hold": 129.62,
+   "const": 114.57,
+   "share": 0.5085
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 131.05,
+   "hold": 161.08,
+   "const": 127.43,
+   "share": 0.4847
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 79.73,
+   "hold": 62.62,
+   "const": 79.06,
+   "share": 0.5225
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 114.0,
+   "hold": 130.67,
+   "const": 114.62,
+   "share": 0.4853
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 93.92,
+   "hold": 88.51,
+   "const": 94.44,
+   "share": 0.5102
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 108.02,
+   "hold": 117.12,
+   "const": 108.17,
+   "share": 0.444
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 88.16,
+   "hold": 78.82,
+   "const": 89.72,
+   "share": 0.4924
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 106.76,
+   "hold": 112.66,
+   "const": 106.09,
+   "share": 0.461
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 104.63,
+   "hold": 110.62,
+   "const": 105.59,
+   "share": 0.5004
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 117.66,
+   "hold": 140.85,
+   "const": 118.83,
+   "share": 0.4827
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 89.99,
+   "hold": 79.68,
+   "const": 89.74,
+   "share": 0.5019
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 109.84,
+   "hold": 122.43,
+   "const": 111.23,
+   "share": 0.4787
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 81.76,
+   "hold": 63.93,
+   "const": 81.24,
+   "share": 0.4845
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 97.82,
+   "hold": 84.05,
+   "const": 93.79,
+   "share": 0.4788
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 110.18,
+   "hold": 118.47,
+   "const": 109.16,
+   "share": 0.4657
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 103.07,
+   "hold": 106.04,
+   "const": 103.07,
+   "share": 0.438
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 101.17,
+   "hold": 98.95,
+   "const": 99.98,
+   "share": 0.4483
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 104.03,
+   "hold": 111.25,
+   "const": 105.48,
+   "share": 0.4612
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 108.67,
+   "hold": 116.49,
+   "const": 108.74,
+   "share": 0.4952
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 103.17,
+   "hold": 104.02,
+   "const": 102.3,
+   "share": 0.462
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 96.95,
+   "hold": 89.71,
+   "const": 95.88,
+   "share": 0.4701
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 86.31,
+   "hold": 71.3,
+   "const": 85.2,
+   "share": 0.4943
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 96.9,
+   "hold": 93.38,
+   "const": 97.17,
+   "share": 0.4706
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 91.08,
+   "hold": 84.7,
+   "const": 92.96,
+   "share": 0.4689
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 89.88,
+   "hold": 79.89,
+   "const": 90.66,
+   "share": 0.4838
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 99.67,
+   "hold": 98.64,
+   "const": 99.67,
+   "share": 0.477
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 100.2,
+   "hold": 99.87,
+   "const": 100.2,
+   "share": 0.477
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 99.78,
+   "hold": 99.22,
+   "const": 99.78,
+   "share": 0.477
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 95.29,
+   "hold": 89.36,
+   "const": 95.29,
+   "share": 0.477
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 99.65,
+   "hold": 98.91,
+   "const": 99.65,
+   "share": 0.477
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 118.46,
+   "hold": 141.43,
+   "const": 118.46,
+   "share": 0.477
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 107.15,
+   "hold": 114.61,
+   "const": 107.15,
+   "share": 0.477
+  },
+  {
+   "symbol": "SOLUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 93.08,
+   "hold": 85.8,
+   "const": 93.08,
+   "share": 0.477
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 85.19,
+   "hold": 70.91,
+   "const": 84.89,
+   "share": 0.5009
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 103.45,
+   "hold": 105.69,
+   "const": 103.45,
+   "share": 0.5049
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 104.43,
+   "hold": 108.42,
+   "const": 104.43,
+   "share": 0.5049
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 94.02,
+   "hold": 87.92,
+   "const": 94.02,
+   "share": 0.5049
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 95.66,
+   "hold": 85.1,
+   "const": 92.85,
+   "share": 0.5424
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 84.15,
+   "hold": 68.43,
+   "const": 82.74,
+   "share": 0.5231
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 113.2,
+   "hold": 129.05,
+   "const": 113.33,
+   "share": 0.4727
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 101.31,
+   "hold": 98.52,
+   "const": 99.63,
+   "share": 0.4488
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 101.17,
+   "hold": 102.01,
+   "const": 101.17,
+   "share": 0.4613
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 106.52,
+   "hold": 114.36,
+   "const": 106.52,
+   "share": 0.4613
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 100.44,
+   "hold": 92.29,
+   "const": 97.18,
+   "share": 0.5011
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 92.04,
+   "hold": 81.94,
+   "const": 90.91,
+   "share": 0.4945
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 111.11,
+   "hold": 126.67,
+   "const": 111.98,
+   "share": 0.4698
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 98.83,
+   "hold": 96.6,
+   "const": 98.35,
+   "share": 0.5555
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 103.4,
+   "hold": 105.14,
+   "const": 102.82,
+   "share": 0.499
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 103.11,
+   "hold": 106.5,
+   "const": 103.41,
+   "share": 0.5069
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 95.47,
+   "hold": 90.9,
+   "const": 95.47,
+   "share": 0.4934
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 88.91,
+   "hold": 78.32,
+   "const": 87.22,
+   "share": 0.5768
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 100.83,
+   "hold": 100.29,
+   "const": 100.3,
+   "share": 0.5465
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 95.5,
+   "hold": 89.92,
+   "const": 94.91,
+   "share": 0.5045
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 99.46,
+   "hold": 99.03,
+   "const": 99.57,
+   "share": 0.4822
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 102.71,
+   "hold": 105.41,
+   "const": 102.54,
+   "share": 0.4613
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 101.67,
+   "hold": 100.62,
+   "const": 100.65,
+   "share": 0.4868
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 115.46,
+   "hold": 136.99,
+   "const": 115.95,
+   "share": 0.4579
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 98.7,
+   "hold": 96.38,
+   "const": 98.49,
+   "share": 0.4583
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 114.54,
+   "hold": 132.91,
+   "const": 113.95,
+   "share": 0.4509
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 122.63,
+   "hold": 151.9,
+   "const": 123.29,
+   "share": 0.4737
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 97.83,
+   "hold": 95.34,
+   "const": 98.03,
+   "share": 0.4764
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 101.68,
+   "hold": 102.65,
+   "const": 101.39,
+   "share": 0.4729
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 97.72,
+   "hold": 98.06,
+   "const": 99.33,
+   "share": 0.5054
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 100.07,
+   "hold": 99.02,
+   "const": 99.92,
+   "share": 0.4532
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 97.21,
+   "hold": 92.44,
+   "const": 96.68,
+   "share": 0.4849
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 103.86,
+   "hold": 106.47,
+   "const": 103.09,
+   "share": 0.454
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 100.6,
+   "hold": 101.62,
+   "const": 100.88,
+   "share": 0.4694
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 105.65,
+   "hold": 113.32,
+   "const": 106.88,
+   "share": 0.5138
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 104.19,
+   "hold": 107.48,
+   "const": 104.16,
+   "share": 0.4951
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 98.81,
+   "hold": 96.46,
+   "const": 98.4,
+   "share": 0.4804
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 95.11,
+   "hold": 86.8,
+   "const": 93.2,
+   "share": 0.527
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 101.84,
+   "hold": 102.85,
+   "const": 101.64,
+   "share": 0.4549
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 99.85,
+   "hold": 99.18,
+   "const": 99.75,
+   "share": 0.4838
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 104.15,
+   "hold": 109.69,
+   "const": 104.46,
+   "share": 0.4544
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 100.12,
+   "hold": 99.83,
+   "const": 100.0,
+   "share": 0.4714
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 108.15,
+   "hold": 119.22,
+   "const": 108.15,
+   "share": 0.4378
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 104.97,
+   "hold": 109.51,
+   "const": 104.57,
+   "share": 0.4641
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 107.68,
+   "hold": 117.59,
+   "const": 108.02,
+   "share": 0.4605
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 105.79,
+   "hold": 107.97,
+   "const": 104.59,
+   "share": 0.4618
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 90.35,
+   "hold": 80.38,
+   "const": 90.28,
+   "share": 0.4819
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 99.59,
+   "hold": 98.74,
+   "const": 99.59,
+   "share": 0.4834
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 95.46,
+   "hold": 90.41,
+   "const": 95.46,
+   "share": 0.4834
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 91.68,
+   "hold": 78.98,
+   "const": 89.55,
+   "share": 0.4919
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 99.91,
+   "hold": 100.05,
+   "const": 100.15,
+   "share": 0.4602
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 99.98,
+   "hold": 99.67,
+   "const": 99.98,
+   "share": 0.4028
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 106.18,
+   "hold": 115.47,
+   "const": 106.18,
+   "share": 0.4028
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 88.31,
+   "hold": 76.92,
+   "const": 89.05,
+   "share": 0.451
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 103.24,
+   "hold": 107.41,
+   "const": 103.24,
+   "share": 0.4377
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 107.56,
+   "hold": 117.79,
+   "const": 107.56,
+   "share": 0.4377
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 104.98,
+   "hold": 111.26,
+   "const": 104.98,
+   "share": 0.4377
+  },
+  {
+   "symbol": "BNBUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 98.73,
+   "hold": 96.84,
+   "const": 98.53,
+   "share": 0.4822
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 85.89,
+   "hold": 72.5,
+   "const": 85.18,
+   "share": 0.5149
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 114.76,
+   "hold": 126.48,
+   "const": 114.23,
+   "share": 0.5055
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 102.32,
+   "hold": 104.34,
+   "const": 102.32,
+   "share": 0.4482
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 86.4,
+   "hold": 71.74,
+   "const": 85.15,
+   "share": 0.4985
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 83.6,
+   "hold": 72.15,
+   "const": 84.79,
+   "share": 0.5514
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 88.79,
+   "hold": 78.75,
+   "const": 88.97,
+   "share": 0.5192
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 107.85,
+   "hold": 114.18,
+   "const": 107.02,
+   "share": 0.4796
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 94.15,
+   "hold": 86.42,
+   "const": 93.42,
+   "share": 0.4833
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 122.81,
+   "hold": 146.44,
+   "const": 120.25,
+   "share": 0.4502
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 98.87,
+   "hold": 96.71,
+   "const": 98.86,
+   "share": 0.4277
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 94.68,
+   "hold": 87.87,
+   "const": 94.92,
+   "share": 0.5311
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 91.84,
+   "hold": 83.1,
+   "const": 91.23,
+   "share": 0.5088
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 109.51,
+   "hold": 119.71,
+   "const": 109.87,
+   "share": 0.5076
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 96.11,
+   "hold": 92.73,
+   "const": 96.11,
+   "share": 0.5475
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 125.75,
+   "hold": 142.85,
+   "const": 120.85,
+   "share": 0.498
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 94.01,
+   "hold": 87.55,
+   "const": 94.01,
+   "share": 0.4882
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 104.84,
+   "hold": 109.8,
+   "const": 104.84,
+   "share": 0.4882
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 96.03,
+   "hold": 91.54,
+   "const": 96.01,
+   "share": 0.4933
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 130.45,
+   "hold": 147.52,
+   "const": 124.84,
+   "share": 0.4634
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 86.34,
+   "hold": 73.25,
+   "const": 86.07,
+   "share": 0.4969
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 100.49,
+   "hold": 100.76,
+   "const": 100.49,
+   "share": 0.5162
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 107.3,
+   "hold": 116.45,
+   "const": 107.3,
+   "share": 0.4494
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 101.31,
+   "hold": 101.12,
+   "const": 100.92,
+   "share": 0.4797
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 101.08,
+   "hold": 101.53,
+   "const": 100.94,
+   "share": 0.4854
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 90.72,
+   "hold": 81.76,
+   "const": 90.15,
+   "share": 0.5293
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 108.55,
+   "hold": 116.57,
+   "const": 108.55,
+   "share": 0.5252
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 105.26,
+   "hold": 107.24,
+   "const": 104.68,
+   "share": 0.5156
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 89.08,
+   "hold": 79.56,
+   "const": 89.61,
+   "share": 0.5052
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 101.91,
+   "hold": 103.4,
+   "const": 101.86,
+   "share": 0.5074
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 95.77,
+   "hold": 91.98,
+   "const": 95.93,
+   "share": 0.5107
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 114.93,
+   "hold": 130.85,
+   "const": 113.67,
+   "share": 0.4497
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 94.81,
+   "hold": 90.88,
+   "const": 96.44,
+   "share": 0.4569
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 103.88,
+   "hold": 107.98,
+   "const": 103.88,
+   "share": 0.4627
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 92.0,
+   "hold": 83.33,
+   "const": 91.91,
+   "share": 0.4767
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 181.96,
+   "hold": 382.98,
+   "const": 184.43,
+   "share": 0.4377
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 104.09,
+   "hold": 106.78,
+   "const": 104.94,
+   "share": 0.4762
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 121.55,
+   "hold": 145.71,
+   "const": 120.77,
+   "share": 0.4749
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 85.14,
+   "hold": 70.66,
+   "const": 85.16,
+   "share": 0.4846
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 104.69,
+   "hold": 97.42,
+   "const": 101.03,
+   "share": 0.4859
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 102.99,
+   "hold": 104.83,
+   "const": 102.99,
+   "share": 0.4863
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 100.03,
+   "hold": 99.22,
+   "const": 100.03,
+   "share": 0.4863
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 101.64,
+   "hold": 102.87,
+   "const": 101.64,
+   "share": 0.4863
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 116.53,
+   "hold": 135.16,
+   "const": 116.53,
+   "share": 0.4863
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 96.56,
+   "hold": 91.84,
+   "const": 96.56,
+   "share": 0.4863
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 101.42,
+   "hold": 102.56,
+   "const": 101.42,
+   "share": 0.4863
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 94.87,
+   "hold": 88.16,
+   "const": 94.42,
+   "share": 0.5091
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 93.01,
+   "hold": 85.87,
+   "const": 93.01,
+   "share": 0.5147
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 92.83,
+   "hold": 85.49,
+   "const": 92.68,
+   "share": 0.5022
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 94.98,
+   "hold": 89.41,
+   "const": 94.98,
+   "share": 0.5086
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 95.73,
+   "hold": 83.55,
+   "const": 92.83,
+   "share": 0.4875
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 99.35,
+   "hold": 97.45,
+   "const": 99.04,
+   "share": 0.4558
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 100.71,
+   "hold": 102.0,
+   "const": 101.0,
+   "share": 0.4356
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 98.83,
+   "hold": 97.45,
+   "const": 98.83,
+   "share": 0.5006
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 88.6,
+   "hold": 78.03,
+   "const": 88.6,
+   "share": 0.5006
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 101.2,
+   "hold": 102.1,
+   "const": 101.2,
+   "share": 0.5006
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 110.71,
+   "hold": 129.94,
+   "const": 114.16,
+   "share": 0.4782
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 105.55,
+   "hold": 107.99,
+   "const": 104.18,
+   "share": 0.4647
+  },
+  {
+   "symbol": "XRPUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 94.62,
+   "hold": 89.35,
+   "const": 94.62,
+   "share": 0.5041
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 88.01,
+   "hold": 76.08,
+   "const": 87.95,
+   "share": 0.5175
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 97.52,
+   "hold": 91.53,
+   "const": 96.15,
+   "share": 0.5289
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 107.04,
+   "hold": 118.61,
+   "const": 109.63,
+   "share": 0.4997
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 81.23,
+   "hold": 66.22,
+   "const": 81.1,
+   "share": 0.5247
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 91.04,
+   "hold": 82.95,
+   "const": 92.7,
+   "share": 0.5618
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 87.04,
+   "hold": 73.37,
+   "const": 86.26,
+   "share": 0.518
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 106.33,
+   "hold": 112.22,
+   "const": 106.33,
+   "share": 0.4791
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 93.77,
+   "hold": 86.46,
+   "const": 93.63,
+   "share": 0.4908
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 101.33,
+   "hold": 97.42,
+   "const": 99.29,
+   "share": 0.4425
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 98.46,
+   "hold": 93.28,
+   "const": 97.03,
+   "share": 0.4872
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 91.22,
+   "hold": 78.59,
+   "const": 89.51,
+   "share": 0.5002
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 88.64,
+   "hold": 77.13,
+   "const": 88.04,
+   "share": 0.5041
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 125.5,
+   "hold": 158.75,
+   "const": 124.79,
+   "share": 0.4679
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 95.83,
+   "hold": 90.13,
+   "const": 95.25,
+   "share": 0.5127
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 107.1,
+   "hold": 113.42,
+   "const": 107.1,
+   "share": 0.4951
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 99.31,
+   "hold": 99.17,
+   "const": 99.84,
+   "share": 0.4956
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 97.27,
+   "hold": 94.64,
+   "const": 97.27,
+   "share": 0.5275
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 85.9,
+   "hold": 76.63,
+   "const": 86.54,
+   "share": 0.5649
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 105.52,
+   "hold": 107.01,
+   "const": 104.4,
+   "share": 0.5217
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 92.21,
+   "hold": 83.19,
+   "const": 91.91,
+   "share": 0.4702
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 100.29,
+   "hold": 99.45,
+   "const": 99.8,
+   "share": 0.4563
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 107.62,
+   "hold": 115.35,
+   "const": 107.25,
+   "share": 0.4785
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 113.13,
+   "hold": 128.29,
+   "const": 112.8,
+   "share": 0.4657
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 120.55,
+   "hold": 158.02,
+   "const": 123.97,
+   "share": 0.443
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 92.86,
+   "hold": 83.77,
+   "const": 92.52,
+   "share": 0.4815
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 114.19,
+   "hold": 131.57,
+   "const": 114.19,
+   "share": 0.4737
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 103.59,
+   "hold": 99.3,
+   "const": 100.63,
+   "share": 0.5038
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 81.28,
+   "hold": 67.87,
+   "const": 81.51,
+   "share": 0.5492
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 101.39,
+   "hold": 101.31,
+   "const": 100.9,
+   "share": 0.4892
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 93.68,
+   "hold": 87.79,
+   "const": 93.89,
+   "share": 0.4983
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 100.29,
+   "hold": 98.93,
+   "const": 100.14,
+   "share": 0.4579
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 94.46,
+   "hold": 88.87,
+   "const": 94.95,
+   "share": 0.4916
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 104.32,
+   "hold": 108.2,
+   "const": 104.32,
+   "share": 0.4925
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 96.01,
+   "hold": 91.56,
+   "const": 96.01,
+   "share": 0.4925
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 170.72,
+   "hold": 315.68,
+   "const": 172.7,
+   "share": 0.454
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 90.43,
+   "hold": 78.32,
+   "const": 90.14,
+   "share": 0.468
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 105.48,
+   "hold": 111.57,
+   "const": 106.46,
+   "share": 0.4884
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 82.77,
+   "hold": 67.11,
+   "const": 82.91,
+   "share": 0.4906
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 114.21,
+   "hold": 104.58,
+   "const": 107.76,
+   "share": 0.4414
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 103.17,
+   "hold": 102.99,
+   "const": 102.15,
+   "share": 0.4768
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 98.98,
+   "hold": 100.62,
+   "const": 100.91,
+   "share": 0.4749
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 91.4,
+   "hold": 83.44,
+   "const": 91.4,
+   "share": 0.516
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 114.64,
+   "hold": 129.19,
+   "const": 114.4,
+   "share": 0.501
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 106.26,
+   "hold": 109.75,
+   "const": 105.29,
+   "share": 0.4763
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 100.66,
+   "hold": 99.49,
+   "const": 100.08,
+   "share": 0.4551
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 87.4,
+   "hold": 75.46,
+   "const": 87.79,
+   "share": 0.5079
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 82.79,
+   "hold": 68.02,
+   "const": 82.25,
+   "share": 0.5231
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 90.14,
+   "hold": 80.5,
+   "const": 90.29,
+   "share": 0.5058
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 94.89,
+   "hold": 88.04,
+   "const": 94.44,
+   "share": 0.5074
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 99.49,
+   "hold": 95.71,
+   "const": 98.93,
+   "share": 0.4743
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 93.38,
+   "hold": 86.05,
+   "const": 93.38,
+   "share": 0.4806
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 101.19,
+   "hold": 101.86,
+   "const": 101.19,
+   "share": 0.4806
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 98.07,
+   "hold": 95.7,
+   "const": 98.07,
+   "share": 0.4806
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 79.66,
+   "hold": 61.26,
+   "const": 79.66,
+   "share": 0.4806
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 108.21,
+   "hold": 116.48,
+   "const": 108.21,
+   "share": 0.4806
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 108.73,
+   "hold": 117.6,
+   "const": 108.83,
+   "share": 0.4815
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 112.04,
+   "hold": 124.67,
+   "const": 111.45,
+   "share": 0.4641
+  },
+  {
+   "symbol": "ADAUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 91.39,
+   "hold": 83.54,
+   "const": 91.39,
+   "share": 0.5236
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 84.51,
+   "hold": 72.54,
+   "const": 84.06,
+   "share": 0.563
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 103.75,
+   "hold": 103.84,
+   "const": 102.81,
+   "share": 0.5071
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 104.69,
+   "hold": 108.88,
+   "const": 104.91,
+   "share": 0.5068
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 88.57,
+   "hold": 77.38,
+   "const": 88.12,
+   "share": 0.5122
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 87.84,
+   "hold": 71.4,
+   "const": 84.95,
+   "share": 0.5397
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 89.49,
+   "hold": 78.71,
+   "const": 89.24,
+   "share": 0.5301
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 105.73,
+   "hold": 110.96,
+   "const": 105.51,
+   "share": 0.4546
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 96.16,
+   "hold": 90.12,
+   "const": 95.71,
+   "share": 0.4642
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 101.58,
+   "hold": 99.33,
+   "const": 100.32,
+   "share": 0.4476
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 101.91,
+   "hold": 102.86,
+   "const": 101.46,
+   "share": 0.4484
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 119.31,
+   "hold": 143.9,
+   "const": 120.78,
+   "share": 0.4694
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 95.86,
+   "hold": 88.61,
+   "const": 94.91,
+   "share": 0.4567
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 114.85,
+   "hold": 134.15,
+   "const": 114.88,
+   "share": 0.4611
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 100.81,
+   "hold": 99.69,
+   "const": 100.18,
+   "share": 0.5397
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 98.35,
+   "hold": 95.49,
+   "const": 98.56,
+   "share": 0.5101
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 99.44,
+   "hold": 98.49,
+   "const": 99.57,
+   "share": 0.5161
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 102.81,
+   "hold": 102.49,
+   "const": 101.58,
+   "share": 0.5098
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 113.04,
+   "hold": 120.22,
+   "const": 111.3,
+   "share": 0.5069
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 92.32,
+   "hold": 84.89,
+   "const": 92.56,
+   "share": 0.4937
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 82.19,
+   "hold": 69.23,
+   "const": 80.96,
+   "share": 0.5887
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 101.74,
+   "hold": 103.26,
+   "const": 101.86,
+   "share": 0.521
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 103.26,
+   "hold": 104.43,
+   "const": 102.21,
+   "share": 0.467
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 100.86,
+   "hold": 100.77,
+   "const": 100.57,
+   "share": 0.4837
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 102.13,
+   "hold": 104.91,
+   "const": 102.53,
+   "share": 0.4744
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 96.97,
+   "hold": 91.67,
+   "const": 96.06,
+   "share": 0.5048
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 108.86,
+   "hold": 119.71,
+   "const": 109.16,
+   "share": 0.4776
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 117.42,
+   "hold": 131.39,
+   "const": 116.11,
+   "share": 0.4923
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 87.72,
+   "hold": 75.7,
+   "const": 88.04,
+   "share": 0.4863
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 102.41,
+   "hold": 104.68,
+   "const": 102.24,
+   "share": 0.4479
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 95.39,
+   "hold": 90.51,
+   "const": 95.48,
+   "share": 0.4824
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 96.99,
+   "hold": 93.14,
+   "const": 97.31,
+   "share": 0.4459
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 97.52,
+   "hold": 92.63,
+   "const": 96.9,
+   "share": 0.4757
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 101.08,
+   "hold": 102.85,
+   "const": 101.46,
+   "share": 0.4535
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 102.18,
+   "hold": 103.76,
+   "const": 102.0,
+   "share": 0.4608
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 120.96,
+   "hold": 148.19,
+   "const": 121.93,
+   "share": 0.4797
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 100.88,
+   "hold": 100.53,
+   "const": 101.94,
+   "share": 0.5123
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 111.28,
+   "hold": 124.02,
+   "const": 112.38,
+   "share": 0.4879
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 103.08,
+   "hold": 99.96,
+   "const": 100.9,
+   "share": 0.4794
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 81.27,
+   "hold": 64.8,
+   "const": 82.25,
+   "share": 0.4665
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 102.01,
+   "hold": 100.65,
+   "const": 100.9,
+   "share": 0.4641
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 101.87,
+   "hold": 104.22,
+   "const": 102.59,
+   "share": 0.478
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 99.65,
+   "hold": 98.82,
+   "const": 99.65,
+   "share": 0.5037
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 111.62,
+   "hold": 123.36,
+   "const": 111.62,
+   "share": 0.5037
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 101.91,
+   "hold": 102.64,
+   "const": 101.91,
+   "share": 0.5037
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 99.27,
+   "hold": 98.15,
+   "const": 99.27,
+   "share": 0.5037
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 94.78,
+   "hold": 89.24,
+   "const": 95.74,
+   "share": 0.4861
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 94.71,
+   "hold": 86.37,
+   "const": 94.33,
+   "share": 0.4651
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 97.13,
+   "hold": 93.29,
+   "const": 97.13,
+   "share": 0.4604
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 89.36,
+   "hold": 77.46,
+   "const": 88.99,
+   "share": 0.4712
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 98.03,
+   "hold": 91.38,
+   "const": 96.34,
+   "share": 0.4821
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 99.78,
+   "hold": 99.17,
+   "const": 99.78,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 101.19,
+   "hold": 102.3,
+   "const": 101.19,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 97.36,
+   "hold": 94.35,
+   "const": 97.36,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 90.41,
+   "hold": 80.53,
+   "const": 90.41,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 102.82,
+   "hold": 105.68,
+   "const": 102.82,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 104.72,
+   "hold": 109.57,
+   "const": 104.72,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 117.57,
+   "hold": 138.52,
+   "const": 117.57,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LTCUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 92.73,
+   "hold": 85.07,
+   "const": 92.73,
+   "share": 0.4787
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 89.13,
+   "hold": 82.53,
+   "const": 91.76,
+   "share": 0.5146
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 96.0,
+   "hold": 88.22,
+   "const": 94.52,
+   "share": 0.5293
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 103.4,
+   "hold": 111.76,
+   "const": 106.02,
+   "share": 0.4746
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 79.72,
+   "hold": 64.75,
+   "const": 80.23,
+   "share": 0.5215
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 85.39,
+   "hold": 69.32,
+   "const": 83.3,
+   "share": 0.5631
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 90.22,
+   "hold": 82.61,
+   "const": 92.15,
+   "share": 0.5355
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 111.17,
+   "hold": 122.03,
+   "const": 110.12,
+   "share": 0.4473
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 94.86,
+   "hold": 86.62,
+   "const": 94.06,
+   "share": 0.4721
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 108.29,
+   "hold": 114.46,
+   "const": 107.0,
+   "share": 0.4433
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 101.86,
+   "hold": 103.59,
+   "const": 102.04,
+   "share": 0.4764
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 101.36,
+   "hold": 97.65,
+   "const": 100.81,
+   "share": 0.5079
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 86.69,
+   "hold": 72.67,
+   "const": 85.49,
+   "share": 0.5011
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 111.24,
+   "hold": 124.7,
+   "const": 111.95,
+   "share": 0.4944
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 102.24,
+   "hold": 103.5,
+   "const": 102.24,
+   "share": 0.5234
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 103.53,
+   "hold": 105.46,
+   "const": 103.29,
+   "share": 0.49
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 95.77,
+   "hold": 92.58,
+   "const": 96.51,
+   "share": 0.5062
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 96.33,
+   "hold": 92.21,
+   "const": 96.33,
+   "share": 0.4833
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 99.16,
+   "hold": 97.45,
+   "const": 99.22,
+   "share": 0.5456
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 113.79,
+   "hold": 119.55,
+   "const": 109.85,
+   "share": 0.4718
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 89.39,
+   "hold": 77.9,
+   "const": 88.99,
+   "share": 0.4794
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 117.17,
+   "hold": 139.33,
+   "const": 117.73,
+   "share": 0.4821
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 114.94,
+   "hold": 138.6,
+   "const": 115.85,
+   "share": 0.4252
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 113.89,
+   "hold": 126.94,
+   "const": 112.16,
+   "share": 0.437
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 102.59,
+   "hold": 103.67,
+   "const": 102.47,
+   "share": 0.4704
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 102.72,
+   "hold": 103.27,
+   "const": 102.26,
+   "share": 0.4778
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 110.33,
+   "hold": 124.92,
+   "const": 111.6,
+   "share": 0.4746
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 102.72,
+   "hold": 99.47,
+   "const": 100.44,
+   "share": 0.5118
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 81.48,
+   "hold": 68.48,
+   "const": 81.79,
+   "share": 0.5531
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 121.0,
+   "hold": 140.25,
+   "const": 119.42,
+   "share": 0.5083
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 88.15,
+   "hold": 77.56,
+   "const": 88.15,
+   "share": 0.5132
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 95.89,
+   "hold": 89.84,
+   "const": 95.63,
+   "share": 0.4708
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 93.98,
+   "hold": 85.89,
+   "const": 93.62,
+   "share": 0.4972
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 103.85,
+   "hold": 107.53,
+   "const": 103.85,
+   "share": 0.4598
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 98.76,
+   "hold": 96.29,
+   "const": 98.73,
+   "share": 0.4622
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 127.31,
+   "hold": 166.52,
+   "const": 129.38,
+   "share": 0.4837
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 105.29,
+   "hold": 105.32,
+   "const": 105.43,
+   "share": 0.4821
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 110.64,
+   "hold": 125.79,
+   "const": 111.89,
+   "share": 0.4541
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 78.25,
+   "hold": 58.84,
+   "const": 77.49,
+   "share": 0.497
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 100.0,
+   "hold": 91.22,
+   "const": 97.16,
+   "share": 0.4932
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 103.95,
+   "hold": 105.85,
+   "const": 103.71,
+   "share": 0.4828
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 99.65,
+   "hold": 97.69,
+   "const": 99.65,
+   "share": 0.4348
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 99.86,
+   "hold": 95.78,
+   "const": 98.6,
+   "share": 0.4524
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 111.36,
+   "hold": 126.46,
+   "const": 111.36,
+   "share": 0.438
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 118.34,
+   "hold": 137.12,
+   "const": 116.84,
+   "share": 0.4437
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 97.34,
+   "hold": 91.81,
+   "const": 96.58,
+   "share": 0.447
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 91.09,
+   "hold": 80.94,
+   "const": 91.27,
+   "share": 0.4983
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 88.69,
+   "hold": 75.12,
+   "const": 88.41,
+   "share": 0.4534
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 97.9,
+   "hold": 94.29,
+   "const": 97.9,
+   "share": 0.449
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 91.79,
+   "hold": 81.82,
+   "const": 91.79,
+   "share": 0.449
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 97.28,
+   "hold": 88.59,
+   "const": 95.25,
+   "share": 0.4777
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 99.96,
+   "hold": 99.21,
+   "const": 99.96,
+   "share": 0.4767
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 102.04,
+   "hold": 103.76,
+   "const": 102.04,
+   "share": 0.4767
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 100.39,
+   "hold": 100.42,
+   "const": 100.39,
+   "share": 0.4767
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 89.54,
+   "hold": 78.72,
+   "const": 89.54,
+   "share": 0.4767
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 106.46,
+   "hold": 113.47,
+   "const": 106.46,
+   "share": 0.4767
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 116.04,
+   "hold": 138.6,
+   "const": 117.33,
+   "share": 0.4744
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 113.81,
+   "hold": 126.85,
+   "const": 113.21,
+   "share": 0.4913
+  },
+  {
+   "symbol": "LINKUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 90.14,
+   "hold": 80.63,
+   "const": 89.89,
+   "share": 0.5054
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 91.3,
+   "hold": 81.62,
+   "const": 91.34,
+   "share": 0.4789
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 96.54,
+   "hold": 94.35,
+   "const": 97.43,
+   "share": 0.544
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 100.56,
+   "hold": 103.45,
+   "const": 102.12,
+   "share": 0.5
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 98.95,
+   "hold": 92.25,
+   "const": 97.43,
+   "share": 0.5327
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 85.04,
+   "hold": 67.43,
+   "const": 82.15,
+   "share": 0.5427
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 89.3,
+   "hold": 77.34,
+   "const": 88.24,
+   "share": 0.5535
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 102.35,
+   "hold": 102.45,
+   "const": 101.58,
+   "share": 0.459
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 96.0,
+   "hold": 90.13,
+   "const": 95.93,
+   "share": 0.4824
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 100.64,
+   "hold": 100.52,
+   "const": 100.64,
+   "share": 0.4615
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 142.33,
+   "hold": 205.71,
+   "const": 141.69,
+   "share": 0.4497
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 95.52,
+   "hold": 84.16,
+   "const": 94.45,
+   "share": 0.4751
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 83.17,
+   "hold": 65.8,
+   "const": 82.0,
+   "share": 0.4881
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 117.23,
+   "hold": 136.83,
+   "const": 117.9,
+   "share": 0.514
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 91.69,
+   "hold": 84.11,
+   "const": 91.38,
+   "share": 0.5426
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 97.92,
+   "hold": 95.18,
+   "const": 97.92,
+   "share": 0.5343
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 102.9,
+   "hold": 103.33,
+   "const": 102.48,
+   "share": 0.481
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 95.43,
+   "hold": 90.11,
+   "const": 95.24,
+   "share": 0.4809
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 97.82,
+   "hold": 92.76,
+   "const": 96.61,
+   "share": 0.5216
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 109.03,
+   "hold": 117.15,
+   "const": 108.94,
+   "share": 0.5145
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 91.37,
+   "hold": 81.89,
+   "const": 91.05,
+   "share": 0.4851
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 98.85,
+   "hold": 97.35,
+   "const": 98.83,
+   "share": 0.454
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 104.49,
+   "hold": 109.99,
+   "const": 104.57,
+   "share": 0.443
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 108.63,
+   "hold": 122.21,
+   "const": 110.18,
+   "share": 0.456
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 102.73,
+   "hold": 107.34,
+   "const": 103.64,
+   "share": 0.4489
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 95.85,
+   "hold": 87.94,
+   "const": 94.37,
+   "share": 0.4928
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 119.61,
+   "hold": 148.98,
+   "const": 122.24,
+   "share": 0.4884
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 142.63,
+   "hold": 187.52,
+   "const": 137.2,
+   "share": 0.4541
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 78.77,
+   "hold": 60.63,
+   "const": 78.8,
+   "share": 0.498
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 108.5,
+   "hold": 119.18,
+   "const": 109.69,
+   "share": 0.481
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 89.11,
+   "hold": 78.3,
+   "const": 89.11,
+   "share": 0.4873
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 99.71,
+   "hold": 97.94,
+   "const": 99.76,
+   "share": 0.4849
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 92.1,
+   "hold": 83.07,
+   "const": 91.86,
+   "share": 0.495
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 107.42,
+   "hold": 112.77,
+   "const": 106.53,
+   "share": 0.4803
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 119.21,
+   "hold": 141.53,
+   "const": 119.69,
+   "share": 0.4965
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 151.9,
+   "hold": 260.83,
+   "const": 157.85,
+   "share": 0.4505
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 86.77,
+   "hold": 74.95,
+   "const": 87.02,
+   "share": 0.5126
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 102.73,
+   "hold": 104.08,
+   "const": 103.06,
+   "share": 0.5102
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 78.2,
+   "hold": 61.37,
+   "const": 78.2,
+   "share": 0.5214
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 94.59,
+   "hold": 82.57,
+   "const": 92.14,
+   "share": 0.5046
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 102.33,
+   "hold": 103.35,
+   "const": 102.44,
+   "share": 0.4863
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 104.11,
+   "hold": 111.77,
+   "const": 106.9,
+   "share": 0.4763
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 94.11,
+   "hold": 85.8,
+   "const": 93.55,
+   "share": 0.466
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 111.72,
+   "hold": 126.98,
+   "const": 112.4,
+   "share": 0.4514
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 101.72,
+   "hold": 101.89,
+   "const": 101.86,
+   "share": 0.4647
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 104.92,
+   "hold": 108.99,
+   "const": 104.6,
+   "share": 0.4593
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 91.23,
+   "hold": 80.04,
+   "const": 91.12,
+   "share": 0.4813
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 89.71,
+   "hold": 78.3,
+   "const": 88.87,
+   "share": 0.5081
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 91.13,
+   "hold": 80.46,
+   "const": 90.57,
+   "share": 0.4777
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 93.21,
+   "hold": 88.75,
+   "const": 95.1,
+   "share": 0.4797
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 98.49,
+   "hold": 90.21,
+   "const": 96.26,
+   "share": 0.4719
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 99.52,
+   "hold": 98.16,
+   "const": 99.52,
+   "share": 0.4714
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 107.17,
+   "hold": 115.36,
+   "const": 107.17,
+   "share": 0.4714
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 97.42,
+   "hold": 94.28,
+   "const": 97.42,
+   "share": 0.4714
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 85.82,
+   "hold": 71.79,
+   "const": 85.82,
+   "share": 0.4714
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 98.54,
+   "hold": 96.59,
+   "const": 98.54,
+   "share": 0.4714
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 109.06,
+   "hold": 119.0,
+   "const": 109.06,
+   "share": 0.4714
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 107.99,
+   "hold": 114.13,
+   "const": 107.19,
+   "share": 0.4785
+  },
+  {
+   "symbol": "DOGEUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 91.12,
+   "hold": 83.63,
+   "const": 91.12,
+   "share": 0.531
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 84.18,
+   "hold": 72.12,
+   "const": 85.16,
+   "share": 0.5121
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 98.6,
+   "hold": 98.95,
+   "const": 100.17,
+   "share": 0.5123
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 105.49,
+   "hold": 115.59,
+   "const": 107.46,
+   "share": 0.4671
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 87.32,
+   "hold": 73.98,
+   "const": 86.51,
+   "share": 0.4978
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 97.15,
+   "hold": 89.22,
+   "const": 95.55,
+   "share": 0.5325
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 89.1,
+   "hold": 74.52,
+   "const": 87.0,
+   "share": 0.5047
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 103.18,
+   "hold": 104.72,
+   "const": 102.71,
+   "share": 0.4883
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 95.83,
+   "hold": 88.69,
+   "const": 94.24,
+   "share": 0.5218
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 107.02,
+   "hold": 109.88,
+   "const": 105.24,
+   "share": 0.4662
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 98.86,
+   "hold": 97.12,
+   "const": 98.86,
+   "share": 0.46
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 92.27,
+   "hold": 80.77,
+   "const": 90.38,
+   "share": 0.523
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 89.34,
+   "hold": 78.98,
+   "const": 88.73,
+   "share": 0.5164
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 113.4,
+   "hold": 127.61,
+   "const": 113.18,
+   "share": 0.4982
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 98.43,
+   "hold": 96.14,
+   "const": 97.99,
+   "share": 0.5691
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 114.67,
+   "hold": 128.82,
+   "const": 113.82,
+   "share": 0.4897
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 92.04,
+   "hold": 84.14,
+   "const": 92.16,
+   "share": 0.4826
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 99.03,
+   "hold": 97.99,
+   "const": 99.03,
+   "share": 0.499
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 111.26,
+   "hold": 119.68,
+   "const": 110.07,
+   "share": 0.5074
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 118.72,
+   "hold": 135.5,
+   "const": 118.41,
+   "share": 0.4326
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 89.61,
+   "hold": 76.6,
+   "const": 88.57,
+   "share": 0.4751
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 99.06,
+   "hold": 97.74,
+   "const": 99.06,
+   "share": 0.4921
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 104.01,
+   "hold": 107.93,
+   "const": 104.01,
+   "share": 0.4921
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 99.02,
+   "hold": 97.61,
+   "const": 99.02,
+   "share": 0.4921
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 105.52,
+   "hold": 109.04,
+   "const": 104.72,
+   "share": 0.505
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 93.12,
+   "hold": 85.27,
+   "const": 92.48,
+   "share": 0.5064
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 105.67,
+   "hold": 110.91,
+   "const": 105.67,
+   "share": 0.5246
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 111.07,
+   "hold": 115.66,
+   "const": 108.95,
+   "share": 0.5206
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 87.59,
+   "hold": 76.33,
+   "const": 87.17,
+   "share": 0.5268
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 99.52,
+   "hold": 98.7,
+   "const": 99.52,
+   "share": 0.4829
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 93.12,
+   "hold": 85.89,
+   "const": 92.8,
+   "share": 0.5024
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 105.45,
+   "hold": 109.97,
+   "const": 104.87,
+   "share": 0.4519
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 96.41,
+   "hold": 92.23,
+   "const": 96.54,
+   "share": 0.4761
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 102.94,
+   "hold": 106.37,
+   "const": 102.94,
+   "share": 0.4515
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 96.99,
+   "hold": 93.81,
+   "const": 97.15,
+   "share": 0.4732
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 225.39,
+   "hold": 568.07,
+   "const": 232.42,
+   "share": 0.4446
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 82.23,
+   "hold": 63.38,
+   "const": 81.32,
+   "share": 0.4785
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 112.99,
+   "hold": 124.5,
+   "const": 113.04,
+   "share": 0.4836
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 84.28,
+   "hold": 69.12,
+   "const": 84.28,
+   "share": 0.4818
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 99.12,
+   "hold": 92.18,
+   "const": 97.16,
+   "share": 0.4884
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 101.88,
+   "hold": 102.69,
+   "const": 101.88,
+   "share": 0.4883
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 99.21,
+   "hold": 97.45,
+   "const": 99.21,
+   "share": 0.4883
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 95.26,
+   "hold": 90.12,
+   "const": 95.26,
+   "share": 0.4883
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 131.06,
+   "hold": 168.45,
+   "const": 131.06,
+   "share": 0.4883
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 94.59,
+   "hold": 88.0,
+   "const": 94.59,
+   "share": 0.4883
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 101.78,
+   "hold": 103.17,
+   "const": 101.78,
+   "share": 0.4883
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 92.47,
+   "hold": 83.79,
+   "const": 92.19,
+   "share": 0.5036
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 90.54,
+   "hold": 81.31,
+   "const": 90.54,
+   "share": 0.5057
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 91.27,
+   "hold": 81.05,
+   "const": 90.87,
+   "share": 0.4747
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 94.28,
+   "hold": 90.05,
+   "const": 95.45,
+   "share": 0.4936
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 94.43,
+   "hold": 87.85,
+   "const": 94.58,
+   "share": 0.4856
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 102.79,
+   "hold": 105.22,
+   "const": 102.79,
+   "share": 0.4825
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 97.64,
+   "hold": 94.62,
+   "const": 97.64,
+   "share": 0.4825
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 125.76,
+   "hold": 164.18,
+   "const": 128.84,
+   "share": 0.4709
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 87.81,
+   "hold": 72.8,
+   "const": 88.44,
+   "share": 0.4115
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 96.24,
+   "hold": 91.01,
+   "const": 96.36,
+   "share": 0.4186
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 101.94,
+   "hold": 102.96,
+   "const": 101.94,
+   "share": 0.4985
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 114.77,
+   "hold": 127.64,
+   "const": 113.67,
+   "share": 0.4974
+  },
+  {
+   "symbol": "XLMUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 86.44,
+   "hold": 75.34,
+   "const": 86.44,
+   "share": 0.5237
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-01",
+   "days": 30,
+   "model": 87.66,
+   "hold": 77.03,
+   "const": 88.06,
+   "share": 0.5073
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-02",
+   "days": 28,
+   "model": 102.72,
+   "hold": 104.57,
+   "const": 102.72,
+   "share": 0.5153
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-03",
+   "days": 31,
+   "model": 108.91,
+   "hold": 119.62,
+   "const": 109.08,
+   "share": 0.4763
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-04",
+   "days": 30,
+   "model": 92.98,
+   "hold": 84.76,
+   "const": 92.44,
+   "share": 0.5115
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-05",
+   "days": 31,
+   "model": 123.4,
+   "hold": 134.8,
+   "const": 117.52,
+   "share": 0.467
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-06",
+   "days": 30,
+   "model": 90.07,
+   "hold": 76.78,
+   "const": 88.64,
+   "share": 0.495
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-07",
+   "days": 31,
+   "model": 103.72,
+   "hold": 106.25,
+   "const": 103.14,
+   "share": 0.4834
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-08",
+   "days": 31,
+   "model": 96.03,
+   "hold": 92.06,
+   "const": 96.03,
+   "share": 0.5115
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-09",
+   "days": 30,
+   "model": 98.17,
+   "hold": 96.25,
+   "const": 98.17,
+   "share": 0.5115
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-10",
+   "days": 31,
+   "model": 101.94,
+   "hold": 103.67,
+   "const": 101.94,
+   "share": 0.5115
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-11",
+   "days": 30,
+   "model": 93.99,
+   "hold": 86.34,
+   "const": 92.65,
+   "share": 0.5484
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2022-12",
+   "days": 31,
+   "model": 100.44,
+   "hold": 99.8,
+   "const": 100.01,
+   "share": 0.4889
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-01",
+   "days": 31,
+   "model": 105.32,
+   "hold": 114.09,
+   "const": 106.58,
+   "share": 0.4675
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-02",
+   "days": 28,
+   "model": 107.66,
+   "hold": 111.05,
+   "const": 105.84,
+   "share": 0.5169
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-03",
+   "days": 31,
+   "model": 100.44,
+   "hold": 94.9,
+   "const": 98.03,
+   "share": 0.5032
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 101.44,
+   "hold": 102.44,
+   "const": 101.24,
+   "share": 0.4898
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 105.4,
+   "hold": 112.05,
+   "const": 105.4,
+   "share": 0.4532
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 100.74,
+   "hold": 101.3,
+   "const": 100.9,
+   "share": 0.4788
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 102.95,
+   "hold": 102.26,
+   "const": 101.31,
+   "share": 0.5152
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 99.97,
+   "hold": 98.47,
+   "const": 99.34,
+   "share": 0.4803
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 106.72,
+   "hold": 115.47,
+   "const": 106.72,
+   "share": 0.4477
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 104.3,
+   "hold": 109.65,
+   "const": 104.3,
+   "share": 0.4477
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 103.68,
+   "hold": 106.51,
+   "const": 103.24,
+   "share": 0.4622
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 102.84,
+   "hold": 104.03,
+   "const": 102.06,
+   "share": 0.4925
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 102.23,
+   "hold": 104.29,
+   "const": 102.22,
+   "share": 0.4905
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 109.95,
+   "hold": 125.15,
+   "const": 109.95,
+   "share": 0.4199
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 95.43,
+   "hold": 87.52,
+   "const": 93.53,
+   "share": 0.5206
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 98.5,
+   "hold": 97.23,
+   "const": 98.55,
+   "share": 0.5666
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 96.36,
+   "hold": 93.79,
+   "const": 96.84,
+   "share": 0.5141
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 105.57,
+   "hold": 111.21,
+   "const": 105.57,
+   "share": 0.506
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 101.62,
+   "hold": 103.21,
+   "const": 101.54,
+   "share": 0.4472
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 109.7,
+   "hold": 122.53,
+   "const": 110.36,
+   "share": 0.4667
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 99.58,
+   "hold": 98.92,
+   "const": 99.58,
+   "share": 0.429
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 104.41,
+   "hold": 107.95,
+   "const": 104.22,
+   "share": 0.5329
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 112.36,
+   "hold": 121.67,
+   "const": 110.75,
+   "share": 0.4982
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 119.35,
+   "hold": 124.35,
+   "const": 119.86,
+   "share": 0.4969
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 100.68,
+   "hold": 99.57,
+   "const": 100.18,
+   "share": 0.5078
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 97.44,
+   "hold": 91.96,
+   "const": 96.0,
+   "share": 0.5196
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 101.84,
+   "hold": 102.36,
+   "const": 101.36,
+   "share": 0.4562
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 101.56,
+   "hold": 103.18,
+   "const": 101.56,
+   "share": 0.4539
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 103.56,
+   "hold": 107.83,
+   "const": 103.56,
+   "share": 0.4539
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 102.49,
+   "hold": 105.31,
+   "const": 102.49,
+   "share": 0.4539
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 107.16,
+   "hold": 116.15,
+   "const": 107.16,
+   "share": 0.4539
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 102.33,
+   "hold": 104.92,
+   "const": 102.33,
+   "share": 0.4539
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 99.12,
+   "hold": 97.83,
+   "const": 99.12,
+   "share": 0.4539
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 94.99,
+   "hold": 88.79,
+   "const": 94.83,
+   "share": 0.4565
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 98.15,
+   "hold": 95.04,
+   "const": 97.6,
+   "share": 0.4929
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 100.52,
+   "hold": 101.07,
+   "const": 100.52,
+   "share": 0.4389
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 100.32,
+   "hold": 100.74,
+   "const": 100.44,
+   "share": 0.4578
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 99.06,
+   "hold": 98.36,
+   "const": 99.31,
+   "share": 0.4603
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 105.22,
+   "hold": 111.14,
+   "const": 105.22,
+   "share": 0.4747
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 102.01,
+   "hold": 104.25,
+   "const": 102.01,
+   "share": 0.4747
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 103.6,
+   "hold": 107.59,
+   "const": 103.6,
+   "share": 0.4747
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 95.05,
+   "hold": 89.73,
+   "const": 95.05,
+   "share": 0.4747
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 101.64,
+   "hold": 103.43,
+   "const": 101.64,
+   "share": 0.4747
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 100.97,
+   "hold": 101.99,
+   "const": 100.97,
+   "share": 0.4747
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 100.72,
+   "hold": 101.44,
+   "const": 100.72,
+   "share": 0.4747
+  },
+  {
+   "symbol": "TRXUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 99.17,
+   "hold": 98.25,
+   "const": 99.17,
+   "share": 0.4747
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-04",
+   "days": 30,
+   "model": 84.8,
+   "hold": 72.77,
+   "const": 84.45,
+   "share": 0.5517
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-05",
+   "days": 31,
+   "model": 103.5,
+   "hold": 109.32,
+   "const": 106.39,
+   "share": 0.5313
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-06",
+   "days": 30,
+   "model": 99.54,
+   "hold": 103.42,
+   "const": 102.14,
+   "share": 0.4737
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-07",
+   "days": 31,
+   "model": 107.19,
+   "hold": 113.11,
+   "const": 106.94,
+   "share": 0.4769
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-08",
+   "days": 31,
+   "model": 88.24,
+   "hold": 72.29,
+   "const": 85.45,
+   "share": 0.508
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-09",
+   "days": 30,
+   "model": 94.35,
+   "hold": 86.93,
+   "const": 94.43,
+   "share": 0.4312
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-10",
+   "days": 31,
+   "model": 72.76,
+   "hold": 52.17,
+   "const": 73.95,
+   "share": 0.5195
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-11",
+   "days": 30,
+   "model": 107.05,
+   "hold": 110.86,
+   "const": 106.51,
+   "share": 0.5245
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2023-12",
+   "days": 31,
+   "model": 126.62,
+   "hold": 145.23,
+   "const": 125.11,
+   "share": 0.5047
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-01",
+   "days": 31,
+   "model": 126.48,
+   "hold": 152.9,
+   "const": 124.18,
+   "share": 0.4646
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-02",
+   "days": 29,
+   "model": 93.72,
+   "hold": 85.7,
+   "const": 93.36,
+   "share": 0.4758
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-03",
+   "days": 31,
+   "model": 97.29,
+   "hold": 72.86,
+   "const": 87.94,
+   "share": 0.5209
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 99.32,
+   "hold": 90.91,
+   "const": 97.09,
+   "share": 0.5067
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 126.01,
+   "hold": 169.06,
+   "const": 129.16,
+   "share": 0.4624
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 95.42,
+   "hold": 87.22,
+   "const": 94.1,
+   "share": 0.4764
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 105.31,
+   "hold": 108.93,
+   "const": 104.53,
+   "share": 0.4728
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 103.64,
+   "hold": 107.33,
+   "const": 103.58,
+   "share": 0.4727
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 81.49,
+   "hold": 64.56,
+   "const": 81.49,
+   "share": 0.477
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 73.36,
+   "hold": 55.22,
+   "const": 74.84,
+   "share": 0.4983
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 93.61,
+   "hold": 87.94,
+   "const": 93.45,
+   "share": 0.5453
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 105.74,
+   "hold": 104.79,
+   "const": 104.48,
+   "share": 0.5375
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 89.44,
+   "hold": 79.79,
+   "const": 88.9,
+   "share": 0.5313
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 75.8,
+   "hold": 58.07,
+   "const": 76.23,
+   "share": 0.508
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 91.06,
+   "hold": 83.24,
+   "const": 92.04,
+   "share": 0.4778
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 152.16,
+   "hold": 248.69,
+   "const": 152.16,
+   "share": 0.4406
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 75.38,
+   "hold": 56.94,
+   "const": 78.93,
+   "share": 0.4517
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 111.72,
+   "hold": 109.02,
+   "const": 113.25,
+   "share": 0.4965
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 94.8,
+   "hold": 87.64,
+   "const": 94.81,
+   "share": 0.4616
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 109.48,
+   "hold": 102.86,
+   "const": 106.5,
+   "share": 0.4872
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 127.47,
+   "hold": 167.62,
+   "const": 127.91,
+   "share": 0.4368
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 87.7,
+   "hold": 71.35,
+   "const": 87.24,
+   "share": 0.4234
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 89.59,
+   "hold": 78.54,
+   "const": 88.93,
+   "share": 0.5155
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 105.42,
+   "hold": 106.86,
+   "const": 103.96,
+   "share": 0.5114
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 81.33,
+   "hold": 65.59,
+   "const": 81.91,
+   "share": 0.489
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 74.89,
+   "hold": 46.93,
+   "const": 73.54,
+   "share": 0.5056
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 98.39,
+   "hold": 85.02,
+   "const": 95.51,
+   "share": 0.4988
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 105.91,
+   "hold": 102.3,
+   "const": 105.19,
+   "share": 0.4029
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 135.56,
+   "hold": 184.29,
+   "const": 135.56,
+   "share": 0.4539
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 104.98,
+   "hold": 105.14,
+   "const": 104.98,
+   "share": 0.4539
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 85.14,
+   "hold": 59.3,
+   "const": 81.62,
+   "share": 0.4542
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 92.62,
+   "hold": 84.08,
+   "const": 92.79,
+   "share": 0.4599
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 69.36,
+   "hold": 43.59,
+   "const": 69.36,
+   "share": 0.5596
+  },
+  {
+   "symbol": "EVERUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 108.96,
+   "hold": 90.77,
+   "const": 100.72,
+   "share": 0.519
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-03",
+   "days": 6,
+   "model": 101.57,
+   "hold": 101.05,
+   "const": 100.82,
+   "share": 0.4971
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-04",
+   "days": 30,
+   "model": 99.18,
+   "hold": 95.26,
+   "const": 99.02,
+   "share": 0.4765
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-05",
+   "days": 31,
+   "model": 109.11,
+   "hold": 122.68,
+   "const": 110.25,
+   "share": 0.4488
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-06",
+   "days": 30,
+   "model": 109.94,
+   "hold": 121.0,
+   "const": 110.14,
+   "share": 0.479
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-07",
+   "days": 31,
+   "model": 94.79,
+   "hold": 88.11,
+   "const": 94.46,
+   "share": 0.4797
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-08",
+   "days": 31,
+   "model": 89.83,
+   "hold": 80.26,
+   "const": 90.34,
+   "share": 0.5252
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-09",
+   "days": 30,
+   "model": 102.89,
+   "hold": 105.35,
+   "const": 102.94,
+   "share": 0.4846
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-10",
+   "days": 31,
+   "model": 92.55,
+   "hold": 84.87,
+   "const": 92.55,
+   "share": 0.4846
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-11",
+   "days": 30,
+   "model": 118.71,
+   "hold": 140.78,
+   "const": 118.71,
+   "share": 0.4846
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2024-12",
+   "days": 31,
+   "model": 90.9,
+   "hold": 80.72,
+   "const": 90.38,
+   "share": 0.5042
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-01",
+   "days": 31,
+   "model": 93.89,
+   "hold": 87.71,
+   "const": 93.89,
+   "share": 0.5061
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-02",
+   "days": 28,
+   "model": 83.31,
+   "hold": 68.94,
+   "const": 83.31,
+   "share": 0.5061
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-03",
+   "days": 31,
+   "model": 111.16,
+   "hold": 123.39,
+   "const": 111.68,
+   "share": 0.4597
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-04",
+   "days": 30,
+   "model": 90.67,
+   "hold": 76.95,
+   "const": 88.96,
+   "share": 0.4722
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-05",
+   "days": 31,
+   "model": 100.59,
+   "hold": 99.65,
+   "const": 100.4,
+   "share": 0.4511
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-06",
+   "days": 30,
+   "model": 96.78,
+   "hold": 92.45,
+   "const": 96.65,
+   "share": 0.463
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-07",
+   "days": 31,
+   "model": 109.06,
+   "hold": 121.08,
+   "const": 109.06,
+   "share": 0.4389
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-08",
+   "days": 31,
+   "model": 95.61,
+   "hold": 89.71,
+   "const": 95.61,
+   "share": 0.4389
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-09",
+   "days": 30,
+   "model": 93.16,
+   "hold": 85.65,
+   "const": 93.12,
+   "share": 0.4722
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-10",
+   "days": 31,
+   "model": 91.52,
+   "hold": 84.28,
+   "const": 92.74,
+   "share": 0.52
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-11",
+   "days": 30,
+   "model": 85.14,
+   "hold": 69.75,
+   "const": 84.38,
+   "share": 0.492
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2025-12",
+   "days": 31,
+   "model": 102.27,
+   "hold": 104.14,
+   "const": 102.27,
+   "share": 0.4664
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-01",
+   "days": 31,
+   "model": 91.21,
+   "hold": 81.43,
+   "const": 91.21,
+   "share": 0.4664
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-02",
+   "days": 28,
+   "model": 97.88,
+   "hold": 94.83,
+   "const": 98.1,
+   "share": 0.4418
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-03",
+   "days": 31,
+   "model": 98.15,
+   "hold": 95.26,
+   "const": 98.15,
+   "share": 0.4403
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-04",
+   "days": 30,
+   "model": 104.38,
+   "hold": 109.44,
+   "const": 104.38,
+   "share": 0.4403
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-05",
+   "days": 31,
+   "model": 113.94,
+   "hold": 141.88,
+   "const": 119.07,
+   "share": 0.4313
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-06",
+   "days": 30,
+   "model": 91.23,
+   "hold": 79.79,
+   "const": 91.23,
+   "share": 0.4463
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-07",
+   "days": 31,
+   "model": 97.21,
+   "hold": 93.0,
+   "const": 97.21,
+   "share": 0.4463
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-08",
+   "days": 31,
+   "model": 99.57,
+   "hold": 98.61,
+   "const": 99.57,
+   "share": 0.4463
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-09",
+   "days": 30,
+   "model": 104.05,
+   "hold": 108.17,
+   "const": 103.98,
+   "share": 0.4498
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "month": "2026-10",
+   "days": 27,
+   "model": 90.93,
+   "hold": 82.07,
+   "const": 90.51,
+   "share": 0.5219
+  }
+ ],
+ "calibration": [
+  {
+   "lo": 0.2,
+   "hi": 0.3,
+   "n": 15,
+   "p": 0.2669,
+   "y": 0.3333
+  },
+  {
+   "lo": 0.3,
+   "hi": 0.4,
+   "n": 820,
+   "p": 0.3771,
+   "y": 0.4439
+  },
+  {
+   "lo": 0.4,
+   "hi": 0.5,
+   "n": 13847,
+   "p": 0.46,
+   "y": 0.4439
+  },
+  {
+   "lo": 0.5,
+   "hi": 0.6,
+   "n": 6447,
+   "p": 0.5318,
+   "y": 0.4593
+  },
+  {
+   "lo": 0.6,
+   "hi": 0.7,
+   "n": 455,
+   "p": 0.6334,
+   "y": 0.5868
+  },
+  {
+   "lo": 0.7,
+   "hi": 0.8,
+   "n": 28,
+   "p": 0.7291,
+   "y": 0.5714
+  }
+ ],
+ "kind": "forecast",
+ "engine_version": "0.4.0",
+ "data_end": "2026-10-26",
+ "run_at": "2026-10-28T04:37:32Z"
+}
