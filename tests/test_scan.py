@@ -26,7 +26,7 @@ def test_scan_covers_every_rule_and_coin(tmp_path, monkeypatch):
     (tmp_path / "coverage.json").write_text(__import__("json").dumps(res, default=str))
     monkeypatch.setattr(scan, "load", lambda path=None: res)
     out = site.build(store, tmp_path / "_site", dt.datetime(2026, 10, 21, tzinfo=dt.timezone.utc), "https://x.test/")
-    home = (out / "ru" / "index.html").read_text(encoding="utf-8")
+    home = (out / "ru" / "research.html").read_text(encoding="utf-8")
     assert "Какое правило на какой монете работает" in home and 'class="sortable rt"' in home and 'data-label=' in home
     assert (out / "sort.js").exists()
     assert "Это же правило на всех монетах" in (out / "ru" / "hypotheses" / "H-005.html").read_text(encoding="utf-8")

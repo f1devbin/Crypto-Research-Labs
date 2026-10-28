@@ -1520,7 +1520,11 @@ T = {
 
 from crl.i18n_diag import D as _DIAG  # noqa: E402  diagnosis + coverage-scan strings
 
+from crl.i18n_layout import L as _LAYOUT  # noqa: E402  menu, home, Market, Research, About
+
 for _code, _strings in _DIAG.items():
+    T[_code].update(_strings)
+for _code, _strings in _LAYOUT.items():
     T[_code].update(_strings)
 
 

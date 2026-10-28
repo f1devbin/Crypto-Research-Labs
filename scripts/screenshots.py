@@ -8,12 +8,12 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-SHOTS = [  # path, file, width, colour scheme, full page
+SHOTS = [  # path, file, width, colour scheme, full page — English only
     ("", "dashboard", 1280, "dark", False),
-    ("#regime", "regime", 1280, "dark", False),
-    ("ru/", "dashboard-ru", 1280, "dark", False),
-    ("hypotheses/H-003.html#equity", "hypothesis", 1280, "light", False),
-    ("ru/coins/SOLUSDT.html", "coin-ru", 1280, "dark", False),
+    ("market.html", "market", 1280, "dark", False),
+    ("research.html", "research", 1280, "dark", False),
+    ("hypotheses/H-020.html#equity", "hypothesis", 1280, "light", False),
+    ("coins/SOLUSDT.html", "coin", 1280, "dark", False),
     ("", "mobile", 390, "dark", False),
 ]
 

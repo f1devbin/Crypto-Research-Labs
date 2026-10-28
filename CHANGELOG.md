@@ -6,10 +6,24 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 ## [Unreleased]
 
 ### Changed
+- Dashboard restructured into five pages, one question each, with the same five-item menu everywhere
+  (Market · Research · Digest · New here? · About; a menu button on phones, languages in a drop-down).
+  The home page now holds only the answer so far, a short market diagnosis and what passed; how-to-read and
+  the glossary moved to the beginners' page, the hypotheses table and the rule × coin matrix to Research,
+  methodology and data freshness to About. Nothing was removed; old home-page anchors redirect to the new pages.
+- New visual style with depth: raised cards, a 3D field of hypothesis blocks (height = verdict), a 3D gauge for
+  the diagnosis, verdict blocks that filter the hypotheses table. Text and charts stay flat; a test keeps text
+  contrast at WCAG AAA (7:1) in both themes; motion respects "reduce motion".
+- Market indicators are grouped by question (trend, nervousness, money flows) with explanations folded under
+  "What is this?"; EVER is shown as a watched coin under Coins.
+- Course lesson 3 describes the new pages; README screenshots are English only (`market`, `research`, `coin`).
 - `research-agents` schedule: GitHub starts scheduled runs 4–7 hours late, so the workflow now wakes every hour
   from 00:17 to 11:17 UTC and a gate job (`crl.schedule_gate`) lets the first run that finds yesterday's data
   published by Binance, Coin Metrics, alternative.me and DefiLlama do the work (the weekly run on Mondays);
   the other runs exit in seconds. The 11:17 slot runs even if a source is late.
+
+### Fixed
+- The weekly digest was labelled with the week that had just started; it now shows the seven days it covers.
 
 ## [0.3.0] - 2026-10-21
 

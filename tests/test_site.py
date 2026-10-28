@@ -25,7 +25,7 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
         assert (out / ("" if lang == "en" else f"{lang}/") / "hypotheses" / "H-003.html").exists()
     sitemap = (out / "sitemap.xml").read_text()
     d = json.loads((out / "data.json").read_text())
-    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 4)
+    assert sitemap.count("<url>") == len(LANGS) * (len(d["hypotheses"]) + len(d["coins"]) + 7)
     course = (out / "ru" / "course.html").read_text(encoding="utf-8")
     assert "Курс для новичков" in course and '"@type": "Course"' in course.replace('":"', '": "') or '"Course"' in course
     assert "{" not in course.split("<main>")[1].split("</main>")[0]  # every placeholder filled
@@ -34,12 +34,46 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
     assert "/ru/setup.html" in sitemap and 'setup.html">' in (out / "ru" / "index.html").read_text(encoding="utf-8")
     assert "/ru/coins/SOLUSDT.html" in sitemap and (out / "ru" / "coins" / "SOLUSDT.html").exists()
     sol = (out / "coins" / "SOLUSDT.html").read_text(encoding="utf-8")
-    assert "Solana (SOL)" in sol and "H-014" in sol and 'href="../#coins"' in sol
+    assert "Solana (SOL)" in sol and "H-014" in sol and 'href="../market.html#coins"' in sol
     assert "Sitemap: https://x.test/sitemap.xml" in (out / "robots.txt").read_text()
     data = json.loads((out / "data.json").read_text())
     assert data["btc"] and any(h["curves"] for h in data["hypotheses"])
     # every text node is rendered server-side: the hypotheses table is in the HTML, not built by JS
-    assert re.search(r"H-011", (out / "ru" / "index.html").read_text(encoding="utf-8"))
+    assert re.search(r"H-011", (out / "ru" / "research.html").read_text(encoding="utf-8"))
+
+
+def test_one_question_per_page(tmp_path):
+    store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
+    out = site.build(store, tmp_path / "_site", dt.datetime(2026, 10, 14, tzinfo=dt.timezone.utc), "https://x.test/")
+    for lang in LANGS:
+        root = out if lang == "en" else out / lang
+        for name in ("index.html", "market.html", "research.html", "about.html", "course.html", "coins/BTCUSDT.html"):
+            html = (root / name).read_text(encoding="utf-8")
+            menu = html.split('<nav class="menu"', 1)[1].split("</nav>", 1)[0]
+            assert menu.count("<a ") == 5 and "#" not in menu, (lang, name)  # five pages, no in-page anchors
+        home = (root / "index.html").read_text(encoding="utf-8").split("<main>")[1].split("</main>")[0]
+        assert "<table" not in home and 'id="glossary"' not in home and 'href="course.html"' in home
+        assert 'id="glossary"' in (root / "course.html").read_text(encoding="utf-8")
+        assert 'id="data"' in (root / "about.html").read_text(encoding="utf-8")
+        assert 'class="matrix"' in (root / "research.html").read_text(encoding="utf-8")
+    assert "'#hypotheses':'research.html#all'" in (out / "ui.js").read_text()
+
+
+def _lum(hex_):
+    rgb = [int(hex_[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    lin = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+
+
+def test_text_tokens_keep_high_contrast():
+    from crl.site_render import CSS
+    dark = dict(re.findall(r"--(\w+):(#[0-9a-f]{6})", CSS.split("@media")[0]))
+    light = dict(re.findall(r"--(\w+):(#[0-9a-f]{6})", CSS.split("prefers-color-scheme:light")[1].split("}}")[0]))
+    for theme in (dark, light):
+        for fg in ("text", "text2", "link"):
+            for bg in ("bg", "panel", "raised"):
+                a, b = sorted((_lum(theme[fg]), _lum(theme[bg])), reverse=True)
+                assert (a + 0.05) / (b + 0.05) >= 7, (fg, bg)  # WCAG AAA for body text
 
 
 def test_translations_cover_english_keys():
@@ -87,7 +121,7 @@ def test_digest_page_shows_model_written_weeks(tmp_path, monkeypatch):
     store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
     out = site.build(store, tmp_path / "_site", dt.datetime(2026, 10, 21, tzinfo=dt.timezone.utc), "https://x.test/")
     ru = (out / "ru" / "digest.html").read_text(encoding="utf-8")
-    assert "Неделя 2026-W43: 2026-10-19 – 2026-10-25" in ru and "<li>BTC выше средней</li>" in ru
+    assert "Неделя 2026-W42: 2026-10-12 – 2026-10-18" in ru and "<li>BTC выше средней</li>" in ru
     es = (out / "es" / "digest.html").read_text(encoding="utf-8")
     assert "Calm market." in es and "se muestra en inglés" in es
-    assert "Последняя недельная сводка" in (out / "ru" / "index.html").read_text(encoding="utf-8")
+    assert "Недельная сводка: 2026-10-12 – 2026-10-18" in (out / "ru" / "index.html").read_text(encoding="utf-8")
