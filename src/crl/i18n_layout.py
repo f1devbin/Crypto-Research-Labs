@@ -730,3 +730,53 @@ TITLES = {
 }
 FAMILIES = {"en": "forecast", "ru": "прогноз", "es": "previsión", "pt": "previsão", "tr": "tahmin", "vi": "dự báo",
             "zh": "预测"}
+
+# improved live model (H-031): extra column, tile and bullet on the forecast page
+FC2 = {
+ "en": {"fc_th_up_v2": "Chance of rising, improved model ({id})", "fc_skill_v2": "Improved model ({id}): Brier skill vs base rate",
+        "fc_th_model_v2": "Improved model ({id})"},
+ "ru": {"fc_th_up_v2": "Шанс роста, улучшенная модель ({id})", "fc_skill_v2": "Улучшенная модель ({id}): Brier skill против базовой частоты",
+        "fc_th_model_v2": "Улучшенная модель ({id})"},
+ "es": {"fc_th_up_v2": "Probabilidad de subir, modelo mejorado ({id})", "fc_skill_v2": "Modelo mejorado ({id}): Brier skill frente a la frecuencia base",
+        "fc_th_model_v2": "Modelo mejorado ({id})"},
+ "pt": {"fc_th_up_v2": "Chance de subir, modelo melhorado ({id})", "fc_skill_v2": "Modelo melhorado ({id}): Brier skill contra a frequência base",
+        "fc_th_model_v2": "Modelo melhorado ({id})"},
+ "tr": {"fc_th_up_v2": "Yükselme olasılığı, geliştirilmiş model ({id})", "fc_skill_v2": "Geliştirilmiş model ({id}): taban orana karşı Brier skill",
+        "fc_th_model_v2": "Geliştirilmiş model ({id})"},
+ "vi": {"fc_th_up_v2": "Xác suất tăng, mô hình cải tiến ({id})", "fc_skill_v2": "Mô hình cải tiến ({id}): Brier skill so với tần suất cơ sở",
+        "fc_th_model_v2": "Mô hình cải tiến ({id})"},
+ "zh": {"fc_th_up_v2": "上涨概率，改进模型（{id}）", "fc_skill_v2": "改进模型（{id}）：相对基础频率的 Brier skill",
+        "fc_th_model_v2": "改进模型（{id}）"},
+}
+HOW_V2 = {
+ "en": "<strong>Improved model.</strong> After the first model failed on history, a second version "
+       "(<a href=\"hypotheses/H-031.html\">H-031</a>) adds a separate base level for each coin and recalibrates the "
+       "probabilities on a held-out year. It is judged only on forecasts published from 2026-11-01.",
+ "ru": "<strong>Улучшенная модель.</strong> После провала первой модели на истории вторая версия "
+       "(<a href=\"hypotheses/H-031.html\">H-031</a>) получила свой базовый уровень для каждой монеты и перекалибровку "
+       "вероятностей на отложенном годе. Её оценивают только по прогнозам, опубликованным с 01.11.2026.",
+ "es": "<strong>Modelo mejorado.</strong> Tras el fracaso del primer modelo en el histórico, una segunda versión "
+       "(<a href=\"hypotheses/H-031.html\">H-031</a>) añade un nivel base propio para cada moneda y recalibra las "
+       "probabilidades con un año reservado. Solo se juzga con previsiones publicadas desde el 2026-11-01.",
+ "pt": "<strong>Modelo melhorado.</strong> Depois que o primeiro modelo falhou no histórico, uma segunda versão "
+       "(<a href=\"hypotheses/H-031.html\">H-031</a>) ganha um nível base próprio para cada moeda e recalibra as "
+       "probabilidades num ano reservado. Ela é julgada só pelas previsões publicadas desde 2026-11-01.",
+ "tr": "<strong>Geliştirilmiş model.</strong> İlk model geçmişte başarısız olunca ikinci sürüm "
+       "(<a href=\"hypotheses/H-031.html\">H-031</a>) her coine kendi taban seviyesini verir ve olasılıkları ayrılmış "
+       "bir yılda yeniden kalibre eder. Yalnızca 2026-11-01'den itibaren yayımlanan tahminlerle değerlendirilir.",
+ "vi": "<strong>Mô hình cải tiến.</strong> Sau khi mô hình đầu tiên thất bại trên lịch sử, phiên bản thứ hai "
+       "(<a href=\"hypotheses/H-031.html\">H-031</a>) có mức cơ sở riêng cho từng coin và hiệu chuẩn lại xác suất trên "
+       "một năm để riêng. Nó chỉ được đánh giá qua các dự báo công bố từ 2026-11-01.",
+ "zh": "<strong>改进模型。</strong>第一个模型在历史检验中失败后，第二个版本（<a href=\"hypotheses/H-031.html\">H-031</a>）"
+       "为每个币设置各自的基础水平，并用预留的一年数据重新校准概率。它只根据 2026-11-01 起发布的预测来评判。",
+}
+TITLES_H031 = {
+ "ru": "Вживую: улучшенная модель (свой уровень для каждой монеты, перекалибровка) оценивает шанс роста выше комиссии точнее базовой частоты",
+ "es": "En vivo: un modelo mejorado (nivel propio por moneda, recalibrado) estima la probabilidad de subir más que las comisiones mejor que la frecuencia base",
+ "pt": "Ao vivo: um modelo melhorado (nível próprio por moeda, recalibrado) estima a chance de subir acima das taxas melhor que a frequência base",
+ "tr": "Canlı: geliştirilmiş model (her coin için ayrı seviye, yeniden kalibre) komisyonların üzerinde yükselme olasılığını taban orandan daha iyi veriyor",
+ "vi": "Trực tiếp: mô hình cải tiến (mức riêng cho từng coin, hiệu chuẩn lại) ước lượng xác suất tăng vượt phí tốt hơn tần suất cơ sở",
+ "zh": "实盘：改进模型（每个币各自的水平、重新校准）对涨幅超过手续费的概率估计优于基础频率",
+}
+for _code, _title in TITLES_H031.items():
+    TITLES[_code]["H-031"] = _title

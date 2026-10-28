@@ -1170,13 +1170,15 @@ def forecast_page(lang: str, data: dict, base: str, verification: str = "") -> s
     n = len((next((h for h in data["hypotheses"] if h["id"] == "H-029"), {}).get("spec") or {}).get("universe", [])) or 13
     td = fc.get("today")
     if td:
+        var_ids = sorted({k for r in td["rows"] for k in (r.get("variants") or {})})
         rows = []
         for r in td["rows"]:
             ch = "—"
             if r.get("w_exec") is not None and r.get("w_prev") is not None:
                 ch = t(lang, "fc_pp", v=f"{(r['w_exec'] - r['w_prev']) * 100:+.0f}")
+            var_cells = "".join(f'<td class=num>{pct((r.get("variants") or {}).get(v), nd=0)}</td>' for v in var_ids)
             rows.append(f'<tr><td>{_coin_label(coins.get(r["symbol"]), r["symbol"])}</td>'
-                        f'<td class=num>{pct(r.get("p_direction"), nd=0)}</td><td class=num>{pct(r.get("p_risk"), nd=0)}</td>'
+                        f'<td class=num>{pct(r.get("p_direction"), nd=0)}</td>{var_cells}<td class=num>{pct(r.get("p_risk"), nd=0)}</td>'
                         f'<td class=num>{pct(r.get("w_exec"), nd=0)}</td><td class=num>{e(ch)}</td></tr>')
         late = "" if td["on_time"] else f'<p class="callout">{e(t(lang, "fc_late"))}</p>'
         stamp = td["published"].replace("T", " ").replace("Z", " UTC")
@@ -1184,6 +1186,7 @@ def forecast_page(lang: str, data: dict, base: str, verification: str = "") -> s
                  f'<p class="meta sort-hint">{e(t(lang, "sort_hint"))}</p>'
                  f'<div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, "sort_hint"))}"><thead><tr>'
                  f'<th>{e(t(lang, "th_coin"))}</th><th class=num>{e(t(lang, "fc_th_up"))}</th>'
+                 + "".join(f'<th class=num>{e(t(lang, "fc_th_up_v2", id=v))}</th>' for v in var_ids) +
                  f'<th class=num>{e(t(lang, "fc_th_move"))}</th><th class=num>{e(t(lang, "fc_th_share"))}</th>'
                  f'<th class=num>{e(t(lang, "fc_th_change"))}</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
                  f'<p class="meta">{e(t(lang, "fc_gate"))}</p>')
@@ -1192,22 +1195,30 @@ def forecast_page(lang: str, data: dict, base: str, verification: str = "") -> s
 
     live = fc.get("live") or {}
     start, test_after = fc.get("start") or "—", fc.get("test_after") or "—"
-    if live.get("direction"):
-        pd_ = live["direction"]["pooled"]
-        pr_ = (live.get("risk") or {}).get("pooled") or {}
+    role = lambda target, variant: next((v for v in live.values() if v["target"] == target and v["variant"] == variant), None)
+    base_d, base_r = role("direction", False), role("risk", False)
+    variants = {hid: v for hid, v in live.items() if v["variant"]}
+    if base_d:
+        pd_, pr_ = base_d["pooled"], (base_r or {}).get("pooled") or {}
         kv = [(t(lang, "fc_days"), str(pd_.get("days", "—"))), (t(lang, "fc_hits"), pct(pd_.get("hits"), nd=1)),
               (t(lang, "fc_skill_dir"), _f(pd_.get("bss"), "+.4f")), (t(lang, "fc_skill_risk"), _f(pr_.get("bss"), "+.4f"))]
+        kv += [(t(lang, "fc_skill_v2", id=hid), _f(v["pooled"].get("bss"), "+.4f")) for hid, v in sorted(variants.items())]
         tiles = "".join(f'<div class="slab stat"><span>{e(k)}</span><b>{e(v)}</b></div>' for k, v in kv)
-        monthly = live["direction"].get("monthly") or []
+        monthly = base_d.get("monthly") or []
         month_html = ""
         if monthly:
             last = max(m["month"] for m in monthly)
+            vmon = {hid: {m["symbol"]: m for m in (v.get("monthly") or []) if m["month"] == last}
+                    for hid, v in sorted(variants.items())}
+            vmon = {hid: x for hid, x in vmon.items() if x}
             mrows = "".join(f'<tr><td>{_coin_label(coins.get(m["symbol"]), m["symbol"])}</td><td class=num>{usd(m["model"])}</td>'
-                            f'<td class=num>{usd(m["hold"])}</td><td class=num>{usd(m["const"])}</td></tr>'
+                            + "".join(f'<td class=num>{usd((x.get(m["symbol"]) or {}).get("model"))}</td>' for x in vmon.values())
+                            + f'<td class=num>{usd(m["hold"])}</td><td class=num>{usd(m["const"])}</td></tr>'
                             for m in monthly if m["month"] == last)
             month_html = (f'<h3>{e(t(lang, "fc_month_h", m=last))}</h3><div class="table-wrap"><table><thead><tr>'
                           f'<th>{e(t(lang, "th_coin"))}</th><th class=num>{e(t(lang, "fc_th_model"))}</th>'
-                          f'<th class=num>{e(t(lang, "fc_th_hold"))}</th><th class=num>{e(t(lang, "fc_th_const"))}</th>'
+                          + "".join(f'<th class=num>{e(t(lang, "fc_th_model_v2", id=hid))}</th>' for hid in vmon)
+                          + f'<th class=num>{e(t(lang, "fc_th_hold"))}</th><th class=num>{e(t(lang, "fc_th_const"))}</th>'
                           f'</tr></thead><tbody>{mrows}</tbody></table></div><p class="meta">{e(t(lang, "fc_month_note"))}</p>')
         live_html = (f'<p>{e(t(lang, "fc_live_text", start=start, date=test_after))}</p><div class="stats">{tiles}</div>'
                      f'<p class="meta">{e(t(lang, "fc_skill_note"))}</p>{month_html}')

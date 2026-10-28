@@ -93,3 +93,26 @@ def test_declared_replication_is_not_a_duplicate(tmp_registry):
     b = make(hyp, "H-101", replicates="H-100")
     c = make(hyp, "H-102")
     assert registry.duplicates(b, [a, b, c]) == ["H-102"]
+
+
+def test_forecast_model_options_are_checked(tmp_registry):
+    import copy
+    hyp, _ = tmp_registry
+    from crl import registry
+    spec = {"kind": "forecast_live", "target": "direction", "log_suffix": "_v2",
+            "model": {"type": "pooled_logit", "features": ["r1"], "zscore_window": 365, "zscore_min_periods": 180,
+                      "clip": 5, "l2": 1.0, "refit": "monthly", "external_lag": 1, "ffill_limit": 3,
+                      "coin_intercepts": True, "calibration": "platt_365"},
+            "universe": ["BTCUSDT"], "costs": {"default": 0.001}, "portfolio": {"weight": "probability", "band": 0.1},
+            "execution": {"time_utc": "12:00"}, "periods": [{"name": "forward", "start": "2026-11-01"}],
+            "significance": {"method": "circular_shift", "n": 2000, "alpha": 0.0125}}
+    good = registry.Hypothesis(hyp / "H-901.yaml", {"id": "H-901", "title": "t", "status": "draft", "family": "forecast",
+                                                    "created": "2026-10-28", "rationale": "r", "spec": spec,
+                                                    "test_after": "2027-11-01"})
+    assert registry.validate(good) == []
+    bad = copy.deepcopy(good.data)
+    bad["spec"]["model"]["calibration"] = "isotonic"
+    bad["spec"]["log_suffix"] = "v2"
+    bad["spec"]["model"]["magic"] = 1
+    errs = " ".join(registry.validate(registry.Hypothesis(hyp / "H-901.yaml", bad)))
+    assert "calibration" in errs and "log_suffix" in errs and "unknown keys" in errs

@@ -1,0 +1,87 @@
+id: H-031
+title: 'Live: an improved daily model (coin-specific levels, recalibrated) gives each coin''s chance of
+  rising above fees better than its base rate'
+status: registered
+family: forecast
+created: '2026-10-28'
+author: F1DevBin (request), Claude (spec)
+rationale: 'Asked for by F1DevBin after H-027 failed, and designed after seeing H-027''s history result,
+  so it is judged only on forecasts published from 2026-11-01 on, data nobody has seen. H-027''s probabilities
+  were biased and overconfident: one shared intercept ignored that Gate.io coins need a larger move to
+  beat their costs (Brier skill -0.10 on EVER, -0.03 on GRAM), and where it said 53 % only 46 % happened.
+  Two changes, nothing else: (1) a separate intercept per coin, ridge-penalised like the other weights;
+  (2) Platt recalibration: a model trained on data up to a year before the month''s cutoff scores that
+  last year, a one-variable logistic regression maps those scores to outcomes, and the map is applied
+  to the model trained on all data. Same inputs, coins, costs, monthly refits (frozen in datasets/forecast_models/YYYY-MM_v2.json),
+  paper portfolio and scoring as H-029, published in the same daily log before 12:00 UTC (columns ending
+  in _v2) and scored noon to noon. Expectation written before any result: the bias disappears and the
+  skill moves to about zero; beating the base rate clearly is unlikely, because H-027''s forecasts carried
+  only a trace of information. Alpha: H-029 is locked at 0.025, so this direction test takes half of it,
+  0.0125.'
+spec:
+  kind: forecast_live
+  target: direction
+  model:
+    type: pooled_logit
+    features:
+    - r1
+    - r3
+    - r7
+    - r30
+    - d50
+    - d200
+    - v7
+    - v30
+    - btc_r1
+    - btc_r7
+    - funding
+    - fear_greed
+    - stable30
+    - flow7
+    zscore_window: 365
+    zscore_min_periods: 180
+    clip: 5
+    l2: 1.0
+    refit: monthly
+    external_lag: 1
+    ffill_limit: 3
+    coin_intercepts: true
+    calibration: platt_365
+  log_suffix: _v2
+  universe:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
+  - EVERUSDT
+  - GRAMUSDT
+  costs:
+    default: 0.001
+    EVERUSDT: 0.004
+    GRAMUSDT: 0.004
+  portfolio:
+    weight: probability
+    band: 0.1
+  execution:
+    time_utc: '12:00'
+  periods:
+  - name: forward
+    start: '2026-11-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.0125
+  criterion:
+    metric: brier_skill
+    pooled: true
+retest_every_days: 90
+test_after: '2027-11-01'
+registered: '2026-10-28'
+prereg_sha256: dd8705602899aeba38cb634219f4635a4f219dc63a4d994f4b31bca73a67b394

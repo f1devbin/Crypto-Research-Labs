@@ -337,19 +337,19 @@ def forecast_data(hyps: list[dict]) -> dict | None:
     """Today's published forecasts, the live track record so far and the history test results."""
     from crl.config import DATASETS_DIR
     from crl.engine import forecast as F
-    live = {h["spec"]["target"]: h for h in hyps if (h.get("spec") or {}).get("kind") == "forecast_live"}
+    live = {h["id"]: h for h in hyps if (h.get("spec") or {}).get("kind") == "forecast_live"}
     hist = {h["spec"]["target"]: h for h in hyps if (h.get("spec") or {}).get("kind") == "forecast"}
     if not live and not hist:
         return None
     pooled = lambda h: next((r for r in h["rows"] if r.get("symbol") == "ALL"), None)
     out = {"history": {t: {"id": h["id"], "verdict": h["verdict"], "pooled": pooled(h), "data_end": h["data_end"]}
                        for t, h in hist.items()},
-           "live_ids": {t: h["id"] for t, h in live.items()}, "today": None, "live": {},
+           "today": None, "live": {},
            "start": None, "test_after": None}
-    if live:
-        any_live = next(iter(live.values()))
-        out["start"] = any_live["spec"]["periods"][0]["start"]
-        out["test_after"] = any_live.get("test_after")
+    base_live = [h for h in live.values() if not h["spec"].get("log_suffix")]
+    if base_live:
+        out["start"] = base_live[0]["spec"]["periods"][0]["start"]
+        out["test_after"] = base_live[0].get("test_after")
     log_ = F.read_log(DATASETS_DIR)
     if len(log_):
         last = log_["date"].max()
@@ -358,23 +358,30 @@ def forecast_data(hyps: list[dict]) -> dict | None:
         rows = []
         for _, r in day.iterrows():
             pw = prev[prev["symbol"] == r["symbol"]]["w_exec"].dropna()
-            rows.append({"symbol": r["symbol"], "p_direction": _num(r["p_direction"]), "p_risk": _num(r["p_risk"]),
-                         "w_exec": None if pd.isna(r["w_exec"]) else _num(r["w_exec"]),
-                         "w_prev": _num(pw.iloc[-1]) if len(pw) else None})
+            row = {"symbol": r["symbol"], "p_direction": _num(r["p_direction"]), "p_risk": _num(r["p_risk"]),
+                   "w_exec": None if pd.isna(r["w_exec"]) else _num(r["w_exec"]),
+                   "w_prev": _num(pw.iloc[-1]) if len(pw) else None}
+            for h in live.values():   # variants (e.g. H-031) publish their own columns
+                col = f"p_{h['spec']['target']}{h['spec'].get('log_suffix', '')}"
+                if h["spec"].get("log_suffix") and col in day.columns and pd.notna(r.get(col)):
+                    row.setdefault("variants", {})[h["id"]] = _num(r[col])
+            rows.append(row)
         out["today"] = {"date": str(last.date()), "published": str(day["published"].iloc[0]),
                         "decision_date": str(pd.Timestamp(day["decision_date"].iloc[0]).date()),
                         "on_time": bool(day["on_time"].iloc[0]), "rows": rows}
     noon = F.read_noon(DATASETS_DIR)
-    for target, h in live.items():
+    for hid, h in live.items():
         if not len(log_) or not len(noon):
             break
         spec = {**h["spec"], "significance": {**h["spec"]["significance"], "n": 200}}
         fc = F.live_frame(spec, log_, noon)
         if fc.empty or not fc["p"].notna().any():
             continue
-        sc = F.score(spec, fc, target, np.random.default_rng(0), "forward")
+        sc = F.score(spec, fc, spec["target"], np.random.default_rng(0), "forward")
         if sc["rows"]:
-            out["live"][target] = {"pooled": sc["rows"][-1], "monthly": sc.get("monthly", [])}
+            out["live"][hid] = {"target": spec["target"], "variant": bool(spec.get("log_suffix")),
+                                "start": spec["periods"][0]["start"], "pooled": sc["rows"][-1],
+                                "monthly": sc.get("monthly", [])}
     return out
 
 
