@@ -11,10 +11,12 @@ SHA-256 hash *before* it is tested, then tested by a fixed engine and re-tested 
 GitHub Actions. Results, a market diagnosis and a beginners' course are published as a static dashboard in 7
 languages: <https://f1devbin.github.io/Crypto-Research-Labs/> (en at root, `/ru/ /es/ /pt/ /tr/ /vi/ /zh/`).
 
-Current state: 31 hypotheses (H-001…H-031), two passed: H-020 (BTC exchange deposits; H-022 is its forward
+Current state: 32 hypotheses (H-001…H-032), two passed: H-020 (BTC exchange deposits; H-022 is its forward
 replication, first test 2027-10-15) and H-028 (the daily model forecasts the size of the next move, not its
 direction — H-027 failed). H-029/H-030 replicate H-027/H-028 live (forecast page, published before 12:00 UTC,
-first test 2027-11-01); H-031 is a live-only improved direction model (coin intercepts + Platt, log columns `_v2`). Version 0.4.0. Honest negative results are the point of the project.
+first test 2027-11-01); H-031 is a live-only improved direction model (coin intercepts + Platt, log columns `_v2`).
+H-032: EVER "smart wallets" on Gate.io (on-chain deposits, `engine/wallets.py`, data `crl data everscale` →
+`datasets/ever_gate_deposits.csv.gz`; hot wallet 0:3addd84b…; never store or publish the owner's own addresses). Version 0.4.0. Honest negative results are the point of the project.
 
 ## Layout
 
@@ -24,7 +26,7 @@ first test 2027-11-01); H-031 is a live-only improved direction model (coin inte
 | `src/crl/engine/` | `rules.py` (timing rules), `protocol.py` (timing_rule, rule_search, cross_section, forecast), `cross.py`, `backtest.py`, `stats.py`, `forecast.py` (pooled daily model, Brier skill, paper portfolio, live log) |
 | `src/crl/registry.py` | validation, SHA-256 lock, duplicates, `is_due` |
 | `src/crl/agents/` | `data_steward` (data refresh + integrity), `regime_watch` (monitors, alerts), `runner` (due hypotheses) |
-| `src/crl/data/` | `sources.py` (Binance vision, Gate.io for EVER/GRAM, OKX funding, Coin Metrics flows, DefiLlama, alternative.me, BGeometrics), `store.py` |
+| `src/crl/data/` | `sources.py` (Binance vision, Gate.io for EVER/GRAM, OKX funding, Coin Metrics flows, DefiLlama, alternative.me, BGeometrics), `store.py`, `everscale.py` (Gate.io EVER deposits traced on-chain, H-032) |
 | `src/crl/scan.py` | coverage scan: every tested timing rule × every coin, BH-FDR q=0.10 → `reports/coverage.json`, `COVERAGE.md` |
 | `src/crl/llm/` | `client.py` (OpenAI-compatible: Groq via `LLM_API_KEY`, model auto-discovered; or Anthropic), `digest.py` (weekly digest: English from facts, then translated), `proposer.py` (monthly drafts) |
 | `src/crl/site.py`, `site_render.py` | dashboard build (`crl site` → `_site/`): home, market, research, about, hypothesis pages, coin pages, course, setup, digest |
@@ -99,5 +101,4 @@ Never print or commit secrets; if one appears in a screenshot, say so and sugges
   - Discussions are on: answer beginners' questions about the course.
   - Google Search Console API report via a service account, once he creates the secret `GSC_SERVICE_ACCOUNT`.
   - Better digest prompt (the free model sometimes misreads cause and effect).
-  - Exchange "smart wallets" study for EVER once the exchange's hot wallet is known; send the spec for approval first.
 - No automated commits, PRs or posts made only for GitHub achievements.
