@@ -3,7 +3,7 @@
 | Workflow | File | Trigger | Needs |
 |----------|------|---------|-------|
 | CI | `.github/workflows/ci.yml` | push, PR | — |
-| Research agents + dashboard | `.github/workflows/research-agents.yml` | daily 06:17 UTC; weekly Mon 07:41 UTC; push to site code; manual | Pages source = GitHub Actions; optional Telegram secrets |
+| Research agents + dashboard | `.github/workflows/research-agents.yml` | hourly 00:17–11:17 UTC, the first run that finds yesterday's data at every source does the work (weekly on Mondays); push to site code; manual | Pages source = GitHub Actions; optional Telegram secrets |
 | Hypothesis proposer | `.github/workflows/propose.yml` | 1st of month; manual | `ANTHROPIC_API_KEY` |
 
 Every step is a single `crl` command, so you can run the same thing locally or from cron.

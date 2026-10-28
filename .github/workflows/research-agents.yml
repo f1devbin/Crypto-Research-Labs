@@ -3,12 +3,14 @@
 #   weekly : the above, then the hypothesis runner and the digest; results/ and reports/ are committed
 #   always : the dashboard is rebuilt from the fresh data and deployed to GitHub Pages
 # The data cache and the watch state live in actions/cache, so nothing is re-downloaded from scratch.
+# Schedule: GitHub starts scheduled runs hours late, so the workflow wakes every hour of the morning and the
+# gate job (src/crl/schedule_gate.py) lets the first run that finds yesterday's data published by every source
+# (Binance, Coin Metrics, alternative.me, DefiLlama) do the work; on Mondays that run is the weekly one.
 name: research-agents
 
 on:
   schedule:
-    - cron: "17 6 * * *"   # daily, 06:17 UTC
-    - cron: "41 7 * * 1"   # weekly, Monday 07:41 UTC
+    - cron: "17 0-11 * * *"   # hourly 00:17–11:17 UTC; the gate picks the first run with all data in
   push:
     branches: [main]
     paths: ["src/crl/site*.py", "src/crl/i18n.py", "src/crl/course.py", "site/**", "config/**", ".github/workflows/research-agents.yml"]
@@ -46,11 +48,30 @@ env:
   CRL_LLM_MODEL: ${{ vars.CRL_LLM_MODEL }}
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      go: ${{ steps.gate.outputs.go }}
+      full: ${{ steps.gate.outputs.full }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+      - id: gate
+        env:
+          FULL_INPUT: ${{ github.event_name == 'workflow_dispatch' && inputs.full }}
+          CRL_SITE_URL: ${{ vars.CRL_SITE_URL }}
+          PYTHONPATH: src
+        run: python3 -m crl.schedule_gate
+
   agents:
+    needs: gate
+    if: needs.gate.outputs.go == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
-      FULL: ${{ github.event.schedule == '41 7 * * 1' || (github.event_name == 'workflow_dispatch' && inputs.full) }}
+      FULL: ${{ needs.gate.outputs.full }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -138,7 +159,7 @@ jobs:
 
   deploy-pages:
     needs: agents
-    if: ${{ !cancelled() }}   # publish fresh numbers even if one data source failed
+    if: ${{ !cancelled() && needs.agents.result != 'skipped' }}   # publish fresh numbers even if one data source failed
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -5,6 +5,12 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 
 ## [Unreleased]
 
+### Changed
+- `research-agents` schedule: GitHub starts scheduled runs 4–7 hours late, so the workflow now wakes every hour
+  from 00:17 to 11:17 UTC and a gate job (`crl.schedule_gate`) lets the first run that finds yesterday's data
+  published by Binance, Coin Metrics, alternative.me and DefiLlama do the work (the weekly run on Mondays);
+  the other runs exit in seconds. The 11:17 slot runs even if a source is late.
+
 ## [0.3.0] - 2026-10-21
 
 Plain-language dashboard, every rule checked on every coin, weekly digest and alerts in 7 languages,
