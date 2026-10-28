@@ -153,6 +153,14 @@ History test, 2022-01-01 → 2026-10-26, 21 612 coin-days, walk-forward with mon
 - Expectation written before any result: direction close to luck, risk with real skill (volatility clusters).
   That is what happened.
 
+## EVER "smart wallets" on Gate.io (H-032, registered 2026-10-28)
+
+Idea by F1DevBin. Gate.io's Everscale hot wallet was found from a withdrawal to the owner's wallet. Deposits are
+traced on-chain: hot wallet ← sweep ← deposit address ← the user's wallet (`crl data everscale`, addresses stored only
+as short hashes, the owner's excluded). Wallets whose 2022–23 deposits were followed by the biggest 7-day EVER drops
+are the "smart" 20 %; from 2024 their deposits are compared with those of 1000 random matched sets of wallets.
+Expectation written before any result: they were lucky, not smart. Result: pending.
+
 ## Bottom line
 
 Apart from H-020 (pending its forward replication) and H-028 (risk, not direction), none of these ideas has a

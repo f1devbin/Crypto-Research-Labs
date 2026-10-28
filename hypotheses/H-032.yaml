@@ -1,0 +1,68 @@
+id: H-032
+title: 'Gate.io EVER ''smart wallets'': deposits of wallets picked on 2022-23 foretell 7-day drops better
+  than random wallets'
+status: registered
+family: flows
+created: '2026-10-28'
+author: F1DevBin (idea), Claude (spec)
+rationale: 'Idea by F1DevBin: wallets that move EVER to an exchange before it falls may know something,
+  and if they do, the same wallets should keep doing it. Data: Gate.io''s Everscale hot wallet (found
+  2026-10-28 from a withdrawal to the owner''s wallet; ~70 M EVER, active since 2021-10). Users send EVER
+  to personal deposit addresses that Gate sweeps into the hot wallet; a deposit address is a sender to
+  the hot wallet that forwarded at least 90 % of its outflow there, and a ''wallet'' is whoever sent EVER
+  to such an address (crl data everscale, public GraphQL, addresses stored only as short SHA-256 ids;
+  the owner''s addresses are excluded when the data is built; transfers from Gate''s own addresses are
+  dropped). An event is a wallet''s transfer of at least 10 EVER into a deposit address that had already
+  been swept before it (so the address was knowable as Gate''s at that moment); transfers within 7 days
+  of the wallet''s previous event join it; wallets with more than 100 transfers in a calendar month of
+  the selection period are services and are dropped. Outcome: log return of EVER (Gate.io daily closes)
+  from the close of the event''s UTC day to the close 7 days later. Selection 2022-01-01 to 2023-12-24
+  (the last 7-day window ends before 2024, so no later price is used): wallets with 5+ events; the 20
+  % with the lowest mean outcome are ''smart'' (need 25+ eligible wallets). Test from 2024-01-01: the
+  mean outcome of the smart wallets'' events (need 30+) against 1000 random sets of eligible wallets matched
+  on their number of selection events; passes if p < 0.05 (one-sided: as low or lower). Also reported:
+  holding EVER but staying out for 7 days after any smart-wallet event, decided at that day''s close,
+  with Gate''s 0.2 % fee plus 0.2 % slippage per side, against holding. EVER only: this wallet-level data
+  exists only on Everscale (an exception to the all-coins rule); GRAM on TON is a separate future hypothesis.
+  Expectation written before any result: the 2022-23 ''smart'' wallets were mostly lucky and will not
+  beat random wallets from 2024.'
+spec:
+  kind: wallet_deposits
+  asset: EVERUSDT
+  universe:
+  - EVERUSDT
+  hot_wallet: 0:3addd84bf73267312a477049fd9b8db761bf39c585c150f8e6f9451347af2b6c
+  dataset: ever_gate_deposits.csv.gz
+  filters:
+    min_value: 10
+    swept_before: true
+    merge_days: 7
+    max_monthly: 100
+  selection:
+    start: '2022-01-01'
+    end: '2023-12-24'
+    min_events: 5
+    horizon_days: 7
+    smart_share: 0.2
+    min_wallets: 25
+  test:
+    start: '2024-01-01'
+    min_events: 30
+  'null':
+    method: random_wallets_matched
+    n: 1000
+    buckets:
+    - 5
+    - 6
+    - 8
+    - 11
+    - 16
+    - 26
+  significance:
+    alpha: 0.05
+  rule:
+    exit_days: 7
+    fee: 0.002
+    slippage: 0.002
+registered: '2026-10-28'
+prereg_sha256: ff452c3ee3d9db2b99e40499fefb39997e5344692c0c6625b285d6705579065f

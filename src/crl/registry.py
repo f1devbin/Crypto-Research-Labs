@@ -80,8 +80,11 @@ def validate(h: Hypothesis) -> list[str]:
     if not isinstance(spec, dict):
         return errs + ["missing 'spec'"]
     kind = spec.get("kind")
-    if kind not in ("timing_rule", "rule_search", "cross_section", "forecast", "forecast_live"):
-        return errs + ["spec.kind must be timing_rule, rule_search, cross_section, forecast or forecast_live"]
+    if kind not in ("timing_rule", "rule_search", "cross_section", "forecast", "forecast_live", "wallet_deposits"):
+        return errs + ["spec.kind must be timing_rule, rule_search, cross_section, forecast, forecast_live or "
+                       "wallet_deposits"]
+    if kind == "wallet_deposits":
+        return errs + _check_wallets(h, spec)
     if kind in ("forecast", "forecast_live"):
         return errs + _check_forecast(h, spec)
     for k in ("fee", "universe", "criterion"):
@@ -128,6 +131,42 @@ def validate(h: Hypothesis) -> list[str]:
             dt.date.fromisoformat(str(h["test_after"]))
         except ValueError:
             errs.append("test_after must be a date YYYY-MM-DD")
+    if h.get("status") != "draft":
+        if not h.get("prereg_sha256"):
+            errs.append("registered hypothesis has no prereg_sha256 — run `crl registry register`")
+        elif h["prereg_sha256"] != spec_hash(spec):
+            errs.append("spec changed after registration (sha256 mismatch) — results would be invalid")
+    return errs
+
+
+def _check_wallets(h: Hypothesis, spec: dict) -> list[str]:
+    errs = []
+    need = {"asset": str, "dataset": str, "filters": dict, "selection": dict, "test": dict, "null": dict,
+            "significance": dict, "rule": dict}
+    for k, typ in need.items():
+        if not isinstance(spec.get(k), typ):
+            errs.append(f"wallet_deposits needs spec.{k}")
+    if errs:
+        return errs
+    for k in ("min_value", "merge_days", "max_monthly"):
+        if not isinstance(spec["filters"].get(k), (int, float)):
+            errs.append(f"filters.{k} must be a number")
+    sel = spec["selection"]
+    for k in ("start", "end", "min_events", "horizon_days", "smart_share", "min_wallets"):
+        if k not in sel:
+            errs.append(f"selection.{k} is required")
+    try:
+        last = dt.date.fromisoformat(str(sel["end"])) + dt.timedelta(days=int(sel["horizon_days"]))
+        if last >= dt.date.fromisoformat(str(spec["test"]["start"])):
+            errs.append("the selection window plus horizon_days must end before test.start (no later prices)")
+    except (KeyError, ValueError, TypeError):
+        errs.append("selection.end, selection.horizon_days and test.start must be valid")
+    if spec["null"].get("method") != "random_wallets_matched" or not spec["null"].get("buckets"):
+        errs.append("null.method must be random_wallets_matched with buckets")
+    if "alpha" not in spec["significance"]:
+        errs.append("significance.alpha is required")
+    if not all(isinstance(spec["rule"].get(k), (int, float)) for k in ("exit_days", "fee", "slippage")):
+        errs.append("rule needs exit_days, fee and slippage")
     if h.get("status") != "draft":
         if not h.get("prereg_sha256"):
             errs.append("registered hypothesis has no prereg_sha256 — run `crl registry register`")

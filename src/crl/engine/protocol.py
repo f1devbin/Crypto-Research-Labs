@@ -14,6 +14,9 @@ rule_search  a set of candidate rules; for each asset the best candidate is chos
 forecast, forecast_live  daily probabilities from a pooled model, scored by Brier skill
              (see engine/forecast.py).
 
+wallet_deposits  on-chain deposits of individual wallets to an exchange: wallets selected on one period
+             are tested on a later one against random wallets (see engine/wallets.py).
+
 Verdicts: PASS (criterion met), WEAK (beats buy-and-hold more often than not, but the
 pre-registered bar is not met — never evidence on its own), FAIL.
 """
@@ -57,6 +60,9 @@ def evaluate(spec: dict, store, seed: int = 2026) -> dict:
     elif kind == "forecast_live":
         from crl.engine import forecast as F
         res = F.evaluate_live(spec, store, np.random.default_rng(seed))
+    elif kind == "wallet_deposits":
+        from crl.engine import wallets as W
+        res = W.evaluate(spec, store, np.random.default_rng(seed))
     else:
         raise ValueError(f"unknown study kind '{kind}'")
     ends = [r["end"] for r in res["rows"] if r.get("end")]
@@ -179,6 +185,11 @@ def _rule_search(spec: dict, store, rng) -> dict:
 def to_markdown(hyp: dict, res: dict) -> str:
     if res.get("kind") in ("forecast", "forecast_live"):
         return _forecast_markdown(hyp, res)
+    if res.get("kind") == "wallet_deposits":
+        return (f"### {MARK[res['verdict']]} {hyp['id']} — {hyp['title']}\n\nVerdict **{res['verdict']}** · data to "
+                f"{res['data_end']} · engine {res['engine_version']} · run {res['run_at']}\n\n{res['summary']}\n\n"
+                + "\n".join(f"- {r['period']}: " + ", ".join(f"{k} {v}" for k, v in r.items() if k not in ("symbol", "period"))
+                             for r in res["rows"]) + "\n")
     out = [f"### {MARK[res['verdict']]} {hyp['id']} — {hyp['title']}",
            "",
            f"Verdict **{res['verdict']}** · data to {res['data_end']} · engine {res['engine_version']} · "

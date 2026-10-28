@@ -1527,10 +1527,12 @@ for _code, _strings in _DIAG.items():
 for _code, _strings in _LAYOUT.items():
     T[_code].update(_strings)
 from crl.i18n_layout import FAMILIES as _FAM, FC as _FC, FC2 as _FC2, HOW_V2 as _HOW2, TITLES as _TIT  # noqa: E402
+from crl.i18n_layout import WAL as _WAL  # noqa: E402
 
 for _code in T:  # daily forecast page (H-027 … H-031)
     T[_code].update(_FC.get(_code, {}))
     T[_code].update(_FC2.get(_code, {}))
+    T[_code].update(_WAL.get(_code, {}))
     T[_code]["fc_how"] = list(T[_code]["fc_how"]) + [_HOW2[_code]]
     T[_code].setdefault("titles", {}).update(_TIT.get(_code, {}))
     T[_code].setdefault("families", {})["forecast"] = _FAM[_code]

@@ -8,6 +8,8 @@ import html
 import json
 import re
 
+import numpy as np
+
 from crl import course as C
 from crl import setup_guide as SG
 from crl.i18n import DEFAULT, LANGS, sub, t
@@ -1146,6 +1148,43 @@ def forecast_results_table(lang: str, rows: list[dict]) -> str:
     return f'<div class="table-wrap"><table><thead>{head}</thead><tbody>{"".join(body)}</tbody></table></div>'
 
 
+def wallet_results_table(lang: str, rows: list[dict]) -> str:
+    """H-032-style result: selection, test against random wallets, and the exit rule."""
+    if not rows:
+        return f"<p>{e(t(lang, 'no_results'))}</p>"
+    by = {r.get("period"): r for r in rows}
+    mv = lambda v: "—" if v is None else pct(float(np.expm1(v)), True, 2)
+    items = []
+    s = by.get("selection")
+    if s:
+        items += [(t(lang, "w_sel", start=s.get("start"), end=s.get("end")),
+                   t(lang, "w_sel_val", wallets=s.get("wallets"), smart=s.get("smart"), events=s.get("events"))),
+                  (t(lang, "w_ret_sel"), f'{mv(s.get("smart_mean"))} / {mv(s.get("all_mean"))}')]
+    x = by.get("test")
+    if x:
+        items += [(t(lang, "w_test", start=x.get("start")), t(lang, "w_test_val", events=x.get("events"), smart=x.get("smart")))]
+        if x.get("p") is not None:
+            items += [(t(lang, "w_ret_test"), f'{mv(x.get("smart_mean"))} / {mv(x.get("random_mean"))}'),
+                      (t(lang, "w_p"), f'{x["p"]:.3f}')]
+    r = by.get("rule")
+    if r:
+        items += [(t(lang, "w_rule"), f'{num(r.get("sharpe"))} / {num(r.get("hold_sharpe"))}'),
+                  (t(lang, "w_rule_cagr"), f'{pct(r.get("cagr"), True)} / {pct(r.get("hold_cagr"), True)}'),
+                  (t(lang, "w_rule_dd"), f'{pct(r.get("max_dd"))} / {pct(r.get("hold_max_dd"))}'),
+                  (t(lang, "w_rule_exp"), pct(r.get("exposure"), nd=0))]
+    body = "".join(f"<tr><th scope=row>{e(k)}</th><td class=num>{e(v)}</td></tr>" for k, v in items)
+    return f'<div class="table-wrap"><table><tbody>{body}</tbody></table></div>'
+
+
+def _results_for(lang: str, h: dict) -> str:
+    kind = (h.get("spec") or {}).get("kind", "")
+    if kind in ("forecast", "forecast_live"):
+        return forecast_results_table(lang, h["rows"])
+    if kind == "wallet_deposits":
+        return wallet_results_table(lang, h["rows"])
+    return results_table(lang, h["rows"], kind)
+
+
 def calibration_table(lang: str, bins: list[dict]) -> str:
     if not bins:
         return ""
@@ -1306,7 +1345,7 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
 {en_note}
 <p lang="en">{e(h['summary'])}</p>
 <p class="meta">{e(t(lang, 'metrics_note'))} <a href="../course.html#glossary">{e(t(lang, 'nav_glossary'))}</a></p>
-{forecast_results_table(lang, h['rows']) if (h.get('spec') or {}).get('kind') in ('forecast', 'forecast_live') else results_table(lang, h['rows'], (h.get('spec') or {}).get('kind', ''))}
+{_results_for(lang, h)}
 {calibration_table(lang, h.get('calibration') or [])}
 {curve_block}
 {scan_for_rule(lang, hid, data)}

@@ -122,6 +122,7 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-028 | Same model: chance of a bigger move than usual (volatility clusters, so skill is likelier here) | ✅ Pass: Brier skill +0.038, p < 0.001, skill on 13/13 coins, well calibrated (says 74 %, happens 74 %). Forecasts risk, not direction |
 | H-029 | Live replication of H-027: forecasts published daily before 12:00 UTC, scored noon to noon | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
 | H-030 | Live replication of H-028 | ⏳ collecting from 2026-10-29, first test 2027-11-01 |
+| H-032 | EVER "smart wallets" on Gate.io: wallets whose 2022–23 deposits came before the biggest 7-day drops vs random wallets from 2024 (on-chain, Everscale) | ⏳ registered 2026-10-28, runs once the deposit data is committed |
 | H-031 | Live only: improved direction model (a base level per coin, probabilities recalibrated on a held-out year), designed after H-027 failed | ⏳ collecting from 2026-11-01, first test 2027-11-01 (α = 0.0125) |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
 | H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |

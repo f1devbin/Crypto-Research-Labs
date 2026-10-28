@@ -31,7 +31,8 @@ SITE_DIR = Path(os.environ.get("CRL_SITE_DIR", ROOT / "_site"))
 REPO_URL = "https://github.com/f1devbin/Crypto-Research-Labs"
 ROW_FIELDS = ("symbol", "period", "selected", "sharpe", "hold_sharpe", "cagr", "hold_cagr", "max_dd",
               "hold_max_dd", "exposure", "trades_per_year", "p", "alpha", "beats_hold", "win", "start", "end",
-              "days", "bss", "brier", "brier_ref", "hits", "q", "const_sharpe", "const_cagr", "beats_const")
+              "days", "bss", "brier", "brier_ref", "hits", "q", "const_sharpe", "const_cagr", "beats_const",
+              "wallets", "smart", "events", "smart_mean", "random_mean", "all_mean")
 FORECAST_KINDS = ("forecast", "forecast_live")
 
 
@@ -279,8 +280,8 @@ def _rule_for(spec: dict, row: dict) -> tuple[dict, dict] | None:
 def equity_curves(spec: dict, rows: list[dict], store: DataStore, step: int = 5) -> list[dict]:
     """Strategy vs buy-and-hold growth of 1 for each result row, fees included."""
     out = []
-    if spec.get("kind") in FORECAST_KINDS:
-        return out  # forecasts carry their own monthly curves (see hypotheses())
+    if spec.get("kind") in FORECAST_KINDS + ("wallet_deposits",):
+        return out  # forecasts carry their own monthly curves (see hypotheses()); wallet studies have none
     if spec.get("kind") == "cross_section":
         from crl.engine import cross as X
         try:

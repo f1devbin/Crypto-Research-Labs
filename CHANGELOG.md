@@ -22,6 +22,14 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   platt_365`; live variants publish their own columns in the same log (`log_suffix`, here `_v2`) with their own
   frozen monthly models. The forecast page shows the improved model's chance of a rise and its live score.
   H-027…H-030 compute exactly as before (checked against a saved fingerprint of the engine's output).
+- H-032 (registered 2026-10-28): EVER "smart wallets" on Gate.io. `crl data everscale` traces deposits on-chain
+  (hot wallet ← sweep ← deposit address ← wallet) through the public Everscale GraphQL API with cursor paging and
+  batched aliases, storing only short hashes of addresses (`datasets/ever_gate_deposits.csv.gz`; the owner's
+  addresses are excluded via `CRL_EXCLUDE_WALLETS`). New study kind `wallet_deposits` (`engine/wallets.py`):
+  dust, sweep-before-event, 7-day merge and service filters; selection on 2022–23 with no later prices; test from
+  2024 against 1000 random matched wallet sets; exit-rule line with Gate fee and slippage. Tests include the
+  null's calibration (about 5 % passes when no wallet knows anything) and that later prices never change the
+  selection.
 
 ### Results
 - H-027 (direction) failed: pooled Brier skill −0.009, overconfident. H-028 (size of the next move) passed:
