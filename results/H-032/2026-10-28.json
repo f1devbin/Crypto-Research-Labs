@@ -1,0 +1,53 @@
+{
+ "id": "H-032",
+ "prereg_sha256": "ff452c3ee3d9db2b99e40499fefb39997e5344692c0c6625b285d6705579065f",
+ "verdict": "FAIL",
+ "summary": "17 smart wallets of 85; from 2024-01-01 their 33 deposits were followed by a mean 7-day log return of -0.0152 vs -0.0378 for random matched wallets (p = 0.931, need p < 0.05); exit rule Sharpe -0.19 vs hold -0.08",
+ "rows": [
+  {
+   "symbol": "EVERUSDT",
+   "period": "selection",
+   "start": "2022-01-01",
+   "end": "2023-12-24",
+   "wallets": 85,
+   "smart": 17,
+   "events": 889,
+   "all_mean": -0.031265,
+   "smart_mean": -0.091038
+  },
+  {
+   "symbol": "EVERUSDT",
+   "period": "test",
+   "start": "2024-01-01",
+   "end": "2026-10-20",
+   "events": 33,
+   "smart": 6,
+   "smart_mean": -0.015217,
+   "random_mean": -0.037752,
+   "p": 0.931069,
+   "win": false
+  },
+  {
+   "symbol": "EVERUSDT",
+   "period": "rule",
+   "days": 1031,
+   "start": "2024-01-01",
+   "end": "2026-10-27",
+   "sharpe": -0.19465,
+   "cagr": -0.728629,
+   "max_dd": -0.983594,
+   "hold_sharpe": -0.082789,
+   "hold_cagr": -0.721211,
+   "hold_max_dd": -0.989911,
+   "exposure": 0.807953,
+   "trades_per_year": 7.080504,
+   "p": 0.657171,
+   "beats_hold": false,
+   "win": false
+  }
+ ],
+ "kind": "wallet_deposits",
+ "engine_version": "0.4.0",
+ "data_end": "2026-10-27",
+ "run_at": "2026-10-28T18:29:12Z"
+}

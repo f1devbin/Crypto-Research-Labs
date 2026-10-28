@@ -1,6 +1,6 @@
 # Regime watch
 
-Updated 2026-10-28 04:37 UTC
+Updated 2026-10-28 18:29 UTC
 
 | monitor | value | band |
 |---|---|---|

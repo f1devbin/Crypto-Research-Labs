@@ -1,6 +1,6 @@
 # Coverage scan: every tested rule on every coin
 
-Generated 2026-10-28T04:37:43Z · window 2022-01-01 → latest · fees included · Benjamini-Hochberg FDR q = 0.1 over 156 cells.
+Generated 2026-10-28T18:29:21Z · window 2022-01-01 → latest · fees included · Benjamini-Hochberg FDR q = 0.1 over 156 cells.
 
 Exploratory, not verdicts. ✅ beats buy-and-hold and survives the false-discovery control; ↑ better Sharpe than holding but could be chance; ✗ worse than holding; — not enough data. **Bold** = the coin was in the original hypothesis. A ✅ on a new coin is a candidate for a new pre-registered hypothesis tested on future data.
 

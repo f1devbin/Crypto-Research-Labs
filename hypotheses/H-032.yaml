@@ -1,7 +1,7 @@
 id: H-032
 title: 'Gate.io EVER ''smart wallets'': deposits of wallets picked on 2022-23 foretell 7-day drops better
   than random wallets'
-status: registered
+status: rejected
 family: flows
 created: '2026-10-28'
 author: F1DevBin (idea), Claude (spec)
@@ -66,3 +66,4 @@ spec:
     slippage: 0.002
 registered: '2026-10-28'
 prereg_sha256: ff452c3ee3d9db2b99e40499fefb39997e5344692c0c6625b285d6705579065f
+last_run: '2026-10-28'
