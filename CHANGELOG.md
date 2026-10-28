@@ -35,6 +35,9 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 - H-027 (direction) failed: pooled Brier skill −0.009, overconfident. H-028 (size of the next move) passed:
   Brier skill +0.038, p < 0.001, skill on all 13 coins, well calibrated — the second pass in the project and the
   first that forecasts risk rather than direction.
+- H-032 failed: 17 "smart" wallets picked on 2022–23 (EVER −8.7 % in the 7 days after their deposits) — only 6 still
+  deposited from 2024, and after their 33 deposits EVER moved −1.5 % vs −3.7 % for random matched wallets
+  (p = 0.93); the exit rule did not beat holding.
 
 ### Fixed
 - Home page: each idea that passed showed "the only one of N ideas"; the text now counts the passes, a risk

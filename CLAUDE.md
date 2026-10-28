@@ -15,7 +15,7 @@ Current state: 32 hypotheses (H-001…H-032), two passed: H-020 (BTC exchange de
 replication, first test 2027-10-15) and H-028 (the daily model forecasts the size of the next move, not its
 direction — H-027 failed). H-029/H-030 replicate H-027/H-028 live (forecast page, published before 12:00 UTC,
 first test 2027-11-01); H-031 is a live-only improved direction model (coin intercepts + Platt, log columns `_v2`).
-H-032: EVER "smart wallets" on Gate.io (on-chain deposits, `engine/wallets.py`, data `crl data everscale` →
+H-032 (failed: the "smart" 2022–23 wallets were no better than random from 2024): EVER "smart wallets" on Gate.io (on-chain deposits, `engine/wallets.py`, data `crl data everscale` →
 `datasets/ever_gate_deposits.csv.gz`; hot wallet 0:3addd84b…; never store or publish the owner's own addresses). Version 0.4.0. Honest negative results are the point of the project.
 
 ## Layout
