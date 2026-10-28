@@ -54,6 +54,9 @@ For site previews use `MemoryStore` with `tests.conftest.random_walk` and Playwr
 5. Fees always included (Binance 0.1 %, Gate 0.2 %). No look-ahead: features lag ≥ 1 day; add a test for any new rule
    that changing the future does not change past decisions.
 6. Never recommend trades in any text, digest or alert. The model only retells numbers from reports.
+7. Every new study uses all coins we track (13 now: BTC, ETH, SOL, BNB, XRP, ADA, LTC, LINK, DOGE, XLM, TRX,
+   EVER, GRAM, plus any added later), never a hand-picked subset. Correct for multiple testing across coins;
+   Gate coins (EVER, GRAM) are reported on their own line with the Gate fee and slippage.
 
 ## Dashboard rules
 
