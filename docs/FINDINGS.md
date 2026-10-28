@@ -159,11 +159,23 @@ Idea by F1DevBin. Gate.io's Everscale hot wallet was found from a withdrawal to 
 traced on-chain: hot wallet ← sweep ← deposit address ← the user's wallet (`crl data everscale`, addresses stored only
 as short hashes, the owner's excluded). Wallets whose 2022–23 deposits were followed by the biggest 7-day EVER drops
 are the "smart" 20 %; from 2024 their deposits are compared with those of 1000 random matched sets of wallets.
-Expectation written before any result: they were lucky, not smart. Result: pending.
+Expectation written before any result: they were lucky, not smart.
+
+Data: 34 327 transfers from 3 062 wallets into 2 528 deposit addresses, 2021-10 → 2026-08.
+
+| Step | Result |
+|------|--------|
+| Selection 2022-01-01 → 2023-12-24 | 85 wallets with 5+ events (889 events); 17 "smart": EVER moved −8.7 % in the 7 days after their deposits vs −3.1 % after all eligible wallets' deposits |
+| Test from 2024-01-01 | only 6 of the 17 still deposited (33 events): −1.5 % after them vs −3.7 % after random matched wallets; p = 0.93 (needed < 0.05) |
+| Exit rule (out 7 days after a smart deposit, 0.4 % per side) | Sharpe −0.19 vs −0.08 holding; −73 %/yr vs −72 %/yr; in the coin 81 % of days |
+
+❌ **Fail.** The wallets that looked best informed in 2022–23 did no better than random ones afterwards; most of
+them stopped depositing. Deposits in general came before falls only because EVER kept falling (−72 %/yr from
+2024). Wallet-level timing on this exchange shows no persistent skill.
 
 ## Bottom line
 
 Apart from H-020 (pending its forward replication) and H-028 (risk, not direction), none of these ideas has a
-statistically reliable edge after fees. Daily trend rules
+statistically reliable edge after fees — including following "smart" on-chain wallets (H-032). Daily trend rules
 are a risk-reduction tool, not an alpha source. Further work should only go to ideas
 with a clear economic reason, tested on independent assets.
