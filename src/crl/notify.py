@@ -5,9 +5,10 @@ import os
 import urllib.parse
 import urllib.request
 
+from crl.config import SITE_URL as SITE
+
 log = logging.getLogger(__name__)
 TELEGRAM_LIMIT = 4000
-SITE = os.environ.get("CRL_SITE_URL", "https://f1devbin.github.io/Crypto-Research-Labs/").rstrip("/") + "/"
 
 
 def lang() -> str:

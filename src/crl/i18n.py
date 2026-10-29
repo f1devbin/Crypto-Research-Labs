@@ -1537,6 +1537,13 @@ for _code in T:  # daily forecast page (H-027 … H-031)
     T[_code].setdefault("titles", {}).update(_TIT.get(_code, {}))
     T[_code].setdefault("families", {})["forecast"] = _FAM[_code]
 
+from crl.i18n_seo import COIN_NAMES as _CN, QUESTIONS as _Q, SEO as _SEO  # noqa: E402
+
+for _code in T:  # search titles and descriptions, one question per hypothesis, coin names as people search them
+    T[_code].update(_SEO[_code])
+    T[_code]["questions"] = _Q[_code]
+    T[_code]["coin_names"] = _CN.get(_code, {})
+
 
 def t(lang: str, key: str, **kw):
     """Translated string (or list) with English fallback."""

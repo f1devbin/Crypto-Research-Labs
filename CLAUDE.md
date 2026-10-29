@@ -33,10 +33,10 @@ events of $500+ at the day's close (`filters.min_usd`). Version 0.4.0. Honest ne
 | `src/crl/scan.py` | coverage scan: every tested timing rule × every coin, BH-FDR q=0.10 → `reports/coverage.json`, `COVERAGE.md` |
 | `src/crl/llm/` | `client.py` (OpenAI-compatible: Groq via `LLM_API_KEY`, model auto-discovered; or Anthropic), `digest.py` (weekly digest: English from facts, then translated), `proposer.py` (monthly drafts) |
 | `src/crl/site.py`, `site_render.py` | dashboard build (`crl site` → `_site/`): home, market, research, about, hypothesis pages, coin pages, course, setup, digest |
-| `src/crl/i18n.py`, `i18n_diag.py`, `i18n_alerts.py`, `course.py`, `setup_guide.py` | all UI text, 7 languages |
+| `src/crl/i18n.py`, `i18n_diag.py`, `i18n_alerts.py`, `i18n_seo.py`, `course.py`, `setup_guide.py` | all UI text, 7 languages (`i18n_seo`: search titles, descriptions, one question per hypothesis) |
 | `config/watch.yaml` | regime monitors and bands |
 | `results/`, `reports/`, `datasets/` | written by the bot (`crl-bot`) on the weekly run; don't hand-edit. `datasets/forecast_log.csv`, `noon_prices.csv`, `forecast_models/` are written daily by `crl forecast` and must never be edited |
-| `docs/` | FINDINGS, METHODOLOGY, WORKFLOWS, GETTING_STARTED, INEFFICIENCIES |
+| `docs/` | FINDINGS, METHODOLOGY, WORKFLOWS, GETTING_STARTED, INEFFICIENCIES, SEO (target queries) |
 
 ## Commands
 
@@ -71,8 +71,11 @@ For site previews use `MemoryStore` with `tests.conftest.random_walk` and Playwr
 - Accessibility first: high contrast, no grey text on dark backgrounds, no horizontal page scroll; on phones tables
   become labelled cards (`responsive_tables`), the rule × coin matrix becomes chip grids.
 - Design tokens live in `site_render.CSS` (IBM Plex Sans, deep navy). Check desktop and 390 px screenshots before a PR.
-- SEO: prerendered HTML, hreflang, sitemap, JSON-LD (Dataset needs creator + license). The host root
-  `f1devbin.github.io` (separate repo) owns `robots.txt`, which lists this project's sitemap.
+- SEO (docs/SEO.md): prerendered HTML, hreflang, sitemap, JSON-LD (Dataset needs creator + license). All of these
+  links are absolute, from `config.SITE_URL` (an empty `CRL_SITE_URL` means the default). Titles: query words first,
+  at most 80 characters; every new hypothesis needs its search question in `i18n_seo.QUESTIONS` in 7 languages
+  (tests check both). The host root `f1devbin.github.io` (separate repo) owns `robots.txt`, which lists this
+  project's sitemap.
 
 ## Git workflow
 

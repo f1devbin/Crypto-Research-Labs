@@ -13,3 +13,7 @@ DATASETS_DIR = Path(os.environ.get("CRL_DATASETS_DIR", ROOT / "datasets"))
 STATE_DIR = Path(os.environ.get("CRL_STATE_DIR", DATA_DIR / "state"))
 
 USER_AGENT = "crypto-research-labs/0.4 (+https://github.com/f1devbin/Crypto-Research-Labs)"
+# Dashboard address; canonical, hreflang and sitemap links are built from it, so it must be absolute. An Actions
+# variable that is not set arrives as an empty string, which means the default.
+SITE_URL = (os.environ.get("CRL_SITE_URL", "").strip()
+            or "https://f1devbin.github.io/Crypto-Research-Labs/").rstrip("/") + "/"

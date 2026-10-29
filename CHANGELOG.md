@@ -38,6 +38,15 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   many dollars at the close of its day. The $500 size was picked by a rule fixed before counting
   (`scripts/h033_threshold.py`, counts only, no returns).
 
+### Changed
+- SEO (docs/SEO.md, target queries chosen 2026-10-29): page titles now start with what people search for and stay
+  under 80 characters ("Crypto market today: trend, funding, Fear & Greed, stablecoins", "Free crypto course for
+  beginners…"), descriptions are cut at a word boundary to 160 characters (90 in Chinese). Every hypothesis page is
+  titled by a short search question in 7 languages ("Do Bitcoin exchange inflows predict price drops? (Pass)"),
+  which also opens the page above the plain-words verdict; the precise statement stays the heading. Russian and
+  Chinese coin pages use local coin names (Биткоин, 比特币). New `src/crl/i18n_seo.py`; tests check title and
+  description lengths, absolute links on every page and a question for every hypothesis.
+
 ### Results
 - H-027 (direction) failed: pooled Brier skill −0.009, overconfident. H-028 (size of the next move) passed:
   Brier skill +0.038, p < 0.001, skill on all 13 coins, well calibrated — the second pass in the project and the
@@ -50,6 +59,11 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   random matched wallets (p = 0.77); the exit rule did not beat holding (Sharpe −1.80 vs −0.71).
 
 ### Fixed
+- Canonical, hreflang, sitemap, Open Graph and JSON-LD links were relative ("/") since 2026-10-14: the unset
+  Actions variable `CRL_SITE_URL` arrives as an empty string, which replaced the default address. Every page told
+  search engines that its canonical address was the host root `f1devbin.github.io`, and the sitemap was invalid.
+  The address now comes from `config.SITE_URL` (empty means the default), the build refuses a relative one, and
+  Telegram alerts get the same fix.
 - Home page: each idea that passed showed "the only one of N ideas"; the text now counts the passes, a risk
   forecast says it predicts the size of moves, not their direction, and each card carries its live re-check.
 - The forecast-log commit failed when the data refresh had changed other tracked files (`git pull --rebase`
