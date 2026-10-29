@@ -8,7 +8,7 @@ GUIDE = {
 # ---------------------------------------------------------------- English
 "en": {
  "nav": "Setup",
- "title": "Setup: Telegram alerts, AI model key, your own copy | Crypto Research Labs",
+ "title": "Setup: Telegram alerts, AI model key, your own copy",
  "h1": "Setup: alerts, AI key and your own copy",
  "desc": "Step by step: get Telegram alerts in your language, connect an optional AI model key for a plain-language weekly digest, and run your own copy of Crypto Research Labs on GitHub for free.",
  "lead": "Everything here is optional. The dashboard works without any of it. All settings live in the GitHub repository, in " + SETTINGS + ".",
@@ -71,7 +71,7 @@ To add your own idea, see [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) or
 # ---------------------------------------------------------------- Russian
 "ru": {
  "nav": "Настройка",
- "title": "Настройка: уведомления в Telegram, ключ ИИ-модели, своя копия | Crypto Research Labs",
+ "title": "Настройка: уведомления в Telegram, ключ ИИ-модели, своя копия",
  "h1": "Настройка: уведомления, ключ ИИ и своя копия",
  "desc": "Пошагово: уведомления в Telegram на вашем языке, необязательный ключ ИИ-модели для понятной недельной сводки и бесплатный запуск своей копии Crypto Research Labs на GitHub.",
  "lead": "Всё здесь необязательно: дашборд работает и без этого. Все настройки хранятся в репозитории GitHub: Settings → Secrets and variables → Actions.",
@@ -134,7 +134,7 @@ To add your own idea, see [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) or
 # ---------------------------------------------------------------- Spanish
 "es": {
  "nav": "Configuración",
- "title": "Configuración: alertas de Telegram, clave de IA, tu propia copia | Crypto Research Labs",
+ "title": "Configuración: alertas de Telegram, clave de IA, tu propia copia",
  "h1": "Configuración: alertas, clave de IA y tu propia copia",
  "desc": "Paso a paso: alertas de Telegram en tu idioma, una clave opcional de modelo de IA para un resumen semanal en palabras sencillas, y tu propia copia gratuita de Crypto Research Labs en GitHub.",
  "lead": "Todo es opcional: el panel funciona sin nada de esto. Los ajustes viven en el repositorio de GitHub: Settings → Secrets and variables → Actions.",
@@ -197,7 +197,7 @@ Para proponer tu idea, mira [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) 
 # ---------------------------------------------------------------- Portuguese
 "pt": {
  "nav": "Configuração",
- "title": "Configuração: alertas no Telegram, chave de IA, sua própria cópia | Crypto Research Labs",
+ "title": "Configuração: alertas no Telegram, chave de IA, sua própria cópia",
  "h1": "Configuração: alertas, chave de IA e sua própria cópia",
  "desc": "Passo a passo: alertas no Telegram no seu idioma, uma chave opcional de modelo de IA para um resumo semanal em palavras simples e sua própria cópia gratuita do Crypto Research Labs no GitHub.",
  "lead": "Tudo aqui é opcional: o painel funciona sem isso. As configurações ficam no repositório do GitHub: Settings → Secrets and variables → Actions.",
@@ -260,7 +260,7 @@ Para sugerir uma ideia, veja [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md)
 # ---------------------------------------------------------------- Turkish
 "tr": {
  "nav": "Kurulum",
- "title": "Kurulum: Telegram bildirimleri, yapay zekâ anahtarı, kendi kopyanız | Crypto Research Labs",
+ "title": "Kurulum: Telegram bildirimleri, yapay zekâ anahtarı, kendi kopyanız",
  "h1": "Kurulum: bildirimler, yapay zekâ anahtarı ve kendi kopyanız",
  "desc": "Adım adım: kendi dilinizde Telegram bildirimleri, sade dilde haftalık özet için isteğe bağlı yapay zekâ anahtarı ve Crypto Research Labs'in GitHub'da ücretsiz kendi kopyası.",
  "lead": "Buradaki her şey isteğe bağlıdır: panel bunlar olmadan da çalışır. Ayarlar GitHub deposunda durur: Settings → Secrets and variables → Actions.",
@@ -323,7 +323,7 @@ Fikir önermek için [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBUTING.md) dosyas�
 # ---------------------------------------------------------------- Vietnamese
 "vi": {
  "nav": "Cài đặt",
- "title": "Cài đặt: thông báo Telegram, khóa mô hình AI, bản sao riêng | Crypto Research Labs",
+ "title": "Cài đặt: thông báo Telegram, khóa mô hình AI, bản sao riêng",
  "h1": "Cài đặt: thông báo, khóa AI và bản sao riêng",
  "desc": "Từng bước: nhận thông báo Telegram bằng ngôn ngữ của bạn, kết nối khóa mô hình AI (tùy chọn) để có bản tóm tắt tuần dễ hiểu, và chạy bản sao Crypto Research Labs miễn phí trên GitHub.",
  "lead": "Mọi thứ ở đây đều tùy chọn: bảng điều khiển vẫn hoạt động khi không có chúng. Các cài đặt nằm trong kho GitHub: Settings → Secrets and variables → Actions.",
@@ -386,7 +386,7 @@ Muốn đề xuất ý tưởng, xem [CONTRIBUTING.md]({REPO}/blob/main/CONTRIBU
 # ---------------------------------------------------------------- Chinese
 "zh": {
  "nav": "设置",
- "title": "设置：Telegram 通知、AI 模型密钥、自己的副本 | Crypto Research Labs",
+ "title": "设置：Telegram 通知、AI 模型密钥、自己的副本",
  "h1": "设置：通知、AI 密钥和自己的副本",
  "desc": "分步说明：用你的语言接收 Telegram 通知，可选接入 AI 模型密钥以获得通俗的每周摘要，并在 GitHub 上免费运行自己的 Crypto Research Labs 副本。",
  "lead": "这里的一切都是可选的：没有它们仪表盘也能正常运行。所有设置都在 GitHub 仓库中：Settings → Secrets and variables → Actions。",

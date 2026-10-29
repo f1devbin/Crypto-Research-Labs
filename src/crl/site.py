@@ -18,7 +18,7 @@ import pandas as pd
 
 from crl import __version__, registry
 from crl.agents import regime_watch
-from crl.config import ROOT, RESULTS_DIR
+from crl.config import RESULTS_DIR, ROOT, SITE_URL
 from crl.data.store import FEATURES, DataStore
 from crl.engine import rules as R
 from crl.engine.backtest import run, to_position
@@ -440,7 +440,6 @@ def data_health(store: DataStore, today: dt.date) -> list[dict]:
     return out
 
 
-SITE_URL = os.environ.get("CRL_SITE_URL", "https://f1devbin.github.io/Crypto-Research-Labs/").rstrip("/") + "/"
 STATIC = ROOT / "site"
 
 
@@ -451,6 +450,8 @@ def _w(path: Path, text: str) -> None:
 def build(store: DataStore | None = None, out_dir: Path = SITE_DIR, now: dt.datetime | None = None,
           base: str = SITE_URL) -> Path:
     from crl import site_render as H
+    if not base.startswith(("https://", "http://")):  # a relative base sent every canonical link to the host root
+        raise ValueError(f"site address must be absolute, got {base!r}")
     store = store or DataStore()
     now = now or dt.datetime.now(dt.timezone.utc)
     verification = os.environ.get("GOOGLE_SITE_VERIFICATION", "").strip()

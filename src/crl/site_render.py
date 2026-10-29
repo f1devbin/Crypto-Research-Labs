@@ -448,9 +448,21 @@ def responsive_tables(body: str) -> str:
     return _TABLE.sub(fix, body)
 
 
+def clip(text: str, limit: int = 160) -> str:
+    """Meta description that search results show whole: at most `limit` characters, cut at a word boundary."""
+    text = " ".join(text.split())
+    if len(text) <= limit:
+        return text
+    cut = text[:limit - 1]
+    if " " in cut:
+        cut = cut.rsplit(" ", 1)[0]
+    return cut.rstrip(" ,;:—-") + "…"
+
+
 def page(*, lang: str, hid: str | None, base: str, title: str, description: str, body: str, charts: dict,
          jsonld: list, verification: str = "") -> str:
     body = responsive_tables(body)
+    description = clip(description, 90 if lang == "zh" else 160)
     root = asset_root(lang, hid)
     canonical = page_url(base, lang, hid)
     hl, locale = LANGS[lang][1], LANGS[lang][2]
@@ -931,8 +943,9 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
          "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json",
                            "contentUrl": base + "data.json"}]},
     ]
-    return page(lang=lang, hid=None, base=base, title=t(lang, "site_title"), description=description[:320],
-                body=body, charts={}, jsonld=jsonld, verification=verification)
+    return page(lang=lang, hid=None, base=base, title=t(lang, "seo_home_title"),
+                description=t(lang, "seo_home_desc", k=cnt["PASS"], n=n), body=body, charts={}, jsonld=jsonld,
+                verification=verification)
 
 
 def _crumbs(lang: str, base: str, key: str, name: str) -> dict:
@@ -1027,8 +1040,8 @@ def market_page(lang: str, data: dict, base: str, verification: str = "") -> str
     jsonld = [{"@context": "https://schema.org", "@type": "WebPage", "name": t(lang, "market_h1"),
                "description": t(lang, "market_lead"), "url": url, "inLanguage": LANGS[lang][1],
                "dateModified": data["generated_at"][:10]}, _crumbs(lang, base, "market", t(lang, "nav_market"))]
-    return page(lang=lang, hid="market", base=base, title=f"{t(lang, 'market_h1')} | Crypto Research Labs",
-                description=t(lang, "market_lead")[:320], body=body, charts=charts, jsonld=jsonld,
+    return page(lang=lang, hid="market", base=base, title=t(lang, "seo_market_title"),
+                description=t(lang, "seo_market_desc"), body=body, charts=charts, jsonld=jsonld,
                 verification=verification)
 
 
@@ -1079,8 +1092,9 @@ def research_page(lang: str, data: dict, base: str, verification: str = "") -> s
                "hasPart": [{"@type": "TechArticle", "headline": f'{h["id"]}: {title_of(lang, h)}'[:110],
                             "url": page_url(base, lang, h["id"])} for h in hyps]},
               _crumbs(lang, base, "research", t(lang, "nav_research"))]
-    return page(lang=lang, hid="research", base=base, title=f"{t(lang, 'research_h1')} | Crypto Research Labs",
-                description=t(lang, "research_lead")[:320], body=body, charts={}, jsonld=jsonld,
+    return page(lang=lang, hid="research", base=base, title=t(lang, "seo_research_title", n=len(hyps)),
+                description=t(lang, "seo_research_desc", n=len(hyps), k=cnt["PASS"]), body=body, charts={},
+                jsonld=jsonld,
                 verification=verification)
 
 
@@ -1116,8 +1130,8 @@ def about_page(lang: str, data: dict, base: str, verification: str = "") -> str:
     jsonld = [{"@context": "https://schema.org", "@type": "AboutPage", "name": t(lang, "about_h1"),
                "description": t(lang, "lead", verdict=verdict_line)[:300], "url": url, "inLanguage": LANGS[lang][1],
                "dateModified": data["generated_at"][:10]}, _crumbs(lang, base, "about", t(lang, "nav_about"))]
-    return page(lang=lang, hid="about", base=base, title=f"{t(lang, 'about_h1')} | Crypto Research Labs",
-                description=t(lang, "lead", verdict=verdict_line)[:320], body=body, charts={}, jsonld=jsonld,
+    return page(lang=lang, hid="about", base=base, title=t(lang, "seo_about_title"),
+                description=t(lang, "seo_about_desc"), body=body, charts={}, jsonld=jsonld,
                 verification=verification)
 
 
@@ -1298,8 +1312,8 @@ def forecast_page(lang: str, data: dict, base: str, verification: str = "") -> s
                "distribution": [{"@type": "DataDownload", "encodingFormat": "text/csv",
                                  "contentUrl": f"{REPO}/blob/main/datasets/forecast_log.csv"}]},
               _crumbs(lang, base, "forecast", t(lang, "fc_h1"))]
-    return page(lang=lang, hid="forecast", base=base, title=f"{t(lang, 'fc_h1')} | Crypto Research Labs",
-                description=t(lang, "fc_lead", n=n)[:320], body=body, charts={}, jsonld=jsonld,
+    return page(lang=lang, hid="forecast", base=base, title=t(lang, "seo_forecast_title"),
+                description=t(lang, "seo_forecast_desc"), body=body, charts={}, jsonld=jsonld,
                 verification=verification)
 
 
@@ -1308,9 +1322,16 @@ def spec_text(spec: dict) -> str:
     return yaml.safe_dump(spec, sort_keys=False, allow_unicode=True)
 
 
+def question_of(lang: str, h: dict) -> str | None:
+    """The hypothesis as people would search for it (i18n_seo.QUESTIONS)."""
+    return sub(lang, "questions", h["id"])
+
+
 def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str = "") -> str:
     hid = h["id"]
     title = title_of(lang, h)
+    question = question_of(lang, h)
+    answer = plain(lang, h["verdict"], h.get("test_after"))
     charts, curve_block = {}, ""
     if h["curves"]:
         opts = []
@@ -1339,7 +1360,7 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
 <p>{badge(lang, h['verdict'])} &nbsp;{e(t(lang, 'family'))}: <strong>{e(sub(lang, 'families', h['family'], h['family']))}</strong>
 · {e(t(lang, 'status'))}: <strong>{e(sub(lang, 'statuses', h['status'], h['status']))}</strong></p>
 {caution}
-<p class="plain"><strong>{e(t(lang, 'in_plain'))}:</strong> {e(plain(lang, h['verdict'], h.get('test_after')))}</p>
+<p class="plain"><strong>{e(question or t(lang, 'in_plain') + ':')}</strong> {e(answer)}</p>
 {progress_bar(lang, h.get('progress'))}
 <h2>{e(t(lang, 'result_h'))}</h2>
 {en_note}
@@ -1355,9 +1376,15 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
 </main>
 {footer(lang, hid)}"""
     url = page_url(base, lang, hid)
-    description = t(lang, "hyp_desc", id=hid, verdict=verdict_word(lang, h["verdict"]), title=title,
-                    plain=plain(lang, h["verdict"], h.get("test_after")))
-    jsonld = [{"@context": "https://schema.org", "@type": "TechArticle", "headline": f"{hid}: {title}"[:110],
+    if question:
+        word = verdict_word(lang, h["verdict"]) if h["verdict"] else t(lang, "tally_wait")
+        page_title = t(lang, "seo_hyp_title", q=question, v=word)
+        description = t(lang, "seo_hyp_desc", q=question, plain=answer, id=hid, title=title)
+    else:
+        page_title = f"{hid}: {title}"
+        description = t(lang, "hyp_desc", id=hid, verdict=verdict_word(lang, h["verdict"]), title=title, plain=answer)
+    jsonld = [{"@context": "https://schema.org", "@type": "TechArticle", "headline": (question or title)[:110],
+               "alternativeHeadline": f"{hid}: {title}"[:110],
                "description": description[:300], "url": url, "inLanguage": LANGS[lang][1],
                "dateModified": (h.get("run_at") or data["generated_at"])[:10],
                "author": {"@type": "Person", "name": "F1DevBin", "url": "https://github.com/f1devbin"},
@@ -1366,8 +1393,8 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
               {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
                   {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
                   {"@type": "ListItem", "position": 2, "name": hid, "item": url}]}]
-    return page(lang=lang, hid=hid, base=base, title=f"{hid}: {title} | Crypto Research Labs",
-                description=description[:320], body=body, charts=charts, jsonld=jsonld, verification=verification)
+    return page(lang=lang, hid=hid, base=base, title=page_title, description=description, body=body, charts=charts,
+                jsonld=jsonld, verification=verification)
 
 
 def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "") -> str:
@@ -1413,7 +1440,8 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
                       f'</a> {badge(lang, s["verdict"])}</li>' for s in c["studies"] if s["id"] in hyps)
     thin = (f'<p class="callout">{e(t(lang, "thin_note", exchange=c["exchange"]))}</p>'
             if c["exchange"] != "Binance" else "")
-    title = t(lang, "coin_title", name=c["name"], ticker=c["ticker"])
+    name = sub(lang, "coin_names", c["symbol"], c["name"])
+    title = t(lang, "coin_title", name=name, ticker=c["ticker"])
     body = f"""{header(lang, key, data['generated_at'])}
 <main>
 <p class="meta crumbs"><a href="../market.html#coins">{e(t(lang, 'back_coins'))}</a></p>
@@ -1437,7 +1465,7 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
 </main>
 {footer(lang, key)}"""
     url = page_url(base, lang, key)
-    description = t(lang, "coin_desc", name=c["name"], ticker=c["ticker"], price=price(c["price"]),
+    description = t(lang, "seo_coin_desc", name=name, ticker=c["ticker"], price=price(c["price"]),
                     ch30=pct(c["ch30"], True), vs200=pct(c["vs200"], True))
     jsonld = [{"@context": "https://schema.org", "@type": "WebPage", "name": title, "description": description[:300],
                "url": url, "inLanguage": LANGS[lang][1], "dateModified": c["date"],
@@ -1446,8 +1474,8 @@ def coin_page(lang: str, c: dict, data: dict, base: str, verification: str = "")
               {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
                   {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
                   {"@type": "ListItem", "position": 2, "name": f"{c['name']} ({c['ticker']})", "item": url}]}]
-    return page(lang=lang, hid=key, base=base, title=f"{title} | Crypto Research Labs", description=description[:320],
-                body=body, charts=charts, jsonld=jsonld, verification=verification)
+    return page(lang=lang, hid=key, base=base, title=t(lang, "seo_coin_title", name=name, ticker=c["ticker"]),
+                description=description, body=body, charts=charts, jsonld=jsonld, verification=verification)
 
 
 def course_page(lang: str, values: dict, data: dict, base: str, verification: str = "") -> str:
@@ -1526,8 +1554,8 @@ def digest_page(lang: str, data: dict, base: str, verification: str = "") -> str
               {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
                   {"@type": "ListItem", "position": 1, "name": "Crypto Research Labs", "item": page_url(base, lang)},
                   {"@type": "ListItem", "position": 2, "name": t(lang, "digest_title"), "item": url}]}]
-    return page(lang=lang, hid="digest", base=base, title=f"{t(lang, 'digest_title')} | Crypto Research Labs",
-                description=t(lang, "digest_desc")[:320], body=body, charts={}, jsonld=jsonld, verification=verification)
+    return page(lang=lang, hid="digest", base=base, title=t(lang, "seo_digest_title"),
+                description=t(lang, "seo_digest_desc"), body=body, charts={}, jsonld=jsonld, verification=verification)
 
 
 def setup_page(lang: str, data: dict, base: str, verification: str = "") -> str:

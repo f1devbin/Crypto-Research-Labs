@@ -1,6 +1,7 @@
 import datetime as dt
 import json
 import re
+from html import unescape as html_unescape
 
 from crl import site
 from crl.data.store import MemoryStore
@@ -36,10 +37,54 @@ def test_site_builds_every_language_with_seo_basics(tmp_path, monkeypatch):
     sol = (out / "coins" / "SOLUSDT.html").read_text(encoding="utf-8")
     assert "Solana (SOL)" in sol and "H-014" in sol and 'href="../market.html#coins"' in sol
     assert "Sitemap: https://x.test/sitemap.xml" in (out / "robots.txt").read_text()
+    assert re.findall(r"<loc>([^<]+)</loc>", sitemap) and all(
+        u.startswith("https://x.test/") for u in re.findall(r'(?:<loc>|href=")([^<"]+)', sitemap))
+    for f in out.rglob("*.html"):  # search engines get absolute links, short titles and whole descriptions
+        html = f.read_text(encoding="utf-8")
+        if f.name == "404.html" or "<title>" not in html:  # search-engine verification files have no head
+            continue
+        links = re.findall(r'<link rel="(?:canonical|alternate)"[^>]*href="([^"]+)"', html)
+        links += re.findall(r'<meta property="og:(?:url|image)" content="([^"]+)"', html)
+        assert len(links) == len(LANGS) + 4 and all(u.startswith("https://x.test/") for u in links), (f, links)
+        title = re.search(r"<title>(.*?)</title>", html).group(1)
+        desc = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
+        short = (8, 25) if "/zh/" in str(f) else (20, 50)  # Chinese needs about half the characters
+        assert short[0] <= len(html_unescape(title)) <= 80 and short[1] <= len(html_unescape(desc)) <= 160, (f, title)
+    btc = (out / "ru" / "coins" / "BTCUSDT.html").read_text(encoding="utf-8")
+    assert "<h1>Биткоин (BTC):" in btc and "<title>Биткоин (BTC) сегодня:" in btc
+    h20 = (out / "hypotheses" / "H-020.html").read_text(encoding="utf-8")
+    assert "<title>Do Bitcoin exchange inflows predict price drops?" in h20
+    assert '<p class="plain"><strong>Do Bitcoin exchange inflows predict price drops?</strong>' in h20
     data = json.loads((out / "data.json").read_text())
     assert data["btc"] and any(h["curves"] for h in data["hypotheses"])
     # every text node is rendered server-side: the hypotheses table is in the HTML, not built by JS
     assert re.search(r"H-011", (out / "ru" / "research.html").read_text(encoding="utf-8"))
+
+
+def test_site_address_is_absolute_even_if_the_variable_is_empty(tmp_path, monkeypatch):
+    import importlib
+
+    import pytest
+
+    from crl import config
+    monkeypatch.setenv("CRL_SITE_URL", "")  # an Actions variable that is not set arrives as ""
+    assert importlib.reload(config).SITE_URL == "https://f1devbin.github.io/Crypto-Research-Labs/"
+    monkeypatch.setenv("CRL_SITE_URL", "https://example.org/lab")
+    assert importlib.reload(config).SITE_URL == "https://example.org/lab/"
+    monkeypatch.delenv("CRL_SITE_URL")
+    importlib.reload(config)
+    with pytest.raises(ValueError):
+        site.build(MemoryStore({}), tmp_path / "_site", base="/")
+
+
+def test_every_hypothesis_has_a_search_question_in_every_language():
+    from crl.config import HYPOTHESES_DIR
+    from crl.i18n_seo import QUESTIONS
+    ids = sorted(p.stem for p in HYPOTHESES_DIR.glob("H-*.yaml"))
+    assert ids and set(ids) <= set(QUESTIONS["en"]), set(ids) - set(QUESTIONS["en"])
+    for lang in LANGS:
+        assert set(QUESTIONS[lang]) == set(QUESTIONS["en"]), lang
+        assert all(len(q) <= 66 for q in QUESTIONS[lang].values()), [q for q in QUESTIONS[lang].values() if len(q) > 66]
 
 
 def test_one_question_per_page(tmp_path):
