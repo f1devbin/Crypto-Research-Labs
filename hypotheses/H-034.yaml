@@ -1,0 +1,34 @@
+id: H-034
+title: ETH long when 7‑day stablecoin growth exceeds its 80th percentile of the past 2 years
+status: draft
+family: flows
+created: '2026-11-01'
+author: llm:openai/gpt-oss-120b
+rationale: Large inflows into USDT/USDC may provide buying power for ETH; extreme growth could signal
+  upcoming demand.
+spec:
+  kind: timing_rule
+  rule:
+    type: feature_vs_rolling_quantile
+    feature: stablecoin_growth_7d
+    q: 0.8
+    long_when: above
+    lookback: 730
+    min_periods: 365
+    lag: 1
+  mode: long_flat
+  fee: 0.001
+  universe:
+  - ETHUSDT
+  periods:
+  - name: oos
+    start: '2022-01-01'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.0125
+  criterion:
+    min_wins:
+      oos: 1
+    require_significance: true
+retest_every_days: 90
