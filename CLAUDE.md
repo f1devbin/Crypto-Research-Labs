@@ -31,7 +31,7 @@ events of $500+ at the day's close (`filters.min_usd`). Version 0.4.0. Honest ne
 | `src/crl/agents/` | `data_steward` (data refresh + integrity), `regime_watch` (monitors, alerts), `runner` (due hypotheses) |
 | `src/crl/data/` | `sources.py` (Binance vision, Gate.io for EVER/GRAM, OKX funding, Coin Metrics flows, DefiLlama, alternative.me, BGeometrics), `store.py`, `everscale.py` (Gate.io EVER deposits traced on-chain, H-032), `ton.py` (deposits to Gate.io's shared TON wallet, H-033) |
 | `src/crl/scan.py` | coverage scan: every tested timing rule × every coin, BH-FDR q=0.10 → `reports/coverage.json`, `COVERAGE.md` |
-| `src/crl/llm/` | `client.py` (OpenAI-compatible: Groq via `LLM_API_KEY`, model auto-discovered; or Anthropic), `digest.py` (weekly digest: English from facts, then translated), `proposer.py` (monthly drafts) |
+| `src/crl/llm/` | `client.py` (OpenAI-compatible: Groq via `LLM_API_KEY`, model auto-discovered; or Anthropic), `digest.py` (weekly digest: English from facts, then translated), `proposer.py` (monthly drafts: timing rules on every coin plus a Gate.io line, rule 7) |
 | `src/crl/site.py`, `site_render.py` | dashboard build (`crl site` → `_site/`): home, market, research, about, hypothesis pages, coin pages, course, setup, digest |
 | `src/crl/i18n.py`, `i18n_diag.py`, `i18n_alerts.py`, `i18n_seo.py`, `course.py`, `setup_guide.py` | all UI text, 7 languages (`i18n_seo`: search titles, descriptions, one question per hypothesis) |
 | `config/watch.yaml` | regime monitors and bands |

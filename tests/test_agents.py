@@ -29,17 +29,23 @@ def test_integrity_flags_gaps_staleness_and_duplicates():
     assert "duplicate" in msgs and "stale" in msgs and "missing" in msgs
 
 
-def test_proposer_accepts_valid_rejects_duplicates_and_junk(tmp_path):
-    existing = make(tmp_path, "H-001")
+def test_proposer_drafts_every_coin_with_a_gate_line_and_rejects_duplicates_and_junk(tmp_path):
+    existing = make(tmp_path, "H-001", spec={**SPEC, "universe": list(proposer.BINANCE_COINS)})
     good = {"title": "ETH SMA100", "family": "trend", "rationale": "r",
-            "spec": {**SPEC, "rule": {"type": "price_above_sma", "window": 100}, "universe": ["ETHUSDT"]}}
-    dup = {"title": "same as H-001 in other words", "family": "trend", "rationale": "r", "spec": SPEC}
+            "spec": {**SPEC, "rule": {"type": "price_above_sma", "window": 100}, "universe": ["ETHUSDT"],
+                     "significance": {"method": "circular_shift", "n": 500, "alpha": 0.05}}}
+    dup = {"title": "same as H-001, picked one coin", "family": "trend", "rationale": "r", "spec": SPEC}
     junk = {"title": "moon", "family": "x", "rationale": "r", "spec": {"kind": "magic"}}
-    written, rejected = proposer.accept([good, dup, junk], [existing], tmp_path, dt.date(2026, 10, 14), "m")
-    assert written == ["H-002"]
-    assert len(rejected) == 2
-    h = registry.load_all(tmp_path)[1]
-    assert h["status"] == "draft" and h["author"] == "llm:m"
+    written, rejected = proposer.accept([good, dup, junk], [existing], tmp_path, dt.date(2026, 11, 4), "m")
+    assert written == ["H-002", "H-003"] and len(rejected) == 2
+    main, gate = registry.load_all(tmp_path)[1:]
+    assert len(proposer.COINS) == 13 and set(proposer.GATE_COINS) == {"EVERUSDT", "GRAMUSDT"}
+    assert main["spec"]["universe"] == proposer.BINANCE_COINS and main["spec"]["fee"] == 0.001
+    assert gate["spec"]["universe"] == proposer.GATE_COINS and gate["spec"]["fee"] == 0.004
+    assert gate["spec"]["periods"] == [{"name": "gate", "start": "2023-03-13"}] and "H-002" in gate["rationale"]
+    for h in (main, gate):
+        assert h["status"] == "draft" and h["author"] == "llm:m" and not registry.validate(h)
+        assert h["spec"]["significance"]["alpha"] <= 0.05 / 13 and h["spec"]["criterion"]["require_significance"]
 
 
 def test_proposer_extracts_json_from_chatty_reply():

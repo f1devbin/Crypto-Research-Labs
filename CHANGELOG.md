@@ -39,6 +39,10 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   (`scripts/h033_threshold.py`, counts only, no returns).
 
 ### Changed
+- The monthly LLM proposer follows rule 7 (every coin, never a hand-picked subset): it drafts timing rules only,
+  each on all 11 Binance coins plus a companion draft for the Gate.io coins (EVER, GRAM) at Gate's fee 0.2 % +
+  slippage 0.2 % per side from 2023-03-13; alpha is split across all 13 coins (0.0038) and significance is
+  required. Its November drafts (H-034, H-035) each picked one coin.
 - SEO (docs/SEO.md, target queries chosen 2026-10-29): page titles now start with what people search for and stay
   under 80 characters ("Crypto market today: trend, funding, Fear & Greed, stablecoins", "Free crypto course for
   beginners…"), descriptions are cut at a word boundary to 160 characters (90 in Chinese). Every hypothesis page is
