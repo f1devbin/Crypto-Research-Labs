@@ -1,11 +1,13 @@
 id: H-035
-title: Short BTC when 7‑day funding rate exceeds its 90th percentile of the last 3 years
+title: Short coins when 7-day BTC funding tops its 3-year 90th percentile, long otherwise
 status: draft
 family: carry
 created: '2026-11-01'
-author: llm:openai/gpt-oss-120b
-rationale: Extremely high funding rates imply strong short‑side pressure; going short may capture mean‑reversion
-  of funding premiums.
+author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
+rationale: Very high BTC funding means crowded longs paying shorts; such extremes may precede pullbacks
+  as the premium mean-reverts. The model drafted it for BTC only (its rationale read high funding as short-side
+  pressure); widened to every coin (rule 7) on 2026-11-04, before any test. The signal stays BTC's funding;
+  Binance coins trade long/short at the futures taker fee.
 spec:
   kind: timing_rule
   rule:
@@ -20,13 +22,23 @@ spec:
   fee: 0.0005
   universe:
   - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
   periods:
   - name: oos
     start: '2022-01-01'
   significance:
     method: circular_shift
     n: 2000
-    alpha: 0.0125
+    alpha: 0.0038
   criterion:
     min_wins:
       oos: 1

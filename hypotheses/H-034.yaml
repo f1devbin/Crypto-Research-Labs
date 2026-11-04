@@ -1,11 +1,12 @@
 id: H-034
-title: ETH long when 7‑day stablecoin growth exceeds its 80th percentile of the past 2 years
+title: Hold coins when 7-day stablecoin growth tops its 2-year 80th percentile
 status: draft
 family: flows
 created: '2026-11-01'
-author: llm:openai/gpt-oss-120b
-rationale: Large inflows into USDT/USDC may provide buying power for ETH; extreme growth could signal
-  upcoming demand.
+author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
+rationale: Large inflows into USDT/USDC may provide buying power for crypto; extreme growth could signal
+  upcoming demand. The model drafted it for ETH only; widened to every coin (rule 7) on 2026-11-04, before
+  any test.
 spec:
   kind: timing_rule
   rule:
@@ -19,14 +20,24 @@ spec:
   mode: long_flat
   fee: 0.001
   universe:
+  - BTCUSDT
   - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+  - XRPUSDT
+  - ADAUSDT
+  - LTCUSDT
+  - LINKUSDT
+  - DOGEUSDT
+  - XLMUSDT
+  - TRXUSDT
   periods:
   - name: oos
     start: '2022-01-01'
   significance:
     method: circular_shift
     n: 2000
-    alpha: 0.0125
+    alpha: 0.0038
   criterion:
     min_wins:
       oos: 1

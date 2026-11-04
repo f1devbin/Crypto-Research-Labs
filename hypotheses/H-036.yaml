@@ -1,0 +1,39 @@
+id: H-036
+title: Hold coins when 7-day stablecoin growth tops its 2-year 80th percentile — Gate.io coins (EVER,
+  GRAM)
+status: draft
+family: flows
+created: '2026-11-01'
+author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
+rationale: 'Gate.io line of H-034 (rule 7: the Gate coins are tested on their own line, with Gate''s fee
+  0.2 % and slippage 0.2 % per side, from 2023-03-13 when all of them have prices; long/flat, as Gate
+  spot cannot short). Large inflows into USDT/USDC may provide buying power for crypto; extreme growth
+  could signal upcoming demand. The model drafted it for ETH only; widened to every coin (rule 7) on 2026-11-04,
+  before any test.'
+spec:
+  kind: timing_rule
+  rule:
+    type: feature_vs_rolling_quantile
+    feature: stablecoin_growth_7d
+    q: 0.8
+    long_when: above
+    lookback: 730
+    min_periods: 365
+    lag: 1
+  mode: long_flat
+  fee: 0.004
+  universe:
+  - EVERUSDT
+  - GRAMUSDT
+  periods:
+  - name: gate
+    start: '2023-03-13'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.0038
+  criterion:
+    min_wins:
+      gate: 1
+    require_significance: true
+retest_every_days: 90
