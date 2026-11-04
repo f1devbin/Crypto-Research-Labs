@@ -19,7 +19,7 @@ H-032 (failed: the "smart" 2022–23 wallets were no better than random from 202
 `datasets/ever_gate_deposits.csv.gz`; hot wallet 0:3addd84b…; never store or publish the owner's own addresses).
 H-033 (failed the same way, p = 0.77: no better than random from 2025) asks the same on GRAM: Gate.io's shared TON deposit
 wallet 0:b496b8f7… (users add a memo, no sweeps), data `crl data ton` → `datasets/gram_gate_deposits.csv.gz`,
-events of $500+ at the day's close (`filters.min_usd`). H-034…H-037 (registered 2026-11-04): the
+events of $500+ at the day's close (`filters.min_usd`). H-034…H-037 (registered and run 2026-11-04: H-034 weak, the rest failed): the
 November LLM proposals widened to every coin — stablecoin growth (H-034) and BTC funding (H-035) on the 11
 Binance coins, H-036/H-037 their Gate.io lines. Version 0.4.0. Honest negative results are the point of the project.
 
