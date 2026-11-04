@@ -213,6 +213,10 @@ QUESTIONS = {
  "H-031": "Does an improved model predict crypto direction live?",
  "H-032": "Do 'smart money' EVER deposits on Gate.io predict drops?",
  "H-033": "Do 'smart money' GRAM deposits on Gate.io predict drops?",
+ "H-034": "Does a surge in stablecoin supply help time crypto?",
+ "H-035": "Do extreme BTC funding rates signal crypto drops?",
+ "H-036": "Does a stablecoin surge help time EVER and GRAM?",
+ "H-037": "Do extreme BTC funding rates help time EVER and GRAM?",
 },
 "ru": {
  "H-001": "Предсказывают ли RSI, MACD и EMA цену крипты на 1–4 часа?",
@@ -248,6 +252,10 @@ QUESTIONS = {
  "H-031": "Предсказывает ли улучшенная модель направление крипты вживую?",
  "H-032": "Предсказывают ли депозиты «умных денег» в EVER падение?",
  "H-033": "Предсказывают ли депозиты «умных денег» в GRAM падение?",
+ "H-034": "Помогает ли всплеск стейблкоинов торговать криптой?",
+ "H-035": "Предвещает ли экстремальный фандинг BTC падение крипты?",
+ "H-036": "Помогает ли всплеск стейблкоинов торговать EVER и GRAM?",
+ "H-037": "Помогает ли экстремальный фандинг BTC торговать EVER и GRAM?",
 },
 "es": {
  "H-001": "¿RSI, MACD y EMA predicen las próximas horas en cripto?",
@@ -283,6 +291,10 @@ QUESTIONS = {
  "H-031": "¿Un modelo mejorado predice la dirección cripto en vivo?",
  "H-032": "¿Los depósitos de «smart money» en EVER predicen caídas?",
  "H-033": "¿Los depósitos de «smart money» en GRAM predicen caídas?",
+ "H-034": "¿Un auge de stablecoins ayuda a operar cripto?",
+ "H-035": "¿Un funding extremo de BTC anticipa caídas cripto?",
+ "H-036": "¿Un auge de stablecoins ayuda con EVER y GRAM?",
+ "H-037": "¿Un funding extremo de BTC ayuda con EVER y GRAM?",
 },
 "pt": {
  "H-001": "RSI, MACD e EMA preveem as próximas horas em cripto?",
@@ -318,6 +330,10 @@ QUESTIONS = {
  "H-031": "Um modelo melhorado prevê a direção cripto ao vivo?",
  "H-032": "Depósitos de “dinheiro inteligente” em EVER preveem quedas?",
  "H-033": "Depósitos de “dinheiro inteligente” em GRAM preveem quedas?",
+ "H-034": "Um salto nas stablecoins ajuda a operar cripto?",
+ "H-035": "Funding extremo do BTC antecipa quedas cripto?",
+ "H-036": "Um salto nas stablecoins ajuda com EVER e GRAM?",
+ "H-037": "Funding extremo do BTC ajuda com EVER e GRAM?",
 },
 "tr": {
  "H-001": "RSI, MACD ve EMA kriptoda sonraki saatleri tahmin eder mi?",
@@ -353,6 +369,10 @@ QUESTIONS = {
  "H-031": "Geliştirilmiş model kripto yönünü canlıda tahmin eder mi?",
  "H-032": "“Akıllı para” EVER yatırımları düşüşü öngörür mü?",
  "H-033": "“Akıllı para” GRAM yatırımları düşüşü öngörür mü?",
+ "H-034": "Stablecoin arzındaki sıçrama kriptoda işe yarar mı?",
+ "H-035": "Aşırı BTC fonlaması kripto düşüşünü haber verir mi?",
+ "H-036": "Stablecoin sıçraması EVER ve GRAM'da işe yarar mı?",
+ "H-037": "Aşırı BTC fonlaması EVER ve GRAM'da işe yarar mı?",
 },
 "vi": {
  "H-001": "RSI, MACD và EMA có dự đoán được vài giờ tới của crypto?",
@@ -388,6 +408,10 @@ QUESTIONS = {
  "H-031": "Mô hình cải tiến có dự đoán hướng giá crypto khi chạy thật?",
  "H-032": "Ví “tiền thông minh” nạp EVER có báo trước giá giảm?",
  "H-033": "Ví “tiền thông minh” nạp GRAM có báo trước giá giảm?",
+ "H-034": "Stablecoin tăng vọt có giúp giao dịch crypto không?",
+ "H-035": "Funding BTC cực cao có báo trước crypto giảm không?",
+ "H-036": "Stablecoin tăng vọt có giúp giao dịch EVER và GRAM?",
+ "H-037": "Funding BTC cực cao có giúp giao dịch EVER và GRAM?",
 },
 "zh": {
  "H-001": "RSI、MACD 和 EMA 能预测加密货币未来几小时的走势吗？",
@@ -423,6 +447,10 @@ QUESTIONS = {
  "H-031": "改进后的模型能实时预测加密货币方向吗？",
  "H-032": "“聪明钱”的 EVER 充值能预测下跌吗？",
  "H-033": "“聪明钱”的 GRAM 充值能预测下跌吗？",
+ "H-034": "稳定币激增能帮助加密货币择时吗？",
+ "H-035": "BTC 资金费率极端偏高预示加密货币下跌吗？",
+ "H-036": "稳定币激增能帮助 EVER 和 GRAM 择时吗？",
+ "H-037": "BTC 资金费率极端偏高能帮助 EVER 和 GRAM 择时吗？",
 },
 }
 

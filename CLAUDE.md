@@ -11,7 +11,7 @@ SHA-256 hash *before* it is tested, then tested by a fixed engine and re-tested 
 GitHub Actions. Results, a market diagnosis and a beginners' course are published as a static dashboard in 7
 languages: <https://f1devbin.github.io/Crypto-Research-Labs/> (en at root, `/ru/ /es/ /pt/ /tr/ /vi/ /zh/`).
 
-Current state: 33 hypotheses (H-001…H-033), two passed: H-020 (BTC exchange deposits; H-022 is its forward
+Current state: 37 hypotheses (H-001…H-037), two passed: H-020 (BTC exchange deposits; H-022 is its forward
 replication, first test 2027-10-15) and H-028 (the daily model forecasts the size of the next move, not its
 direction — H-027 failed). H-029/H-030 replicate H-027/H-028 live (forecast page, published before 12:00 UTC,
 first test 2027-11-01); H-031 is a live-only improved direction model (coin intercepts + Platt, log columns `_v2`).
@@ -19,7 +19,9 @@ H-032 (failed: the "smart" 2022–23 wallets were no better than random from 202
 `datasets/ever_gate_deposits.csv.gz`; hot wallet 0:3addd84b…; never store or publish the owner's own addresses).
 H-033 (failed the same way, p = 0.77: no better than random from 2025) asks the same on GRAM: Gate.io's shared TON deposit
 wallet 0:b496b8f7… (users add a memo, no sweeps), data `crl data ton` → `datasets/gram_gate_deposits.csv.gz`,
-events of $500+ at the day's close (`filters.min_usd`). Version 0.4.0. Honest negative results are the point of the project.
+events of $500+ at the day's close (`filters.min_usd`). H-034…H-037 (registered 2026-11-04): the
+November LLM proposals widened to every coin — stablecoin growth (H-034) and BTC funding (H-035) on the 11
+Binance coins, H-036/H-037 their Gate.io lines. Version 0.4.0. Honest negative results are the point of the project.
 
 ## Layout
 

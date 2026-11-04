@@ -6,6 +6,11 @@ stored with every result (`engine_version` in `results/*/latest.json`).
 ## [Unreleased]
 
 ### Added
+- H-034…H-037 registered 2026-11-04, before any run: the monthly LLM proposals of 2026-11-01, widened to every
+  coin (rule 7). H-034 holds coins while 7-day stablecoin growth is above its 2-year 80th percentile; H-035 shorts
+  them while 7-day BTC funding is above its 3-year 90th percentile (long otherwise, futures fee); H-036/H-037 are
+  their Gate.io lines for EVER and GRAM (fee + slippage 0.4 % per side, long/flat, from 2023-03-13). Alpha
+  0.05/13 per coin with significance required. Search questions and titles in 7 languages.
 - Daily model forecast for all 13 coins (idea by F1DevBin), pre-registered as H-027 (direction: chance of a rise
   above fees), H-028 (risk: chance of a bigger move than usual) on history from 2022, and H-029/H-030, their live
   replications. New study kinds `forecast` / `forecast_live` (`engine/forecast.py`): one pooled logistic

@@ -1,0 +1,41 @@
+id: H-037
+title: Out of EVER and GRAM when 7-day BTC funding tops its 3-year 90th percentile — Gate.io line of H-035
+status: registered
+family: carry
+created: '2026-11-01'
+author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
+rationale: 'Gate.io line of H-035 (rule 7: the Gate coins are tested on their own line, with Gate''s fee
+  0.2 % and slippage 0.2 % per side, from 2023-03-13 when all of them have prices; long/flat, as Gate
+  spot cannot short). Very high BTC funding means crowded longs paying shorts; such extremes may precede
+  pullbacks as the premium mean-reverts. The model drafted it for BTC only (its rationale read high funding
+  as short-side pressure); widened to every coin (rule 7) on 2026-11-04, before any test. The signal stays
+  BTC''s funding; Binance coins trade long/short at the futures taker fee.'
+spec:
+  kind: timing_rule
+  rule:
+    type: feature_vs_rolling_quantile
+    feature: funding_btc_7d
+    q: 0.9
+    long_when: not_above
+    lookback: 1095
+    min_periods: 730
+    lag: 1
+  mode: long_flat
+  fee: 0.004
+  universe:
+  - EVERUSDT
+  - GRAMUSDT
+  periods:
+  - name: gate
+    start: '2023-03-13'
+  significance:
+    method: circular_shift
+    n: 2000
+    alpha: 0.0038
+  criterion:
+    min_wins:
+      gate: 1
+    require_significance: true
+retest_every_days: 90
+registered: '2026-11-04'
+prereg_sha256: ddcf5f069aac73b8139be86fcbc862d084d37c33296f56994dc9cbd38ae26084
