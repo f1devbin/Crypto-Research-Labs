@@ -46,6 +46,9 @@ def test_proposer_drafts_every_coin_with_a_gate_line_and_rejects_duplicates_and_
     for h in (main, gate):
         assert h["status"] == "draft" and h["author"] == "llm:m" and not registry.validate(h)
         assert h["spec"]["significance"]["alpha"] <= 0.05 / 13 and h["spec"]["criterion"]["require_significance"]
+    short, gate_line = proposer.all_coins({**SPEC, "mode": "long_short", "fee": 0.0005})
+    assert short["mode"] == "long_short" and short["fee"] == 0.0005
+    assert gate_line["mode"] == "long_flat" and gate_line["fee"] == 0.004  # Gate.io spot cannot short
 
 
 def test_proposer_extracts_json_from_chatty_reply():
