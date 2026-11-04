@@ -1,0 +1,48 @@
+{
+ "id": "H-037",
+ "prereg_sha256": "ddcf5f069aac73b8139be86fcbc862d084d37c33296f56994dc9cbd38ae26084",
+ "verdict": "FAIL",
+ "summary": "gate: wins 0/2 (need 1), beats buy-and-hold 0/2",
+ "rows": [
+  {
+   "symbol": "EVERUSDT",
+   "period": "gate",
+   "days": 1332,
+   "start": "2023-03-13",
+   "end": "2026-11-03",
+   "sharpe": -0.19516,
+   "cagr": -0.71547,
+   "max_dd": -0.991531,
+   "hold_sharpe": -0.16244,
+   "hold_cagr": -0.72064,
+   "hold_max_dd": -0.992079,
+   "exposure": 0.951952,
+   "trades_per_year": 1.096096,
+   "p": 0.646177,
+   "beats_hold": false,
+   "win": false
+  },
+  {
+   "symbol": "GRAMUSDT",
+   "period": "gate",
+   "days": 1331,
+   "start": "2023-03-14",
+   "end": "2026-11-03",
+   "sharpe": -0.167431,
+   "cagr": -0.311299,
+   "max_dd": -0.88433,
+   "hold_sharpe": 0.11577,
+   "hold_cagr": -0.177722,
+   "hold_max_dd": -0.858274,
+   "exposure": 0.951916,
+   "trades_per_year": 1.234035,
+   "p": 0.983508,
+   "beats_hold": false,
+   "win": false
+  }
+ ],
+ "kind": "timing_rule",
+ "engine_version": "0.4.0",
+ "data_end": "2026-11-03",
+ "run_at": "2026-11-04T15:39:15Z"
+}

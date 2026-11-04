@@ -1,6 +1,6 @@
 # Coverage scan: every tested rule on every coin
 
-Generated 2026-11-04T06:21:31Z · window 2022-01-01 → latest · fees included · Benjamini-Hochberg FDR q = 0.1 over 156 cells.
+Generated 2026-11-04T15:39:23Z · window 2022-01-01 → latest · fees included · Benjamini-Hochberg FDR q = 0.1 over 195 cells.
 
 Exploratory, not verdicts. ✅ beats buy-and-hold and survives the false-discovery control; ↑ better Sharpe than holding but could be chance; ✗ worse than holding; — not enough data. **Bold** = the coin was in the original hypothesis. A ✅ on a new coin is a candidate for a new pre-registered hypothesis tested on future data.
 
@@ -18,5 +18,8 @@ Exploratory, not verdicts. ✅ beats buy-and-hold and survives the false-discove
 | H-017 | ↑ | ↑ | ↑ | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **✗** | **↑** | ✗ |
 | H-020 | **↑** | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ↑ | ✗ | ✗ |
 | H-021 | ↑ | **↑** | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ↑ | ↑ | ✗ |
+| H-034 | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **↑** | **✗** | **↑** | **↑** |
+| H-035 | **✗** | **✗** | **✗** | **✗** | **✗** | **✗** | **✗** | **✗** | **✗** | **✗** | **✗** | ✗ | ✗ |
+| H-037 | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ↑ | **✗** | **✗** |
 
-Counts: works 0, better 71, worse 85, nodata 0
+Counts: works 0, better 84, worse 111, nodata 0

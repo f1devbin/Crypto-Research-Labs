@@ -1,7 +1,7 @@
 id: H-036
 title: Hold coins when 7-day stablecoin growth tops its 2-year 80th percentile — Gate.io coins (EVER,
   GRAM)
-status: registered
+status: rejected
 family: flows
 created: '2026-11-01'
 author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
@@ -39,3 +39,4 @@ spec:
 retest_every_days: 90
 registered: '2026-11-04'
 prereg_sha256: 3e20393a12d82259a61bafb524ebd40e743221154ede4d69927822b09498fe0c
+last_run: '2026-11-04'

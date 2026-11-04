@@ -1,11 +1,11 @@
 # Regime watch
 
-Updated 2026-11-04 06:21 UTC
+Updated 2026-11-04 15:39 UTC
 
 | monitor | value | band |
 |---|---|---|
-| BTC funding carry, yield on capital (30 d, annualised, after costs) | +2.7% | low |
-| USDT+USDC supply growth (30 d) | -72.53% | contracting |
+| BTC funding carry, yield on capital (30 d, annualised, after costs) | +2.6% | low |
+| USDT+USDC supply growth (30 d) | -3.47% | contracting |
 | Crypto Fear & Greed index | 34 | fear |
 | BTC vs its 200-day average | +5.8% | above |
 | BTC realised volatility (30 d, annualised) | 28% | calm |

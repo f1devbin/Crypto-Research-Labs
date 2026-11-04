@@ -1,6 +1,6 @@
 id: H-034
 title: Hold coins when 7-day stablecoin growth tops its 2-year 80th percentile
-status: registered
+status: weak
 family: flows
 created: '2026-11-01'
 author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
@@ -45,3 +45,4 @@ spec:
 retest_every_days: 90
 registered: '2026-11-04'
 prereg_sha256: 8fb70f833c4ccc0935021e972e9e4b0c392662610191b2fa59117e4f803eb9c1
+last_run: '2026-11-04'
