@@ -73,9 +73,9 @@ For site previews use `MemoryStore` with `tests.conftest.random_walk` and Playwr
 - Design tokens live in `site_render.CSS` (IBM Plex Sans, deep navy). Check desktop and 390 px screenshots before a PR.
 - SEO (docs/SEO.md): prerendered HTML, hreflang, sitemap, JSON-LD (Dataset needs creator + license). All of these
   links are absolute, from `config.SITE_URL` (an empty `CRL_SITE_URL` means the default). Titles: query words first,
-  at most 80 characters; every new hypothesis needs its search question in `i18n_seo.QUESTIONS` in 7 languages
-  (tests check both). The host root `f1devbin.github.io` (separate repo) owns `robots.txt`, which lists this
-  project's sitemap.
+  at most 80 characters; a hypothesis needs its search question in `i18n_seo.QUESTIONS` in 7 languages once it is
+  registered (drafts fall back to their statement; tests check both). The host root `f1devbin.github.io`
+  (separate repo) owns `robots.txt`, which lists this project's sitemap.
 
 ## Git workflow
 

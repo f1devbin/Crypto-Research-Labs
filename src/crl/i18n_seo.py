@@ -2,8 +2,9 @@
 
 Titles put the words people search for first and stay short (tests: at most 80 characters); descriptions are clipped
 to 160 characters (90 in Chinese) at a word boundary by `site_render.page`. Every hypothesis has a short question in
-QUESTIONS — the page title and the first line of its page; the precise statement stays the H1. A new hypothesis
-needs its question in all 7 languages (tests check it).
+QUESTIONS — the page title and the first line of its page; the precise statement stays the H1. A hypothesis
+needs its question in all 7 languages once it is registered (tests check it); drafts, such as the monthly LLM
+proposals, fall back to their statement, clipped to 80 characters.
 """
 
 SEO = {

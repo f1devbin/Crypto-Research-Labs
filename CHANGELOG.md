@@ -59,6 +59,9 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   random matched wallets (p = 0.77); the exit rule did not beat holding (Sharpe −1.80 vs −0.71).
 
 ### Fixed
+- The monthly LLM proposals (`propose`) could not pass the new SEO tests: drafts have no search question yet and
+  their statements ran past 80 characters in the page title. Drafts now fall back to the statement, clipped to 80
+  characters; the question is required once a hypothesis is registered.
 - Canonical, hreflang, sitemap, Open Graph and JSON-LD links were relative ("/") since 2026-10-14: the unset
   Actions variable `CRL_SITE_URL` arrives as an empty string, which replaced the default address. Every page told
   search engines that its canonical address was the host root `f1devbin.github.io`, and the sitemap was invalid.

@@ -1381,7 +1381,7 @@ def hypothesis_page(lang: str, h: dict, data: dict, base: str, verification: str
         page_title = t(lang, "seo_hyp_title", q=question, v=word)
         description = t(lang, "seo_hyp_desc", q=question, plain=answer, id=hid, title=title)
     else:
-        page_title = f"{hid}: {title}"
+        page_title = clip(f"{hid}: {title}", 80)  # drafts (monthly LLM proposals) have no question yet
         description = t(lang, "hyp_desc", id=hid, verdict=verdict_word(lang, h["verdict"]), title=title, plain=answer)
     jsonld = [{"@context": "https://schema.org", "@type": "TechArticle", "headline": (question or title)[:110],
                "alternativeHeadline": f"{hid}: {title}"[:110],
