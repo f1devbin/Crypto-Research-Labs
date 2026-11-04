@@ -916,7 +916,8 @@ def index_page(lang: str, data: dict, base: str, verification: str = "") -> str:
                   f'<a href="digest.html">{e(t(lang, "read"))}</a></p>')
     td = (data.get("forecast") or {}).get("today")
     if td:
-        digest = (f'<p class="slab digest-line"><strong>{e(t(lang, "fc_home", n=len(td["rows"]), d=td["date"]))}</strong>'
+        key = "fc_home" if td["date"] == data["generated_at"][:10] else "fc_home_last"  # before the morning run
+        digest = (f'<p class="slab digest-line"><strong>{e(t(lang, key, n=len(td["rows"]), d=td["date"]))}</strong>'
                   f'<a href="forecast.html">{e(t(lang, "fc_open"))}</a></p>') + digest
 
     body = f"""{header(lang, None, data['generated_at'])}
@@ -1235,7 +1236,9 @@ def forecast_page(lang: str, data: dict, base: str, verification: str = "") -> s
                         f'<td class=num>{pct(r.get("w_exec"), nd=0)}</td><td class=num>{e(ch)}</td></tr>')
         late = "" if td["on_time"] else f'<p class="callout">{e(t(lang, "fc_late"))}</p>'
         stamp = td["published"].replace("T", " ").replace("Z", " UTC")
-        today = (f'<p class="meta">{e(t(lang, "fc_published", t=stamp, d=td["decision_date"]))}</p>{late}'
+        pending = ("" if td["date"] == data["generated_at"][:10] else
+                   f'<p class="callout">{e(t(lang, "fc_pending", d=td["date"]))}</p>')
+        today = (f'{pending}<p class="meta">{e(t(lang, "fc_published", t=stamp, d=td["decision_date"]))}</p>{late}'
                  f'<p class="meta sort-hint">{e(t(lang, "sort_hint"))}</p>'
                  f'<div class="table-wrap"><table class="sortable" data-hint="{e(t(lang, "sort_hint"))}"><thead><tr>'
                  f'<th>{e(t(lang, "th_coin"))}</th><th class=num>{e(t(lang, "fc_th_up"))}</th>'
