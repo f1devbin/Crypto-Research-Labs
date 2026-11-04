@@ -1,6 +1,6 @@
 id: H-037
 title: Out of EVER and GRAM when 7-day BTC funding tops its 3-year 90th percentile — Gate.io line of H-035
-status: draft
+status: registered
 family: carry
 created: '2026-11-01'
 author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
@@ -37,3 +37,5 @@ spec:
       gate: 1
     require_significance: true
 retest_every_days: 90
+registered: '2026-11-04'
+prereg_sha256: ddcf5f069aac73b8139be86fcbc862d084d37c33296f56994dc9cbd38ae26084

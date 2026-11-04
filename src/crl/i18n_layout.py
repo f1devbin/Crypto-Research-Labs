@@ -867,3 +867,14 @@ TITLES_H033 = {
 }
 for _code, _title in TITLES_H033.items():
     TITLES[_code]["H-033"] = _title
+
+TITLES_H034 = {
+ "ru": ['Держать монеты, когда недельный рост стейблкоинов выше 80-го процентиля за 2 года', 'Шорт монет, когда недельный фандинг BTC выше 90-го процентиля за 3 года, иначе лонг', 'Держать монеты при недельном росте стейблкоинов выше 80-го процентиля за 2 года — монеты Gate.io (EVER, GRAM)', 'Вне EVER и GRAM, когда недельный фандинг BTC выше 90-го процентиля за 3 года — строка Gate.io для H-035'],
+ "es": ['Mantener monedas cuando el crecimiento semanal de stablecoins supera su percentil 80 de 2 años', 'Corto en monedas cuando el funding semanal de BTC supera su percentil 90 de 3 años, largo si no', 'Mantener monedas con crecimiento semanal de stablecoins sobre su percentil 80 de 2 años — monedas de Gate.io (EVER, GRAM)', 'Fuera de EVER y GRAM cuando el funding semanal de BTC supera su percentil 90 de 3 años — línea Gate.io de H-035'],
+ "pt": ['Manter moedas quando o crescimento semanal das stablecoins passa do percentil 80 de 2 anos', 'Vendido em moedas quando o funding semanal do BTC passa do percentil 90 de 3 anos, comprado se não', 'Manter moedas com crescimento semanal das stablecoins acima do percentil 80 de 2 anos — moedas da Gate.io (EVER, GRAM)', 'Fora de EVER e GRAM quando o funding semanal do BTC passa do percentil 90 de 3 anos — linha Gate.io do H-035'],
+ "tr": ['Haftalık stablecoin büyümesi 2 yıllık 80. yüzdeliğin üstündeyken coinleri tut', 'Haftalık BTC fonlaması 3 yıllık 90. yüzdeliğin üstündeyken coinlerde short, aksi halde long', 'Haftalık stablecoin büyümesi 2 yıllık 80. yüzdeliğin üstündeyken coinleri tut — Gate.io coinleri (EVER, GRAM)', "Haftalık BTC fonlaması 3 yıllık 90. yüzdeliğin üstündeyken EVER ve GRAM dışında kal — H-035'in Gate.io satırı"],
+ "vi": ['Giữ coin khi tăng trưởng stablecoin 7 ngày vượt phân vị 80 của 2 năm', 'Bán khống coin khi funding BTC 7 ngày vượt phân vị 90 của 3 năm, nếu không thì mua', 'Giữ coin khi tăng trưởng stablecoin 7 ngày vượt phân vị 80 của 2 năm — coin trên Gate.io (EVER, GRAM)', 'Đứng ngoài EVER và GRAM khi funding BTC 7 ngày vượt phân vị 90 của 3 năm — dòng Gate.io của H-035'],
+ "zh": ['7 日稳定币增长高于其 2 年 80 分位时持有各币', 'BTC 7 日资金费率高于其 3 年 90 分位时做空各币，否则做多', '7 日稳定币增长高于其 2 年 80 分位时持有 — Gate.io 币种（EVER、GRAM）', 'BTC 7 日资金费率高于其 3 年 90 分位时不持有 EVER 和 GRAM — H-035 的 Gate.io 线'],
+}
+for _code, _titles in TITLES_H034.items():
+    TITLES[_code].update(zip(['H-034', 'H-035', 'H-036', 'H-037'], _titles))

@@ -1,6 +1,6 @@
 id: H-035
 title: Short coins when 7-day BTC funding tops its 3-year 90th percentile, long otherwise
-status: draft
+status: registered
 family: carry
 created: '2026-11-01'
 author: llm:openai/gpt-oss-120b; widened to every coin by Claude (rule 7)
@@ -44,3 +44,5 @@ spec:
       oos: 1
     require_significance: true
 retest_every_days: 90
+registered: '2026-11-04'
+prereg_sha256: 69440de3fe5579d998600037bbc3ea723941b8b23357702cbbf16aa87f74965a
