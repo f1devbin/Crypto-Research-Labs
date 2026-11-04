@@ -27,3 +27,12 @@ def test_workflows_have_no_duplicate_keys():
     assert files
     for f in files:
         yaml.load(f.read_text(), Loader=StrictLoader)
+
+
+def test_scheduled_runs_write_the_digest_and_pushes_never_forecast():
+    wf = yaml.load((WORKFLOWS / "research-agents.yml").read_text(), Loader=StrictLoader)
+    steps = {s.get("name"): s for s in wf["jobs"]["agents"]["steps"]}
+    # GitHub compares a missing input (null) as false, so "inputs.digest != false" skipped every scheduled digest
+    assert "!= false" not in steps["Digest"]["if"]
+    assert "github.event_name != 'workflow_dispatch'" in steps["Digest"]["if"]
+    assert steps["Daily model forecast (H-029/H-030)"]["if"] == "github.event_name != 'push'"

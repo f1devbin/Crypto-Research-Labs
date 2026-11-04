@@ -7,7 +7,8 @@
 # The forecast files are reset to their committed versions after the cache restore: git is their only source.
 # Schedule: GitHub starts scheduled runs hours late, so the workflow wakes every hour of the morning and the
 # gate job (src/crl/schedule_gate.py) lets the first run that finds yesterday's data published by every source
-# (Binance, Coin Metrics, alternative.me, DefiLlama) do the work; on Mondays that run is the weekly one.
+# (Binance, Coin Metrics, alternative.me, DefiLlama) do the work, until today's forecast is in the log; on
+# Mondays, or after a missed weekly digest, that run is the weekly one. Pushes rebuild the site, never forecast.
 name: research-agents
 
 on:
@@ -116,6 +117,8 @@ jobs:
 
       - name: Daily model forecast (H-029/H-030)
         id: forecast
+        # not on pushes: a merge at night must not publish the day's forecast before every source is in
+        if: github.event_name != 'push'
         run: crl forecast
         continue-on-error: true   # a missing input must not stop the dashboard
 
@@ -144,7 +147,8 @@ jobs:
         continue-on-error: true
 
       - name: Digest
-        if: env.FULL == 'true' && inputs.digest != false
+        # not "inputs.digest != false": a scheduled run has no inputs, and GitHub compares null as false
+        if: env.FULL == 'true' && (github.event_name != 'workflow_dispatch' || inputs.digest)
         run: crl digest
 
       - name: Build dashboard

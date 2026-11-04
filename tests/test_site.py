@@ -111,6 +111,19 @@ def test_a_draft_without_a_question_gets_a_short_title(tmp_path, monkeypatch):
         assert title.startswith("H-999: BTC long when") and len(title) <= 80, title
 
 
+def test_before_the_morning_run_the_forecast_is_called_the_latest(tmp_path):
+    store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
+    later = site.build(store, tmp_path / "a", dt.datetime(2030, 1, 1, tzinfo=dt.timezone.utc), "https://x.test/")
+    last = json.loads((later / "data.json").read_text())["forecast"]["today"]["date"]
+    home = (later / "ru" / "index.html").read_text(encoding="utf-8")
+    assert f"Последний прогноз модели для 13 монет ({last})" in home and "на сегодня" not in home
+    assert "Прогноз на сегодня ещё не вышел" in (later / "ru" / "forecast.html").read_text(encoding="utf-8")
+    same = site.build(store, tmp_path / "b", dt.datetime.fromisoformat(f"{last}T06:00:00+00:00"), "https://x.test/")
+    home = (same / "ru" / "index.html").read_text(encoding="utf-8")
+    assert f"Прогноз модели на сегодня для 13 монет ({last})" in home
+    assert "ещё не вышел" not in (same / "ru" / "forecast.html").read_text(encoding="utf-8")
+
+
 def test_one_question_per_page(tmp_path):
     store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
     out = site.build(store, tmp_path / "_site", dt.datetime(2026, 10, 14, tzinfo=dt.timezone.utc), "https://x.test/")
