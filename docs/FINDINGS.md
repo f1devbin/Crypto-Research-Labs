@@ -206,3 +206,17 @@ Apart from H-020 (pending its forward replication) and H-028 (risk, not directio
 statistically reliable edge after fees — including following "smart" on-chain wallets (H-032 on EVER,
 H-033 on GRAM). Daily trend rules are a risk-reduction tool, not an alpha source. Further work should only go to ideas
 with a clear economic reason, tested on independent assets.
+
+## LLM proposals widened to every coin (H-034…H-037, tested 2026-11-04)
+
+The monthly proposer drafted two single-coin ideas; under rule 7 they were widened to all 11 Binance coins
+plus a Gate.io line for EVER and GRAM, registered, then run once. Alpha 0.05/13 per coin, significance required.
+
+- **H-034, stablecoin surge (🟡 weak).** Holding coins only while 7-day stablecoin growth is above its 2-year
+  80th percentile beat buy-and-hold on 10 of 11 coins since 2022 (median Sharpe 0.55 vs 0.29), mostly by being
+  out of the 2022 fall. No coin was significant at 0.0038 (best p = 0.006, ADA). Consistent with H-006/H-010:
+  stablecoin growth goes the right way but is not proven.
+- **H-035, extreme BTC funding (❌).** Shorting coins while BTC funding is in its top 10 % of 3 years, long
+  otherwise, beat holding on no coin (median Sharpe 0.03 vs 0.29): extreme funding is not a reliable top.
+- **H-036 / H-037, Gate.io lines (❌).** Neither rule helped EVER or GRAM after Gate's fee and slippage
+  (best p = 0.29).

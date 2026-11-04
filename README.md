@@ -125,9 +125,9 @@ versions, a sitemap and structured data, so it is readable without JavaScript an
 | H-032 | EVER "smart wallets" on Gate.io: wallets whose 2022–23 deposits came before the biggest 7-day drops vs random wallets from 2024 (on-chain, Everscale) | ❌ Fail: of 17 "smart" wallets only 6 were still active; after their 33 deposits EVER moved −1.5 % in 7 days vs −3.7 % for random wallets (p = 0.93). They were lucky, not smart |
 | H-033 | GRAM "smart wallets" on Gate.io: $500+ deposits by wallets picked on 2023–24 vs random wallets from 2025 (on-chain, TON) | ❌ Fail: of 36 "smart" wallets only 12 were still active; after their 144 deposits GRAM moved −0.5 % in 7 days vs −1.9 % for random wallets (p = 0.77). Lucky, not smart, as on EVER |
 | H-031 | Live only: improved direction model (a base level per coin, probabilities recalibrated on a held-out year), designed after H-027 failed | ⏳ collecting from 2026-11-01, first test 2027-11-01 (α = 0.0125) |
-| H-034 | Hold every coin while 7-day stablecoin growth is above its 2-year 80th percentile (monthly LLM proposal, widened to all coins) | ⏳ registered 2026-11-04, runs on the next weekly run |
-| H-035 | Short every coin while 7-day BTC funding is above its 3-year 90th percentile, long otherwise (LLM proposal, futures fee) | ⏳ registered 2026-11-04 |
-| H-036, H-037 | Gate.io lines of H-034 and H-035 for EVER and GRAM (Gate fee + slippage, long/flat, from 2023-03-13) | ⏳ registered 2026-11-04 |
+| H-034 | Hold every coin while 7-day stablecoin growth is above its 2-year 80th percentile (monthly LLM proposal, widened to all coins) | 🟡 Weak: beat holding on 10/11 coins since 2022 (median Sharpe 0.55 vs 0.29), but none significant at 0.05/13 (best p = 0.006, ADA) |
+| H-035 | Short every coin while 7-day BTC funding is above its 3-year 90th percentile, long otherwise (LLM proposal, futures fee) | ❌ Fail: beat holding on 0/11 coins (median Sharpe 0.03 vs 0.29) |
+| H-036, H-037 | Gate.io lines of H-034 and H-035 for EVER and GRAM (Gate fee + slippage, long/flat, from 2023-03-13) | ❌ Fail both: no significant win on EVER or GRAM (best p = 0.29) |
 | H-020 | BTC out of the market after heavy net deposits to exchanges | ✅ **Pass** (Sharpe 0.83 vs 0.50, p = 0.010); look-ahead check in H-022 |
 | H-021 | Same for ETH | ◐ Weak (0.40 vs 0.22, p = 0.082) |
 | H-022 | Forward replication of H-020 on as-published data | ⏳ collecting data, test on 2027-10-15 |

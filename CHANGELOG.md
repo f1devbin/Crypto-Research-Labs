@@ -57,6 +57,9 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   description lengths, absolute links on every page and a question for every hypothesis.
 
 ### Results
+- H-034 (stablecoin surge, all coins) weak: beat holding on 10/11 coins since 2022, none significant at 0.05/13
+  (best p = 0.006). H-035 (short on extreme BTC funding) failed on every coin; the Gate.io lines H-036/H-037
+  failed too.
 - H-027 (direction) failed: pooled Brier skill −0.009, overconfident. H-028 (size of the next move) passed:
   Brier skill +0.038, p < 0.001, skill on all 13 coins, well calibrated — the second pass in the project and the
   first that forecasts risk rather than direction.
