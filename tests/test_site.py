@@ -77,14 +77,51 @@ def test_site_address_is_absolute_even_if_the_variable_is_empty(tmp_path, monkey
         site.build(MemoryStore({}), tmp_path / "_site", base="/")
 
 
-def test_every_hypothesis_has_a_search_question_in_every_language():
+def test_every_registered_hypothesis_has_a_search_question_in_every_language():
+    import yaml
+
     from crl.config import HYPOTHESES_DIR
     from crl.i18n_seo import QUESTIONS
-    ids = sorted(p.stem for p in HYPOTHESES_DIR.glob("H-*.yaml"))
+    # drafts (the monthly LLM proposals) get their question when they are registered
+    ids = sorted(p.stem for p in HYPOTHESES_DIR.glob("H-*.yaml")
+                 if (yaml.safe_load(p.read_text(encoding="utf-8")) or {}).get("status") != "draft")
     assert ids and set(ids) <= set(QUESTIONS["en"]), set(ids) - set(QUESTIONS["en"])
     for lang in LANGS:
         assert set(QUESTIONS[lang]) == set(QUESTIONS["en"]), lang
         assert all(len(q) <= 66 for q in QUESTIONS[lang].values()), [q for q in QUESTIONS[lang].values() if len(q) > 66]
+
+
+def test_a_draft_without_a_question_gets_a_short_title(tmp_path, monkeypatch):
+    import yaml
+
+    from crl import registry
+    real = registry.load_all()
+    spec = next(h for h in real if h.id == "H-008").data["spec"]
+    draft = {"id": "H-999", "title": "BTC long when 7-day stablecoin growth exceeds its 80th percentile of the past two "
+             "years and funding is calm", "status": "draft", "family": "flows", "created": "2026-11-01",
+             "author": "LLM proposal", "rationale": "test", "spec": spec}
+    path = tmp_path / "H-999.yaml"
+    path.write_text(yaml.safe_dump(draft))
+    monkeypatch.setattr(registry, "load_all", lambda *a, **k: real + [registry.Hypothesis(path, draft)])
+    store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
+    out = site.build(store, tmp_path / "_site", dt.datetime(2026, 11, 4, tzinfo=dt.timezone.utc), "https://x.test/")
+    for lang in ("en", "ru", "zh"):
+        html = (out / ("" if lang == "en" else lang) / "hypotheses" / "H-999.html").read_text(encoding="utf-8")
+        title = html_unescape(re.search(r"<title>(.*?)</title>", html).group(1))
+        assert title.startswith("H-999: BTC long when") and len(title) <= 80, title
+
+
+def test_before_the_morning_run_the_forecast_is_called_the_latest(tmp_path):
+    store = MemoryStore({s: random_walk(seed=i, start="2017-08-17", n=3350) for i, s in enumerate(SYMBOLS)})
+    later = site.build(store, tmp_path / "a", dt.datetime(2030, 1, 1, tzinfo=dt.timezone.utc), "https://x.test/")
+    last = json.loads((later / "data.json").read_text())["forecast"]["today"]["date"]
+    home = (later / "ru" / "index.html").read_text(encoding="utf-8")
+    assert f"Последний прогноз модели для 13 монет ({last})" in home and "на сегодня" not in home
+    assert "Прогноз на сегодня ещё не вышел" in (later / "ru" / "forecast.html").read_text(encoding="utf-8")
+    same = site.build(store, tmp_path / "b", dt.datetime.fromisoformat(f"{last}T06:00:00+00:00"), "https://x.test/")
+    home = (same / "ru" / "index.html").read_text(encoding="utf-8")
+    assert f"Прогноз модели на сегодня для 13 монет ({last})" in home
+    assert "ещё не вышел" not in (same / "ru" / "forecast.html").read_text(encoding="utf-8")
 
 
 def test_one_question_per_page(tmp_path):

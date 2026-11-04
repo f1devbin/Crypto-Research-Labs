@@ -55,6 +55,12 @@ schema-validated (rule type, parameter names, feature names) and checked against
 the registry by fingerprint. Survivors become `status: draft` files with
 `author: llm:<model>`, and the workflow opens a PR.
 
+Every coin, never a hand-picked subset (rule 7): the model only drafts timing rules, and
+the proposer puts each one on all Binance coins (spot fee) and writes a companion draft
+for the Gate.io coins (EVER, GRAM) with Gate's fee 0.2 % + slippage 0.2 % per side, from
+2023-03-13, long/flat (Gate spot cannot short). Alpha is split across all 13 coins (Bonferroni, 0.0038) and significance is
+required, so a pass on any single coin is already corrected for testing many.
+
 Guardrails:
 - The runner never tests drafts.
 - Only a human can lock a draft: `crl registry register H-0NN` writes the sha256.

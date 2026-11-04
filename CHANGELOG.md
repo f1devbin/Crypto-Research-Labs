@@ -39,6 +39,10 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   (`scripts/h033_threshold.py`, counts only, no returns).
 
 ### Changed
+- The monthly LLM proposer follows rule 7 (every coin, never a hand-picked subset): it drafts timing rules only,
+  each on all 11 Binance coins plus a companion draft for the Gate.io coins (EVER, GRAM) at Gate's fee 0.2 % +
+  slippage 0.2 % per side from 2023-03-13, long/flat because Gate spot cannot short; alpha is split across all
+  13 coins (0.0038) and significance is required. Its November drafts (H-034, H-035) each picked one coin.
 - SEO (docs/SEO.md, target queries chosen 2026-10-29): page titles now start with what people search for and stay
   under 80 characters ("Crypto market today: trend, funding, Fear & Greed, stablecoins", "Free crypto course for
   beginners…"), descriptions are cut at a word boundary to 160 characters (90 in Chinese). Every hypothesis page is
@@ -59,6 +63,19 @@ stored with every result (`engine_version` in `results/*/latest.json`).
   random matched wallets (p = 0.77); the exit rule did not beat holding (Sharpe −1.80 vs −0.71).
 
 ### Fixed
+- Scheduled weekly runs skipped the digest from 2026-10-28 on, so the digest of 2026-11-02 is missing: the
+  condition `inputs.digest != false` is false when a run has no inputs (GitHub compares null as false). Every
+  full scheduled run writes the digest again; only a manual run can skip it. A missed weekly digest now makes
+  the next scheduled run the weekly one, so this one is caught up.
+- A site rebuild after a merge counted as the day's run: the gate saw today's site and would have skipped the
+  daily job, and with it the day's forecast (2026-11-04 after a merge at 01:22 UTC). The gate now waits for
+  today's row in the committed forecast log, and push runs never publish a forecast (they could run before
+  every source has published).
+- Before the morning run, the home page and the forecast page called the latest forecast "today's"; they now
+  say it is the latest and that today's comes before 12:00 UTC (7 languages).
+- The monthly LLM proposals (`propose`) could not pass the new SEO tests: drafts have no search question yet and
+  their statements ran past 80 characters in the page title. Drafts now fall back to the statement, clipped to 80
+  characters; the question is required once a hypothesis is registered.
 - Canonical, hreflang, sitemap, Open Graph and JSON-LD links were relative ("/") since 2026-10-14: the unset
   Actions variable `CRL_SITE_URL` arrives as an empty string, which replaced the default address. Every page told
   search engines that its canonical address was the host root `f1devbin.github.io`, and the sitemap was invalid.
