@@ -31,7 +31,8 @@ English and in Russian first (the other five languages follow the same plan).
 - Titles put the query words first and stay at most 80 characters (tests check every page). Inner pages carry no
   brand suffix: search results show the site name separately.
 - Descriptions: `site_render.clip` cuts them at a word boundary to 160 characters (90 in Chinese).
-- Every hypothesis needs a question in `src/crl/i18n_seo.py` (`QUESTIONS`), in all 7 languages (tests check it).
+- Every registered hypothesis needs a question in `src/crl/i18n_seo.py` (`QUESTIONS`), in all 7 languages (tests
+  check it). Drafts, such as the monthly LLM proposals, fall back to their statement, clipped to 80 characters.
   Write it the way people search ("Does X work on Y?"), at most 66 characters, and never as advice. The question
   is the page title and the first line of the page; the precise statement stays the H1.
 - Canonical, hreflang, sitemap, Open Graph and JSON-LD links are absolute, built from `config.SITE_URL`. An empty
