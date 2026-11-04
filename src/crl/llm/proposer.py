@@ -115,6 +115,7 @@ def all_coins(spec) -> tuple[dict, dict] | str:
     crit = {**spec.get("criterion", {}), "min_wins": wins, "require_significance": True}
     main = {**copy.deepcopy(spec), "universe": list(BINANCE_COINS), "significance": sig, "criterion": crit}
     gate = {**copy.deepcopy(main), "universe": list(GATE_COINS), "fee": GATE_COST,
+            "mode": "long_flat",  # Gate.io spot cannot short: the Gate line of a long/short rule is out instead
             "periods": [{"name": "gate", "start": GATE_START}],
             "criterion": {**crit, "min_wins": {"gate": 1}}}
     return main, gate
@@ -135,6 +136,9 @@ def accept(proposals: list, hyps: list, root: Path, today: dt.date, model: str) 
             continue
         main_id, gate_id = f"H-{n:03d}", f"H-{n + 1:03d}"
         rationale = str(prop.get("rationale", "")).strip()
+        gate_note = (f"Gate.io line of {main_id} (rule 7: the Gate coins are tested on their own line, with Gate's "
+                     f"fee 0.2 % and slippage 0.2 % per side, from {GATE_START} when all of them have prices; "
+                     f"long/flat, as Gate spot cannot short).")
         common = {"status": "draft", "family": str(prop.get("family", "other")), "created": str(today),
                   "author": f"llm:{model}", "retest_every_days": 90}
         pair = [registry.Hypothesis(root / f"{main_id}.yaml",
@@ -142,10 +146,7 @@ def accept(proposals: list, hyps: list, root: Path, today: dt.date, model: str) 
                                      "spec": specs[0]}),
                 registry.Hypothesis(root / f"{gate_id}.yaml",
                                     {"id": gate_id, "title": f"{title} — Gate.io coins ({gate_names})", **common,
-                                     "rationale": f"Gate.io line of {main_id} (rule 7: the Gate coins are tested on "
-                                                  f"their own line, with Gate's fee 0.2 % and slippage 0.2 % per side, "
-                                                  f"from {GATE_START} when all of them have prices). {rationale}",
-                                     "spec": specs[1]})]
+                                     "rationale": f"{gate_note} {rationale}", "spec": specs[1]})]
         errs = [e for h in pair for e in registry.validate(h)]
         errs += [f"duplicate of {d}" for h in pair for d in registry.duplicates(h, known)]
         if errs or not title:
