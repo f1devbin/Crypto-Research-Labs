@@ -1,22 +1,22 @@
 # Data health
 
-Checked 2026-11-09 06:26 UTC
+Checked 2026-11-16 06:28 UTC
 
 | source | files | missing | errors |
 |---|---|---|---|
-| klines ADAUSDT | 111 | 0 | — |
-| klines BNBUSDT | 116 | 0 | — |
-| klines BTCUSDT | 119 | 0 | — |
-| klines DOGEUSDT | 96 | 0 | — |
-| klines ETHUSDT | 119 | 0 | — |
+| klines ADAUSDT | 118 | 0 | — |
+| klines BNBUSDT | 123 | 0 | — |
+| klines BTCUSDT | 126 | 0 | — |
+| klines DOGEUSDT | 103 | 0 | — |
+| klines ETHUSDT | 126 | 0 | — |
 | klines EVERUSDT (gate) | 5 | 0 | — |
 | klines GRAMUSDT (gate) | 4 | 0 | — |
-| klines LINKUSDT | 102 | 0 | — |
-| klines LTCUSDT | 115 | 0 | — |
-| klines SOLUSDT | 83 | 0 | — |
-| klines TRXUSDT | 109 | 0 | — |
-| klines XLMUSDT | 110 | 0 | — |
-| klines XRPUSDT | 110 | 0 | — |
+| klines LINKUSDT | 109 | 0 | — |
+| klines LTCUSDT | 122 | 0 | — |
+| klines SOLUSDT | 90 | 0 | — |
+| klines TRXUSDT | 116 | 0 | — |
+| klines XLMUSDT | 117 | 0 | — |
+| klines XRPUSDT | 117 | 0 | — |
 | etf_flow_btc | 1 | 0 | — |
 | exchange flows (Coin Metrics) | 1 | 0 | — |
 | fear_greed | 1 | 0 | — |
