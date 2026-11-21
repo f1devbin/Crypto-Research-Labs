@@ -10,6 +10,7 @@ Telegram gets the TELEGRAM_LANG version (or the facts when no model is configure
 import datetime as dt
 import json
 import logging
+import re
 from pathlib import Path
 
 from crl.config import REPORTS_DIR
@@ -23,16 +24,41 @@ LANG_NAMES = {"en": "English", "ru": "Russian", "es": "Spanish", "pt": "Brazilia
               "vi": "Vietnamese", "zh": "Simplified Chinese"}
 
 SYSTEM = """You write a short weekly briefing for beginners about a crypto research dashboard.
-Use ONLY facts and numbers present in the input; never invent or round differently. Never recommend trades,
-never predict prices. Explain jargon in plain words. Flag uncertainty.
-Format: one short opening paragraph with the overall picture, then 3-6 lines starting with "- ",
-then one closing sentence on what changed in the tested hypotheses (or that nothing changed).
-No headings, no tables, no emojis, at most 220 words."""
+Use ONLY facts and numbers present in the input; copy them exactly, never round differently, never do new
+arithmetic. Never recommend trades, never predict prices. Explain jargon in plain words.
+
+Facts are measurements, not explanations. Never say why something happened and never join two facts as cause
+and effect ("because", "due to", "thanks to", "after X, Y followed"). If the input does not state a cause, say
+the reports do not explain it, or leave it out.
+
+When a tested idea passed or failed, say it was locked before the test and that one week is not proof either way.
+
+Format: one or two opening sentences with the overall picture, then 3-5 lines starting with "- ", each one a
+measured fact, then one closing sentence about the tested hypotheses (or that nothing changed). No headings, no
+tables, no emojis, at most 200 words.
+
+Bad: "Fees fell because traders left the market." Good: "Fees fell to 0.2 % from 0.4 %; the reports do not say why."
+Bad: "Stablecoin inflows pushed BTC up." Good: "Stablecoin growth was 1.2 %, BTC rose 3.4 % the same week."
+"""
 
 TRANSLATE = """Translate the user's text into {lang}. Keep every number, sign, percent, ticker and hypothesis id
 exactly as written, keep the paragraph and "- " line structure, add nothing, omit nothing. Output only the translation."""
 
 DIGEST_DIR = REPORTS_DIR / "digest"
+
+_NUM = re.compile(r"\d[\d.,]*\s?%?")
+
+
+def _numbers(text: str) -> set[str]:
+    """Numeric tokens, spaces removed, so "1.5 %" and "1.5%" compare equal."""
+    return {m.group(0).replace(" ", "").rstrip(".,") for m in _NUM.finditer(text)}
+
+
+def _invented(text: str, facts: str) -> list[str]:
+    """Numbers in the draft that do not appear in the facts. The weekly text must never invent one."""
+    known = _numbers(facts)
+    return sorted({n for n in _numbers(text) if n not in known})
+
 
 
 def collect(days: int = 7) -> str:
@@ -79,7 +105,7 @@ def _why(e: Exception) -> str:
 
 
 def write(facts: str, texts: dict[str, str], model: str | None, day: dt.date, root: Path = DIGEST_DIR,
-          errors: dict | None = None) -> Path:
+          errors: dict | None = None, warnings: dict | None = None) -> Path:
     d = root / week_id(day)
     d.mkdir(parents=True, exist_ok=True)
     for old in d.glob("*.md"):  # a rerun replaces the whole week, no stale languages
@@ -88,7 +114,8 @@ def write(facts: str, texts: dict[str, str], model: str | None, day: dt.date, ro
     for code, text in texts.items():
         (d / f"{code}.md").write_text(text.strip() + "\n", encoding="utf-8")
     (d / "meta.json").write_text(json.dumps({"week": week_id(day), "date": str(day), "model": model,
-                                             "languages": sorted(texts), "errors": errors or {}},
+                                             "languages": sorted(texts), "errors": errors or {},
+                                             "warnings": warnings or {}},
                                             indent=1, ensure_ascii=False), encoding="utf-8")
     return d
 
@@ -145,13 +172,25 @@ def main() -> int:
     today = dt.datetime.now(dt.timezone.utc).date()
     texts: dict[str, str] = {}
     errors: dict[str, str] = {}
+    warnings: dict[str, str] = {}
     if not client.available():
         errors["_"] = "no LLM key: set LLM_API_KEY (free, e.g. Groq) or ANTHROPIC_API_KEY"
     else:
         # write once in English from the facts, then translate the short text: 7x fewer input tokens,
         # which keeps free tiers under their per-minute limits, and the numbers stay identical
         try:
-            texts["en"] = client.complete(SYSTEM, "This week's reports:\n\n" + facts, 4000)
+            prompt = "This week's reports:\n\n" + facts
+            texts["en"] = client.complete(SYSTEM, prompt, 4000)
+            bad = _invented(texts["en"], facts)
+            if bad:  # free models do invent numbers; one corrective retry, then keep and record it
+                note = ("\n\nYour previous draft used numbers that are not in the reports: "
+                        + ", ".join(bad[:10]) + ". Rewrite it using only numbers from the reports.")
+                again = client.complete(SYSTEM, prompt + note, 4000)
+                left = _invented(again, facts)
+                texts["en"] = again
+                if left:
+                    warnings["en"] = "numbers not in the facts after a retry: " + ", ".join(left[:10])
+                    log.warning("digest numbers: %s", warnings["en"])
         except Exception as e:
             errors["en"] = _why(e)
             log.warning("digest failed: %s", errors["en"])
@@ -163,7 +202,7 @@ def main() -> int:
             except Exception as e:  # one language failing must not lose the others
                 errors[code] = _why(e)
                 log.warning("digest in %s failed: %s", code, errors[code])
-    write(facts, texts, client.model_name() if texts else None, today, errors=errors)
+    write(facts, texts, client.model_name() if texts else None, today, errors=errors, warnings=warnings)
     if errors:
         job_summary("## Weekly digest: model errors\n\n" + "\n".join(f"- {k}: {v}" for k, v in errors.items()))
     body = texts.get(alert_lang())
