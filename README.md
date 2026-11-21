@@ -230,6 +230,8 @@ docs/               getting started, methodology, findings, workflows
 
 New hypotheses, translations and fixes are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+Security issues: see [SECURITY.md](SECURITY.md). Please report them privately, not in a public issue.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
