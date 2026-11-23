@@ -1,0 +1,18 @@
+{
+ "week": "2026-W48",
+ "date": "2026-11-23",
+ "model": "openai/gpt-oss-120b",
+ "languages": [
+  "en",
+  "es",
+  "pt",
+  "ru",
+  "tr",
+  "vi",
+  "zh"
+ ],
+ "errors": {},
+ "warnings": {
+  "en": "numbers not in the facts after a retry: 0 %, 15.4 %, 2.6 %, 20,583 , 30 , 4.32 %, 46 %, 7 "
+ }
+}
